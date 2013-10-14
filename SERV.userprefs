@@ -1,0 +1,71 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SERV.Utils/Data/DBHelperFactory.cs">
+    <Files>
+      <File FileName="SERVWeb/Service/Service.asmx" Line="1" Column="1" />
+      <File FileName="SERVWeb/Service/Service.asmx.cs" Line="24" Column="57" />
+      <File FileName="SERVBLLFactory/Factory.cs" Line="1" Column="1" />
+      <File FileName="SERVBLL/MemberBLL.cs" Line="1" Column="1" />
+      <File FileName="SERVDALFactory/Factory.cs" Line="1" Column="1" />
+      <File FileName="SERVDAL/MemberDAL.cs" Line="205" Column="9" />
+      <File FileName="SERV.Utils/Data/DBHelperFactory.cs" Line="1" Column="1" />
+      <File FileName="../TalkingEye/net.talkingeye.dal/DBHelper.cs" Line="1" Column="1" />
+      <File FileName="DBHelperProvider/MySQLServerDBHelper.cs" Line="129" Column="1" />
+      <File FileName="DBHelperProvider/SQLiteDBHelper.cs" Line="1" Column="1" />
+      <File FileName="DBHelperProvider/SQLServerDBHelper.cs" Line="1" Column="1" />
+      <File FileName="SERVDataContract/Member.cs" Line="11" Column="16" />
+      <File FileName="SERVDAL/MemberDAL2.cs" Line="1" Column="1" />
+      <File FileName="SERVDataContract/User.cs" Line="23" Column="25" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Option id="ShowAllFiles" value="True" />
+          <Node name="DBHelperProvider" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="bin" expanded="True" />
+          </Node>
+          <Node name="SERV.Utils" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="Data" expanded="True">
+              <Node name="DBHelperFactory.cs" selected="True" />
+            </Node>
+          </Node>
+          <Node name="SERVBLL" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="SERVBLLFactory" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="SERVDAL" expanded="True" />
+          <Node name="SERVDALFactory" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="SERVDataContract" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="SERVIBLL" expanded="True" />
+          <Node name="SERVIDAL" expanded="True" />
+          <Node name="SERVWeb" expanded="True">
+            <Node name="Service" expanded="True">
+              <Node name="Service.asmx" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="ConnectionManagerPad">
+        <State selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

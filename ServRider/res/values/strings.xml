@@ -1,0 +1,110 @@
+<resources>
+	<string name="versionDescription">Rider v0.97.2</string>
+	<string name="skip_step">Skip >></string>
+    <string name="app_name">Serv Rider</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_logs">View Log</string>
+    <string name="title_activity_serv">SERV</string>
+    <string name="title_activity_job">SERV - New Job</string>
+    <string name="title_activity_onroute">SERV - On Route / Pickup</string>
+    <string name="title_activity_onroutetodrop">SERV - On Route / Dropoff</string>
+    <string name="title_activity_onroutehome">SERV - On Route / Home</string>
+    <string name="ServNow">SERV Now (Call Control)</string>
+    <string name="OnDuty">On Duty</string>
+    <string name="newCall">Start New Job</string>
+    <string name="jacket"> Jacket &amp; ID Card</string>
+    <string name="vhChecks"> Bike / Car Checks</string>
+    <string name="podStraps"> POD Book &amp; Pen, Placard &amp; Straps, Covers</string>
+	<string name="servNowNumber">tel:07017378669</string>
+	<string name="blood">Blood</string>
+	<string name="platelets">Platelets</string>
+	<string name="plasma">Plasma</string>
+	<string name="sample">Sample</string>
+	<string name="other">Other</string>
+	<string name="unknown">Unknown</string>
+	<string name="carrying">What are you carrying?</string>
+	<string name="from">From:</string>
+	<string name="to">To:</string>
+    <string name="departing">On Route to Pickup</string>
+    <string name="arrivedAtPickup">Arrived at Pickup (SMS)</string>
+    <string name="delayAtPickup">There is a delay at Pickup (SMS)</string>
+	<string name="messageSent">Text message sent to controller</string>
+	<string name="messageNOTSent">Your status message could NOT BE SENT</string>
+	<string name="controllerNumber">Wait for a call and enter the Controller\'s Number:</string>
+	<string name="checks">Pre-Serv Checks:</string>
+	<string name="serveNowLabel">At 18:45 Check into Serv (0701 7378669) by pressing the button below. Let the controller know your vehicle type, where you are and how many boxes you can carry.</string>
+	<string name="runningLate">Running Late! (SMS)</string>
+	<string name="pickupCheck">Pickup Product and Papers</string>
+	<string name="pickedup">Picked up - On Route to Drop (SMS)</string>
+	<string name="dropCheck">Drop off Product and get POD signed, leave copy</string>
+	<string name="droppedHeadingHome">Dropped Off - Heading Home (SMS)</string>
+	<string name="droppedWaiting">Droped Off - Waiting Here (SMS)</string>
+	<string name="home">Home! (SMS)</string>
+	<string name="droppedheadingBunkhouse">Dropped Off - Heading to New Malden (SMS)</string>
+	<string name="proceedTo">"Proceed to "</string>
+	<string name="routeAssistance">Route Assistance</string>
+	<string name="splashImageContentDescription">Serv Logo</string>
+	<string name="enterControllersNumber">Please enter your controller\'s mobile number</string>
+	<string name="destinationMustDiffer">The drop off point cannot be the same as the pickup point</string>
+	<string name="lastCalled">  &#8230;  </string>
+	<string name="locationUnknown">Location Unknown</string>
+	<string name="goHome">Go Home / to bunkhouse</string>
+	<string name="arrivedSafe">Arrived Safe (SMS)</string>
+	<string name="fillInPOD">Fill in POD Slip</string>
+	<string name="arrivedHomeSMS">Home safe</string>
+	<string name="goingToPickupSMS">On Route to </string>
+	<string name="delayAtPickupSMS">There is a delay picking up at </string>
+	<string name="waiting">. Waiting . . . </string>
+	<string name="arrivedAtPickupSMS">Arrived at pickup at </string>
+	<string name="goingToDropSMS">Picked up, heading to </string>
+	<string name="goingHomeSMS">Dropped Off.  Heading home . . .</string>
+	<string name="goingToBunkhouseSMS">Dropped Off.  Heading to bunkhouse . . .</string>
+	<string name="waitingHereSMS">Dropped Off.  Waiting here</string>
+	<string name="runningLateSMS">Running Late / Delayed . . .</string>
+	<string name="callServConfirmation">Call to Serv now?</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="callServNo">No, I already called</string>
+	<string name="goBackConfirm">Do you really want to go back?  This may result in your controller receiving a duplicate notification?</string>
+	<string-array name="locations">
+        <item>NBS Tooting</item>
+        <item>NBS Colindale</item>
+        <item>Hooley Handover</item>
+        <item>Croydon University Hospital</item>
+        <item>Epsom General Hospital</item>
+        <item>Frimley Park Hospital</item>
+        <item>Guy\'s Hospital</item>
+        <item>Royal Surrey Hospital</item>
+        <item>St Peter\'s Hospital</item>
+        <item>St Helier Hospital</item>
+        <item>St Thomas\' Hospital</item>
+        <item>Clare Park Hospital</item>
+        <item>Darent Valley Hospital</item>
+        <item>Great Ormond Street Hospital</item>
+        <item>London Chest Hospital</item>
+        <item>Royal London Hospital</item>
+        <item>Royal National Orthopaedic Hospital</item>
+        <item>St George\'s Hospital</item>
+        <item>Other</item>
+        <item>Multiple</item>
+    </string-array>
+    <string-array name="vheTypes">
+        <item>Bike (1 Box)</item>
+        <item>Bike (2 Boxes)</item>
+       	<item>Bike (3 Boxes)</item>
+       	<item>Bike (4 Boxes)</item>
+       	<item>Car</item>
+       	<item>Van</item>
+    </string-array>
+    <string-array name="noBoxes">
+        <item>1 Box</item>
+        <item>2 Boxes</item>
+       	<item>3 Boxes</item>
+       	<item>4 Boxes</item>
+       	<item>5 Boxes</item>
+       	<item>6 Boxes</item>
+       	<item>More</item>
+    </string-array>
+       	<string name="settingsNameLabel">Your Name:</string>
+       	<string name="save">Save</string>
+</resources>

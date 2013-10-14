@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/skip_step"
+        android:title="@string/skip_step"
+        android:orderInCategory="100" >
+    </item>
+</menu>

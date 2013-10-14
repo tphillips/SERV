@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>SERV Controller</title>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	
+	<style type="text/css">
+	  html { height: 100% }
+	  body { height: 100%; margin: 0px; padding: 0; font-size: small; font-family: helvetica, arial, clean;}
+	  #map_canvas { height: 100%;  }
+	  .ui-menu { width: 200px; margin: 2px; }
+	  .shadowed
+		{
+		-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);  
+		-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); 
+		}
+		#callsTable
+		{
+			border-collapse:collapse;
+		}
+		table,th, td
+		{
+			border: 1px solid gainsboro;
+		}
+		td
+		{
+		padding:4px;
+		}
+	</style>
+	
+	<script type="text/javascript"
+	  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-Wccd0zvGm6GyENJJs7d3lQNmysym9o&sensor=true&libraries=weather">
+	</script>
+	
+	<script type="text/javascript" src="Controller-min.js"></script>
+
+</head>
+
+<body>
+
+	<div id="map_canvas" style="float:left; width:100%; height:100%; border: 1px solid gainsboro;"></div>	
+
+	<div id="menuDiv" class="shadowed" style="position:absolute; top:16px; left: 85px; display: none">	
+		<ul class="menu">
+			<li>
+				<a href="#"><span id="menController">Controller<span></a>
+				<ul>
+					<li><a href="javascript:showLogCall()">Log a Call</a></li>
+					<li><a href="javascript:showAddRider()">Add New Rider</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#"><span id="menRider">Rider<span></a>
+				<ul>
+					<li><a href="javascript:showAddRider()">Add New Rider</a></li>
+					<li><a href="javascript:showUpdateRiderLocation()">Update Location</a></li>
+					<li><a href="javascript:sendRiderHome()">Send and mark as Home</a></li>
+					<li><a href="javascript:markRiderHome()">Mark as Home</a></li>
+					<li><a href="javascript:markRiderOut()">Mark as Dispatched</a></li>
+					<li><a href="javascript:removeRider()">Remove</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#"><span id="menMap">Map<span></a>
+				<ul>
+					<li><a href="javascript:showHideTraffic()">Show / Hide Traffic</a></li>
+					<li><a href="javascript:showHideWeather()">Show / Hide Weather</a></li>
+					<li><a href="javascript:showHideNotes()">Show / Hide Notes</a></li>
+					<li><a href="javascript:showHideLog()">Show / Hide Log</a></li>
+					<li><a href="javascript:showLoadRouteFile()">Load a TomTom ".itn" Route File</a></li>
+					<li><a href="javascript:showHelp()">Show User Guide</a></li>
+				</ul>
+			</li>
+		</ul>
+		<span id="info" style="display:none" />
+	</div>
+	
+	<div id="Notes" class="shadowed" style="opacity:0.9; border: 1px solid gainsboro; background-color: white; 
+		position:absolute; bottom:6px; right:6px; width:310px; height: 600px; padding: 5px; padding-top:15px; display:none">
+		<center><img src="logo.png" width=75px; /><br>Controller v0.4</center>
+		<br/>
+<textarea id="txtNotes" style="height:490px; width:100%; border: none; font-family: tahoma, arial, clean, font-size: medium;">
+NOTE: Internet Explorer is NOT SUPPORTED.  
+Use Firefox, Chrome or Safari.
+
+Enter your controller notes here, copy and paste them out whenever you like:
+
+</textarea>
+
+	</div>
+	
+		<div id="Calls" class="shadowed" style="opacity:0.9; border: 1px solid gainsboro; background-color: white; 
+			position:absolute; bottom:6px; left:6px; padding: 5px; display:none;">
+		<div id="CallList">
+			<table id="callsTable">
+				<tr>
+					<td>Date</td>
+					<td>Time</td>
+					<td>Destination</td>
+					<td>Collect From</td>
+					<td>Collect Time</td>
+					<td>Delivery Time</td>
+					<td>Consignment</td>
+					<td>Urgency</td>
+					<td>Controller</td>
+					<td>Rider</td>
+					<td>Notes</td>
+					<td></td>
+					<td>Vehicle</td>
+				</tr>
+				<tr id="call_0" style="display:none">
+					<td><input type="text" size="10" 		id="call_0_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_0_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_0_txtDest" class="locationAC" /></td>
+					<td><input type="text" size="10"		id="call_0_txtFrom" class="locationAC" /></td>
+					<td><input type="text" size="8" 		id="call_0_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_0_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_0_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_0_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_0_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_0_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_0_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_0_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_0').slideUp()"></img></td>
+				</tr>
+				<tr id="call_1" style="display:none">
+					<td><input type="text" size="10" 		id="call_1_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_1_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_1_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_1_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_1_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_1_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_1_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_1_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_1_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_1_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_1_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_1_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_1').slideUp()"></img></td>
+				</tr>
+				<tr id="call_2" style="display:none">
+					<td><input type="text" size="10" 		id="call_2_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_2_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_2_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_2_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_2_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_2_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_2_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_2_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_2_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_2_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_2_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_2_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_2').slideUp()"></img></td>
+				</tr>
+				<tr id="call_3" style="display:none">
+					<td><input type="text" size="10" 		id="call_3_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_3_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_3_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_3_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_3_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_3_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_3_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_3_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_3_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_3_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_3_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_3_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_3').slideUp()"></img></td>
+				</tr>
+				<tr id="call_4" style="display:none">
+					<td><input type="text" size="10" 		id="call_4_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_4_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_4_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_4_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_4_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_4_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_4_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_4_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_4_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_4_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_4_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_4_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_4').slideUp()"></img></td>
+				</tr>
+				<tr id="call_5" style="display:none">
+					<td><input type="text" size="10" 		id="call_5_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_5_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_5_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_5_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_5_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_5_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_5_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_5_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_5_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_5_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_5_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_5_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_5').slideUp()"></img></td>
+				</tr>
+				<tr id="call_6" style="display:none">
+					<td><input type="text" size="10" 		id="call_6_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_6_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_6_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_6_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_6_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_6_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_6_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_6_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_6_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_6_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_6_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_6_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_6').slideUp()"></img></td>
+				</tr>
+				<tr id="call_7" style="display:none">
+					<td><input type="text" size="10" 		id="call_7_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_7_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_7_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_7_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_7_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_7_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_7_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_7_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_7_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_7_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_7_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_7_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_7').slideUp()"></img></td>
+				</tr>
+				<tr id="call_8" style="display:none">
+					<td><input type="text" size="10" 		id="call_8_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_8_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_8_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_8_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_8_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_8_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_8_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_8_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_8_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_8_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_8_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_8_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_8').slideUp()"></img></td>
+				</tr>
+				<tr id="call_9" style="display:none">
+					<td><input type="text" size="10" 		id="call_9_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_9_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_9_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_9_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_9_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_9_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_9_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_9_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_9_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_9_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_9_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_9_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_9').slideUp()"></img></td>
+				</tr>
+				<tr id="call_10" style="display:none">
+					<td><input type="text" size="10" 		id="call_10_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_10_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_10_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_10_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_10_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_10_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_10_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_10_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_10_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_10_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_10_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_10_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_10').slideUp()"></img></td>
+				</tr>
+				<tr id="call_11" style="display:none">
+					<td><input type="text" size="10" 		id="call_11_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_11_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_11_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_11_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_11_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_11_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_11_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_11_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_11_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_11_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_11_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_11_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_11').slideUp()"></img></td>
+				</tr>
+				<tr id="call_12" style="display:none">
+					<td><input type="text" size="10" 		id="call_12_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_12_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_12_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_12_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_12_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_12_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_12_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_12_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_12_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_12_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_12_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_12_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_12').slideUp()"></img></td>
+				</tr>
+				<tr id="call_13" style="display:none">
+					<td><input type="text" size="10" 		id="call_13_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_13_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_13_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_13_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_13_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_13_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_13_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_13_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_13_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_13_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_13_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_13_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_13').slideUp()"></img></td>
+				</tr>
+				<tr id="call_14" style="display:none">
+					<td><input type="text" size="10" 		id="call_14_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_14_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_14_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_14_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_14_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_14_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_14_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_14_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_14_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_14_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_14_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_14_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_14').slideUp()"></img></td>
+				</tr>
+				<tr id="call_15" style="display:none">
+					<td><input type="text" size="10" 		id="call_15_txtDate" /></td>
+					<td><input type="text" size="8" 		id="call_15_txtTime" /></td>
+					<td><input type="text" size="10"		id="call_15_txtDest" class="locationAC"/></td>
+					<td><input type="text" size="10"		id="call_15_txtFrom" class="locationAC"/></td>
+					<td><input type="text" size="8" 		id="call_15_txtCollTime" /></td>
+					<td><input type="text" size="8" 		id="call_15_txtDellTime" /></td>
+					<td><input type="text" size="8" 		id="call_15_txtCon" /></td>
+					<td><input type="text" size="2" 		id="call_15_txtUrgency" /></td>
+					<td><input type="text" size="8" 		id="call_15_txtController" /></td>
+					<td><input type="text" size="8" 		id="call_15_txtRider" /></td>
+					<td><input type="text" size="12" 		id="call_15_txtNotes" /></td>
+					<td></td>
+					<td><input type="text" size="4" 		id="call_15_txtVehicle" /></td>
+					<td><img src="hiderow.png" onclick="$('#call_15').slideUp()"></img></td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+	
+	<div id="addRiderDialog" style="display:none; width:200px" title="Add a Rider / Driver">
+		<p>
+			Name:<br/>
+			<input type="text" id="txtNewRiderName" style="width:250px"/><br/>
+			Notes (e.g "Bike - 07555 555555"):<br/>
+			<input type="text" id="txtNewRiderNotes" style="width:250px"/><br/>
+			Located At:<br/>
+			<input type="text" class="locationAC" id="txtNewRiderLoc" style="width:250px" />
+			<br/><br/>
+			<input class="button" type="button" value="Add" onclick="addRider($('#txtNewRiderName').val(), $('#txtNewRiderLoc').val(), $('#txtNewRiderNotes').val())" />
+		</p>
+	</div>
+	
+	<div id="logCallDialog" style="display:none; width:200px" title="Log a Call">
+		<p>
+			Controller (That's probably you):<br/>
+			<input type="text" class="" id="txtCallController" style="width:250px"/><br/>
+			Destination:<br/>
+			<input type="text" class="locationAC" id="txtCallDestination" style="width:250px"/><br/>
+			Consignment:<br/>
+			<input type="text" class="consigmentAC" id="txtCallConsign" style="width:250px"/><br/>
+			Collect From:<br/>
+			<input type="text" class="locationAC" id="txtCallColFrom" style="width:250px"/><br/>
+			Final Destination (optional):<br/>
+			<input type="text" class="locationAC" id="txtCallFinalDest" style="width:250px"/><br/>
+			Urgency:<br/>
+			<input type="text" id="txtCallUrgency" style="width:250px" value="2"/><br/>
+			Notes (e.g "Ready at 22:00"):<br/>
+			<input type="text" id="txtCallNotes" style="width:250px" />
+			<br/><br/>
+			<input class="button" type="button" value="Log" onclick="logCall();" />
+		</p>
+	</div>
+	
+	<div id="locationDialog" style="display:none" title="Set New Location">
+		<p>
+			New Location:<br/>
+			<input type="text" class="" id="txtRiderLoc" style="width:250px" />
+			<br/><br/>
+			<input class="button" type="button" value="Update" onclick="updateRiderLocation($('#txtRiderLoc').val(), false)" />
+		</p>
+	</div>
+
+	<div id="routeDialog" style="display:none" title="Load an 'itn' Route">
+		<p>
+			Paste the itn file content in here:<br/>
+			<textarea id="txtRoute" style="width:100%; height: 400px; font-family: courier; font-size:small;"></textarea>
+			<br/><br/>
+			<input class="button" type="button" value="Load" onclick="loadRouteFile();" />
+		</p>
+	</div>
+	
+	<div id="helpDialog" style="display:none" title="Controller Tool User Guide">
+		<p><strong>New:</strong> 
+		<ul>
+			<li>Load a TomTom route (alpha, just for a laugh). </li>
+			<li>Weather information - Map > Show / Hide Weather. </li>
+			<li>Consignment auto-fill.  </li>
+			<li>Final destination box on call log.</li>
+			<li>More rows on call table</li>
+			<li>You can now hide rows on the call table</li>
+		</ul>
+		</p>
+		<p>This tool will help you track rider's locations, status and calls.  All information will automatically be logged in the panel on the right hand side & the controllers table on the bottom.  You can add additional notes, or personalise what has been logged for you.</p>
+		
+		<small>
+		<p>As riders / drivers call in, using the menu on the top left, click "Controller > Add New Rider" and enter their details.  An icon that looks like a house will appear on the map at the riders address.  The house icon shows a rider who is on call but not on a run.</p>
+		
+		<p>When a call comes in, click "Controller > Log a Call".  Enter the details of the call and the information will be logged.  Decide on a rider (based on the map) and click on their icon.  Then choose The riders name from the menu and click "Mark as Dispatched".  You will see their icon change to a motorbike.  This again will be logged.</p>
+		
+		<p>When a rider gives you a status update you can update the map by either dragging the riders icon into place, or clicking on the riders name in the menu and then "Update Location".  Enter the rider's location (e.g "Tooting") and press "Update".  The rider's icon will move to the correct location.  All this will be logged automatically.</p>
+		
+		<p>When a rider sends a home safe text, select the riders icon, then in the menu choose "Send and Mark as Home".  The rider's location will be set back to their home address and their status will be set to idle.</p>
+		</small>
+		<p>There are more things to discover in the menus.  Enjoy.</p>
+		
+		<p>Note, closing your browser will purge all information.  <strong>Don't use Internet Explorer</strong>.</p>
+		
+		<p>If you have any suggestions or comments, contact me on the forum!  </p><p>Cheers  Tris</p>
+	</div>
+	
+</body>
+</html>
+
