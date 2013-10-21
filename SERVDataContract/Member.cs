@@ -132,6 +132,9 @@ namespace SERVDataContract
 		[DbMember(MaxLength=0)]
 		public DateTime? LastGDPGMPDate { get; set; }
 
+		[DataMember]
+		public List<Tag> Tags { get; set; }
+
 	}
 
 }

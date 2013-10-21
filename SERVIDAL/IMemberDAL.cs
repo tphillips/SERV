@@ -13,6 +13,7 @@ namespace SERVIDAL
 		int Save(Member newclass);
 		void Update(Member newclass);
 		List<Member> List(string search);
+		List<Tag> ListMemberTags(int memberId);
 
 	}
 }

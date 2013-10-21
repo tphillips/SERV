@@ -16,11 +16,27 @@ namespace SERVDAL
 		public Member Get(int memberId)
 		{
 			Member ret = null;
-			//TODO: Confirm sql
-			DataTable t = DBHelperFactory.DBHelper().ExecuteDataTable("Select * from Member where MemberID = " + memberId);
+			DataTable t = DBHelperFactory.DBHelper().ExecuteDataTable("Select * from Member " +
+				"where MemberID = " + memberId);
 			if (t != null)
 			{
 				ret = GetFromRow(t.Rows[0]);
+			}
+			return ret;
+		}
+
+		public List<Tag> ListMemberTags(int memberId)
+		{
+			List<Tag> ret = new List<Tag>();
+			DataTable t = DBHelperFactory.DBHelper().ExecuteDataTable("Select * from Member_Tag mt " +
+				"join Tag t on mt.TagID = t.TagID " +
+				"where mt.MemberID = " + memberId);
+			if (t != null)
+			{
+				foreach(DataRow r in t.Rows)
+				{
+					ret.Add(new Tag() { ID = Convert.ToInt32(r["TagID"]), TagName = r["Tag"].ToString() });
+				}
 			}
 			return ret;
 		}

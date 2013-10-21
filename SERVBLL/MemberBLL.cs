@@ -23,9 +23,18 @@ namespace SERVBLL
 
 		public List<Member> List(string search)
 		{
-			return SERVDALFactory.Factory.MemberDAL().List(search);
+			List<Member> ret = SERVDALFactory.Factory.MemberDAL().List(search);
+			foreach (Member m in ret)
+			{
+				m.Tags = ListMemberTags(m.ID);
+			}
+			return ret;
 		}
 
+		List<Tag> ListMemberTags(int memberId)
+		{
+			return SERVDALFactory.Factory.MemberDAL().ListMemberTags(memberId);
+		}
 	}
 
 }
