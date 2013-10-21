@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestRecord xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results />
+  <Tests>
+    <TestRecord Name="Tests">
+      <Results />
+      <Tests>
+        <TestRecord Name="Test">
+          <Results />
+          <Tests>
+            <TestRecord Name="MemberTest">
+              <Results>
+                <UnitTestResult>
+                  <TestDate>2013-10-21T20:49:23</TestDate>
+                  <Status />
+                  <Passed>0</Passed>
+                  <Errors>1</Errors>
+                  <Failures>0</Failures>
+                  <Inconclusive>0</Inconclusive>
+                  <NotRunnable>0</NotRunnable>
+                  <Skipped>0</Skipped>
+                  <Ignored>0</Ignored>
+                  <Time />
+                  <Message>System.IO.FileNotFoundException : Could not load file or assembly 'DBHelperProvider' or one of its dependencies. The system cannot find the file specified.</Message>
+                  <StackTrace>  at System.AppDomain.Load (System.String assemblyString, System.Security.Policy.Evidence assemblySecurity, Boolean refonly) [0x00045] in /private/tmp/source/bockbuild-xamarin/profiles/mono-mac-xamarin/build-root/mono-3.2.3/mcs/class/corlib/System/AppDomain.cs:803 
+  at System.AppDomain.Load (System.String assemblyString) [0x00000] in /private/tmp/source/bockbuild-xamarin/profiles/mono-mac-xamarin/build-root/mono-3.2.3/mcs/class/corlib/System/AppDomain.cs:781 
+  at (wrapper remoting-invoke-with-check) System.AppDomain:Load (string)
+  at System.Reflection.Assembly.Load (System.String assemblyString) [0x00000] in /private/tmp/source/bockbuild-xamarin/profiles/mono-mac-xamarin/build-root/mono-3.2.3/mcs/class/corlib/System.Reflection/Assembly.cs:541 
+  at SERV.Utils.Data.DBHelperFactory.GetNewInstance (System.String HelperClassName) [0x00003] in /Users/Tris/Dropbox/Dev/Code/SERV/SERV.Utils/Data/DBHelperFactory.cs:41 
+  at SERV.Utils.Data.DBHelperFactory.DBHelper () [0x00045] in /Users/Tris/Dropbox/Dev/Code/SERV/SERV.Utils/Data/DBHelperFactory.cs:34 
+  at SERVDAL.MemberDAL.List (System.String search) [0x00048] in /Users/Tris/Dropbox/Dev/Code/SERV/SERVDAL/MemberDAL.cs:234 
+  at SERVBLL.MemberBLL.List (System.String search) [0x00007] in /Users/Tris/Dropbox/Dev/Code/SERV/SERVBLL/MemberBLL.cs:26 
+  at Tests.Test.MemberTest () [0x0000b] in /Users/Tris/Dropbox/Dev/Code/SERV/Tests/Test.cs:12 
+  at (wrapper managed-to-native) System.Reflection.MonoMethod:InternalInvoke (System.Reflection.MonoMethod,object,object[],System.Exception&amp;)
+  at System.Reflection.MonoMethod.Invoke (System.Object obj, BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00054] in /private/tmp/source/bockbuild-xamarin/profiles/mono-mac-xamarin/build-root/mono-3.2.3/mcs/class/corlib/System.Reflection/MonoMethod.cs:230 </StackTrace>
+                  <ConsoleOutput />
+                  <ConsoleError />
+                </UnitTestResult>
+                <UnitTestResult>
+                  <TestDate>2013-10-21T20:50:32</TestDate>
+                  <Status />
+                  <Passed>1</Passed>
+                  <Errors>0</Errors>
+                  <Failures>0</Failures>
+                  <Inconclusive>0</Inconclusive>
+                  <NotRunnable>0</NotRunnable>
+                  <Skipped>0</Skipped>
+                  <Ignored>0</Ignored>
+                  <Time />
+                  <Message>Test successful
+
+Execution time: 8.96ms</Message>
+                  <ConsoleOutput />
+                  <ConsoleError />
+                </UnitTestResult>
+                <UnitTestResult>
+                  <TestDate>2013-10-21T20:51:27</TestDate>
+                  <Status />
+                  <Passed>1</Passed>
+                  <Errors>0</Errors>
+                  <Failures>0</Failures>
+                  <Inconclusive>0</Inconclusive>
+                  <NotRunnable>0</NotRunnable>
+                  <Skipped>0</Skipped>
+                  <Ignored>0</Ignored>
+                  <Time />
+                  <Message>Test successful
+
+Execution time: 8.96ms</Message>
+                  <ConsoleOutput />
+                  <ConsoleError />
+                </UnitTestResult>
+              </Results>
+              <Tests />
+            </TestRecord>
+          </Tests>
+        </TestRecord>
+      </Tests>
+    </TestRecord>
+  </Tests>
+</TestRecord>

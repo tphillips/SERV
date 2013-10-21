@@ -1,0 +1,37 @@
+<%@ Master Language="C#" Inherits="SERVWeb.Master" %>
+<%@ Register TagPrefix="SERV" TagName="TopControl" Src="TopControl.ascx" %>
+
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>SERV - <asp:ContentPlaceHolder runat="server" id="titlePlaceholder" /></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/css/style.css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    </head>
+    
+    <body>
+        
+        <script src="/js/bootstrap.min.js"></script>
+        
+        <div class="container">
+            
+			<h2 class="text-muted">SERV</h2>
+			
+			<SERV:TopControl runat="server" id="topControl" />
+            
+            <div class="row">
+                <form runat="server" id="cententForm">
+                    <div class="span12">
+                        <asp:ContentPlaceHolder runat="server" id="contentPlaceholder"/>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+            
+    </body>
+    
+</html>

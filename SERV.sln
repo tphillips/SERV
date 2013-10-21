@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SERVDALFactory", "SERVDALFa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SERVBLLFactory", "SERVBLLFactory\SERVBLLFactory.csproj", "{FAF1635A-4209-4888-A85E-46A0B3182682}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{7A918492-F8A7-4B58-A512-46902B3B8A33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{785A132E-3053-46FC-88F5-C4B652334128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{785A132E-3053-46FC-88F5-C4B652334128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{785A132E-3053-46FC-88F5-C4B652334128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A918492-F8A7-4B58-A512-46902B3B8A33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A918492-F8A7-4B58-A512-46902B3B8A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A918492-F8A7-4B58-A512-46902B3B8A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A918492-F8A7-4B58-A512-46902B3B8A33}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F3E429D-6D76-40DD-9F90-F2F7876A52F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8F3E429D-6D76-40DD-9F90-F2F7876A52F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3E429D-6D76-40DD-9F90-F2F7876A52F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -102,6 +108,7 @@ Global
 		$2.inheritsScope = text/x-csharp
 		$2.scope = text/x-csharp
 		$0.TextStylePolicy = $3
+		$3.TabsToSpaces = False
 		$3.inheritsSet = VisualStudio
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
