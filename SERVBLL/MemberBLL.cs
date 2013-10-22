@@ -11,14 +11,14 @@ namespace SERVBLL
 	public class MemberBLL : IMemberBLL
 	{
 
-		public Member Get(int newclassID)
+		public Member Get(int memberId)
 		{
-			return SERVDALFactory.Factory.MemberDAL().Get(newclassID);
+			return SERVDALFactory.Factory.MemberDAL().Get(memberId);
 		}
 
-		public int Create(Member newclass)
+		public int Create(Member member)
 		{
-			return SERVDALFactory.Factory.MemberDAL().Create(newclass);
+			return SERVDALFactory.Factory.MemberDAL().Create(member);
 		}	
 
 		public List<Member> List(string search)
@@ -35,6 +35,17 @@ namespace SERVBLL
 		{
 			return SERVDALFactory.Factory.MemberDAL().ListMemberTags(memberId);
 		}
+		
+		public SERVUser Login(string username, string passwordHash)
+		{
+			SERVUser u = SERVDALFactory.Factory.MemberDAL().Login(username, passwordHash);
+			if (u != null)
+			{
+				u.Member = Get(u.MemberId);
+			}
+			return u;
+		}
+		
 	}
 
 }

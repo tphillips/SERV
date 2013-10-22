@@ -7,8 +7,9 @@ namespace SERVIBLL
 {
 	public interface IMemberBLL
 	{
-        Member Get(int newclassID);
-        int Create(Member newclass);
+        Member Get(int memberId);
+        int Create(Member member);
         List<Member> List(string search);
+		SERVUser Login(string username, string passwordHash);
 	}
 }

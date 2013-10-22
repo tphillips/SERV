@@ -24,6 +24,12 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.MemberBLL().List(search);
 		}
 
+		[WebMethod]
+		public SERVUser Login(string username, string passwordHash)
+		{
+			return SERVBLLFactory.Factory.MemberBLL().Login(username, passwordHash);
+		}
+
     }
 }
 

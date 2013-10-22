@@ -14,6 +14,7 @@ namespace SERVIDAL
 		void Update(Member newclass);
 		List<Member> List(string search);
 		List<Tag> ListMemberTags(int memberId);
+		SERVUser Login(string username, string passwordHash);
 
 	}
 }

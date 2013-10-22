@@ -110,3 +110,11 @@ Backup*/
 UpgradeLog*.XML
 
 SERVWeb/web.config
+
+Tests/app.config
+
+Tests/test-results/Tests.csproj-Debug-2013-10-22.xml
+
+*.test-cache
+
+*.userprefs
