@@ -117,7 +117,7 @@ namespace DBHelperProvider
 
 		private MySqlConnection Connect()
 		{
-			MySqlConnection ret = new MySqlConnection(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
+			MySqlConnection ret = new MySqlConnection(System.Configuration.ConfigurationManager.AppSettings["RawConnectionString"]);
 			ret.Open();
 			return ret;
 		}

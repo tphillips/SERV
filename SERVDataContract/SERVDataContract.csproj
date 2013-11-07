@@ -40,8 +40,8 @@
     <Compile Include="User.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="SERVUser.cs" />
-    <Compile Include="PermissionSet.cs" />
     <Compile Include="DbLinq.cs" />
+    <Compile Include="UpdatePolicyAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

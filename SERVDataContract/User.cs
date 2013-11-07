@@ -8,6 +8,15 @@ using SERV.Utils;
 namespace SERVDataContract
 {
 
+	public enum UserLevel
+	{
+		None,
+		Volunteer,
+		Controller,
+		Committee,
+		Admin
+	}
+
 	[DataContract]
 	[Serializable]
 	public class User
@@ -17,10 +26,9 @@ namespace SERVDataContract
 
 		public User(SERVDataContract.DbLinq.User metal)
 		{
-			PropertyMapper.MapProperties(metal, this, false, false);
+			PropertyMapper.MapProperties(metal, this);
 			this.Member = new Member();
-			PropertyMapper.MapProperties(metal.Member, this.Member, false, false);
-			this.Permissions = new PermissionSet();
+			PropertyMapper.MapProperties(metal.Member, this.Member);
 		}
 
 		public int UserID { get; set; }
@@ -28,7 +36,6 @@ namespace SERVDataContract
 		public Member Member { get; set; }
 		public int UserLevel { get; set; }
 		public DateTime? LastLoginDate { get; set; }
-		public PermissionSet Permissions {get; set;}
 
     }
 }

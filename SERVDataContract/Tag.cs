@@ -15,7 +15,8 @@ namespace SERVDataContract
 
 		public Tag(SERVDataContract.DbLinq.Tag metal)
 		{
-			PropertyMapper.MapProperties(metal, this, false, false);
+			this.TagID = metal.TagID;
+			this.TagName = metal.Tag1;
 		}
 
 		[DataMember]

@@ -25,8 +25,25 @@ function DisplayMember(memberId)
 			$("#txtNOKAddress").val(json.d.NextOfKinAddress);
 			$("#txtNOKPhone").val(json.d.NextOfKinPhone);
 			
+			for(var x = 0; x < json.d.Tags.length; x++)
+			{
+				if (json.d.Tags[x].TagName == "Rider") { $("#chkRider").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "Driver") { $("#chkDriver").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "4x4") { $("#chk4x4").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "EmergencyList") { $("#chkEmergencyList").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "Fundraiser") { $("#chkFundraiser").prop('checked', true); }
+				
+				if (json.d.Tags[x].TagName == "Blood") { $("#chkBlood").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "AA") { $("#chkAA").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "Milk") { $("#chkMilk").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "Water") { $("#chkWater").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "Controller") { $("#chkController").prop('checked', true); }
+				
+			}
+			
 			$("#loading").slideUp();
 			$("#entry").slideDown();
+			
 		},
 		function()
 		{

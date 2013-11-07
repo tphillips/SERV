@@ -49,6 +49,19 @@ namespace SERVDAL
 		{
 			throw new NotImplementedException();
 		}
+		
+		public void AddMemberTag(int memberId, string tagName)
+		{
+			int tagId = Convert.ToInt32(DBHelperFactory.DBHelper().ExecuteScalar("select TagID from Tag where Tag = " + SERV.Utils.String.DBSafeString(tagName)));
+			string sql = string.Format("insert into Member_Tag values ({0}, {1})", memberId, tagId);
+			DBHelperFactory.DBHelper().ExecuteNonQuery(sql);
+		}
+		
+		public void RemoveMemberTag(int memberId, string tagName)
+		{
+			string sql = string.Format("delete from Member_Tag where MemberID = {0} and TagID in (Select TagID from Tag where Tag = {1})", memberId, SERV.Utils.String.DBSafeString(tagName));
+			DBHelperFactory.DBHelper().ExecuteNonQuery(sql);
+		}
 
 		public User Login(string username, string passwordHash)
 		{

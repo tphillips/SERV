@@ -15,6 +15,7 @@ namespace SERVIDAL
 		List<Member> List(string search);
 		List<Tag> ListMemberTags(int memberId);
 		User Login(string username, string passwordHash);
-
+		void AddMemberTag(int memberId, string tagName);
+		void RemoveMemberTag(int memberId, string tagName);
 	}
 }

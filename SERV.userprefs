@@ -1,28 +1,25 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SERVDAL/MemberDAL.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SERVWeb/TopControl.ascx.designer.cs">
     <Files>
-      <File FileName="SERVWeb/js/JS.js" Line="1" Column="1" />
-      <File FileName="SERVWeb/ViewMember.aspx" Line="1" Column="1" />
-      <File FileName="SERVIDAL/IMemberDAL.cs" Line="1" Column="1" />
-      <File FileName="SERVDAL/MemberDAL.cs" Line="44" Column="29" />
-      <File FileName="SERVDataContract/Output.cs" Line="1" Column="1" />
-      <File FileName="SERVDataContract/Member.cs" Line="1" Column="1" />
-      <File FileName="SERVDataContract/Tag.cs" Line="1" Column="1" />
-      <File FileName="SERVDataContract/User.cs" Line="1" Column="1" />
-      <File FileName="SERVDataContract/PermissionSet.cs" Line="1" Column="1" />
-      <File FileName="SERVBLL/MemberBLL.cs" Line="1" Column="1" />
-      <File FileName="SERV.Utils/Translation/TranslateAttribute.cs" Line="1" Column="1" />
-      <File FileName="SERV.Utils/Translation/Google.cs" Line="1" Column="1" />
-      <File FileName="SERV.Utils/PropertyMapper.cs" Line="1" Column="1" />
-      <File FileName="SERVDataContract/SERVUser.cs" Line="1" Column="1" />
-      <File FileName="SERVWeb/ViewMember.aspx.cs" Line="1" Column="1" />
-      <File FileName="SERVWeb/SERVGlobal.cs" Line="1" Column="1" />
-      <File FileName="SERVWeb/Service/Service.asmx.cs" Line="1" Column="1" />
-      <File FileName="SERVIBLL/IMemberBLL.cs" Line="1" Column="1" />
-      <File FileName="SERVWeb/Service/Service.asmx" Line="1" Column="1" />
-      <File FileName="SERVBLLFactory/Factory.cs" Line="1" Column="1" />
-      <File FileName="SERVDALFactory/Factory.cs" Line="1" Column="1" />
+      <File FileName="SERVDAL/MemberDAL.cs" Line="28" Column="25" />
+      <File FileName="SERVBLL/MemberBLL.cs" Line="33" Column="25" />
+      <File FileName="SERVIDAL/IMemberDAL.cs" Line="21" Column="1" />
+      <File FileName="SERVWeb/ViewMember.aspx" Line="21" Column="8" />
+      <File FileName="SERVWeb/js/JS.js" Line="48" Column="15" />
+      <File FileName="SERV.Utils/PropertyMapper.cs" Line="28" Column="1" />
+      <File FileName="SERVDataContract/Member.cs" Line="20" Column="19" />
+      <File FileName="SERVDataContract/User.cs" Line="22" Column="19" />
+      <File FileName="SERVDataContract/Tag.cs" Line="18" Column="58" />
+      <File FileName="SERVWeb/Login.aspx.cs" Line="18" Column="4" />
+      <File FileName="SERVWeb/TopControl.ascx.cs" Line="1" Column="1" />
+      <File FileName="SERVWeb/TopControl.ascx" Line="11" Column="46" />
+      <File FileName="SERVWeb/TopControl.ascx.designer.cs" Line="1" Column="1" />
+      <File FileName="SERVWeb/ViewMember.aspx.cs" Line="28" Column="4" />
+      <File FileName="SERVWeb/Default.aspx" Line="5" Column="2" />
+      <File FileName="SERVWeb/Login.aspx" Line="6" Column="1" />
+      <File FileName="SERVWeb/Default.aspx.designer.cs" Line="1" Column="1" />
+      <File FileName="SERVWeb/Login.aspx.designer.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -37,12 +34,14 @@
           <Node name="SERVBLLFactory" expanded="True" />
           <Node name="SERVDAL" expanded="True" />
           <Node name="SERVDALFactory" expanded="True" />
-          <Node name="SERVDataContract" expanded="True" />
+          <Node name="SERVDataContract" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
           <Node name="SERVIBLL" expanded="True" />
           <Node name="SERVIDAL" expanded="True">
             <Node name="References" expanded="True" />
           </Node>
-          <Node name="SERVWeb" expanded="True" selected="True">
+          <Node name="SERVWeb" expanded="True">
             <Node name="css" expanded="True" />
             <Node name="js" expanded="True" />
             <Node name="Service" expanded="True">
@@ -51,7 +50,9 @@
             <Node name="Default.aspx" expanded="True" />
             <Node name="Login.aspx" expanded="True" />
             <Node name="Master.master" expanded="True" />
-            <Node name="TopControl.ascx" expanded="True" />
+            <Node name="TopControl.ascx" expanded="True">
+              <Node name="TopControl.ascx.designer.cs" selected="True" />
+            </Node>
             <Node name="ViewMember.aspx" expanded="True" />
           </Node>
           <Node name="Tests" expanded="True" />
@@ -78,11 +79,7 @@
     <BreakpointStore>
       <Breakpoint file="/Users/Tris/Dropbox/Dev/Code/SERV/SERVWeb/Index.aspx.designer.cs" line="19" column="1" />
       <Breakpoint file="/Users/Tris/Dropbox/Dev/Code/SERV/SERVWeb/Index.aspx.designer.cs" line="17" column="1" />
-      <Breakpoint file="/Users/Tris/Dropbox/Dev/Code/SERV/SERVBLL/MemberBLL.cs" line="28" column="1" />
       <Breakpoint file="/Users/Tris/Dropbox/Dev/Code/SERV/SERVWeb/Service/Service.asmx.cs" line="29" column="1" />
-      <Breakpoint file="/Users/Tris/Dropbox/Dev/Code/SERV/SERVWeb/Service/Service.asmx.cs" line="31" column="1" />
-      <Breakpoint file="/Users/Tris/Dropbox/Dev/Code/SERV/SERVWeb/Service/Service.asmx.cs" line="36" column="1" />
-      <Breakpoint file="/Users/Tris/Dropbox/Dev/Code/SERV/SERVDAL/MemberDAL.cs" line="40" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

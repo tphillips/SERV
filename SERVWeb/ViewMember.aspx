@@ -77,6 +77,50 @@
 				
 				</div>
 				
+				<div class="span3">
+				<label>Tags / Capabilities (<strong>preferences</strong>):</label>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="chkRider" /> Rider - You own a bike and will happily ride for SERV
+					</label>
+					<label>
+						<input type="checkbox" id="chkDriver" /> Driver - You own a car and will happily drive for SERV
+					</label>
+					<label>
+						<input type="checkbox" id="chk4x4" /> 4x4 - You have access to a 4x4 for use in bad weather
+					</label>
+					<label>
+						<input type="checkbox" id="chkEmergencyList" /> Emergency Contact List - You are happy to be contacted (by phone or SMS) when SERV are short of riders / drivers
+					</label>
+					<label>
+						<input type="checkbox" id="chkFundraiser" /> Fundraiser - You are happy to be contacted (by phone or SMS) when SERV are arranging a fundraising event
+					</label>
+				</div>
+				<p><br/>Admin editable only:</p>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="chkBlood" /> Blood volunteer
+					</label>
+					
+					<label>
+						<input type="checkbox" id="chkAA" /> Air Ambulance Volunteer
+					</label>
+					
+					<label>
+						<input type="checkbox" id="chkMilk" /> Milk Volunteer
+					</label>
+					
+					<label>
+						<input type="checkbox" id="chkWater" /> Water Volunteer
+					</label>
+					
+					<label>
+						<input type="checkbox" id="chkController" /> Controller
+					</label>
+					
+				</div>
+				</div>
+				
 			</div>
 		</fieldset>
 		<br/>
