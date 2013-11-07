@@ -11,10 +11,16 @@
 namespace SERVWeb {
 	
 	
-	public partial class TopControl {
+	public partial class Login {
 		
-		protected System.Web.UI.WebControls.Literal pnlNotLoggedIn;
+		protected System.Web.UI.HtmlControls.HtmlGenericControl titlePlaceholderContent;
+		protected System.Web.UI.WebControls.TextBox txtEmail;
+		protected System.Web.UI.WebControls.TextBox txtPassword;
 		
-		protected System.Web.UI.WebControls.Literal pnlLoggedIn;
+		public new SERVWeb.Master Master {
+			get {
+				return ((SERVWeb.Master)(base.Master));
+			}
+		}
 	}
 }

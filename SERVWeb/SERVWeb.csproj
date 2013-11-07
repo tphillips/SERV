@@ -84,6 +84,7 @@
     <Content Include="Default.aspx" />
     <Content Include="ViewMember.aspx" />
     <Content Include="web.config" />
+    <Content Include="Login.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -113,5 +114,12 @@
     <Compile Include="ViewMember.aspx.designer.cs">
       <DependentUpon>ViewMember.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SERVGlobal.cs" />
   </ItemGroup>
 </Project>

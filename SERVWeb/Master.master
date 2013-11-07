@@ -15,12 +15,10 @@
     <body>
         
         <script src="/js/bootstrap.min.js"></script>
-        
-        <div class="container">
-            
-			<h2 class="text-muted">SERV</h2>
 			
-			<SERV:TopControl runat="server" id="topControl" />
+		<SERV:TopControl runat="server" id="topControl" />
+        <br/><br/>
+        <div class="container">			
             
             <div class="row">
                 <form runat="server" id="cententForm">

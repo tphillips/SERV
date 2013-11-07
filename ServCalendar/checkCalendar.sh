@@ -16,7 +16,7 @@ function checkCover
 	
 	pass=`cat .calPasswd`
 
-	gcalcli --user serv.surrey@gmail.com --pw $pass cal "Air Ambulance" agenda "$day $month 20$year 01:00" "$tday $tmonth 20$tyear" > .riders
+	gcalcli --user serv.surrey@gmail.com --pw $pass --cal "Air Ambulance" agenda "$day $month 20$year 01:00" "$tday $tmonth 20$tyear" > .riders
 
 	night1=$(checkForCover "Night" 1)
 	night2=$(checkForCover "Night" 2)

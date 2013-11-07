@@ -9,7 +9,16 @@ namespace SERVWeb
 	{
 		protected override void OnLoad (EventArgs e)
 		{
-
+			if (SERVGlobal.User == null)
+			{
+				pnlNotLoggedIn.Visible = true;
+				pnlLoggedIn.Visible = false;
+			}
+			else
+			{
+				pnlLoggedIn.Visible = true;
+				pnlNotLoggedIn.Visible = false;
+			}
 		}
 	}
 }

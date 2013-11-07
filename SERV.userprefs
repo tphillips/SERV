@@ -1,9 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SERVWeb/web.config">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SERVWeb/TopControl.ascx.designer.cs">
     <Files>
-      <File FileName="SERVWeb/web.config" Line="19" Column="20" />
-      <File FileName="DBHelperProvider/MySQLServerDBHelper.cs" Line="115" Column="119" />
+      <File FileName="SERVWeb/ViewMember.aspx" Line="49" Column="29" />
+      <File FileName="SERVWeb/js/JS.js" Line="25" Column="46" />
+      <File FileName="SERVWeb/Master.master" Line="20" Column="19" />
+      <File FileName="SERVWeb/TopControl.ascx" Line="2" Column="37" />
+      <File FileName="SERVWeb/TopControl.ascx.designer.cs" Line="5" Column="4" />
+      <File FileName="SERVWeb/Login.aspx.cs" Line="14" Column="37" />
+      <File FileName="SERVWeb/Login.aspx" Line="15" Column="10" />
+      <File FileName="SERVWeb/Login.aspx.designer.cs" Line="18" Column="58" />
+      <File FileName="../../../../../../Library/Frameworks/Mono.framework/Versions/3.2.3/lib/mono/4.0/Microsoft.Common.targets" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,6 +23,7 @@
           <Node name="SERVBLL" expanded="True" />
           <Node name="SERVDAL" expanded="True" />
           <Node name="SERVDataContract" expanded="True" />
+          <Node name="SERVIBLL" expanded="True" />
           <Node name="SERVIDAL" expanded="True" />
           <Node name="SERVWeb" expanded="True">
             <Node name="css" expanded="True" />
@@ -24,33 +32,27 @@
               <Node name="Service.asmx" expanded="True" />
             </Node>
             <Node name="Default.aspx" expanded="True" />
+            <Node name="Login.aspx" expanded="True" />
             <Node name="Master.master" expanded="True" />
             <Node name="TopControl.ascx" expanded="True" />
             <Node name="ViewMember.aspx" expanded="True" />
-            <Node name="web.config" selected="True" />
           </Node>
-          <Node name="Tests" expanded="True" />
+          <Node name="Tests" expanded="True" selected="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
+        <State>
+          <Value>Session["User"]</Value>
+        </State>
       </Pad>
       <Pad Id="ConnectionManagerPad">
         <State selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
-          <Node name="Tests" expanded="True">
-            <Node name="Tests" expanded="True">
-              <Node name="Test" expanded="True">
-                <Node name="MemberTest" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

@@ -18,6 +18,12 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.MemberBLL().List("");
 		}
 
+		[WebMethod(EnableSession = true)]
+		public Member GetMember(int memberId)
+		{
+			return SERVBLLFactory.Factory.MemberBLL().Get(memberId);
+		}
+
 		[WebMethod]
 		public List<Member> SearchMembers(string search)
 		{
