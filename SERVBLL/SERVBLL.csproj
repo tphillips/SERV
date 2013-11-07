@@ -30,6 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,6 +53,10 @@
     <ProjectReference Include="..\SERVIDAL\SERVIDAL.csproj">
       <Project>{DC871B06-1443-4664-8E39-68485A47F1D0}</Project>
       <Name>SERVIDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SERV.Utils\SERV.Utils.csproj">
+      <Project>{11642B2B-034E-4F46-97B1-D005CA169BCE}</Project>
+      <Name>SERV.Utils</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

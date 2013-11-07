@@ -9,7 +9,8 @@ namespace SERVIBLL
 	{
         Member Get(int memberId);
         int Create(Member member);
+		int Save(Member member);
         List<Member> List(string search);
-		SERVUser Login(string username, string passwordHash);
+		User Login(string username, string passwordHash);
 	}
 }

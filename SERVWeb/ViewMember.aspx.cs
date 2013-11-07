@@ -1,7 +1,7 @@
 using System;
 using System.Web;
 using System.Web.UI;
-using SERVDataContract;
+using SERVDataContract.DbLinq;
 
 namespace SERVWeb
 {
@@ -15,7 +15,7 @@ namespace SERVWeb
 			{
 				if (Request["self"] == "yes")
 				{
-					return SERVGlobal.User.MemberId;
+					return SERVGlobal.User.MemberID;
 				}
 				if (Request["memberId"] == null) { return 0; }
 				return int.Parse(Request["memberId"]);

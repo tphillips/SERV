@@ -10,6 +10,8 @@ namespace SERV.Utils.Data
 
 		void Prepare();
 
+		IDbConnection GetConnection();
+
 		DataSet ExecuteDataSet(string sql);
 		
 		DataSet ExecuteDataSetCommand(DbCommand com);

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using System;
-using SERVDataContract;
+using SERVDataContract.DbLinq;
 
 namespace SERVTests
 {

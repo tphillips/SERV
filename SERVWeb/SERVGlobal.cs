@@ -8,12 +8,12 @@ namespace SERVWeb
 
 		public static Service Service = new Service();
 
-		public static SERVUser User
+		public static User User
 		{
 			get
 			{
 				if (System.Web.HttpContext.Current.Session["User"] == null) { return null; }
-				return (SERVUser)System.Web.HttpContext.Current.Session["User"];
+				return (User)System.Web.HttpContext.Current.Session["User"];
 			}
 			set
 			{

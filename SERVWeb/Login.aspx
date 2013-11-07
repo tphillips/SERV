@@ -10,9 +10,9 @@
 <asp:TextBox runat="server" id="txtEmail" />
 
 <label>Password:</label>
-<asp:TextBox runat="server" id="txtPassword" />
+<asp:TextBox runat="server" id="txtPassword" TextMode="password"/>
 
 <br/><br/>
-<asp:Button runat="server" id="cmdLogin" Text="Login" onclick="cmdLoginClick"/>
+<asp:Button runat="server" id="cmdLogin" Text="Login" class="btn" onclick="cmdLoginClick"/>
 
 </asp:Content>

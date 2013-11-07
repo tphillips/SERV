@@ -74,6 +74,7 @@
     <Compile Include="Caching\CallStackCaching.cs" />
     <Compile Include="Caching\StackSigCacheConfig.cs" />
     <Compile Include="Caching\NoCacheAttribute.cs" />
+    <Compile Include="PropertyMapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

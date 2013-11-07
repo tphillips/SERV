@@ -1,6 +1,6 @@
 using System;
 
-namespace SERVDataContract
+namespace SERVDataContract.DbLinq
 {
 	public class SERVUser
 	{
@@ -9,6 +9,7 @@ namespace SERVDataContract
 		public Member Member { get; set; }
 		public int UserLevel { get; set; }
 		public DateTime? LastLoginDate { get; set; }
+		public PermissionSet Permissions {get; set;}
 	}
 }
 

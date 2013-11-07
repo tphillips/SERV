@@ -24,6 +24,11 @@ namespace DBHelperProvider
 				return t;
 			}
 		}
+	
+		public IDbConnection GetConnection()
+		{
+			return Connect();
+		}
 
 		public DataSet ExecuteDataSetCommand(System.Data.Common.DbCommand com)
 		{

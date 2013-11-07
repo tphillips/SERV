@@ -15,12 +15,20 @@ namespace DBHelperProvider
 	public class SQLServerDBHelper : IDBHelper , IDisposable
 	{
 
+
+
 		SqlConnection con = new SqlConnection();
 
 		public SQLServerDBHelper()
 		{
 			con = new SqlConnection(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
 			//Connect();
+		}
+
+		public IDbConnection GetConnection()
+		{
+			Connect();
+			return con;
 		}
 
 		void Connect()

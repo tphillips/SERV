@@ -28,64 +28,76 @@
 				<div class="span3">
 				
 					<label>First Name:</label>
-					<input type="text" id="txtFirstName" required="*" />
+					<input type="text" id="txtFirstName" />
 						
 					<label>Last Name:</label>
-					<input type="text" id="txtLastName" required="*" />
+					<input type="text" id="txtLastName" />
 					
 					<label>Email Address:</label>
-					<input type="text" id="txtEmail" required="*" />
+					<input type="text" id="txtEmail" />
 					
 					<label>Mobile Number:</label>
-					<input type="text" id="txtMobile" required="*" />
+					<input type="text" id="txtMobile" />
 					
 					<label>Home Phone:</label>
-					<input type="text" id="txtHomePhone" required="*" />
-					
-				</div>
-				
-				<div class="span3">
-					
+					<input type="text" id="txtHomePhone" />
+										
 					<label>Address:</label>
-					<input type="text" id="txtAddress1" required="*" /><br/>
-					<input type="text" id="txtAddress2" required="*" /><br/>
-					<input type="text" id="txtAddress3" required="*" />
+					<input type="text" id="txtAddress1" /><br/>
+					<input type="text" id="txtAddress2" /><br/>
+					<input type="text" id="txtAddress3" />
 					
 					<label>Town:</label>
-					<input type="text" id="txTown" required="*" />
+					<input type="text" id="txtTown" />
 					
 					<label>County:</label>
-					<input type="text" id="txtCounty" required="*" />
+					<input type="text" id="txtCounty" />
 					
 					<label>Post Code:</label>
-					<input type="text" id="txtPostCode" required="*" />
+					<input type="text" id="txtPostCode" />
 					
 				</div>
 				
 				<div class="span3">
 				
 					<label>Occupation:</label>
-					<input type="text" id="txtOccupation" required="*" />
+					<input type="text" id="txtOccupation" />
+					
+					<label>Birth Year:</label>
+					<input type="text" id="txtBirthYear" />
 					
 					<label>Next Of Kin:</label>
-					<input type="text" id="txtNOK" required="*" />
+					<input type="text" id="txtNOK" />
 					
 					<label>Next Of Kin Address:</label>
-					<input type="text" id="txtNOKAddress" required="*" />
+					<input type="text" id="txtNOKAddress" />
 					
 					<label>Next Of Kin Phone Number:</label>
-					<input type="text" id="txtNOKPhone" required="*" />
+					<input type="text" id="txtNOKPhone" />
 				
 				</div>
 				
 			</div>
 		</fieldset>
+		<br/>
+		<input type=button class="btn" onclick="SaveMember()" value="Save" />
+		
 	</div>
 	<br/>
 	<br/>
 	
 	<script>
+	
+	$(function() 
+	{
 		DisplayMember(<%=this.MemberId%>);
+	});
+	
+	function SaveMember()
+	{
+		SaveBasicMember(<%=this.MemberId%>);
+	}
+		
 	</script>
 
 </asp:Content>

@@ -1,20 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SERVDataContract;
+using SERVDataContract.DbLinq;
 
 namespace SERVIDAL
 {
 	public interface IMemberDAL
 	{
 
-		Member Get(int newclassID);
-		int Create(Member newclass);
-		int Save(Member newclass);
-		void Update(Member newclass);
+		Member Get(int memberId);
+		int Create(Member member);
+		int Save(Member member);
+		int Update(Member member);
 		List<Member> List(string search);
 		List<Tag> ListMemberTags(int memberId);
-		SERVUser Login(string username, string passwordHash);
+		User Login(string username, string passwordHash);
 
 	}
 }

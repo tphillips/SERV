@@ -12,7 +12,7 @@ namespace SERVWeb
     public class Service : System.Web.Services.WebService
     {
 
-		[WebMethod]
+		[WebMethod(EnableSession = true)]
 		public List<Member> ListMembers()
 		{
 			return SERVBLLFactory.Factory.MemberBLL().List("");
@@ -21,19 +21,44 @@ namespace SERVWeb
 		[WebMethod(EnableSession = true)]
 		public Member GetMember(int memberId)
 		{
+			Authenticate();
 			return SERVBLLFactory.Factory.MemberBLL().Get(memberId);
 		}
 
-		[WebMethod]
+		[WebMethod(EnableSession = true)]
+		public bool SaveMember(Member member)
+		{
+			Authenticate();
+			if (!CurrentUser().Permissions.IsAdmin && !CurrentUser().Permissions.CanEditOtherMembers && member.MemberID != CurrentUser().MemberID)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.MemberBLL().Save(member) == member.MemberID;
+		}
+
+		[WebMethod(EnableSession = true)]
 		public List<Member> SearchMembers(string search)
 		{
 			return SERVBLLFactory.Factory.MemberBLL().List(search);
 		}
 
-		[WebMethod]
-		public SERVUser Login(string username, string passwordHash)
+		public User Login(string username, string passwordHash)
 		{
 			return SERVBLLFactory.Factory.MemberBLL().Login(username, passwordHash);
+		}
+
+		private User CurrentUser()
+		{
+			if (Session["User"] == null) { return null; }
+			return (User)Session["User"];
+		}
+
+		private void Authenticate()
+		{
+			if (CurrentUser() == null)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
 		}
 
     }
