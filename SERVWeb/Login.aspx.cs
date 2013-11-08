@@ -16,7 +16,7 @@ namespace SERVWeb
 
 		protected void cmdLoginClick (object src, EventArgs e)
 		{
-			User u = new Service().Login(txtEmail.Text, txtPassword.Text);
+			User u = new Service().Login(txtEmail.Text, SERV.Utils.Authentication.Hash(txtEmail.Text.ToLower().Trim() + txtPassword.Text));
 			if (u != null)
 			{
 				SERVGlobal.User = u;

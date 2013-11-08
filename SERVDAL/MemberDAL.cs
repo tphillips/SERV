@@ -75,7 +75,8 @@ namespace SERVDAL
 		public User Login(string username, string passwordHash)
 		{
 			SERVDataContract.DbLinq.User ret = (from u in db.User where u.Member.EmailAddress == username select u).FirstOrDefault();
-			if (String.IsNullOrEmpty(ret.PasswordHash))
+			if (ret == null) { return null; }
+			if (!String.IsNullOrEmpty(ret.PasswordHash))
 			{
 				if (passwordHash == ret.PasswordHash)
 				{
@@ -84,7 +85,8 @@ namespace SERVDAL
 			}
 			else
 			{
-				if (passwordHash.Remove(' ') == ret.Member.MobileNumber.Remove(' '))
+				string comp = SERV.Utils.Authentication.Hash(ret.Member.EmailAddress.ToLower().Trim() + ret.Member.MobileNumber);
+				if (passwordHash == comp)
 				{
 					return ret;
 				}

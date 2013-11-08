@@ -33,5 +33,19 @@ namespace SERV.Utils
 				
 			}
 		}
+
+		public static string Hash(string toHash)
+		{
+			System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
+			byte[] bytesIn = System.Text.ASCIIEncoding.ASCII.GetBytes(toHash);
+			byte[] hash = md5.ComputeHash(bytesIn);
+			string ret = "";
+			foreach (byte b in hash)
+			{
+				ret += Convert.ToString(b, 16).PadLeft(2, '0');
+			}
+			return ret;
+		}
+
 	}
 }

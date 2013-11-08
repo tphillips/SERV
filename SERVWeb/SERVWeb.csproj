@@ -70,6 +70,10 @@
       <Project>{F3A5BDEA-6D9B-4EF2-B0FC-4E2758ECB5E2}</Project>
       <Name>DBHelperProvider</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SERV.Utils\SERV.Utils.csproj">
+      <Project>{11642B2B-034E-4F46-97B1-D005CA169BCE}</Project>
+      <Name>SERV.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Service\Service.asmx" />

@@ -16,10 +16,11 @@ namespace SERVWeb
 
 		protected void cmdChangeClick (object src, EventArgs e)
 		{
-			User u = new Service().Login(txtEmail.Text, txtOldPassword.Text);
+			User u = new Service().Login(txtEmail.Text.ToLower().Trim(), SERV.Utils.Authentication.Hash(txtEmail.Text.ToLower().Trim() + txtOldPassword.Text));
 			if (u != null && txtNewPassword.Text == txtNewPassword2.Text)
 			{
-				SERVBLLFactory.Factory.MemberBLL().SetPassword(u.Member.EmailAddress, txtNewPassword.Text);
+				SERVBLLFactory.Factory.MemberBLL().SetPassword(u.Member.EmailAddress, SERV.Utils.Authentication.Hash(u.Member.EmailAddress.ToLower().Trim() + txtNewPassword.Text));
+				Response.Redirect("Default.aspx?success=yes");
 			}
 		}
 

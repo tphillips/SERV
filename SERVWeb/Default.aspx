@@ -9,6 +9,7 @@
 	
 	<script>
 		$("#loading").hide();
+		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); }
 	</script>
 	
 </asp:Content>
