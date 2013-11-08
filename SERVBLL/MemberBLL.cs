@@ -28,20 +28,38 @@ namespace SERVBLL
 		{
 			SERVDataContract.DbLinq.Member m = new SERVDataContract.DbLinq.Member();
 			PropertyMapper.MapProperties(member, m);
+			m.User.Add(new SERVDataContract.DbLinq.User(){ PasswordHash = "", UserLevelID =1});
+			m.MemberStatusID = 1;
 			return SERVDALFactory.Factory.MemberDAL().Create(m);
 		}	
 	
 		public int Save(Member member, User user)
 		{
-			SERVIDAL.IMemberDAL dal = SERVDALFactory.Factory.MemberDAL();
-			SERVDataContract.DbLinq.Member m = dal.Get(member.MemberID);
-			UpdatePolicyAttribute.MapPropertiesWithUpdatePolicy(member, m, user, user.MemberID == member.MemberID);
-			return dal.Update(m);
+			using (SERVIDAL.IMemberDAL dal = SERVDALFactory.Factory.MemberDAL())
+			{
+				SERVDataContract.DbLinq.Member m = dal.Get(member.MemberID);
+				UpdatePolicyAttribute.MapPropertiesWithUpdatePolicy(member, m, user, user.MemberID == member.MemberID);
+				return dal.Update(m);
+			}
 		}
 
 		public List<Member> List(string search)
 		{
-			throw new NotImplementedException();
+			List<Member> ret = new List<Member>();
+			List<SERVDataContract.DbLinq.Member> members = SERVDALFactory.Factory.MemberDAL().List(search);
+			foreach(SERVDataContract.DbLinq.Member m in members)
+			{
+				ret.Add(new Member() 
+				{ 
+					MemberID = m.MemberID, 
+					FirstName = m.FirstName, 
+					LastName = m.LastName,
+					EmailAddress = m.EmailAddress,
+					MobileNumber = m.MobileNumber,
+					Town = m.Town
+				});
+			}
+			return ret;
 		}
 
 		List<Tag> ListMemberTags(int memberId)
@@ -62,7 +80,16 @@ namespace SERVBLL
 		public User Login(string username, string passwordHash)
 		{
 			SERVDataContract.DbLinq.User u = SERVDALFactory.Factory.MemberDAL().Login(username, passwordHash);
+			if (u == null)
+			{
+				return null;
+			}
 			return new User(u);
+		}
+
+		public void SetPassword(string username, string passwordHash)
+		{
+			SERVDALFactory.Factory.MemberDAL().SetPasswordHash(username, passwordHash);
 		}
 		
 	}

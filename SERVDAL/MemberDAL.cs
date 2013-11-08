@@ -11,10 +11,15 @@ using System.Linq;
 namespace SERVDAL
 {
 
-	public class MemberDAL : IMemberDAL
+	public class MemberDAL : IMemberDAL, IDisposable
 	{
 
-		static SERVDataContract.DbLinq.SERVDB db = new SERVDataContract.DbLinq.SERVDB(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
+		static SERVDataContract.DbLinq.SERVDB db;
+
+		public MemberDAL()
+		{
+			db = new SERVDataContract.DbLinq.SERVDB(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
+		}
 
 		public Member Get(int memberId)
 		{
@@ -24,9 +29,9 @@ namespace SERVDAL
 		
 		public int Create(Member member)
 		{
-			//db.Member.InsertOnSubmit(member);
-			//db.SubmitChanges();
-			throw new NotImplementedException();
+			db.Member.InsertOnSubmit(member);
+			db.SubmitChanges();
+			return member.MemberID;
 		}
 
 		public int Save(Member newclass)
@@ -42,7 +47,7 @@ namespace SERVDAL
 
 		public List<Member> List(string search)
 		{
-			throw new NotImplementedException();
+			return (from m in db.Member where m.FirstName.Contains(search) || m.LastName.Contains(search) orderby m.LastName select m).ToList();
 		}
 
 		public List<Tag> ListMemberTags(int memberId)
@@ -52,21 +57,51 @@ namespace SERVDAL
 		
 		public void AddMemberTag(int memberId, string tagName)
 		{
-			int tagId = Convert.ToInt32(DBHelperFactory.DBHelper().ExecuteScalar("select TagID from Tag where Tag = " + SERV.Utils.String.DBSafeString(tagName)));
-			string sql = string.Format("insert into Member_Tag values ({0}, {1})", memberId, tagId);
-			DBHelperFactory.DBHelper().ExecuteNonQuery(sql);
+			string sql = string.Format("insert into Member_Tag values ({0}, {1})", memberId, GetTagId(tagName));
+			db.ExecuteCommand(sql);
 		}
 		
 		public void RemoveMemberTag(int memberId, string tagName)
 		{
-			string sql = string.Format("delete from Member_Tag where MemberID = {0} and TagID in (Select TagID from Tag where Tag = {1})", memberId, SERV.Utils.String.DBSafeString(tagName));
-			DBHelperFactory.DBHelper().ExecuteNonQuery(sql);
+			string sql = string.Format("delete from Member_Tag where MemberID = {0} and TagID = {1}", memberId, GetTagId(tagName));
+			db.ExecuteCommand(sql);
+		}
+
+		private int GetTagId(string tagName)
+		{
+			return Convert.ToInt32(DBHelperFactory.DBHelper().ExecuteScalar("select TagID from Tag where Tag = " + SERV.Utils.String.DBSafeString(tagName)));
 		}
 
 		public User Login(string username, string passwordHash)
 		{
-			SERVDataContract.DbLinq.User ret = (from u in db.User where u.Member.EmailAddress == username && u.Member.MobileNumber == passwordHash select u).FirstOrDefault();
-			return ret;
+			SERVDataContract.DbLinq.User ret = (from u in db.User where u.Member.EmailAddress == username select u).FirstOrDefault();
+			if (String.IsNullOrEmpty(ret.PasswordHash))
+			{
+				if (passwordHash == ret.PasswordHash)
+				{
+					return ret;
+				}
+			}
+			else
+			{
+				if (passwordHash.Remove(' ') == ret.Member.MobileNumber.Remove(' '))
+				{
+					return ret;
+				}
+			}
+			return null;
+		}
+
+		public void SetPasswordHash(string username, string passwordHash)
+		{
+			SERVDataContract.DbLinq.User ret = (from u in db.User where u.Member.EmailAddress == username select u).FirstOrDefault();
+			ret.PasswordHash = passwordHash;
+			db.SubmitChanges();
+		}
+		
+		public void Dispose()
+		{
+			db.Dispose();
 		}
 
 	}

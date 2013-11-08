@@ -41,7 +41,7 @@ namespace SERVDataContract
 						}
 						if (policy != null && !policy.ReadOnly)
 						{
-							if (user.UserLevel >= (int)policy.MinRequiredLevel || (isOwner && policy.AllowOwner))
+							if (user.UserLevelID >= (int)policy.MinRequiredLevel || (isOwner && policy.AllowOwner))
 							{
 								try
 								{ 

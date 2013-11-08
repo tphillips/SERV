@@ -11,10 +11,15 @@
 namespace SERVWeb {
 	
 	
-	public partial class Default {
+	public partial class ChangePassword {
+		
+		protected System.Web.UI.HtmlControls.HtmlGenericControl titlePlaceholderContent;
+		protected System.Web.UI.WebControls.TextBox txtEmail;
+		protected System.Web.UI.WebControls.TextBox txtOldPassword;
+		protected System.Web.UI.WebControls.TextBox txtNewPassword;
+		protected System.Web.UI.WebControls.TextBox txtNewPassword2;
 
-
-
+		
 		public new SERVWeb.Master Master {
 			get {
 				return ((SERVWeb.Master)(base.Master));

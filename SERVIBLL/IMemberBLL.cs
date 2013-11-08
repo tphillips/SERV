@@ -14,5 +14,6 @@ namespace SERVIBLL
 		User Login(string username, string passwordHash);
 		void AddMemberTag(int memberId, string tagName);
 		void RemoveMemberTag(int memberId, string tagName);
+		void SetPassword(string username, string passwordHash);
 	}
 }

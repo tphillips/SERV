@@ -3,25 +3,13 @@
 
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Member</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
+	
 	<script language="JavaScript" src="js/JS.js"></script>
 	
-	<div id="loading">
-		<h2>Member</h2>
-		<p>Please wait . . .</p>
-	</div>
-	
-	<div id="error" style="display:none">
-		<h2>Ooops!</h2>	
-		<p>There was an error :(</p>	
-	</div>
-	
-	<div id="success" style="display:none" class="hero-unit">
-		<h2>Success!</h2>	
-		<p ><span id="successMessage">Super . . .</span></p>	
-	</div>
-	
 	<div id="entry" style="display:none">
-		<h3><span id="lblTitle"></span></h3>
+		<h3><span id="lblTitle"></span> <span id="memNav" style="display:none"><a class="btn" href="ViewMember.aspx?memberId=<%=this.MemberId-1%>"><</a> <a class="btn" href="ViewMember.aspx?memberId=<%=this.MemberId+1%>">></a></span></h3>
+		<button type=button class="btn btn-primary btn-lg" onclick="SaveMember()">Save</button>
+		<hr/>
 		<fieldset>
 			<div class="row">
 			
@@ -41,7 +29,17 @@
 					
 					<label>Home Phone:</label>
 					<input type="text" id="txtHomePhone" />
-										
+					
+					<label>Birth Year:</label>
+					<input type="text" id="txtBirthYear" />
+					
+					<label>Occupation:</label>
+					<input type="text" id="txtOccupation" />
+					
+				</div>
+				
+				<div class="span3">
+				
 					<label>Address:</label>
 					<input type="text" id="txtAddress1" /><br/>
 					<input type="text" id="txtAddress2" /><br/>
@@ -56,16 +54,6 @@
 					<label>Post Code:</label>
 					<input type="text" id="txtPostCode" />
 					
-				</div>
-				
-				<div class="span3">
-				
-					<label>Occupation:</label>
-					<input type="text" id="txtOccupation" />
-					
-					<label>Birth Year:</label>
-					<input type="text" id="txtBirthYear" />
-					
 					<label>Next Of Kin:</label>
 					<input type="text" id="txtNOK" />
 					
@@ -74,72 +62,131 @@
 					
 					<label>Next Of Kin Phone Number:</label>
 					<input type="text" id="txtNOKPhone" />
+					
+				</div>
+				
+				<div class="span3">
+					
+					<label>Tags / Capabilities (<strong>preferences</strong>):</label>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="chkRider" onchange="onTagChecked('chkRider', 'Rider')" /> Rider - You own a bike and will happily ride for SERV
+						</label>
+						<label>
+							<input type="checkbox" id="chkDriver" onchange="onTagChecked('chkDriver', 'Driver')" /> Driver - You own a car and will happily drive for SERV
+						</label>
+						<label>
+							<input type="checkbox" id="chk4x4" onchange="onTagChecked('chk4x4', '4x4')" /> 4x4 - You have access to a 4x4 for use in bad weather
+						</label>
+						<label>
+							<input type="checkbox" id="chkEmergencyList" onchange="onTagChecked('chkEmergencyList', 'EmergencyList')" /> Emergency Contact List - You are happy to be contacted (by phone or SMS) when SERV are short of riders / drivers
+						</label>
+						<label>
+							<input type="checkbox" id="chkFundraiser" onchange="onTagChecked('chkFundraiser', 'Fundraiser')" /> Fundraiser - You are happy to be contacted (by phone or SMS) when SERV are arranging a fundraising event
+						</label>
+					</div>
 				
 				</div>
 				
 				<div class="span3">
-				<label>Tags / Capabilities (<strong>preferences</strong>):</label>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="chkRider" /> Rider - You own a bike and will happily ride for SERV
-					</label>
-					<label>
-						<input type="checkbox" id="chkDriver" /> Driver - You own a car and will happily drive for SERV
-					</label>
-					<label>
-						<input type="checkbox" id="chk4x4" /> 4x4 - You have access to a 4x4 for use in bad weather
-					</label>
-					<label>
-						<input type="checkbox" id="chkEmergencyList" /> Emergency Contact List - You are happy to be contacted (by phone or SMS) when SERV are short of riders / drivers
-					</label>
-					<label>
-						<input type="checkbox" id="chkFundraiser" /> Fundraiser - You are happy to be contacted (by phone or SMS) when SERV are arranging a fundraising event
-					</label>
-				</div>
-				<p><br/>Admin editable only:</p>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="chkBlood" /> Blood volunteer
-					</label>
+										
+					<label>Admin editable only:</label>
 					
-					<label>
-						<input type="checkbox" id="chkAA" /> Air Ambulance Volunteer
-					</label>
+					<label>Join Date:</label>
+					<input type="text" id="txtJoinDate" />
 					
-					<label>
-						<input type="checkbox" id="chkMilk" /> Milk Volunteer
-					</label>
+					<label>Leave Date:</label>
+					<input type="text" id="txtLeaveDate" />
 					
-					<label>
-						<input type="checkbox" id="chkWater" /> Water Volunteer
-					</label>
+					<label>Rider Assessment Date:</label>
+					<input type="text" id="txtAssessmentDate" />
 					
-					<label>
-						<input type="checkbox" id="chkController" /> Controller
-					</label>
+					<label>Ad-Qual Type:</label>
+					<input type="text" id="txtAdQualType" />
 					
-				</div>
+					<label>Ad-Qual Date:</label>
+					<input type="text" id="txtAdQualDate" />
+					
+					<label>Last GMP Date:</label>
+					<input type="text" id="txtGMPDate" />
+					
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="chkBlood" onchange="onTagChecked('chkBlood', 'Blood')" /> Blood volunteer
+						</label>
+						
+						<label>
+							<input type="checkbox" id="chkAA" onchange="onTagChecked('chkAA', 'AA')" /> Air Ambulance Volunteer
+						</label>
+						
+						<label>
+							<input type="checkbox" id="chkMilk" onchange="onTagChecked('chkMilk', 'Milk')" /> Milk Volunteer
+						</label>
+						
+						<label>
+							<input type="checkbox" id="chkWater" onchange="onTagChecked('chkWater', 'Water')" /> Water Volunteer
+						</label>
+						
+						<label>
+							<input type="checkbox" id="chkController" onchange="onTagChecked('chkController', 'Controller')"  /> Controller
+						</label>
+						
+					</div>
+					
+					<label>Notes:</label>
+					<textarea id="txtNotes" rows="2"></textarea>
+					
 				</div>
 				
 			</div>
 		</fieldset>
 		<br/>
-		<input type=button class="btn" onclick="SaveMember()" value="Save" />
-		
+		<hr/>
+		<button type=button class="btn btn-primary btn-lg" onclick="SaveMember()">Save</button>
+	
 	</div>
-	<br/>
-	<br/>
 	
 	<script>
 	
 	$(function() 
 	{
+		if (<%=this.UserLevel%> < 4)
+		{
+			$("#chkBlood").attr('disabled', true);
+			$("#chkAA").attr('disabled', true);
+			$("#chkWater").attr('disabled', true);
+			$("#chkMilk").attr('disabled', true);
+			$("#chkController").attr('disabled', true);
+			$("#txtJoinDate").attr('disabled', true);
+			$("#txtLeaveDate").attr('disabled', true);
+			$("#txtAssessmentDate").attr('disabled', true);
+			$("#txtAdQualType").attr('disabled', true);
+			$("#txtAdQualDate").attr('disabled', true);
+			$("#txtGMPDate").attr('disabled', true);
+			$("#txtNotes").attr('disabled', true);
+		}
+		else
+		{
+			$("#memNav").show();
+		}
 		DisplayMember(<%=this.MemberId%>);
 	});
 	
 	function SaveMember()
 	{
 		SaveBasicMember(<%=this.MemberId%>);
+	}
+	
+	function onTagChecked(src, tag)
+	{
+		if ($("#" + src).prop('checked') == true)
+		{
+			addMemberTag(<%=this.MemberId%>, tag);
+		}
+		else
+		{
+			removeMemberTag(<%=this.MemberId%>, tag);
+		}
 	}
 		
 	</script>

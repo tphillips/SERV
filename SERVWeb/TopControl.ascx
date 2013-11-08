@@ -8,6 +8,7 @@
 			</asp:Literal>
 			<asp:Literal runat="server" id="pnlLoggedIn">
 			<li><a href="ViewMember.aspx?self=yes">Your Profile</a></li>
+			<li><a href="Members.aspx">Members</a></li>
 			<li><a href="Login.aspx?Logout=yes">Logout</a></li>
 			</asp:Literal>
 		</ul>

@@ -11,10 +11,10 @@
 namespace SERVWeb {
 	
 	
-	public partial class Default {
-
-
-
+	public partial class Members {
+		
+		protected System.Web.UI.HtmlControls.HtmlGenericControl titlePlaceholderContent;
+		
 		public new SERVWeb.Master Master {
 			get {
 				return ((SERVWeb.Master)(base.Master));

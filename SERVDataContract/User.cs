@@ -34,7 +34,7 @@ namespace SERVDataContract
 		public int UserID { get; set; }
 		public int MemberID { get; set; }
 		public Member Member { get; set; }
-		public int UserLevel { get; set; }
+		public int UserLevelID { get; set; }
 		public DateTime? LastLoginDate { get; set; }
 
     }

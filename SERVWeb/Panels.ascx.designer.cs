@@ -11,14 +11,6 @@
 namespace SERVWeb {
 	
 	
-	public partial class Default {
-
-
-
-		public new SERVWeb.Master Master {
-			get {
-				return ((SERVWeb.Master)(base.Master));
-			}
-		}
+	public partial class Panels {
 	}
 }

@@ -17,6 +17,8 @@ namespace SERVWeb {
 		
 		protected System.Web.UI.HtmlControls.HtmlGenericControl topControl;
 		
+		protected System.Web.UI.HtmlControls.HtmlGenericControl panels;
+		
 		protected System.Web.UI.HtmlControls.HtmlForm cententForm;
 		
 		protected System.Web.UI.HtmlControls.HtmlGenericControl contentPlaceholder;

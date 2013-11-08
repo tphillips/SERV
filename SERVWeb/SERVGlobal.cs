@@ -26,6 +26,11 @@ namespace SERVWeb
 			System.Web.HttpContext.Current.Response.Redirect("Default.aspx");
 		}
 
+		public static void AssertAuthentication()
+		{
+			if (User == null) { GotoDefault(); }
+		}
+
 	}
 }
 

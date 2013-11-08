@@ -15,6 +15,7 @@ namespace SERVWeb
 		[WebMethod(EnableSession = true)]
 		public List<Member> ListMembers()
 		{
+			Authenticate();
 			return SERVBLLFactory.Factory.MemberBLL().List("");
 		}
 
@@ -22,7 +23,7 @@ namespace SERVWeb
 		public Member GetMember(int memberId)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevel <= (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
+			if (CurrentUser().UserLevelID <= (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
@@ -36,11 +37,25 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.MemberBLL().Save(member, CurrentUser()) == member.MemberID;
 		}
 
+		public int CreateBlankMember(User user)
+		{
+			if (user == null || user.UserLevelID < (int)UserLevel.Admin)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			Member m = new Member();
+			m.FirstName = "-";
+			m.LastName = "-";
+			m.EmailAddress = "@";
+			m.MobileNumber = "07";
+			return SERVBLLFactory.Factory.MemberBLL().Create(m);
+		}
+
 		[WebMethod(EnableSession = true)]
 		public void TagMember(int memberId, string tagName)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevel <= (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
+			if (CurrentUser().UserLevelID <= (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
@@ -51,7 +66,7 @@ namespace SERVWeb
 		public void UnTagMember(int memberId, string tagName)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevel <= (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
+			if (CurrentUser().UserLevelID <= (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
@@ -62,6 +77,7 @@ namespace SERVWeb
 		[WebMethod(EnableSession = true)]
 		public List<Member> SearchMembers(string search)
 		{
+			Authenticate();
 			return SERVBLLFactory.Factory.MemberBLL().List(search);
 		}
 
@@ -72,7 +88,7 @@ namespace SERVWeb
 
 		private User CurrentUser()
 		{
-			if (Session["User"] == null) { return null; }
+			if (System.Web.HttpContext.Current.Session["User"] == null) { return null; }
 			return (User)Session["User"];
 		}
 

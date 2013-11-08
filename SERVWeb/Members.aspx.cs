@@ -1,12 +1,11 @@
-using System;
-using System.Web;
-using System.Web.UI;
-using SERVDataContract.DbLinq;
 
 namespace SERVWeb
 {
+	using System;
+	using System.Web;
+	using System.Web.UI;
 
-	public partial class ViewMember : System.Web.UI.Page
+	public partial class Members : System.Web.UI.Page
 	{
 
 		protected int MemberId
@@ -33,14 +32,7 @@ namespace SERVWeb
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication();
-			if (Request["new"] != null)
-			{
-				int blank = SERVGlobal.Service.CreateBlankMember(SERVGlobal.User);
-				Response.Redirect("ViewMember.aspx?memberId=" + blank);
-			}
 		}
-
 	}
-
 }
 

@@ -37,6 +37,19 @@ namespace SERVDataContract
 		public DateTime JoinDate { get; set; }
 
 		[DataMember]
+		public string JoinDateString { 
+			get { return JoinDate.ToString("dd MMM yyyy"); } 
+			set 
+			{
+				DateTime val; 
+				if (DateTime.TryParse(value, out val))
+				{
+					JoinDate = val;
+				}
+			}
+		}
+
+		[DataMember]
 		[UpdatePolicy]
 		public string EmailAddress { get; set; }
 
@@ -53,35 +66,54 @@ namespace SERVDataContract
 		public string Occupation { get; set; }
 
 		[DataMember]
-		[UpdatePolicy(AllowOwner = false)]
-		public int MemberTypeID { get; set; }
-
-		[DataMember]
-		[UpdatePolicy(AllowOwner = false)]
+		//[UpdatePolicy(AllowOwner = false)]
 		public int MemberStatusID { get; set; }
 
 		[DataMember]
-		[UpdatePolicy]
+		//[UpdatePolicy]
 		public int? AvailabilityID { get; set; }
 
 		[DataMember]
 		[UpdatePolicy(AllowOwner = false, MinRequiredLevel = UserLevel.Committee)]
 		public DateTime? RiderAssesmentPassDate { get; set; }
+		[DataMember]
+		public string RiderAssesmentPassDateString { 
+			get { return RiderAssesmentPassDate != null ? ((DateTime)RiderAssesmentPassDate).ToString("dd MMM yyyy") : "-"; } 
+			set 
+			{
+				DateTime val; 
+				if (DateTime.TryParse(value, out val))
+				{
+					RiderAssesmentPassDate = val;
+				}
+			}
+		}
 
 		[DataMember]
 		[UpdatePolicy(AllowOwner = false, MinRequiredLevel = UserLevel.Committee)]
 		public DateTime? AdQualPassDate { get; set; }
+		public string AdQualPassDateString { 
+			get { return AdQualPassDate != null ? ((DateTime)AdQualPassDate).ToString("dd MMM yyyy") : "-"; } 
+			set 
+			{
+				DateTime val; 
+				if (DateTime.TryParse(value, out val))
+				{
+					AdQualPassDate = val;
+				}
+			}
+		}
 
 		[DataMember]
 		[UpdatePolicy(AllowOwner = false, MinRequiredLevel = UserLevel.Committee)]
 		public string AdQualType { get; set; }
 
 		[DataMember]
-		[UpdatePolicy]
+		//[UpdatePolicy]
 		public string BikeType { get; set; }
 
 		[DataMember]
-		[UpdatePolicy]
+		//[UpdatePolicy]
 		public string CarType { get; set; }
 
 		[DataMember]
@@ -129,16 +161,38 @@ namespace SERVDataContract
 		public string NextOfKinPhone { get; set; }
 
 		[DataMember]
-		[UpdatePolicy(AllowOwner = false, MinRequiredLevel = UserLevel.Committee)]
+		//[UpdatePolicy(AllowOwner = false, MinRequiredLevel = UserLevel.Committee)]
 		public bool LegalConfirmation { get; set; }
 
 		[DataMember]
 		[UpdatePolicy(AllowOwner = false, MinRequiredLevel = UserLevel.Committee)]
 		public DateTime? LeaveDate { get; set; }
+		public string LeaveDateString { 
+			get { return LeaveDate != null ? ((DateTime)LeaveDate).ToString("dd MMM yyyy") : "-"; } 
+			set 
+			{
+				DateTime val; 
+				if (DateTime.TryParse(value, out val))
+				{
+					LeaveDate = val;
+				}
+			}
+		}
 
 		[DataMember]
 		[UpdatePolicy(AllowOwner = false, MinRequiredLevel = UserLevel.Committee)]
-		public DateTime? LastGDPGMPDate { get; set; }
+		public DateTime? LastGdpgmpdAte { get; set; }
+		public string LastGDPGMPDateString { 
+			get { return LastGdpgmpdAte != null ? ((DateTime)LastGdpgmpdAte).ToString("dd MMM yyyy") : "-"; } 
+			set 
+			{
+				DateTime val; 
+				if (DateTime.TryParse(value, out val))
+				{
+					LastGdpgmpdAte = val;
+				}
+			}
+		}
 
 		[DataMember]
 		public List<Tag> Tags { get; set; }

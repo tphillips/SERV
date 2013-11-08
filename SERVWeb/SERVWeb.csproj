@@ -46,7 +46,7 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties VerifyCodeBehindFields="True" VerifyCodeBehindEvents="True">
-        <XspParameters Port="8081" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
@@ -85,6 +85,9 @@
     <Content Include="ViewMember.aspx" />
     <Content Include="web.config" />
     <Content Include="Login.aspx" />
+    <Content Include="Panels.ascx" />
+    <Content Include="Members.aspx" />
+    <Content Include="ChangePassword.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -121,5 +124,23 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="SERVGlobal.cs" />
+    <Compile Include="Panels.ascx.cs">
+      <DependentUpon>Panels.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Panels.ascx.designer.cs">
+      <DependentUpon>Panels.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Members.aspx.cs">
+      <DependentUpon>Members.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Members.aspx.designer.cs">
+      <DependentUpon>Members.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

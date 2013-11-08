@@ -1073,8 +1073,6 @@ namespace SERVDataContract.DbLinq
 		
 		private int _memberStatusID;
 		
-		private int _memberTypeID;
-		
 		private string _mobileNumber;
 		
 		private string _nextOfKin;
@@ -1106,8 +1104,6 @@ namespace SERVDataContract.DbLinq
 		private EntityRef<Availability> _availability = new EntityRef<Availability>();
 		
 		private EntityRef<MemberStatus> _memberStatus = new EntityRef<MemberStatus>();
-		
-		private EntityRef<MemberType> _memberType = new EntityRef<MemberType>();
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
@@ -1191,10 +1187,6 @@ namespace SERVDataContract.DbLinq
 		partial void OnMemberStatusIDChanged();
 		
 		partial void OnMemberStatusIDChanging(int value);
-		
-		partial void OnMemberTypeIDChanged();
-		
-		partial void OnMemberTypeIDChanging(int value);
 		
 		partial void OnMobileNumberChanged();
 		
@@ -1672,31 +1664,6 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_memberTypeID", Name="MemberTypeID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int MemberTypeID
-		{
-			get
-			{
-				return this._memberTypeID;
-			}
-			set
-			{
-				if ((_memberTypeID != value))
-				{
-					if (_memberType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMemberTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._memberTypeID = value;
-					this.SendPropertyChanged("MemberTypeID");
-					this.OnMemberTypeIDChanged();
-				}
-			}
-		}
-		
 		[Column(Storage="_mobileNumber", Name="MobileNumber", DbType="varchar(12)", AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public string MobileNumber
@@ -1942,8 +1909,7 @@ namespace SERVDataContract.DbLinq
 				this._message = value;
 			}
 		}
-
-
+		
 		[Association(Storage="_user", OtherKey="MemberID", ThisKey="MemberID", Name="fk_User_Member")]
 		[DebuggerNonUserCode()]
 		public EntitySet<User> User
@@ -2019,38 +1985,6 @@ namespace SERVDataContract.DbLinq
 					else
 					{
 						_memberStatusID = default(int);
-					}
-				}
-			}
-		}
-		
-		[Association(Storage="_memberType", OtherKey="MemberTypeID", ThisKey="MemberTypeID", Name="fk_Member_MemberType1", IsForeignKey=true)]
-		[DebuggerNonUserCode()]
-		public MemberType MemberType
-		{
-			get
-			{
-				return this._memberType.Entity;
-			}
-			set
-			{
-				if (((this._memberType.Entity == value) == false))
-				{
-					if ((this._memberType.Entity != null))
-					{
-						MemberType previousMemberType = this._memberType.Entity;
-						this._memberType.Entity = null;
-						previousMemberType.Member.Remove(this);
-					}
-					this._memberType.Entity = value;
-					if ((value != null))
-					{
-						value.Member.Add(this);
-						_memberTypeID = value.MemberTypeID;
-					}
-					else
-					{
-						_memberTypeID = default(int);
 					}
 				}
 			}
@@ -2619,8 +2553,6 @@ namespace SERVDataContract.DbLinq
 		
 		private int _memberTypeID;
 		
-		private EntitySet<Member> _member;
-		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
 		
@@ -2636,7 +2568,6 @@ namespace SERVDataContract.DbLinq
 		
 		public MemberType()
 		{
-			_member = new EntitySet<Member>(new Action<Member>(this.Member_Attach), new Action<Member>(this.Member_Detach));
 			this.OnCreated();
 		}
 		
@@ -2682,22 +2613,6 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		#region Children
-		[Association(Storage="_member", OtherKey="MemberTypeID", ThisKey="MemberTypeID", Name="fk_Member_MemberType1")]
-		[DebuggerNonUserCode()]
-		public EntitySet<Member> Member
-		{
-			get
-			{
-				return this._member;
-			}
-			set
-			{
-				this._member = value;
-			}
-		}
-		#endregion
-		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -2719,20 +2634,6 @@ namespace SERVDataContract.DbLinq
 				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
 			}
 		}
-		
-		#region Attachment handlers
-		private void Member_Attach(Member entity)
-		{
-			this.SendPropertyChanging();
-			entity.MemberType = this;
-		}
-		
-		private void Member_Detach(Member entity)
-		{
-			this.SendPropertyChanging();
-			entity.MemberType = null;
-		}
-		#endregion
 	}
 	
 	[Table(Name="SERV.Message")]

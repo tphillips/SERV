@@ -1,5 +1,6 @@
 <%@ Master Language="C#" Inherits="SERVWeb.Master" %>
 <%@ Register TagPrefix="SERV" TagName="TopControl" Src="TopControl.ascx" %>
+<%@ Register TagPrefix="SERV" TagName="Panels" Src="Panels.ascx" %>
 
 <!DOCTYPE html>
 <html>
@@ -17,9 +18,11 @@
         <script src="/js/bootstrap.min.js"></script>
 			
 		<SERV:TopControl runat="server" id="topControl" />
-        <br/><br/>
+        
         <div class="container">			
             
+			<SERV:Panels runat="server" id="panels" />
+		
             <div class="row">
                 <form runat="server" id="cententForm">
                     <div class="span12">

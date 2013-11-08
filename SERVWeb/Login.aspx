@@ -13,6 +13,10 @@
 <asp:TextBox runat="server" id="txtPassword" TextMode="password"/>
 
 <br/><br/>
-<asp:Button runat="server" id="cmdLogin" Text="Login" class="btn" onclick="cmdLoginClick"/>
+<asp:Button runat="server" id="cmdLogin" Text="Login" class="btn btn-primary btn-lg" onclick="cmdLoginClick"/>
+
+<script>
+	$("#loading").hide();
+</script>
 
 </asp:Content>

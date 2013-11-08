@@ -6,4 +6,9 @@
 		<h2>Do Something</h2>	
 		<p >Nothing interesting on this page . . .</span></p>	
 	</div>
+	
+	<script>
+		$("#loading").hide();
+	</script>
+	
 </asp:Content>

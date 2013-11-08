@@ -5,7 +5,7 @@ using SERVDataContract.DbLinq;
 
 namespace SERVIDAL
 {
-	public interface IMemberDAL
+	public interface IMemberDAL : IDisposable
 	{
 
 		Member Get(int memberId);
@@ -17,5 +17,6 @@ namespace SERVIDAL
 		User Login(string username, string passwordHash);
 		void AddMemberTag(int memberId, string tagName);
 		void RemoveMemberTag(int memberId, string tagName);
+		void SetPasswordHash(string username, string passwordHash);
 	}
 }
