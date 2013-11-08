@@ -118,3 +118,7 @@ Tests/test-results/Tests.csproj-Debug-2013-10-22.xml
 *.test-cache
 
 *.userprefs
+
+SERVWeb.zip
+
+SERV.userprefs
