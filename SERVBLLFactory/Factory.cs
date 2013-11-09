@@ -12,5 +12,9 @@ namespace SERVBLLFactory
 			return new SERVBLL.MemberBLL();
 		}
 
+		public static IRunLogBLL RunLogBLL()
+		{
+			return new SERVBLL.RunLogBLL();
+		}
 	}
 }

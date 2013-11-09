@@ -40,6 +40,8 @@
     <Reference Include="MySql.Data">
       <HintPath>..\..\TalkingEye\3party\mysql-connector-net-6\v2\mysql.data.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

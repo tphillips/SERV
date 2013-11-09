@@ -13,5 +13,9 @@ namespace SERVDALFactory
 			return new MemberDAL();
         }
 		
+		public static IRunLogDAL RunLogDAL()
+		{
+			return new RunLogDAL();
+		}
 	}
 }

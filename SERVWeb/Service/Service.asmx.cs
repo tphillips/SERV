@@ -12,6 +12,20 @@ namespace SERVWeb
     public class Service : System.Web.Services.WebService
     {
 
+		[WebMethod]
+		public bool ImportRawRunLog()
+		{
+			System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(_ImportRawRunLog));
+			t.IsBackground = true;
+			t.Start();
+			return true;
+		}
+
+		private void _ImportRawRunLog()
+		{
+			SERVBLLFactory.Factory.RunLogBLL().ImportRawRunLog();;
+		}
+
 		[WebMethod(EnableSession = true)]
 		public List<Member> ListMembers()
 		{

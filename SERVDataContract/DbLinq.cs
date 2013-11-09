@@ -1,3 +1,13 @@
+// 
+//  ____  _     __  __      _        _ 
+// |  _ \| |__ |  \/  | ___| |_ __ _| |
+// | | | | '_ \| |\/| |/ _ \ __/ _` | |
+// | |_| | |_) | |  | |  __/ || (_| | |
+// |____/|_.__/|_|  |_|\___|\__\__,_|_|
+//
+// Auto-generated from SERV on 2013-11-09 16:27:34Z.
+// Please visit http://code.google.com/p/dblinq2007/ for more information.
+//
 namespace SERVDataContract.DbLinq
 {
 	using System;
@@ -133,6 +143,14 @@ namespace SERVDataContract.DbLinq
 			get
 			{
 				return this.GetTable <MessageType>();
+			}
+		}
+		
+		public Table<RawRunLog> RawRunLog
+		{
+			get
+			{
+				return this.GetTable <RawRunLog>();
 			}
 		}
 		
@@ -3039,6 +3057,423 @@ namespace SERVDataContract.DbLinq
 			entity.MessageType = null;
 		}
 		#endregion
+	}
+	
+	[Table(Name="SERV.RawRunLog")]
+	public partial class RawRunLog : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private string _callDate;
+		
+		private string _callTime;
+		
+		private string _collectFrom;
+		
+		private string _collectTime;
+		
+		private string _collectTime2;
+		
+		private string _consignment;
+		
+		private string _controller;
+		
+		private string _deliveryTime;
+		
+		private string _destination;
+		
+		private string _notes;
+		
+		private int _rawRunLogID;
+		
+		private string _rider;
+		
+		private string _urgency;
+		
+		private string _vehicle;
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnCallDateChanged();
+		
+		partial void OnCallDateChanging(string value);
+		
+		partial void OnCallTimeChanged();
+		
+		partial void OnCallTimeChanging(string value);
+		
+		partial void OnCollectFromChanged();
+		
+		partial void OnCollectFromChanging(string value);
+		
+		partial void OnCollectTimeChanged();
+		
+		partial void OnCollectTimeChanging(string value);
+		
+		partial void OnCollectTime2Changed();
+		
+		partial void OnCollectTime2Changing(string value);
+		
+		partial void OnConsignmentChanged();
+		
+		partial void OnConsignmentChanging(string value);
+		
+		partial void OnControllerChanged();
+		
+		partial void OnControllerChanging(string value);
+		
+		partial void OnDeliveryTimeChanged();
+		
+		partial void OnDeliveryTimeChanging(string value);
+		
+		partial void OnDestinationChanged();
+		
+		partial void OnDestinationChanging(string value);
+		
+		partial void OnNotesChanged();
+		
+		partial void OnNotesChanging(string value);
+		
+		partial void OnRawRunLogIDChanged();
+		
+		partial void OnRawRunLogIDChanging(int value);
+		
+		partial void OnRiderChanged();
+		
+		partial void OnRiderChanging(string value);
+		
+		partial void OnUrgencyChanged();
+		
+		partial void OnUrgencyChanging(string value);
+		
+		partial void OnVehicleChanged();
+		
+		partial void OnVehicleChanging(string value);
+		#endregion
+		
+		
+		public RawRunLog()
+		{
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_callDate", Name="CallDate", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string CallDate
+		{
+			get
+			{
+				return this._callDate;
+			}
+			set
+			{
+				if (((_callDate == value) == false))
+				{
+					this.OnCallDateChanging(value);
+					this.SendPropertyChanging();
+					this._callDate = value;
+					this.SendPropertyChanged("CallDate");
+					this.OnCallDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_callTime", Name="CallTime", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string CallTime
+		{
+			get
+			{
+				return this._callTime;
+			}
+			set
+			{
+				if (((_callTime == value) == false))
+				{
+					this.OnCallTimeChanging(value);
+					this.SendPropertyChanging();
+					this._callTime = value;
+					this.SendPropertyChanged("CallTime");
+					this.OnCallTimeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_collectFrom", Name="CollectFrom", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string CollectFrom
+		{
+			get
+			{
+				return this._collectFrom;
+			}
+			set
+			{
+				if (((_collectFrom == value) == false))
+				{
+					this.OnCollectFromChanging(value);
+					this.SendPropertyChanging();
+					this._collectFrom = value;
+					this.SendPropertyChanged("CollectFrom");
+					this.OnCollectFromChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_collectTime", Name="CollectTime", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string CollectTime
+		{
+			get
+			{
+				return this._collectTime;
+			}
+			set
+			{
+				if (((_collectTime == value) == false))
+				{
+					this.OnCollectTimeChanging(value);
+					this.SendPropertyChanging();
+					this._collectTime = value;
+					this.SendPropertyChanged("CollectTime");
+					this.OnCollectTimeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_collectTime2", Name="CollectTime2", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string CollectTime2
+		{
+			get
+			{
+				return this._collectTime2;
+			}
+			set
+			{
+				if (((_collectTime2 == value) == false))
+				{
+					this.OnCollectTime2Changing(value);
+					this.SendPropertyChanging();
+					this._collectTime2 = value;
+					this.SendPropertyChanged("CollectTime2");
+					this.OnCollectTime2Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_consignment", Name="Consignment", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Consignment
+		{
+			get
+			{
+				return this._consignment;
+			}
+			set
+			{
+				if (((_consignment == value) == false))
+				{
+					this.OnConsignmentChanging(value);
+					this.SendPropertyChanging();
+					this._consignment = value;
+					this.SendPropertyChanged("Consignment");
+					this.OnConsignmentChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_controller", Name="Controller", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Controller
+		{
+			get
+			{
+				return this._controller;
+			}
+			set
+			{
+				if (((_controller == value) == false))
+				{
+					this.OnControllerChanging(value);
+					this.SendPropertyChanging();
+					this._controller = value;
+					this.SendPropertyChanged("Controller");
+					this.OnControllerChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_deliveryTime", Name="DeliveryTime", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string DeliveryTime
+		{
+			get
+			{
+				return this._deliveryTime;
+			}
+			set
+			{
+				if (((_deliveryTime == value) == false))
+				{
+					this.OnDeliveryTimeChanging(value);
+					this.SendPropertyChanging();
+					this._deliveryTime = value;
+					this.SendPropertyChanged("DeliveryTime");
+					this.OnDeliveryTimeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_destination", Name="Destination", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Destination
+		{
+			get
+			{
+				return this._destination;
+			}
+			set
+			{
+				if (((_destination == value) == false))
+				{
+					this.OnDestinationChanging(value);
+					this.SendPropertyChanging();
+					this._destination = value;
+					this.SendPropertyChanged("Destination");
+					this.OnDestinationChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_notes", Name="Notes", DbType="varchar(2000)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Notes
+		{
+			get
+			{
+				return this._notes;
+			}
+			set
+			{
+				if (((_notes == value) == false))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_rawRunLogID", Name="RawRunLogID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int RawRunLogID
+		{
+			get
+			{
+				return this._rawRunLogID;
+			}
+			set
+			{
+				if ((_rawRunLogID != value))
+				{
+					this.OnRawRunLogIDChanging(value);
+					this.SendPropertyChanging();
+					this._rawRunLogID = value;
+					this.SendPropertyChanged("RawRunLogID");
+					this.OnRawRunLogIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_rider", Name="Rider", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Rider
+		{
+			get
+			{
+				return this._rider;
+			}
+			set
+			{
+				if (((_rider == value) == false))
+				{
+					this.OnRiderChanging(value);
+					this.SendPropertyChanging();
+					this._rider = value;
+					this.SendPropertyChanged("Rider");
+					this.OnRiderChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_urgency", Name="Urgency", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Urgency
+		{
+			get
+			{
+				return this._urgency;
+			}
+			set
+			{
+				if (((_urgency == value) == false))
+				{
+					this.OnUrgencyChanging(value);
+					this.SendPropertyChanging();
+					this._urgency = value;
+					this.SendPropertyChanged("Urgency");
+					this.OnUrgencyChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_vehicle", Name="Vehicle", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Vehicle
+		{
+			get
+			{
+				return this._vehicle;
+			}
+			set
+			{
+				if (((_vehicle == value) == false))
+				{
+					this.OnVehicleChanging(value);
+					this.SendPropertyChanging();
+					this._vehicle = value;
+					this.SendPropertyChanged("Vehicle");
+					this.OnVehicleChanged();
+				}
+			}
+		}
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
+			if ((h != null))
+			{
+				h(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(string propertyName)
+		{
+			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
+			if ((h != null))
+			{
+				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
 	}
 	
 	[Table(Name="SERV.RunLog")]
