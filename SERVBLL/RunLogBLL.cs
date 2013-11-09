@@ -16,10 +16,8 @@ namespace SERVBLL
 		{
 		}
 
-		public bool ImportRawRunLog()
+		static string CleanTextBlocks(string csv)
 		{
-			string docURI = "https://docs.google.com/spreadsheet/pub?key=0Avzf69R2XNmVdExyQkpRa3Rtb1d1cHBqM2dINDB1N0E&single=true&gid=0&output=csv";
-			string csv = new System.Net.WebClient().DownloadString(docURI);
 			bool inText = false;
 			int stop = csv.Length;
 			for (int x = 0; x < stop; x++)
@@ -31,19 +29,27 @@ namespace SERVBLL
 				if (csv.Substring(x, 1) == "," && inText)
 				{
 					csv = csv.Remove(x, 1);
-					stop --;
+					stop--;
 				}
 				if (csv.Substring(x, 1) == "\r" && inText)
 				{
 					csv = csv.Remove(x, 1);
-					stop --;
+					stop--;
 				}
 				if (csv.Substring(x, 1) == "\n" && inText)
 				{
 					csv = csv.Remove(x, 1);
-					stop --;
+					stop--;
 				}
 			}
+			return csv;
+		}
+
+		public bool ImportRawRunLog()
+		{
+			string docURI = "https://docs.google.com/spreadsheet/pub?key=0Avzf69R2XNmVdExyQkpRa3Rtb1d1cHBqM2dINDB1N0E&single=true&gid=0&output=csv";
+			string csv = new System.Net.WebClient().DownloadString(docURI);
+			csv = CleanTextBlocks(csv);
 			string[] rows = csv.Split('\n');
 			int rowNum = 0;
 			foreach (string row in rows)
@@ -74,7 +80,7 @@ namespace SERVBLL
 						} 
 						catch(Exception ex)
 						{
-							Console.WriteLine(string.Format("{0} ------ {1}", ex.Message, r));
+							Console.WriteLine(string.Format("{0} ------ {1} --------- {2}", ex.Message,row, r));
 						}
 					}
 				}
