@@ -16,6 +16,7 @@ namespace SERVWeb
 
 		protected void cmdChangeClick (object src, EventArgs e)
 		{
+			if (txtNewPassword.Text.Trim() == string.Empty) { return; }
 			User u = new Service().Login(txtEmail.Text.ToLower().Trim(), SERV.Utils.Authentication.Hash(txtEmail.Text.ToLower().Trim() + txtOldPassword.Text));
 			if (u != null && txtNewPassword.Text == txtNewPassword2.Text)
 			{
