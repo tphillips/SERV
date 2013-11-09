@@ -8,6 +8,8 @@ using SERV.Utils;
 
 namespace SERVBLL
 {
+	// Short term raw import until all controllers are using the system directly.
+	// 1st hacky draft, needs refactoring
 	public class RunLogBLL : IRunLogBLL
 	{
 		public RunLogBLL()
