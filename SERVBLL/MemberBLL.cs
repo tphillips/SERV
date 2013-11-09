@@ -79,12 +79,16 @@ namespace SERVBLL
 
 		public User Login(string username, string passwordHash)
 		{
-			SERVDataContract.DbLinq.User u = SERVDALFactory.Factory.MemberDAL().Login(username, passwordHash);
-			if (u == null)
+			using (SERVIDAL.IMemberDAL dal = SERVDALFactory.Factory.MemberDAL())
 			{
-				return null;
+				SERVDataContract.DbLinq.User u = dal.Login(username, passwordHash);
+				if (u == null)
+				{
+					return null;
+				}
+				dal.SetUserLastLoginDate(u);
+				return new User(u);
 			}
-			return new User(u);
 		}
 
 		public void SetPassword(string username, string passwordHash)

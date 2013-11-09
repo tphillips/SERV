@@ -7,7 +7,6 @@ namespace SERVIDAL
 {
 	public interface IMemberDAL : IDisposable
 	{
-
 		Member Get(int memberId);
 		int Create(Member member);
 		int Save(Member member);
@@ -18,5 +17,6 @@ namespace SERVIDAL
 		void AddMemberTag(int memberId, string tagName);
 		void RemoveMemberTag(int memberId, string tagName);
 		void SetPasswordHash(string username, string passwordHash);
+		void SetUserLastLoginDate(SERVDataContract.DbLinq.User u);
 	}
 }

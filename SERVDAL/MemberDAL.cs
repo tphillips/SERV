@@ -101,6 +101,12 @@ namespace SERVDAL
 			db.SubmitChanges();
 		}
 		
+		public void SetUserLastLoginDate(User u)
+		{
+			u.LastLoginDate = DateTime.Now;
+			db.SubmitChanges();
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();
