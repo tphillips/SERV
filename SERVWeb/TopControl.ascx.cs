@@ -18,6 +18,7 @@ namespace SERVWeb
 			{
 				pnlLoggedIn.Visible = true;
 				pnlNotLoggedIn.Visible = false;
+				litLoginName.Text = string.Format("{0} {1}", SERVGlobal.User.Member.FirstName, SERVGlobal.User.Member.LastName);
 			}
 		}
 	}

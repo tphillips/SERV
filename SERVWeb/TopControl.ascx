@@ -13,5 +13,6 @@
 			<li><a href="Login.aspx?Logout=yes">Logout</a></li>
 			</asp:Literal>
 		</ul>
+		<p class="navbar-text pull-right"><asp:Literal runat="server" id="litLoginName"/></p>
 	</div>
 </nav>

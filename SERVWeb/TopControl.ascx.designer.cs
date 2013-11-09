@@ -14,7 +14,7 @@ namespace SERVWeb {
 	public partial class TopControl {
 		
 		protected System.Web.UI.WebControls.Literal pnlNotLoggedIn;
-		
+		protected System.Web.UI.WebControls.Literal litLoginName;
 		protected System.Web.UI.WebControls.Literal pnlLoggedIn;
 	}
 }

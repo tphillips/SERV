@@ -4,7 +4,7 @@
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 	<div class="hero-unit">
 		<h2>Do Something</h2>	
-		<p >Nothing interesting on this page . . .</span></p>	
+		<p >Nothing interesting on this page yet, but there will be soon!</span></p>	
 	</div>
 	
 	<script>
