@@ -1,13 +1,3 @@
-// 
-//  ____  _     __  __      _        _ 
-// |  _ \| |__ |  \/  | ___| |_ __ _| |
-// | | | | '_ \| |\/| |/ _ \ __/ _` | |
-// | |_| | |_) | |  | |  __/ || (_| | |
-// |____/|_.__/|_|  |_|\___|\__\__,_|_|
-//
-// Auto-generated from SERV on 2013-11-09 16:27:34Z.
-// Please visit http://code.google.com/p/dblinq2007/ for more information.
-//
 namespace SERVDataContract.DbLinq
 {
 	using System;
