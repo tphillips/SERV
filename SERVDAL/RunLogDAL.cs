@@ -26,6 +26,20 @@ namespace SERVDAL
 			return true;
 		}
 
+		public void CreateRawRecords(List<RawRunLog> records)
+		{
+			foreach (RawRunLog r in records)
+			{
+				db.RawRunLog.InsertOnSubmit(r);
+			}
+			db.SubmitChanges();
+		}
+
+		public void TruncateRawRunLog()
+		{
+			db.ExecuteCommand("truncate table RawRunLog");
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();

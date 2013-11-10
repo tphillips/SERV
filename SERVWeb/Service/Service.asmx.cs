@@ -11,19 +11,24 @@ namespace SERVWeb
 
     public class Service : System.Web.Services.WebService
     {
+		static Logger log = new Logger();
 
 		[WebMethod]
 		public bool ImportRawRunLog()
 		{
+			log.LogStart();
 			System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(_ImportRawRunLog));
 			t.IsBackground = true;
 			t.Start();
+			log.LogEnd();
 			return true;
 		}
 
 		private void _ImportRawRunLog()
 		{
-			SERVBLLFactory.Factory.RunLogBLL().ImportRawRunLog();;
+			log.LogStart();
+			SERVBLLFactory.Factory.RunLogBLL().ImportRawRunLog();
+			log.LogEnd();
 		}
 
 		[WebMethod(EnableSession = true)]

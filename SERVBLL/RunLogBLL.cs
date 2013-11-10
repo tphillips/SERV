@@ -12,6 +12,9 @@ namespace SERVBLL
 	// 1st hacky draft, needs refactoring
 	public class RunLogBLL : IRunLogBLL
 	{
+
+		static Logger log = new Logger();
+
 		public RunLogBLL()
 		{
 		}
@@ -42,16 +45,24 @@ namespace SERVBLL
 					stop--;
 				}
 			}
+			csv = csv.Replace("    ", " ");
+			csv = csv.Replace("   ", " ");
+			csv = csv.Replace("  ", " ");
 			return csv;
 		}
 
 		public bool ImportRawRunLog()
 		{
+			log.LogStart();
+			List<SERVDataContract.DbLinq.RawRunLog> records = new List<SERVDataContract.DbLinq.RawRunLog>();
+			SERVDALFactory.Factory.RunLogDAL().TruncateRawRunLog();
 			string docURI = "https://docs.google.com/spreadsheet/pub?key=0Avzf69R2XNmVdExyQkpRa3Rtb1d1cHBqM2dINDB1N0E&single=true&gid=0&output=csv";
 			string csv = new System.Net.WebClient().DownloadString(docURI);
 			csv = CleanTextBlocks(csv);
 			string[] rows = csv.Split('\n');
 			int rowNum = 0;
+			string prevRow = "";
+			log.Info("Starting import loop");
 			foreach (string row in rows)
 			{
 				if (rowNum > 1)
@@ -59,6 +70,7 @@ namespace SERVBLL
 					string r = row.Trim();
 					if (!string.IsNullOrEmpty(r))
 					{
+						//log.Debug(r);
 						string[] cols = r.Split(',');
 						SERVDataContract.DbLinq.RawRunLog raw = new SERVDataContract.DbLinq.RawRunLog();
 						try 
@@ -72,20 +84,26 @@ namespace SERVBLL
 							raw.Consignment = cols[7].Trim().Replace("\"", "");
 							raw.Urgency = cols[8].Trim().Replace("\"", "");
 							raw.Controller = cols[9].Trim().Replace("\"", "");
-							raw.Rider = cols[10].Trim().Replace("\"", "");
+							raw.Rider = cols[10].Trim().Replace("\"", "").Replace(".", "");
 							raw.Notes = cols[11].Trim().Replace("\"", "");
 							raw.CollectTime2 = cols[12].Trim().Replace("\"", "");
 							raw.Vehicle = cols[13].Trim().Replace("\"", "");
-							SERVDALFactory.Factory.RunLogDAL().CreateRawRecord(raw);
+							//SERVDALFactory.Factory.RunLogDAL().CreateRawRecord(raw);
+							records.Add(raw);
 						} 
 						catch(Exception ex)
 						{
+							log.Error(string.Format("{0} ------ prev: {1} ------ current: {2}", ex.Message, prevRow, row), ex);
 							Console.WriteLine(string.Format("{0} ------ {1} --------- {2}", ex.Message,row, r));
 						}
 					}
 				}
 				rowNum++;
+				prevRow = row;
 			}
+			log.Info("Starting batch insert of " + records.Count + " records");
+			SERVDALFactory.Factory.RunLogDAL().CreateRawRecords(records);
+			log.Info("Batch insert complete");
 			return true;
 		}
 
