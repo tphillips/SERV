@@ -12,16 +12,26 @@ namespace SERVBLL
 	public class MemberBLL : IMemberBLL
 	{
 
+		static Logger log = new Logger();
+
 		public Member Get(int memberId)
 		{
-			SERVDataContract.DbLinq.Member lret = SERVDALFactory.Factory.MemberDAL().Get(memberId);
-			Member ret = new Member(lret);
-			ret.Tags = new List<Tag>();
-			for(int x = 0; x < lret.MemberTag.Count; x++)
+			try
 			{
-				ret.Tags.Add(new Tag(lret.MemberTag[x].Tag));
+				SERVDataContract.DbLinq.Member lret = SERVDALFactory.Factory.MemberDAL().Get(memberId);
+				Member ret = new Member(lret);
+				ret.Tags = new List<Tag>();
+				for(int x = 0; x < lret.MemberTag.Count; x++)
+				{
+					ret.Tags.Add(new Tag(lret.MemberTag[x].Tag));
+				}
+				return ret;
 			}
-			return ret;
+			catch(Exception ex)
+			{
+				log.Error(ex.Message, ex);
+				return null;
+			}
 		}
 
 		public int Create(Member member)
@@ -35,11 +45,19 @@ namespace SERVBLL
 	
 		public int Save(Member member, User user)
 		{
-			using (SERVIDAL.IMemberDAL dal = SERVDALFactory.Factory.MemberDAL())
+			try
 			{
-				SERVDataContract.DbLinq.Member m = dal.Get(member.MemberID);
-				UpdatePolicyAttribute.MapPropertiesWithUpdatePolicy(member, m, user, user.MemberID == member.MemberID);
-				return dal.Update(m);
+				using (SERVIDAL.IMemberDAL dal = SERVDALFactory.Factory.MemberDAL())
+				{
+					SERVDataContract.DbLinq.Member m = dal.Get(member.MemberID);
+					UpdatePolicyAttribute.MapPropertiesWithUpdatePolicy(member, m, user, user.MemberID == member.MemberID);
+					return dal.Update(m);
+				}
+			}
+			catch(Exception ex)
+			{
+				log.Error(ex.Message, ex);
+				return -1;
 			}
 		}
 
