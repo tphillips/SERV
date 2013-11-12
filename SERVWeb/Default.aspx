@@ -3,13 +3,12 @@
 
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 	<div class="hero-unit">
-		<h2>Do Something</h2>	
-		<p >Nothing interesting on this page yet, but there will be soon!</span></p>	
+		<h2>SERV SSL</h2>	
+		<p>Welcome to the SERV system.  Please <a href="Login.aspx">login</a> to continue.</p>	
 	</div>
 	
 	<script>
 		$("#loading").hide();
-		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); }
 	</script>
 	
 </asp:Content>

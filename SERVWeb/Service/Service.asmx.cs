@@ -27,7 +27,14 @@ namespace SERVWeb
 		private void _ImportRawRunLog()
 		{
 			log.LogStart();
-			SERVBLLFactory.Factory.RunLogBLL().ImportRawRunLog();
+			try
+			{
+				SERVBLLFactory.Factory.RunLogBLL().ImportRawRunLog();
+			}
+			catch(Exception e)
+			{
+				log.Error(e.Message, e);
+			}
 			log.LogEnd();
 		}
 

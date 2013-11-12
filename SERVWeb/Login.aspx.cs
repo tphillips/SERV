@@ -20,7 +20,7 @@ namespace SERVWeb
 			if (u != null)
 			{
 				SERVGlobal.User = u;
-				Response.Redirect("Default.aspx");
+				Response.Redirect("Home.aspx");
 			}
 		}
 

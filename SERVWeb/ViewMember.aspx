@@ -10,9 +10,9 @@
 		<h3><span id="lblTitle"></span> <span id="memNav" style="display:none"><a class="btn" href="ViewMember.aspx?memberId=<%=this.MemberId-1%>"><</a> <a class="btn" href="ViewMember.aspx?memberId=<%=this.MemberId+1%>">></a></span></h3>
 		<button type=button class="btn btn-primary btn-lg" onclick="SaveMember()">Save</button>
 		<hr/>
-		<fieldset>
+		
 			<div class="row">
-			
+				<fieldset>
 				<div class="span3">
 				
 					<label>First Name:</label>
@@ -138,8 +138,8 @@
 					
 				</div>
 				
+				</fieldset>
 			</div>
-		</fieldset>
 		<br/>
 		<hr/>
 		<button type=button class="btn btn-primary btn-lg" onclick="SaveMember()">Save</button>

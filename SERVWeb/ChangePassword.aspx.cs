@@ -21,7 +21,7 @@ namespace SERVWeb
 			if (u != null && txtNewPassword.Text == txtNewPassword2.Text)
 			{
 				SERVBLLFactory.Factory.MemberBLL().SetPassword(u.Member.EmailAddress, SERV.Utils.Authentication.Hash(u.Member.EmailAddress.ToLower().Trim() + txtNewPassword.Text));
-				Response.Redirect("Default.aspx?success=yes");
+				Response.Redirect("Home.aspx?success=yes");
 			}
 		}
 

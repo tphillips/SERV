@@ -11,7 +11,7 @@
 namespace SERVWeb {
 	
 	
-	public partial class Default {
+	public partial class Home {
 		
 		protected System.Web.UI.HtmlControls.HtmlGenericControl contentPlaceholderContent;
 		

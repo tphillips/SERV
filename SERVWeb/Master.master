@@ -22,14 +22,12 @@
         <div class="container">			
             
 			<SERV:Panels runat="server" id="panels" />
-		
-            <div class="row">
-                <form runat="server" id="cententForm">
-                    <div class="span12">
-                        <asp:ContentPlaceHolder runat="server" id="contentPlaceholder"/>
-                    </div>
-                </form>
-            </div>
+            
+            <form runat="server" id="cententForm">
+                <div class="span12">
+                    <asp:ContentPlaceHolder runat="server" id="contentPlaceholder"/>
+                </div>
+            </form>
             
         </div>
             
