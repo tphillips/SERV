@@ -121,7 +121,7 @@ namespace SERVBLL
 			foreach (string m in res)
 			{
 				string num = m.Replace(" ", "");
-				if (num.Length > 5)
+				if (num.Length == 11)
 				{
 					if (num.StartsWith("07"))
 					{

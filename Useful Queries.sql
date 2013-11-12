@@ -24,7 +24,7 @@ select * from User u join Member m on m.MemberID = u.MemberID where u.PasswordHa
 select * from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is not null;
 
 -- Select all Mobile numbers for a set of tags
-select distinct m.MobileNumber, m.FirstName, m.LastName from Member m 
+select distinct m.MobileNumber, CONCAT(m.FirstName, ' ', m.LastName) Name from Member m 
 join Member_Tag mt on mt.MemberID = m.MemberID 
 join Tag t on t.TagID = mt.TagID
 where t.Tag in ('Fundraiser');
