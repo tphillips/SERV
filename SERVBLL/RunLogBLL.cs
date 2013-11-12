@@ -46,6 +46,18 @@ namespace SERVBLL
 			nameReplacements.Add("MacDonald Jan", "MacDonald Janet");
 			nameReplacements.Add("McCullock Ian", "McCulloch Ian");
 			nameReplacements.Add("Mizsler Frank", "Miszler Frank");
+			nameReplacements.Add("McEacham Ema", "McEachan Emma");
+			nameReplacements.Add("McEacham Emma", "McEachan Emma");
+			nameReplacements.Add("McEchan Emma", "McEachan Emma");
+			nameReplacements.Add("Ney Mike", "Ney Michael");
+			nameReplacements.Add("SoperAndrew", "Soper Andrew");
+			nameReplacements.Add("Soper Andy", "Soper Andrew");
+			nameReplacements.Add("Semmens Raymond", "Semmens Ray");
+			nameReplacements.Add("Semmons Ray", "Semmens Ray");
+			nameReplacements.Add("Whiteman Martin", "Whitehead Martin");
+			nameReplacements.Add("Watson Phil", "Watson Philip");
+			nameReplacements.Add("Watsom Philip", "Watson Philip");
+			nameReplacements.Add("Wats Philip", "Watson Philip");
 
 		}
 
