@@ -2,6 +2,7 @@
 <%@ MasterType VirtualPath="~/Master.master" %>
 
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
+	
 	<div class="hero-unit">
 		<h2>Hey <%=this.Username%>,</h2>	
 		<p>Now that you have logged in, please make sure you change your password.  You can then <a href="ViewMember.aspx?self=yes">view and edit your profile</a> to make sure it is all correct, or take a look at the <a href="Members.aspx">members list</a>.</p>	
@@ -32,7 +33,7 @@
 	
 	<script>
 		$("#loading").hide();
-		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); }
+		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); window.setTimeout('$("#success").slideUp()',4000); }
 	</script>
 	
 </asp:Content>

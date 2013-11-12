@@ -15,7 +15,8 @@ namespace SERVWeb
 
 		protected void cmdSendClick (object src, EventArgs e)
 		{
-
+			SERV.Utils.Messaging.SendTextMessage(txtCustomNumbers.Text, txtSMS.Text);
+			Response.Redirect("Home.aspx?success=yes");
 		}
 
 	}
