@@ -12,31 +12,28 @@
 		<input type="checkbox" id="chkEmergencyList" /> Emergency List
 	</label>
 	<label>
-		<input type="checkbox" id="chkEmergencyList" /> Controllers
+		<input type="checkbox" id="chkController" /> Controllers
 	</label>
 	<label>
-		<input type="checkbox" id="chkEmergencyList" /> Fundraisers
+		<input type="checkbox" id="chkFundraisers" /> Fundraisers
 	</label>
 	<label>
-		<input type="checkbox" id="chkEmergencyList" /> Admins
+		<input type="checkbox" id="chkBlood" /> Blood Riders / Drivers
 	</label>
 	<label>
-		<input type="checkbox" id="chkEmergencyList" /> Blood Riders / Drivers
+		<input type="checkbox" id="chkAA" /> Air Ambulance Riders / Drivers
 	</label>
 	<label>
-		<input type="checkbox" id="chkEmergencyList" /> Air Ambulance Riders / Drivers
+		<input type="checkbox" id="chkMilk" /> Milk Riders / Drivers
 	</label>
 	<label>
-		<input type="checkbox" id="chkEmergencyList" /> Milk Riders / Drivers
+		<input type="checkbox" id="chk4x4" /> 4x4 Owners
 	</label>
 	<label>
-		<input type="checkbox" id="chkEmergencyList" /> 4x4 Owners
-	</label>
-	<label>
-		<input type="checkbox" id="chkEmergencyList" /> EVERYBODY (CAUTION!!!!)
+		<input type="checkbox" id="chkAll" /> EVERYBODY (CAUTION!!!!)
 	</label>
 </div>
-<label>Custom numbers seperated by a semicolon:</label>
+<label>Custom numbers seperated by a comma:</label>
 <asp:TextBox runat="server" id="txtCustomNumbers" />
 <br/>
 <label>Message:</label>
