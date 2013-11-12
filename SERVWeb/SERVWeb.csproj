@@ -95,6 +95,7 @@
     <Content Include="Members.aspx" />
     <Content Include="ChangePassword.aspx" />
     <Content Include="Home.aspx" />
+    <Content Include="SMS.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -154,6 +155,12 @@
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SMS.aspx.cs">
+      <DependentUpon>SMS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SMS.aspx.designer.cs">
+      <DependentUpon>SMS.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

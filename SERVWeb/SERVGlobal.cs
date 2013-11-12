@@ -31,6 +31,15 @@ namespace SERVWeb
 			if (User == null) { GotoDefault(); }
 		}
 
+		public static void AssertAuthentication(int minUserLevel)
+		{
+			if (User == null) { GotoDefault(); }
+			if (User.UserLevelID < minUserLevel)
+			{
+				System.Web.HttpContext.Current.Response.Redirect("Home.aspx");
+			}
+		}
+
 	}
 }
 

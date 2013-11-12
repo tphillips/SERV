@@ -9,21 +9,20 @@ namespace SERVWeb
 	{
 		protected override void OnLoad (EventArgs e)
 		{
-			if (SERVGlobal.User == null)
-			{
-				pnlNotLoggedIn.Visible = true;
-				pnlLoggedIn.Visible = false;
-			}
-			else
+			pnlPowerUser.Visible = false;
+			pnlNotLoggedIn.Visible = true;
+			pnlLoggedIn.Visible = false;
+			if (SERVGlobal.User != null)
 			{
 				pnlLoggedIn.Visible = true;
 				pnlNotLoggedIn.Visible = false;
 				litLoginName.Text = string.Format("{0} {1}", SERVGlobal.User.Member.FirstName, SERVGlobal.User.Member.LastName);
+				if (SERVGlobal.User.UserLevelID > (int)SERVDataContract.UserLevel.Volunteer)
+				{
+					pnlPowerUser.Visible = true;
+				}
 			}
-			if (SERVGlobal.User.UserLevelID > (int)SERVDataContract.UserLevel.Volunteer)
-			{
-				pnlPowerUser.Visible = true;
-			}
+
 		}
 	}
 }
