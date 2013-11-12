@@ -6,6 +6,8 @@
 			<li><a href="/">Home</a></li>
 			<li><a href="Login.aspx">Login</a></li>
 			</asp:Literal>
+			<asp:Literal runat="server" id="pnlPowerUser">
+			</asp:Literal
 			<asp:Literal runat="server" id="pnlLoggedIn">
 			<li><a href="Home.aspx">Home</a></li>
 			<li><a href="ViewMember.aspx?self=yes">Your Profile</a></li>
