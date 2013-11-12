@@ -107,6 +107,17 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.MemberBLL().List(search);
 		}
 
+		[WebMethod(EnableSession = true)]
+		public List<string> ListMobileNumbersWithTags(string tagsCsv)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID <= (int)UserLevel.Controller)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.MemberBLL().ListMobileNumbersWithTags(tagsCsv);
+		}
+
 		public User Login(string username, string passwordHash)
 		{
 			return SERVBLLFactory.Factory.MemberBLL().Login(username, passwordHash);

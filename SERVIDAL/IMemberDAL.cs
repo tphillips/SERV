@@ -18,5 +18,6 @@ namespace SERVIDAL
 		void RemoveMemberTag(int memberId, string tagName);
 		void SetPasswordHash(string username, string passwordHash);
 		void SetUserLastLoginDate(SERVDataContract.DbLinq.User u);
+		List<string> ListMobileNumbersWithTags(string tagsCsv);
 	}
 }

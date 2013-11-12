@@ -106,6 +106,38 @@ namespace SERVDAL
 			u.LastLoginDate = DateTime.Now;
 			db.SubmitChanges();
 		}
+		
+		public List<string> ListMobileNumbersWithTags(string tagsCsv)
+		{
+			List<string> ret = new List<string>();
+			string[] tags = tagsCsv.Split(',');
+			List<string> tagList = new List<string>();
+			foreach (string tag in tags)
+			{
+				if (tag.Trim() != string.Empty) { tagList.Add(tag); }
+			}
+			string inClause = "in (";
+			foreach (string t in tagList)
+			{
+				inClause += "'" + t.Trim() + "',";
+			}
+			inClause = inClause.Substring(0, inClause.Length - 1);
+			inClause += ")";
+			string sql = "select distinct m.MobileNumber " +
+			             "from Member m " +
+			             "join Member_Tag mt on mt.MemberID = m.MemberID " +
+			             "join Tag t on t.TagID = mt.TagID " +
+			             "where t.Tag " + inClause;
+			DataTable tbl = DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+			if (tbl != null && tbl.Rows.Count > 0)
+			{
+				foreach (DataRow r in tbl.Rows)
+				{
+					ret.Add(r[0].ToString());
+				}
+			}
+			return ret;
+		}
 
 		public void Dispose()
 		{

@@ -24,9 +24,7 @@
 			<SERV:Panels runat="server" id="panels" />
             
             <form runat="server" id="cententForm">
-                
-                    <asp:ContentPlaceHolder runat="server" id="contentPlaceholder"/>
-                
+            	<asp:ContentPlaceHolder runat="server" id="contentPlaceholder"/>
             </form>
             
         </div>

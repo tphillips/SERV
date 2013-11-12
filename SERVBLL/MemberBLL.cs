@@ -113,7 +113,26 @@ namespace SERVBLL
 		{
 			SERVDALFactory.Factory.MemberDAL().SetPasswordHash(username, passwordHash);
 		}
-		
+
+		public List<string> ListMobileNumbersWithTags(string tagsCsv)
+		{
+			List<string> ret = new List<string>();
+			List<string> res = SERVDALFactory.Factory.MemberDAL().ListMobileNumbersWithTags(tagsCsv);
+			foreach (string m in res)
+			{
+				string num = m.Replace(" ", "");
+				if (num.Length > 5)
+				{
+					if (num.StartsWith("07"))
+					{
+						num = "44" + num.Substring(1, num.Length - 1);
+						ret.Add(num);
+					}
+				}
+			}
+			return ret;
+		}
+
 	}
 
 }
