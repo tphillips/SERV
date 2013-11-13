@@ -58,6 +58,47 @@ function DisplayMember(memberId)
 	);
 }
 
+function sendSMSMessage(numbers, message)
+{
+	$("#loading").slideDown();
+	$("#entry").slideUp();
+	callServerSide(
+		"Service/Service.asmx/SendSMSMessage", 
+		"{'numbers':'" + numbers + "', 'message':'"+ message + "'}",
+		function(json)
+		{
+			$("#loading").slideUp();
+			$("#success").slideDown();
+		},
+		function()
+		{
+		}
+	);
+}
+
+function getNumbersForTags(tags, target)
+{
+	callServerSide(
+		"Service/Service.asmx/ListMobileNumbersWithTags", 
+		"{'tagsCsv':'" + tags + "'}",
+		function(json)
+		{
+			var nums = "";
+			for(var x = 0; x < json.d.length; x++)
+			{
+				nums += json.d[x] + ",";
+			}
+			$("#" + target).val(nums);
+			smsCount = json.d.length;
+			$("#loading").slideUp();
+			$("#lblCount").text(smsCount);
+		},
+		function()
+		{
+		}
+	);
+}
+
 function SearchMembers(userLevel, search)
 {
 	callServerSide(

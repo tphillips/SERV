@@ -118,6 +118,17 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.MemberBLL().ListMobileNumbersWithTags(tagsCsv);
 		}
 
+		[WebMethod(EnableSession = true)]
+		public bool SendSMSMessage(string numbers, string message)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID <= (int)UserLevel.Controller)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERV.Utils.Messaging.SendTextMessages(numbers, message);
+		}
+
 		public User Login(string username, string passwordHash)
 		{
 			return SERVBLLFactory.Factory.MemberBLL().Login(username, passwordHash);
