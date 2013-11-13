@@ -37,7 +37,7 @@
 <input type="hidden" id="txtNumbers" disabled width="200" />
 <br/>
 <label>Message to <strong><span id="lblCount">0</span></strong> people:</label>
-<textarea type="text" id="txtSMS" textmode="multiline" cols="40" rows=3 maxLength="120" ></textarea>
+<textarea type="text" id="txtSMS" textmode="multiline" cols="40" rows=3 maxlength="150" ></textarea>
 
 <br/><br/>
 <input type="button" id="cmdSend" value="Send" class="btn btn-primary btn-lg" onclick="sendSMSMessage($('#txtNumbers').val(), $('#txtSMS').val());"></input>
