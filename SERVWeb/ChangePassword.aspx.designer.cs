@@ -13,12 +13,19 @@ namespace SERVWeb {
 	
 	public partial class ChangePassword {
 		
-		protected System.Web.UI.HtmlControls.HtmlGenericControl titlePlaceholderContent;
+		protected System.Web.UI.WebControls.Content titlePlaceholderContent;
+		
+		protected System.Web.UI.WebControls.Content contentPlaceholderContent;
+		
 		protected System.Web.UI.WebControls.TextBox txtEmail;
+		
 		protected System.Web.UI.WebControls.TextBox txtOldPassword;
+		
 		protected System.Web.UI.WebControls.TextBox txtNewPassword;
+		
 		protected System.Web.UI.WebControls.TextBox txtNewPassword2;
-
+		
+		protected System.Web.UI.WebControls.Button cmdChange;
 		
 		public new SERVWeb.Master Master {
 			get {

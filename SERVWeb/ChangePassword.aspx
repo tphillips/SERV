@@ -5,7 +5,7 @@
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Change Password</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
-<h3>Login</h3>
+<h3>Change Your Password</h3>
 <label>Email Address:</label>
 <asp:TextBox runat="server" id="txtEmail" />
 

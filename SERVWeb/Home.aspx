@@ -6,7 +6,7 @@
 	
 	<div class="hero-unit">
 		<h2>Hey <%=this.Username%>,</h2>	
-		<p>Now that you have logged in, please make sure you change your password.  You can then <a href="ViewMember.aspx?self=yes">view and edit your profile</a> to make sure it is all correct, or take a look at the <a href="Members.aspx">members list</a>.</p>	
+		<p>Now that you have logged in, please make sure you <a href="ChangePassword.aspx">change your password</a>.  You can then <a href="ViewMember.aspx?self=yes">view and edit your profile</a> to make sure it is all correct, or take a look at the <a href="Members.aspx">members list</a>.</p>	
 		<p>You will notice an "Admin editable only" section in your profile.  If you need something changed in there, please PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</a>.</p>
 		<p>There will be loads of cool things coming along in this new system, and the majority of the benefits will be realised if we all keep our volunteer profiles and preferences up to date.  If you have any suggestions or comments, then feel free to PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</a>.</p>
 	</div>

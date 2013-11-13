@@ -21,7 +21,7 @@ order by count(*) desc;
 select * from User u join Member m on m.MemberID = u.MemberID where u.PasswordHash is not null and u.PasswordHash != '';
 
 -- USERS WHO HAVE LOGGED IN
-select * from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is not null;
+select * from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is not null order by lastLoginDate desc; 
 
 -- Select all Mobile numbers for a set of tags
 select distinct m.MobileNumber, CONCAT(m.FirstName, ' ', m.LastName) Name from Member m 
