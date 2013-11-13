@@ -17,6 +17,13 @@ namespace SERVDataContract
 		Admin
 	}
 
+	public enum MessageType
+	{
+		None,
+		Email,
+		SMS
+	}
+
 	[DataContract]
 	[Serializable]
 	public class User

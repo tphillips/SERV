@@ -126,7 +126,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERV.Utils.Messaging.SendTextMessages(numbers, message);
+			return SERVBLLFactory.Factory.MessageBLL().SendSMSMessage(numbers, message, CurrentUser().UserID);
 		}
 
 		public User Login(string username, string passwordHash)

@@ -2658,13 +2658,17 @@ namespace SERVDataContract.DbLinq
 		
 		private string _recipient;
 		
-		private int _recipientMemberID;
+		private System.Nullable<int> _recipientMemberID;
 		
-		private string _sentDate;
+		private int _senderUserID;
+		
+		private System.DateTime _sentDate;
 		
 		private EntityRef<Member> _member = new EntityRef<Member>();
 		
 		private EntityRef<MessageType> _messageType = new EntityRef<MessageType>();
+		
+		private EntityRef<User> _user = new EntityRef<User>();
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
@@ -2687,11 +2691,15 @@ namespace SERVDataContract.DbLinq
 		
 		partial void OnRecipientMemberIDChanged();
 		
-		partial void OnRecipientMemberIDChanging(int value);
+		partial void OnRecipientMemberIDChanging(System.Nullable<int> value);
+		
+		partial void OnSenderUserIDChanged();
+		
+		partial void OnSenderUserIDChanging(int value);
 		
 		partial void OnSentDateChanged();
 		
-		partial void OnSentDateChanging(string value);
+		partial void OnSentDateChanging(System.DateTime value);
 		#endregion
 		
 		
@@ -2700,7 +2708,7 @@ namespace SERVDataContract.DbLinq
 			this.OnCreated();
 		}
 		
-		[Column(Storage="_message1", Name="Message", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[Column(Storage="_message1", Name="Message", DbType="varchar(1000)", AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public string Message1
 		{
@@ -2767,7 +2775,7 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_recipient", Name="Recipient", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[Column(Storage="_recipient", Name="Recipient", DbType="varchar(4000)", AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public string Recipient
 		{
@@ -2788,9 +2796,9 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_recipientMemberID", Name="RecipientMemberID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_recipientMemberID", Name="RecipientMemberID", DbType="int", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
-		public int RecipientMemberID
+		public System.Nullable<int> RecipientMemberID
 		{
 			get
 			{
@@ -2813,9 +2821,34 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_sentDate", Name="SentDate", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[Column(Storage="_senderUserID", Name="SenderUserID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
-		public string SentDate
+		public int SenderUserID
+		{
+			get
+			{
+				return this._senderUserID;
+			}
+			set
+			{
+				if ((_senderUserID != value))
+				{
+					if (_user.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSenderUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._senderUserID = value;
+					this.SendPropertyChanged("SenderUserID");
+					this.OnSenderUserIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_sentDate", Name="SentDate", DbType="datetime", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public System.DateTime SentDate
 		{
 			get
 			{
@@ -2823,7 +2856,7 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_sentDate == value) == false))
+				if ((_sentDate != value))
 				{
 					this.OnSentDateChanging(value);
 					this.SendPropertyChanging();
@@ -2861,7 +2894,7 @@ namespace SERVDataContract.DbLinq
 					}
 					else
 					{
-						_recipientMemberID = default(int);
+						_recipientMemberID = null;
 					}
 				}
 			}
@@ -2894,6 +2927,38 @@ namespace SERVDataContract.DbLinq
 					else
 					{
 						_messageTypeID = default(int);
+					}
+				}
+			}
+		}
+		
+		[Association(Storage="_user", OtherKey="UserID", ThisKey="SenderUserID", Name="fk_Message_User1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public User User
+		{
+			get
+			{
+				return this._user.Entity;
+			}
+			set
+			{
+				if (((this._user.Entity == value) == false))
+				{
+					if ((this._user.Entity != null))
+					{
+						User previousUser = this._user.Entity;
+						this._user.Entity = null;
+						previousUser.Message.Remove(this);
+					}
+					this._user.Entity = value;
+					if ((value != null))
+					{
+						value.Message.Add(this);
+						_senderUserID = value.UserID;
+					}
+					else
+					{
+						_senderUserID = default(int);
 					}
 				}
 			}
@@ -3768,6 +3833,8 @@ namespace SERVDataContract.DbLinq
 		
 		private int _userLevelID;
 		
+		private EntitySet<Message> _message;
+		
 		private EntityRef<Member> _member = new EntityRef<Member>();
 		
 		private EntityRef<UserLevel> _userLevel = new EntityRef<UserLevel>();
@@ -3799,6 +3866,7 @@ namespace SERVDataContract.DbLinq
 		
 		public User()
 		{
+			_message = new EntitySet<Message>(new Action<Message>(this.Message_Attach), new Action<Message>(this.Message_Detach));
 			this.OnCreated();
 		}
 		
@@ -3915,6 +3983,22 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		#region Children
+		[Association(Storage="_message", OtherKey="SenderUserID", ThisKey="UserID", Name="fk_Message_User1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<Message> Message
+		{
+			get
+			{
+				return this._message;
+			}
+			set
+			{
+				this._message = value;
+			}
+		}
+		#endregion
+		
 		#region Parents
 		[Association(Storage="_member", OtherKey="MemberID", ThisKey="MemberID", Name="fk_User_Member", IsForeignKey=true)]
 		[DebuggerNonUserCode()]
@@ -4002,6 +4086,20 @@ namespace SERVDataContract.DbLinq
 				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		#region Attachment handlers
+		private void Message_Attach(Message entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void Message_Detach(Message entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		#endregion
 	}
 	
 	[Table(Name="SERV.UserLevel")]

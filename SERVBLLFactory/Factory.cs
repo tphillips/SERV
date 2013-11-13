@@ -16,5 +16,11 @@ namespace SERVBLLFactory
 		{
 			return new SERVBLL.RunLogBLL();
 		}
+
+		public static IMessageBLL MessageBLL()
+		{
+			return new SERVBLL.MessageBLL();
+		}
+
 	}
 }

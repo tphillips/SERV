@@ -17,5 +17,11 @@ namespace SERVDALFactory
 		{
 			return new RunLogDAL();
 		}
+
+		public static IMessageDAL MessageDAL()
+		{
+			return new MessageDAL();
+		}
+
 	}
 }
