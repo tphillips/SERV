@@ -1,6 +1,7 @@
 <%@ Page Language="C#" Inherits="SERVWeb.Home" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
 
+<asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">System</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 	
 	<div class="hero-unit">

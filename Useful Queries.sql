@@ -31,5 +31,6 @@ where t.Tag in ('Fundraiser');
 
 select * from Tag;
 
+select * from Message
 
-
+select distinct Controller from RawRunLog
