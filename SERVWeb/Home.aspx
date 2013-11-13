@@ -16,7 +16,6 @@
 		<div class="span4">
 			<h3>Coming Soon</h3>
 			<ul>
-				<li>Mass SMS Alert System</li>
 				<li>Controller Logging - No more Google!</li>
 				<li>Run stats - See how many runs you / we have done &amp; how busy we are on different nights</li>
 			</ul>
