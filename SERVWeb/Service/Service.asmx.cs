@@ -108,6 +108,13 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
+		public List<Member> ListMembersWithTags(string tagsCsv)
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.MemberBLL().ListMembersWithTags(tagsCsv);
+		}
+
+		[WebMethod(EnableSession = true)]
 		public List<string> ListMobileNumbersWithTags(string tagsCsv)
 		{
 			Authenticate();
@@ -116,6 +123,13 @@ namespace SERVWeb
 				throw new System.Security.Authentication.AuthenticationException();
 			}
 			return SERVBLLFactory.Factory.MemberBLL().ListMobileNumbersWithTags(tagsCsv);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<Location> ListLocations()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.LocationBLL().ListLocations();
 		}
 
 		[WebMethod(EnableSession = true)]

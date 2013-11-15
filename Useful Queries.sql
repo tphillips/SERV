@@ -29,8 +29,28 @@ join Member_Tag mt on mt.MemberID = m.MemberID
 join Tag t on t.TagID = mt.TagID
 where t.Tag in ('Fundraiser');
 
+-- Sent messages
+select * from Message;
+
+-- Controllers from raw logs
+select distinct Controller from RawRunLog;
+
+-- Select an insert to generate missing member tags for a subset of filtered control logs
+select distinct m.MemberID, 8 -- AA
+from RawRunLog rr 
+LEFT join Member m on rr.Rider = (CONCAT(m.LastName, ' ', m.FirstName)) 
+where m.MemberID not in 
+(select MemberID from Member_Tag where TagID = 8)
+and rr.CollectFrom like 'East Surrey' or rr.CollectFrom like '%Redhill%';
+
+-- Recent run log activity
+select CallDate, CallTime, CONCAT(m.FirstName, ' ', m.LastName), Consignment, CollectFrom, Destination  from RawRunLog rr 
+LEFT join Member m on rr.Rider = (CONCAT(m.LastName, ' ', m.FirstName)) 
+order by CallDate desc, RawRunLogID desc LIMIT 100;
+
 select * from Tag;
 
-select * from Message
+select * from Product;
 
-select distinct Controller from RawRunLog
+
+

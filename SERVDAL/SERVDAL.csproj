@@ -44,6 +44,7 @@
     <Compile Include="MemberDAL.cs" />
     <Compile Include="RunLogDAL.cs" />
     <Compile Include="MessageDAL.cs" />
+    <Compile Include="LocationDAL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

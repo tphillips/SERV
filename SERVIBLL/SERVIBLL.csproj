@@ -36,6 +36,7 @@
     <Compile Include="IMemberBLL.cs" />
     <Compile Include="IRunLogBLL.cs" />
     <Compile Include="IMessageBLL.cs" />
+    <Compile Include="ILocationBLL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

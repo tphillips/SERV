@@ -136,6 +136,14 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		public Table<Product> Product
+		{
+			get
+			{
+				return this.GetTable <Product>();
+			}
+		}
+		
 		public Table<RawRunLog> RawRunLog
 		{
 			get
@@ -149,6 +157,14 @@ namespace SERVDataContract.DbLinq
 			get
 			{
 				return this.GetTable <RunLog>();
+			}
+		}
+		
+		public Table<RunLogProduct> RunLogProduct
+		{
+			get
+			{
+				return this.GetTable <RunLogProduct>();
 			}
 		}
 		
@@ -173,6 +189,14 @@ namespace SERVDataContract.DbLinq
 			get
 			{
 				return this.GetTable <UserLevel>();
+			}
+		}
+		
+		public Table<VehicleType> VehicleType
+		{
+			get
+			{
+				return this.GetTable <VehicleType>();
 			}
 		}
 	}
@@ -504,8 +528,6 @@ namespace SERVDataContract.DbLinq
 		
 		private EntitySet<MemberDuty> _memberDuty;
 		
-		private EntitySet<RunLog> _runLog;
-		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
 		
@@ -523,7 +545,6 @@ namespace SERVDataContract.DbLinq
 		{
 			_calendar = new EntitySet<Calendar>(new Action<Calendar>(this.Calendar_Attach), new Action<Calendar>(this.Calendar_Detach));
 			_memberDuty = new EntitySet<MemberDuty>(new Action<MemberDuty>(this.MemberDuty_Attach), new Action<MemberDuty>(this.MemberDuty_Detach));
-			_runLog = new EntitySet<RunLog>(new Action<RunLog>(this.RunLog_Attach), new Action<RunLog>(this.RunLog_Detach));
 			this.OnCreated();
 		}
 		
@@ -597,20 +618,6 @@ namespace SERVDataContract.DbLinq
 				this._memberDuty = value;
 			}
 		}
-		
-		[Association(Storage="_runLog", OtherKey="DutyID", ThisKey="DutyID", Name="fk_RunLog_Duty1")]
-		[DebuggerNonUserCode()]
-		public EntitySet<RunLog> RunLog
-		{
-			get
-			{
-				return this._runLog;
-			}
-			set
-			{
-				this._runLog = value;
-			}
-		}
 		#endregion
 		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
@@ -655,18 +662,6 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		private void MemberDuty_Detach(MemberDuty entity)
-		{
-			this.SendPropertyChanging();
-			entity.Duty = null;
-		}
-		
-		private void RunLog_Attach(RunLog entity)
-		{
-			this.SendPropertyChanging();
-			entity.Duty = this;
-		}
-		
-		private void RunLog_Detach(RunLog entity)
 		{
 			this.SendPropertyChanging();
 			entity.Duty = null;
@@ -817,6 +812,8 @@ namespace SERVDataContract.DbLinq
 		
 		private sbyte _changeover;
 		
+		private sbyte _enabled;
+		
 		private sbyte _hospital;
 		
 		private string _lat;
@@ -837,6 +834,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnChangeoverChanged();
 		
 		partial void OnChangeoverChanging(sbyte value);
+		
+		partial void OnEnabledChanged();
+		
+		partial void OnEnabledChanging(sbyte value);
 		
 		partial void OnHospitalChanged();
 		
@@ -903,6 +904,27 @@ namespace SERVDataContract.DbLinq
 					this._changeover = value;
 					this.SendPropertyChanged("Changeover");
 					this.OnChangeoverChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_enabled", Name="Enabled", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public sbyte Enabled
+		{
+			get
+			{
+				return this._enabled;
+			}
+			set
+			{
+				if ((_enabled != value))
+				{
+					this.OnEnabledChanging(value);
+					this.SendPropertyChanging();
+					this._enabled = value;
+					this.SendPropertyChanged("Enabled");
+					this.OnEnabledChanged();
 				}
 			}
 		}
@@ -2729,7 +2751,7 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_messageID", Name="MessageID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_messageID", Name="MessageID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public int MessageID
 		{
@@ -3110,6 +3132,159 @@ namespace SERVDataContract.DbLinq
 		{
 			this.SendPropertyChanging();
 			entity.MessageType = null;
+		}
+		#endregion
+	}
+	
+	[Table(Name="SERV.Product")]
+	public partial class Product : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private sbyte _enabled;
+		
+		private string _product1;
+		
+		private int _productID;
+		
+		private EntitySet<RunLogProduct> _runLogProduct;
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnEnabledChanged();
+		
+		partial void OnEnabledChanging(sbyte value);
+		
+		partial void OnProduct1Changed();
+		
+		partial void OnProduct1Changing(string value);
+		
+		partial void OnProductIDChanged();
+		
+		partial void OnProductIDChanging(int value);
+		#endregion
+		
+		
+		public Product()
+		{
+			_runLogProduct = new EntitySet<RunLogProduct>(new Action<RunLogProduct>(this.RunLogProduct_Attach), new Action<RunLogProduct>(this.RunLogProduct_Detach));
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_enabled", Name="Enabled", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public sbyte Enabled
+		{
+			get
+			{
+				return this._enabled;
+			}
+			set
+			{
+				if ((_enabled != value))
+				{
+					this.OnEnabledChanging(value);
+					this.SendPropertyChanging();
+					this._enabled = value;
+					this.SendPropertyChanged("Enabled");
+					this.OnEnabledChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_product1", Name="Product", DbType="varchar(100)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public string Product1
+		{
+			get
+			{
+				return this._product1;
+			}
+			set
+			{
+				if (((_product1 == value) == false))
+				{
+					this.OnProduct1Changing(value);
+					this.SendPropertyChanging();
+					this._product1 = value;
+					this.SendPropertyChanged("Product1");
+					this.OnProduct1Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_productID", Name="ProductID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int ProductID
+		{
+			get
+			{
+				return this._productID;
+			}
+			set
+			{
+				if ((_productID != value))
+				{
+					this.OnProductIDChanging(value);
+					this.SendPropertyChanging();
+					this._productID = value;
+					this.SendPropertyChanged("ProductID");
+					this.OnProductIDChanged();
+				}
+			}
+		}
+		
+		#region Children
+		[Association(Storage="_runLogProduct", OtherKey="ProductID", ThisKey="ProductID", Name="fk_RunLog_Product_Product1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<RunLogProduct> RunLogProduct
+		{
+			get
+			{
+				return this._runLogProduct;
+			}
+			set
+			{
+				this._runLogProduct = value;
+			}
+		}
+		#endregion
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
+			if ((h != null))
+			{
+				h(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(string propertyName)
+		{
+			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
+			if ((h != null))
+			{
+				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		#region Attachment handlers
+		private void RunLogProduct_Attach(RunLogProduct entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = this;
+		}
+		
+		private void RunLogProduct_Detach(RunLogProduct entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = null;
 		}
 		#endregion
 	}
@@ -3537,83 +3712,418 @@ namespace SERVDataContract.DbLinq
 		
 		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
 		
-		private System.Nullable<System.DateTime> _dateTime;
+		private string _callDateTime;
 		
-		private int _dutyID;
+		private int _callFromLocationID;
+		
+		private System.Nullable<System.DateTime> _collectDateTime;
+		
+		private int _collectionLocationID;
+		
+		private int _controllerMemberID;
+		
+		private System.DateTime _createDate;
+		
+		private System.Nullable<System.DateTime> _deliverDateTime;
+		
+		private int _deliverToLocationID;
+		
+		private System.Nullable<System.DateTime> _dutyDate;
+		
+		private int _finalDestinationLocationID;
+		
+		private sbyte _isTransfer;
+		
+		private string _notes;
+		
+		private int _originLocationID;
+		
+		private int _riderMemberID;
 		
 		private int _runLogID;
 		
-		private EntityRef<Duty> _duty = new EntityRef<Duty>();
+		private int _urgency;
+		
+		private int _vehicleTypeID;
+		
+		private EntitySet<RunLogProduct> _runLogProduct;
+		
+		private EntityRef<VehicleType> _vehicleType = new EntityRef<VehicleType>();
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
 		
-		partial void OnDateTimeChanged();
+		partial void OnCallDateTimeChanged();
 		
-		partial void OnDateTimeChanging(System.Nullable<System.DateTime> value);
+		partial void OnCallDateTimeChanging(string value);
 		
-		partial void OnDutyIDChanged();
+		partial void OnCallFromLocationIDChanged();
 		
-		partial void OnDutyIDChanging(int value);
+		partial void OnCallFromLocationIDChanging(int value);
+		
+		partial void OnCollectDateTimeChanged();
+		
+		partial void OnCollectDateTimeChanging(System.Nullable<System.DateTime> value);
+		
+		partial void OnCollectionLocationIDChanged();
+		
+		partial void OnCollectionLocationIDChanging(int value);
+		
+		partial void OnControllerMemberIDChanged();
+		
+		partial void OnControllerMemberIDChanging(int value);
+		
+		partial void OnCreateDateChanged();
+		
+		partial void OnCreateDateChanging(System.DateTime value);
+		
+		partial void OnDeliverDateTimeChanged();
+		
+		partial void OnDeliverDateTimeChanging(System.Nullable<System.DateTime> value);
+		
+		partial void OnDeliverToLocationIDChanged();
+		
+		partial void OnDeliverToLocationIDChanging(int value);
+		
+		partial void OnDutyDateChanged();
+		
+		partial void OnDutyDateChanging(System.Nullable<System.DateTime> value);
+		
+		partial void OnFinalDestinationLocationIDChanged();
+		
+		partial void OnFinalDestinationLocationIDChanging(int value);
+		
+		partial void OnIsTransferChanged();
+		
+		partial void OnIsTransferChanging(sbyte value);
+		
+		partial void OnNotesChanged();
+		
+		partial void OnNotesChanging(string value);
+		
+		partial void OnOriginLocationIDChanged();
+		
+		partial void OnOriginLocationIDChanging(int value);
+		
+		partial void OnRiderMemberIDChanged();
+		
+		partial void OnRiderMemberIDChanging(int value);
 		
 		partial void OnRunLogIDChanged();
 		
 		partial void OnRunLogIDChanging(int value);
+		
+		partial void OnUrgencyChanged();
+		
+		partial void OnUrgencyChanging(int value);
+		
+		partial void OnVehicleTypeIDChanged();
+		
+		partial void OnVehicleTypeIDChanging(int value);
 		#endregion
 		
 		
 		public RunLog()
 		{
+			_runLogProduct = new EntitySet<RunLogProduct>(new Action<RunLogProduct>(this.RunLogProduct_Attach), new Action<RunLogProduct>(this.RunLogProduct_Detach));
 			this.OnCreated();
 		}
 		
-		[Column(Storage="_dateTime", Name="DateTime", DbType="timestamp", AutoSync=AutoSync.Never)]
+		[Column(Storage="_callDateTime", Name="CallDateTime", DbType="varchar(45)", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
-		public System.Nullable<System.DateTime> DateTime
+		public string CallDateTime
 		{
 			get
 			{
-				return this._dateTime;
+				return this._callDateTime;
 			}
 			set
 			{
-				if ((_dateTime != value))
+				if (((_callDateTime == value) == false))
 				{
-					this.OnDateTimeChanging(value);
+					this.OnCallDateTimeChanging(value);
 					this.SendPropertyChanging();
-					this._dateTime = value;
-					this.SendPropertyChanged("DateTime");
-					this.OnDateTimeChanged();
+					this._callDateTime = value;
+					this.SendPropertyChanged("CallDateTime");
+					this.OnCallDateTimeChanged();
 				}
 			}
 		}
 		
-		[Column(Storage="_dutyID", Name="DutyID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_callFromLocationID", Name="CallFromLocationID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
-		public int DutyID
+		public int CallFromLocationID
 		{
 			get
 			{
-				return this._dutyID;
+				return this._callFromLocationID;
 			}
 			set
 			{
-				if ((_dutyID != value))
+				if ((_callFromLocationID != value))
 				{
-					if (_duty.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnDutyIDChanging(value);
+					this.OnCallFromLocationIDChanging(value);
 					this.SendPropertyChanging();
-					this._dutyID = value;
-					this.SendPropertyChanged("DutyID");
-					this.OnDutyIDChanged();
+					this._callFromLocationID = value;
+					this.SendPropertyChanged("CallFromLocationID");
+					this.OnCallFromLocationIDChanged();
 				}
 			}
 		}
 		
-		[Column(Storage="_runLogID", Name="RunLogID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_collectDateTime", Name="CollectDateTime", DbType="datetime", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<System.DateTime> CollectDateTime
+		{
+			get
+			{
+				return this._collectDateTime;
+			}
+			set
+			{
+				if ((_collectDateTime != value))
+				{
+					this.OnCollectDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._collectDateTime = value;
+					this.SendPropertyChanged("CollectDateTime");
+					this.OnCollectDateTimeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_collectionLocationID", Name="CollectionLocationID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int CollectionLocationID
+		{
+			get
+			{
+				return this._collectionLocationID;
+			}
+			set
+			{
+				if ((_collectionLocationID != value))
+				{
+					this.OnCollectionLocationIDChanging(value);
+					this.SendPropertyChanging();
+					this._collectionLocationID = value;
+					this.SendPropertyChanged("CollectionLocationID");
+					this.OnCollectionLocationIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_controllerMemberID", Name="ControllerMemberID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int ControllerMemberID
+		{
+			get
+			{
+				return this._controllerMemberID;
+			}
+			set
+			{
+				if ((_controllerMemberID != value))
+				{
+					this.OnControllerMemberIDChanging(value);
+					this.SendPropertyChanging();
+					this._controllerMemberID = value;
+					this.SendPropertyChanged("ControllerMemberID");
+					this.OnControllerMemberIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_createDate", Name="CreateDate", DbType="timestamp", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._createDate;
+			}
+			set
+			{
+				if ((_createDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._createDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_deliverDateTime", Name="DeliverDateTime", DbType="datetime", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<System.DateTime> DeliverDateTime
+		{
+			get
+			{
+				return this._deliverDateTime;
+			}
+			set
+			{
+				if ((_deliverDateTime != value))
+				{
+					this.OnDeliverDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._deliverDateTime = value;
+					this.SendPropertyChanged("DeliverDateTime");
+					this.OnDeliverDateTimeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_deliverToLocationID", Name="DeliverToLocationID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int DeliverToLocationID
+		{
+			get
+			{
+				return this._deliverToLocationID;
+			}
+			set
+			{
+				if ((_deliverToLocationID != value))
+				{
+					this.OnDeliverToLocationIDChanging(value);
+					this.SendPropertyChanging();
+					this._deliverToLocationID = value;
+					this.SendPropertyChanged("DeliverToLocationID");
+					this.OnDeliverToLocationIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_dutyDate", Name="DutyDate", DbType="datetime", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<System.DateTime> DutyDate
+		{
+			get
+			{
+				return this._dutyDate;
+			}
+			set
+			{
+				if ((_dutyDate != value))
+				{
+					this.OnDutyDateChanging(value);
+					this.SendPropertyChanging();
+					this._dutyDate = value;
+					this.SendPropertyChanged("DutyDate");
+					this.OnDutyDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_finalDestinationLocationID", Name="FinalDestinationLocationID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int FinalDestinationLocationID
+		{
+			get
+			{
+				return this._finalDestinationLocationID;
+			}
+			set
+			{
+				if ((_finalDestinationLocationID != value))
+				{
+					this.OnFinalDestinationLocationIDChanging(value);
+					this.SendPropertyChanging();
+					this._finalDestinationLocationID = value;
+					this.SendPropertyChanged("FinalDestinationLocationID");
+					this.OnFinalDestinationLocationIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_isTransfer", Name="IsTransfer", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public sbyte IsTransfer
+		{
+			get
+			{
+				return this._isTransfer;
+			}
+			set
+			{
+				if ((_isTransfer != value))
+				{
+					this.OnIsTransferChanging(value);
+					this.SendPropertyChanging();
+					this._isTransfer = value;
+					this.SendPropertyChanged("IsTransfer");
+					this.OnIsTransferChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_notes", Name="Notes", DbType="varchar(600)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Notes
+		{
+			get
+			{
+				return this._notes;
+			}
+			set
+			{
+				if (((_notes == value) == false))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_originLocationID", Name="OriginLocationID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int OriginLocationID
+		{
+			get
+			{
+				return this._originLocationID;
+			}
+			set
+			{
+				if ((_originLocationID != value))
+				{
+					this.OnOriginLocationIDChanging(value);
+					this.SendPropertyChanging();
+					this._originLocationID = value;
+					this.SendPropertyChanged("OriginLocationID");
+					this.OnOriginLocationIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_riderMemberID", Name="RiderMemberID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int RiderMemberID
+		{
+			get
+			{
+				return this._riderMemberID;
+			}
+			set
+			{
+				if ((_riderMemberID != value))
+				{
+					this.OnRiderMemberIDChanging(value);
+					this.SendPropertyChanging();
+					this._riderMemberID = value;
+					this.SendPropertyChanged("RiderMemberID");
+					this.OnRiderMemberIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_runLogID", Name="RunLogID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public int RunLogID
 		{
@@ -3634,34 +4144,335 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		#region Parents
-		[Association(Storage="_duty", OtherKey="DutyID", ThisKey="DutyID", Name="fk_RunLog_Duty1", IsForeignKey=true)]
+		[Column(Storage="_urgency", Name="Urgency", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
-		public Duty Duty
+		public int Urgency
 		{
 			get
 			{
-				return this._duty.Entity;
+				return this._urgency;
 			}
 			set
 			{
-				if (((this._duty.Entity == value) == false))
+				if ((_urgency != value))
 				{
-					if ((this._duty.Entity != null))
+					this.OnUrgencyChanging(value);
+					this.SendPropertyChanging();
+					this._urgency = value;
+					this.SendPropertyChanged("Urgency");
+					this.OnUrgencyChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_vehicleTypeID", Name="VehicleTypeID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int VehicleTypeID
+		{
+			get
+			{
+				return this._vehicleTypeID;
+			}
+			set
+			{
+				if ((_vehicleTypeID != value))
+				{
+					if (_vehicleType.HasLoadedOrAssignedValue)
 					{
-						Duty previousDuty = this._duty.Entity;
-						this._duty.Entity = null;
-						previousDuty.RunLog.Remove(this);
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this._duty.Entity = value;
+					this.OnVehicleTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._vehicleTypeID = value;
+					this.SendPropertyChanged("VehicleTypeID");
+					this.OnVehicleTypeIDChanged();
+				}
+			}
+		}
+		
+		#region Children
+		[Association(Storage="_runLogProduct", OtherKey="RunLogID", ThisKey="RunLogID", Name="fk_RunLog_Product_RunLog1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<RunLogProduct> RunLogProduct
+		{
+			get
+			{
+				return this._runLogProduct;
+			}
+			set
+			{
+				this._runLogProduct = value;
+			}
+		}
+		#endregion
+		
+		#region Parents
+		[Association(Storage="_vehicleType", OtherKey="VehicleTypeID", ThisKey="VehicleTypeID", Name="fk_RunLog_VehicleType1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public VehicleType VehicleType
+		{
+			get
+			{
+				return this._vehicleType.Entity;
+			}
+			set
+			{
+				if (((this._vehicleType.Entity == value) == false))
+				{
+					if ((this._vehicleType.Entity != null))
+					{
+						VehicleType previousVehicleType = this._vehicleType.Entity;
+						this._vehicleType.Entity = null;
+						previousVehicleType.RunLog.Remove(this);
+					}
+					this._vehicleType.Entity = value;
 					if ((value != null))
 					{
 						value.RunLog.Add(this);
-						_dutyID = value.DutyID;
+						_vehicleTypeID = value.VehicleTypeID;
 					}
 					else
 					{
-						_dutyID = default(int);
+						_vehicleTypeID = default(int);
+					}
+				}
+			}
+		}
+		#endregion
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
+			if ((h != null))
+			{
+				h(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(string propertyName)
+		{
+			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
+			if ((h != null))
+			{
+				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		#region Attachment handlers
+		private void RunLogProduct_Attach(RunLogProduct entity)
+		{
+			this.SendPropertyChanging();
+			entity.RunLog = this;
+		}
+		
+		private void RunLogProduct_Detach(RunLogProduct entity)
+		{
+			this.SendPropertyChanging();
+			entity.RunLog = null;
+		}
+		#endregion
+	}
+	
+	[Table(Name="SERV.RunLog_Product")]
+	public partial class RunLogProduct : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private int _productID;
+		
+		private int _quantity;
+		
+		private int _runLogID;
+		
+		private int _runLogProductID;
+		
+		private EntityRef<Product> _product = new EntityRef<Product>();
+		
+		private EntityRef<RunLog> _runLog = new EntityRef<RunLog>();
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnProductIDChanged();
+		
+		partial void OnProductIDChanging(int value);
+		
+		partial void OnQuantityChanged();
+		
+		partial void OnQuantityChanging(int value);
+		
+		partial void OnRunLogIDChanged();
+		
+		partial void OnRunLogIDChanging(int value);
+		
+		partial void OnRunLogProductIDChanged();
+		
+		partial void OnRunLogProductIDChanging(int value);
+		#endregion
+		
+		
+		public RunLogProduct()
+		{
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_productID", Name="ProductID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int ProductID
+		{
+			get
+			{
+				return this._productID;
+			}
+			set
+			{
+				if ((_productID != value))
+				{
+					if (_product.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnProductIDChanging(value);
+					this.SendPropertyChanging();
+					this._productID = value;
+					this.SendPropertyChanged("ProductID");
+					this.OnProductIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_quantity", Name="Quantity", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int Quantity
+		{
+			get
+			{
+				return this._quantity;
+			}
+			set
+			{
+				if ((_quantity != value))
+				{
+					this.OnQuantityChanging(value);
+					this.SendPropertyChanging();
+					this._quantity = value;
+					this.SendPropertyChanged("Quantity");
+					this.OnQuantityChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_runLogID", Name="RunLogID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int RunLogID
+		{
+			get
+			{
+				return this._runLogID;
+			}
+			set
+			{
+				if ((_runLogID != value))
+				{
+					if (_runLog.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRunLogIDChanging(value);
+					this.SendPropertyChanging();
+					this._runLogID = value;
+					this.SendPropertyChanged("RunLogID");
+					this.OnRunLogIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_runLogProductID", Name="RunLog_ProductID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int RunLogProductID
+		{
+			get
+			{
+				return this._runLogProductID;
+			}
+			set
+			{
+				if ((_runLogProductID != value))
+				{
+					this.OnRunLogProductIDChanging(value);
+					this.SendPropertyChanging();
+					this._runLogProductID = value;
+					this.SendPropertyChanged("RunLogProductID");
+					this.OnRunLogProductIDChanged();
+				}
+			}
+		}
+		
+		#region Parents
+		[Association(Storage="_product", OtherKey="ProductID", ThisKey="ProductID", Name="fk_RunLog_Product_Product1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public Product Product
+		{
+			get
+			{
+				return this._product.Entity;
+			}
+			set
+			{
+				if (((this._product.Entity == value) == false))
+				{
+					if ((this._product.Entity != null))
+					{
+						Product previousProduct = this._product.Entity;
+						this._product.Entity = null;
+						previousProduct.RunLogProduct.Remove(this);
+					}
+					this._product.Entity = value;
+					if ((value != null))
+					{
+						value.RunLogProduct.Add(this);
+						_productID = value.ProductID;
+					}
+					else
+					{
+						_productID = default(int);
+					}
+				}
+			}
+		}
+		
+		[Association(Storage="_runLog", OtherKey="RunLogID", ThisKey="RunLogID", Name="fk_RunLog_Product_RunLog1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public RunLog RunLog
+		{
+			get
+			{
+				return this._runLog.Entity;
+			}
+			set
+			{
+				if (((this._runLog.Entity == value) == false))
+				{
+					if ((this._runLog.Entity != null))
+					{
+						RunLog previousRunLog = this._runLog.Entity;
+						this._runLog.Entity = null;
+						previousRunLog.RunLogProduct.Remove(this);
+					}
+					this._runLog.Entity = value;
+					if ((value != null))
+					{
+						value.RunLogProduct.Add(this);
+						_runLogID = value.RunLogID;
+					}
+					else
+					{
+						_runLogID = default(int);
 					}
 				}
 			}
@@ -4224,6 +5035,159 @@ namespace SERVDataContract.DbLinq
 		{
 			this.SendPropertyChanging();
 			entity.UserLevel = null;
+		}
+		#endregion
+	}
+	
+	[Table(Name="SERV.VehicleType")]
+	public partial class VehicleType : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private sbyte _enabled;
+		
+		private string _vehicleType1;
+		
+		private int _vehicleTypeID;
+		
+		private EntitySet<RunLog> _runLog;
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnEnabledChanged();
+		
+		partial void OnEnabledChanging(sbyte value);
+		
+		partial void OnVehicleType1Changed();
+		
+		partial void OnVehicleType1Changing(string value);
+		
+		partial void OnVehicleTypeIDChanged();
+		
+		partial void OnVehicleTypeIDChanging(int value);
+		#endregion
+		
+		
+		public VehicleType()
+		{
+			_runLog = new EntitySet<RunLog>(new Action<RunLog>(this.RunLog_Attach), new Action<RunLog>(this.RunLog_Detach));
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_enabled", Name="Enabled", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public sbyte Enabled
+		{
+			get
+			{
+				return this._enabled;
+			}
+			set
+			{
+				if ((_enabled != value))
+				{
+					this.OnEnabledChanging(value);
+					this.SendPropertyChanging();
+					this._enabled = value;
+					this.SendPropertyChanged("Enabled");
+					this.OnEnabledChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_vehicleType1", Name="VehicleType", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string VehicleType1
+		{
+			get
+			{
+				return this._vehicleType1;
+			}
+			set
+			{
+				if (((_vehicleType1 == value) == false))
+				{
+					this.OnVehicleType1Changing(value);
+					this.SendPropertyChanging();
+					this._vehicleType1 = value;
+					this.SendPropertyChanged("VehicleType1");
+					this.OnVehicleType1Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_vehicleTypeID", Name="VehicleTypeID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int VehicleTypeID
+		{
+			get
+			{
+				return this._vehicleTypeID;
+			}
+			set
+			{
+				if ((_vehicleTypeID != value))
+				{
+					this.OnVehicleTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._vehicleTypeID = value;
+					this.SendPropertyChanged("VehicleTypeID");
+					this.OnVehicleTypeIDChanged();
+				}
+			}
+		}
+		
+		#region Children
+		[Association(Storage="_runLog", OtherKey="VehicleTypeID", ThisKey="VehicleTypeID", Name="fk_RunLog_VehicleType1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<RunLog> RunLog
+		{
+			get
+			{
+				return this._runLog;
+			}
+			set
+			{
+				this._runLog = value;
+			}
+		}
+		#endregion
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
+			if ((h != null))
+			{
+				h(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(string propertyName)
+		{
+			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
+			if ((h != null))
+			{
+				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		#region Attachment handlers
+		private void RunLog_Attach(RunLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.VehicleType = this;
+		}
+		
+		private void RunLog_Detach(RunLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.VehicleType = null;
 		}
 		#endregion
 	}

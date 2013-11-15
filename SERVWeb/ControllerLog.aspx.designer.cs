@@ -11,16 +11,16 @@
 namespace SERVWeb {
 	
 	
-	public partial class Master {
+	public partial class ControllerLog {
 		
-		protected System.Web.UI.WebControls.ContentPlaceHolder titlePlaceholder;
+		protected System.Web.UI.WebControls.Content titlePlaceholderContent;
 		
-		protected SERVWeb.TopControl topControl;
+		protected System.Web.UI.WebControls.Content contentPlaceholderContent;
 		
-		protected SERVWeb.Panels panels;
-		
-		protected System.Web.UI.HtmlControls.HtmlForm cententForm;
-		
-		protected System.Web.UI.WebControls.ContentPlaceHolder contentPlaceholder;
+		public new SERVWeb.Master Master {
+			get {
+				return ((SERVWeb.Master)(base.Master));
+			}
+		}
 	}
 }

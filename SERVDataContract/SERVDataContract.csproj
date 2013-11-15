@@ -42,6 +42,7 @@
     <Compile Include="SERVUser.cs" />
     <Compile Include="UpdatePolicyAttribute.cs" />
     <Compile Include="DbLinq.cs" />
+    <Compile Include="Location.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

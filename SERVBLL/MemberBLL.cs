@@ -133,6 +133,17 @@ namespace SERVBLL
 			return ret;
 		}
 
+		public List<Member> ListMembersWithTags(string tagsCsv)
+		{
+			List<Member> ret = new List<Member>();
+			List<SERVDataContract.DbLinq.Member> ms = SERVDALFactory.Factory.MemberDAL().ListMembersWithTags(tagsCsv);
+			foreach (SERVDataContract.DbLinq.Member m in ms)
+			{
+				ret.Add(new Member() { MemberID = m.MemberID, FirstName = m.FirstName, LastName = m.LastName });
+			}
+			return ret;
+		}
+
 	}
 
 }

@@ -16,5 +16,6 @@ namespace SERVIBLL
 		void RemoveMemberTag(int memberId, string tagName);
 		void SetPassword(string username, string passwordHash);
 		List<string> ListMobileNumbersWithTags(string tagsCsv);
+		List<Member> ListMembersWithTags(string tagsCsv);
 	}
 }

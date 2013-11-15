@@ -99,6 +99,48 @@ function getNumbersForTags(tags, target)
 	);
 }
 
+function writeMembersWithTagAsListItems(tag, target, onClick)
+{
+	callServerSide(
+		"Service/Service.asmx/ListMembersWithTags", 
+		"{'tagsCsv':'" + tag + "'}",
+		function(json)
+		{
+			for(var x = 0; x < json.d.length; x++)
+			{
+				$("#" + target).append("<li id=\"" + target + x + "\"><a>" + json.d[x].FirstName + " " + json.d[x].LastName + "</a></li>");
+				$("#" + target + x).click({param1: json.d[x]}, function(event) {
+					onClick(event.data.param1.MemberID, event.data.param1.FirstName, event.data.param1.LastName);
+				});
+			}
+		},
+		function()
+		{
+		}
+	);
+}
+
+function writeLocations(target, onClick)
+{
+	callServerSide(
+		"Service/Service.asmx/ListLocations", 
+		"{}",
+		function(json)
+		{
+			for(var x = 0; x < json.d.length; x++)
+			{
+				$("#" + target).append("<li id=\"" + target + x + "\"><a>" + json.d[x].LocationName + "</a></li>");
+				$("#" + target + x).click({param1: json.d[x]}, function(event) {
+					onClick(event.data.param1.LocationID, event.data.param1.LocationName);
+				});
+			}
+		},
+		function()
+		{
+		}
+	);
+}
+
 function SearchMembers(userLevel, search)
 {
 	callServerSide(

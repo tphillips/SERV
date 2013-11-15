@@ -19,5 +19,6 @@ namespace SERVIDAL
 		void SetPasswordHash(string username, string passwordHash);
 		void SetUserLastLoginDate(SERVDataContract.DbLinq.User u);
 		List<string> ListMobileNumbersWithTags(string tagsCsv);
+		List<Member> ListMembersWithTags(string tagsCsv);
 	}
 }

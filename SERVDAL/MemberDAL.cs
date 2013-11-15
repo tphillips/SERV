@@ -139,6 +139,30 @@ namespace SERVDAL
 			return ret;
 		}
 
+		public List<Member> ListMembersWithTags(string tagsCsv)
+		{
+			string[] tags = tagsCsv.Split(',');
+			List<string> tagList = new List<string>();
+			foreach (string tag in tags)
+			{
+				if (tag.Trim() != string.Empty) { tagList.Add(tag); }
+			}
+			string inClause = "in (";
+			foreach (string t in tagList)
+			{
+				inClause += "'" + t.Trim() + "',";
+			}
+			inClause = inClause.Substring(0, inClause.Length - 1);
+			inClause += ")";
+			string sql = "select distinct m.MemberID, m.FirstName, m.LastName " +
+			             "from Member m " +
+			             "join Member_Tag mt on mt.MemberID = m.MemberID " +
+			             "join Tag t on t.TagID = mt.TagID " +
+			             "where t.Tag " + inClause +
+			             " order by m.LastName";
+			return db.ExecuteQuery<Member>(sql).ToList();
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();
