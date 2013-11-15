@@ -73,6 +73,7 @@ INSERT INTO `SERV`.`Product` (`ProductID`, `Product`, `Enabled`) VALUES (NULL, '
 INSERT INTO `SERV`.`Product` (`ProductID`, `Product`, `Enabled`) VALUES (NULL, 'Package', 1);
 INSERT INTO `SERV`.`Product` (`ProductID`, `Product`, `Enabled`) VALUES (NULL, 'Other', 1);
 
+DROP TABLE IF EXISTS `SERV`.`RunLog`;
 CREATE  TABLE IF NOT EXISTS `SERV`.`RunLog` (
   `RunLogID` INT NOT NULL AUTO_INCREMENT ,
   `CreatedByUserID` INT NOT NULL ,
