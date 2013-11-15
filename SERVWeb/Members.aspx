@@ -8,10 +8,12 @@
 	
 	<div id="entry" style="display:none">
 		<h3>Member List</h3>
-		<div id="results">
-		
+		<div class="row">
+			<div class="span12">
+				<div id="results">
+				</div>
+			</div>
 		</div>
-		
 		<a type=button id="cmdAdd" class="btn btn-primary btn-lg" href="ViewMember.aspx?new=yes">Add a New Member</a>
 	</div>
 	

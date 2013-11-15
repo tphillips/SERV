@@ -5,9 +5,10 @@ using SERVDataContract.DbLinq;
 
 namespace SERVIDAL
 {
-	public interface ILocationDAL : IDisposable
+	public interface IListDAL : IDisposable
 	{
 		List<Location> ListLocations();
+		List<VehicleType> ListVehicleTypes();
 	}
 }
 

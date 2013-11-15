@@ -5,9 +5,10 @@ using SERVDataContract;
 
 namespace SERVIBLL
 {
-	public interface ILocationBLL
+	public interface ILListBLL
 	{
 		List<Location> ListLocations();
+		List<VehicleType> ListVehicleTypes();
 	}
 }
 

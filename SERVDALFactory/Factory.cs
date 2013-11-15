@@ -23,9 +23,9 @@ namespace SERVDALFactory
 			return new MessageDAL();
 		}
 
-		public static ILocationDAL LocationDAL()
+		public static IListDAL ListDAL()
 		{
-			return new LocationDAL();
+			return new ListDAL();
 		}
 
 	}

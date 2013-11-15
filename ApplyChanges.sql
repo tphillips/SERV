@@ -73,18 +73,16 @@ INSERT INTO `SERV`.`Product` (`ProductID`, `Product`, `Enabled`) VALUES (NULL, '
 INSERT INTO `SERV`.`Product` (`ProductID`, `Product`, `Enabled`) VALUES (NULL, 'Package', 1);
 INSERT INTO `SERV`.`Product` (`ProductID`, `Product`, `Enabled`) VALUES (NULL, 'Other', 1);
 
-DROP TABLE IF EXISTS `SERV`.`RunLog`;
 CREATE  TABLE IF NOT EXISTS `SERV`.`RunLog` (
   `RunLogID` INT NOT NULL AUTO_INCREMENT ,
+  `CreatedByUserID` INT NOT NULL ,
   `CreateDate` TIMESTAMP NOT NULL ,
   `DutyDate` DATETIME NULL ,
   `CallDateTime` VARCHAR(45) NULL ,
   `CollectionLocationID` INT NOT NULL ,
   `CollectDateTime` DATETIME NULL ,
-  `DeliverToLocationID` INT NOT NULL ,
   `DeliverDateTime` DATETIME NULL ,
   `FinalDestinationLocationID` INT NOT NULL ,
-  `RiderMemberID` INT NOT NULL ,
   `ControllerMemberID` INT NOT NULL ,
   `Urgency` INT NOT NULL ,
   `IsTransfer` TINYINT(1) NOT NULL DEFAULT 0 ,
@@ -92,11 +90,31 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`RunLog` (
   `Notes` VARCHAR(600) NULL ,
   `OriginLocationID` INT NOT NULL ,
   `CallFromLocationID` INT NOT NULL ,
+  `RiderMemberID` INT NOT NULL ,
+  `DeliverToLocationID` INT NOT NULL ,
   PRIMARY KEY (`RunLogID`) ,
   INDEX `fk_RunLog_VehicleType1_idx` (`VehicleTypeID` ASC) ,
+  INDEX `fk_RunLog_User1_idx` (`CreatedByUserID` ASC) ,
+  INDEX `fk_RunLog_Member1_idx` (`RiderMemberID` ASC) ,
+  INDEX `fk_RunLog_Location1_idx` (`DeliverToLocationID` ASC) ,
   CONSTRAINT `fk_RunLog_VehicleType1`
     FOREIGN KEY (`VehicleTypeID` )
     REFERENCES `SERV`.`VehicleType` (`VehicleTypeID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RunLog_User1`
+    FOREIGN KEY (`CreatedByUserID` )
+    REFERENCES `SERV`.`User` (`UserID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RunLog_Member1`
+    FOREIGN KEY (`RiderMemberID` )
+    REFERENCES `SERV`.`Member` (`MemberID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RunLog_Location1`
+    FOREIGN KEY (`DeliverToLocationID` )
+    REFERENCES `SERV`.`Location` (`LocationID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

@@ -33,7 +33,6 @@
 
 		</div>
 
-
 		<fieldset>
 
 		<div id="AA" style="display:none">
@@ -97,7 +96,7 @@
 				<input type="text" id="txtCallDate" class="date" />
 
 				<label>Call Time:</label>
-				<input type="text" id="txtCallTime" placeholder="HH:MM" />
+				<input type="text" id="txtCallTime" class="time" placeholder="HH:MM" />
 
 				<label>Call From:</label>
 				<div class="btn-group">
@@ -124,27 +123,42 @@
 
 				<label>Consignment:</label>
 				<div class="btn-group">
-					<button type="button" class="btn" disabled>Blood</button><button type="button" class="btn">-</button><button type="button" class="btn" disabled>0</button><button type="button" class="btn">+</button>
+					<button type="button" class="btn" disabled style="width:90px;">Blood</button>
+					<button type="button" class="btn" onclick="bloodBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnBloodBox" disabled>0
+					</button><button type="button" class="btn" onclick="bloodBox ++; updateBoxCounts();">+</button>
 				</div><br/><br/>
 				<div class="btn-group">
-					<button type="button" class="btn" disabled>Plasma</button><button type="button" class="btn">-</button><button type="button" class="btn" disabled>0</button><button type="button" class="btn">+</button>
+					<button type="button" class="btn" disabled style="width:90px;">Plasma</button>
+					<button type="button" class="btn" onclick="plasmaBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnPlasmaBox" disabled>0
+					</button><button type="button" class="btn" onclick="plasmaBox ++; updateBoxCounts();">+</button>
 				</div><br/><br/>
 				<div class="btn-group">
-					<button type="button" class="btn" disabled>Platelets</button><button type="button" class="btn">-</button><button type="button" class="btn" disabled>0</button><button type="button" class="btn">+</button>
+					<button type="button" class="btn" disabled style="width:90px;">Platelets</button>
+					<button type="button" class="btn" onclick="plateletsBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnPlateletsBox" disabled>0
+					</button><button type="button" class="btn" onclick="plateletsBox ++; updateBoxCounts();">+</button>
 				</div><br/><br/>
 				<div class="btn-group">
-					<button type="button" class="btn" disabled>Sample</button><button type="button" class="btn">-</button><button type="button" class="btn" disabled>0</button><button type="button" class="btn">+</button>
+					<button type="button" class="btn" disabled style="width:90px;">Sample</button>
+					<button type="button" class="btn" onclick="sampleBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnSampleBox" disabled>0
+					</button><button type="button" class="btn" onclick="sampleBox ++; updateBoxCounts();">+</button>
 				</div><br/><br/>
 				<div class="btn-group">
-					<button type="button" class="btn" disabled>Package</button><button type="button" class="btn">-</button><button type="button" class="btn" disabled>0</button><button type="button" class="btn">+</button>
+					<button type="button" class="btn" disabled style="width:90px;">Package</button>
+					<button type="button" class="btn" onclick="packageBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnPackageBox" disabled>0
+					</button><button type="button" class="btn" onclick="packageBox ++; updateBoxCounts();">+</button>
 				</div>
 				<br/><br/>
 
 				<label>Vehicle:</label>
 				<div class="btn-group">
-					<button type="button" class="btn" disabled>Select the vehicle</button>
+					<button type="button" class="btn" disabled id="btnVehicle">Select the vehicle</button>
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu" id="lstVehicles">
 						<!-- dropdown menu links -->
 					</ul>
 				</div>
@@ -186,7 +200,7 @@
 				</div>
 				<br/><br/>
 
-				<label>Delivery Time:</label>
+				<label>Delivery / Exchange Time:</label>
 				<input type="text" id="txtDeliverTime" placeholder="HH:MM" />
 
 				<label>Final Destination:</label>
@@ -206,24 +220,128 @@
 
 	</div>
 	<hr/>
-	<button type=button class="btn btn-primary btn-lg" onclick="SaveMember()">Save</button>
+	<button type=button class="btn btn-primary btn-lg" onclick="saveRun()">Save Run</button>
+
+	<div id="alert" style="display:none" title="SERV">
+		<p><span id="alertMessage">Default message</span></p>
+	</div>
 
 </div>
 
 <script>
 
+	var bloodBox = 0;
+	var plasmaBox = 0;
+	var plateletsBox=0
+	var sampleBox=0;
+	var packageBox=0;
+
+	var runType = "";
+	
+	var controllerId=0;
+	var riderId=0;
+	var callerLocationId=0;
+	var originLocationId=0;
+	var pickupLocationId=0;
+	var dropLocationId=0;
+	var finalLocationId=0;
+	var vehicleId=0;
+
     $(function() 
 	{
-		$(".date").datepicker();
+		$(".date").datepicker({ dateFormat: 'dd M yy' });
 		listControllers();
 		listRiders();
 		listLocations();
+		listVehicleTypes();
 		$("#loading").slideUp();
 		$("#entry").slideDown();
 	});
 
+	function saveRun()
+	{
+		if (validate())
+		{
+			var json = "{}";
+		}
+	}
+
+	function validate()
+	{
+		if (runType == "")
+		{
+			niceAlert("You need to choose a Run Type");	return false;
+		}
+		if (controllerId == 0)
+		{
+			niceAlert("You need to choose a Controller"); return false;
+		}
+		if (riderId == 0)
+		{
+			niceAlert("You need to choose a Rider"); return false;
+		}
+		if (vehicleId == 0)
+		{
+			niceAlert("What did the rider / driver travel on or in?"); return false;
+		}
+		if (runType=="blood")
+		{
+			if ($("#txtShiftDate").val() == "") 
+			{
+				niceAlert("What shift date are you logging against?"); return false;
+			}
+			if ($("#txtCallDate").val() == "") 
+			{
+				niceAlert("What date did the call come in?"); return false;
+			}
+			if ($("#txtCallTime").val() == "") 
+			{
+				niceAlert("What time did the call come in?"); return false;
+			}
+			if (bloodBox + plasmaBox + plateletsBox + sampleBox + packageBox == 0)
+			{
+				niceAlert("What did the rider / driver carry?"); return false;
+			}
+			if (callerLocationId == 0)
+			{
+				niceAlert("Who called SERV NOW?"); return false;
+			}
+			if (originLocationId == 0)
+			{
+				niceAlert("What was the consignments origin? (This may not be where we collected from)"); return false;
+			}
+			if (pickupLocationId == 0)
+			{
+				niceAlert("Where did we pickup from?"); return false;
+			}
+			if (dropLocationId == 0)
+			{
+				niceAlert("Where did we drop off?"); return false;
+			}
+			if (finalLocationId == 0)
+			{
+				niceAlert("What was the consignments final destination? (This may not be where we dropped off)"); return false;
+			}
+		}
+	}
+
+	function updateBoxCounts()
+	{
+		if (bloodBox < 0) { bloodBox = 0; }
+		if (plasmaBox < 0) { plasmaBox = 0; }
+		if (plateletsBox < 0) { plateletsBox = 0; }
+		if (sampleBox < 0) { sampleBox = 0; }
+		if (packageBox < 0) { packageBox = 0; }
+		$("#btnBloodBox").text(bloodBox);
+		$("#btnPlasmaBox").text(plasmaBox);
+		$("#btnPlateletsBox").text(plateletsBox);
+		$("#btnSampleBox").text(sampleBox);
+		$("#btnPackageBox").text(packageBox);
+	}
+
 	function showBloodPanel()
 	{
+		runType="blood";
 		$("#blood").slideUp();
 		$("#AA").slideUp();
 		$("#Water").slideUp();
@@ -233,6 +351,7 @@
 
 	function showAAPanel()
 	{
+		runType="aa";
 		$("#blood").slideUp();
 		$("#AA").slideUp();
 		$("#Water").slideUp();
@@ -242,6 +361,7 @@
 
 	function showMilkPanel()
 	{
+		runType="milk";
 		$("#blood").slideUp();
 		$("#AA").slideUp();
 		$("#Water").slideUp();
@@ -251,6 +371,7 @@
 
 	function showWaterPanel()
 	{
+		runType="water";
 		$("#blood").slideUp();
 		$("#AA").slideUp();
 		$("#Water").slideUp();
@@ -271,45 +392,64 @@
 	function listLocations()
 	{
 		writeLocations("lstCallers", callerSelected);
+		// relying on jQuery ajax caching here . . .
 		writeLocations("lstOrigins", originSelected);
 		writeLocations("lstPickups", pickupSelected);
 		writeLocations("lstDrops", dropSelected);
 		writeLocations("lstFinalDests", finalDestSelected);
 	}
 
+	function listVehicleTypes()
+	{
+		writeVehicleTypes("lstVehicles", vehicleSelected);
+	}
+
+	function vehicleSelected(vehicleTypeId, vehicleType)
+	{
+		$("#btnVehicle").text(vehicleType);
+		vehicleId = vehicleTypeId;
+	}
+
 	function callerSelected(locationId, locationName)
 	{
 		$("#btnCaller").text(locationName);
+		callerLocationId = locationId;
 	}
 
 	function originSelected(locationId, locationName)
 	{
 		$("#btnOrigin").text(locationName);
+		originLocationId = locationId;
 	}
 
 	function pickupSelected(locationId, locationName)
 	{
 		$("#btnPickup").text(locationName);
+		pickupLocationId = locationId;
 	}
 
 	function dropSelected(locationId, locationName)
 	{
 		$("#btnDrop").text(locationName);
+		dropLocationId = locationId;
 	}
 
 	function finalDestSelected(locationId, locationName)
 	{
 		$("#btnFinalDest").text(locationName);
+		finalLocationId = locationId;
 	}
 
 	function controllerSelected(memberId, firstName, lastName)
 	{
 		$("#btnController").text(firstName + " " + lastName);
+		controllerId = memberId;
 	}
 
 	function riderSelected(memberId, firstName, lastName)
 	{
 		$("#btnRider").text(firstName + " " + lastName);
+		riderId = memberId;
 	}
 
 </script>

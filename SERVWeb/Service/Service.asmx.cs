@@ -129,7 +129,22 @@ namespace SERVWeb
 		public List<Location> ListLocations()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.LocationBLL().ListLocations();
+			return SERVBLLFactory.Factory.ListBLL().ListLocations();
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<VehicleType> ListVehicleTypes()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.ListBLL().ListVehicleTypes();
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool LogBloodRun()
+		{
+			throw new NotImplementedException();
+			//Authenticate();
+			//return SERVBLLFactory.Factory.ListBLL().ListVehicleTypes();
 		}
 
 		[WebMethod(EnableSession = true)]

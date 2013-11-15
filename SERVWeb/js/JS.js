@@ -141,6 +141,27 @@ function writeLocations(target, onClick)
 	);
 }
 
+function writeVehicleTypes(target, onClick)
+{
+	callServerSide(
+		"Service/Service.asmx/ListVehicleTypes", 
+		"{}",
+		function(json)
+		{
+			for(var x = 0; x < json.d.length; x++)
+			{
+				$("#" + target).append("<li id=\"" + target + x + "\"><a>" + json.d[x].VehicleTypeName + "</a></li>");
+				$("#" + target + x).click({param1: json.d[x]}, function(event) {
+					onClick(event.data.param1.VehicleTypeID, event.data.param1.VehicleTypeName);
+				});
+			}
+		},
+		function()
+		{
+		}
+	);
+}
+
 function SearchMembers(userLevel, search)
 {
 	callServerSide(
@@ -255,6 +276,16 @@ function JsonifyBasicMemberFromForm(memberId)
 		'"LastGDPGMPDateString":"' + $("#txtGMPDate").val() + '", ' +
 		'"AdQualType":"' + $("#txtAdQualType").val() + '", ' +
 		'"Notes":"' + $("#txtNotes").val() + '"}}';
+}
+
+function niceAlert(msg)
+{
+	$("#alertMessage").text(msg);
+	$("#alert").dialog({
+	  autoOpen: true,
+	  show: { effect: "slide", duration: 200 },
+	  hide: { effect: "slide", duration: 200 }
+	});
 }
 
 function callServerSide(url, data, success, error)

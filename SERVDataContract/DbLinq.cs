@@ -824,6 +824,8 @@ namespace SERVDataContract.DbLinq
 		
 		private int _locationID;
 		
+		private EntitySet<RunLog> _runLog;
+		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
 		
@@ -863,6 +865,7 @@ namespace SERVDataContract.DbLinq
 		
 		public Location()
 		{
+			_runLog = new EntitySet<RunLog>(new Action<RunLog>(this.RunLog_Attach), new Action<RunLog>(this.RunLog_Detach));
 			this.OnCreated();
 		}
 		
@@ -1034,6 +1037,22 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		#region Children
+		[Association(Storage="_runLog", OtherKey="DeliverToLocationID", ThisKey="LocationID", Name="fk_RunLog_Location1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<RunLog> RunLog
+		{
+			get
+			{
+				return this._runLog;
+			}
+			set
+			{
+				this._runLog = value;
+			}
+		}
+		#endregion
+		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -1055,6 +1074,20 @@ namespace SERVDataContract.DbLinq
 				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		#region Attachment handlers
+		private void RunLog_Attach(RunLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.Location = this;
+		}
+		
+		private void RunLog_Detach(RunLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.Location = null;
+		}
+		#endregion
 	}
 	
 	[Table(Name="SERV.Member")]
@@ -1128,6 +1161,8 @@ namespace SERVDataContract.DbLinq
 		private EntitySet<MemberDuty> _memberDuty;
 		
 		private EntitySet<Message> _message;
+		
+		private EntitySet<RunLog> _runLog;
 		
 		private EntitySet<User> _user;
 		
@@ -1262,6 +1297,7 @@ namespace SERVDataContract.DbLinq
 			_memberTag = new EntitySet<MemberTag>(new Action<MemberTag>(this.MemberTag_Attach), new Action<MemberTag>(this.MemberTag_Detach));
 			_memberDuty = new EntitySet<MemberDuty>(new Action<MemberDuty>(this.MemberDuty_Attach), new Action<MemberDuty>(this.MemberDuty_Detach));
 			_message = new EntitySet<Message>(new Action<Message>(this.Message_Attach), new Action<Message>(this.Message_Detach));
+			_runLog = new EntitySet<RunLog>(new Action<RunLog>(this.RunLog_Attach), new Action<RunLog>(this.RunLog_Detach));
 			_user = new EntitySet<User>(new Action<User>(this.User_Attach), new Action<User>(this.User_Detach));
 			this.OnCreated();
 		}
@@ -1940,6 +1976,20 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		[Association(Storage="_runLog", OtherKey="RiderMemberID", ThisKey="MemberID", Name="fk_RunLog_Member1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<RunLog> RunLog
+		{
+			get
+			{
+				return this._runLog;
+			}
+			set
+			{
+				this._runLog = value;
+			}
+		}
+		
 		[Association(Storage="_user", OtherKey="MemberID", ThisKey="MemberID", Name="fk_User_Member")]
 		[DebuggerNonUserCode()]
 		public EntitySet<User> User
@@ -2087,6 +2137,18 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		private void Message_Detach(Message entity)
+		{
+			this.SendPropertyChanging();
+			entity.Member = null;
+		}
+		
+		private void RunLog_Attach(RunLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.Member = this;
+		}
+		
+		private void RunLog_Detach(RunLog entity)
 		{
 			this.SendPropertyChanging();
 			entity.Member = null;
@@ -3724,6 +3786,8 @@ namespace SERVDataContract.DbLinq
 		
 		private System.DateTime _createDate;
 		
+		private int _createdByUserID;
+		
 		private System.Nullable<System.DateTime> _deliverDateTime;
 		
 		private int _deliverToLocationID;
@@ -3747,6 +3811,12 @@ namespace SERVDataContract.DbLinq
 		private int _vehicleTypeID;
 		
 		private EntitySet<RunLogProduct> _runLogProduct;
+		
+		private EntityRef<Location> _location = new EntityRef<Location>();
+		
+		private EntityRef<Member> _member = new EntityRef<Member>();
+		
+		private EntityRef<User> _user = new EntityRef<User>();
 		
 		private EntityRef<VehicleType> _vehicleType = new EntityRef<VehicleType>();
 		
@@ -3776,6 +3846,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnCreateDateChanged();
 		
 		partial void OnCreateDateChanging(System.DateTime value);
+		
+		partial void OnCreatedByUserIDChanged();
+		
+		partial void OnCreatedByUserIDChanging(int value);
 		
 		partial void OnDeliverDateTimeChanged();
 		
@@ -3955,6 +4029,31 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		[Column(Storage="_createdByUserID", Name="CreatedByUserID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int CreatedByUserID
+		{
+			get
+			{
+				return this._createdByUserID;
+			}
+			set
+			{
+				if ((_createdByUserID != value))
+				{
+					if (_user.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCreatedByUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._createdByUserID = value;
+					this.SendPropertyChanged("CreatedByUserID");
+					this.OnCreatedByUserIDChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_deliverDateTime", Name="DeliverDateTime", DbType="datetime", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
 		public System.Nullable<System.DateTime> DeliverDateTime
@@ -3988,6 +4087,10 @@ namespace SERVDataContract.DbLinq
 			{
 				if ((_deliverToLocationID != value))
 				{
+					if (_location.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnDeliverToLocationIDChanging(value);
 					this.SendPropertyChanging();
 					this._deliverToLocationID = value;
@@ -4114,6 +4217,10 @@ namespace SERVDataContract.DbLinq
 			{
 				if ((_riderMemberID != value))
 				{
+					if (_member.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnRiderMemberIDChanging(value);
 					this.SendPropertyChanging();
 					this._riderMemberID = value;
@@ -4207,6 +4314,102 @@ namespace SERVDataContract.DbLinq
 		#endregion
 		
 		#region Parents
+		[Association(Storage="_location", OtherKey="LocationID", ThisKey="DeliverToLocationID", Name="fk_RunLog_Location1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public Location Location
+		{
+			get
+			{
+				return this._location.Entity;
+			}
+			set
+			{
+				if (((this._location.Entity == value) == false))
+				{
+					if ((this._location.Entity != null))
+					{
+						Location previousLocation = this._location.Entity;
+						this._location.Entity = null;
+						previousLocation.RunLog.Remove(this);
+					}
+					this._location.Entity = value;
+					if ((value != null))
+					{
+						value.RunLog.Add(this);
+						_deliverToLocationID = value.LocationID;
+					}
+					else
+					{
+						_deliverToLocationID = default(int);
+					}
+				}
+			}
+		}
+		
+		[Association(Storage="_member", OtherKey="MemberID", ThisKey="RiderMemberID", Name="fk_RunLog_Member1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public Member Member
+		{
+			get
+			{
+				return this._member.Entity;
+			}
+			set
+			{
+				if (((this._member.Entity == value) == false))
+				{
+					if ((this._member.Entity != null))
+					{
+						Member previousMember = this._member.Entity;
+						this._member.Entity = null;
+						previousMember.RunLog.Remove(this);
+					}
+					this._member.Entity = value;
+					if ((value != null))
+					{
+						value.RunLog.Add(this);
+						_riderMemberID = value.MemberID;
+					}
+					else
+					{
+						_riderMemberID = default(int);
+					}
+				}
+			}
+		}
+		
+		[Association(Storage="_user", OtherKey="UserID", ThisKey="CreatedByUserID", Name="fk_RunLog_User1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public User User
+		{
+			get
+			{
+				return this._user.Entity;
+			}
+			set
+			{
+				if (((this._user.Entity == value) == false))
+				{
+					if ((this._user.Entity != null))
+					{
+						User previousUser = this._user.Entity;
+						this._user.Entity = null;
+						previousUser.RunLog.Remove(this);
+					}
+					this._user.Entity = value;
+					if ((value != null))
+					{
+						value.RunLog.Add(this);
+						_createdByUserID = value.UserID;
+					}
+					else
+					{
+						_createdByUserID = default(int);
+					}
+				}
+			}
+		}
+		
 		[Association(Storage="_vehicleType", OtherKey="VehicleTypeID", ThisKey="VehicleTypeID", Name="fk_RunLog_VehicleType1", IsForeignKey=true)]
 		[DebuggerNonUserCode()]
 		public VehicleType VehicleType
@@ -4646,6 +4849,8 @@ namespace SERVDataContract.DbLinq
 		
 		private EntitySet<Message> _message;
 		
+		private EntitySet<RunLog> _runLog;
+		
 		private EntityRef<Member> _member = new EntityRef<Member>();
 		
 		private EntityRef<UserLevel> _userLevel = new EntityRef<UserLevel>();
@@ -4678,6 +4883,7 @@ namespace SERVDataContract.DbLinq
 		public User()
 		{
 			_message = new EntitySet<Message>(new Action<Message>(this.Message_Attach), new Action<Message>(this.Message_Detach));
+			_runLog = new EntitySet<RunLog>(new Action<RunLog>(this.RunLog_Attach), new Action<RunLog>(this.RunLog_Detach));
 			this.OnCreated();
 		}
 		
@@ -4808,6 +5014,20 @@ namespace SERVDataContract.DbLinq
 				this._message = value;
 			}
 		}
+		
+		[Association(Storage="_runLog", OtherKey="CreatedByUserID", ThisKey="UserID", Name="fk_RunLog_User1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<RunLog> RunLog
+		{
+			get
+			{
+				return this._runLog;
+			}
+			set
+			{
+				this._runLog = value;
+			}
+		}
 		#endregion
 		
 		#region Parents
@@ -4906,6 +5126,18 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		private void Message_Detach(Message entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void RunLog_Attach(RunLog entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void RunLog_Detach(RunLog entity)
 		{
 			this.SendPropertyChanging();
 			entity.User = null;

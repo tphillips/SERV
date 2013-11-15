@@ -13,7 +13,9 @@ namespace SERVWeb {
 	
 	public partial class Members {
 		
-		protected System.Web.UI.HtmlControls.HtmlGenericControl titlePlaceholderContent;
+		protected System.Web.UI.WebControls.Content titlePlaceholderContent;
+		
+		protected System.Web.UI.WebControls.Content contentPlaceholderContent;
 		
 		public new SERVWeb.Master Master {
 			get {
