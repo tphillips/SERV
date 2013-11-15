@@ -157,6 +157,30 @@ namespace SERVBLL
 			return true;
 		}
 
+		public bool CreateRunLog(DateTime callDateTime, int callFromLocationId, DateTime collectDateTime, int collectionLocationId, 
+			int controllerMemberId, int createdByUserId, DateTime deliverDateTime, int deliverToLocationId, DateTime dutyDate, 
+			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, string productIdCsv)
+		{
+			SERVDataContract.DbLinq.RunLog log = new SERVDataContract.DbLinq.RunLog();
+			log.CallDateTime = callDateTime;
+			log.CallFromLocationID = callFromLocationId;
+			log.CollectDateTime = collectDateTime;
+			log.CollectionLocationID = collectionLocationId;
+			log.ControllerMemberID = controllerMemberId;
+			log.CreateDate = DateTime.Now;
+			log.CreatedByUserID = createdByUserId;
+			log.DeliverDateTime = deliverDateTime;
+			log.DeliverToLocationID = deliverToLocationId;
+			log.DutyDate = dutyDate;
+			log.FinalDestinationLocationID = finalDestinationLocationId;
+			log.IsTransfer = 0;
+			log.OriginLocationID = originLocationId;
+			log.RiderMemberID = riderMemberId;
+			log.Urgency = urgency;
+			log.VehicleTypeID = vehicleTypeId;
+			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log) > 0;
+		}
+
 	}
 }
 

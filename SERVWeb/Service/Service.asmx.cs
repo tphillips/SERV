@@ -140,11 +140,18 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
-		public bool LogBloodRun()
+		public bool LogRun(string callDateTime, int callFromLocationId, string collectDateTime, int collectionLocationId, 
+			int controllerMemberId, string deliverDateTime, int deliverToLocationId, string dutyDate, 
+			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, string productIdCsv)
 		{
-			throw new NotImplementedException();
-			//Authenticate();
-			//return SERVBLLFactory.Factory.ListBLL().ListVehicleTypes();
+			Authenticate();
+			DateTime _callDateTime = DateTime.Parse(callDateTime);
+			DateTime _collectDateTime = DateTime.Parse(collectDateTime);
+			DateTime _deliverDateTime = DateTime.Parse(deliverDateTime);
+			DateTime _dutyDate = DateTime.Parse(dutyDate);
+			return SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
+				controllerMemberId, CurrentUser().UserID, _deliverDateTime, deliverToLocationId, _dutyDate, 
+				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv);
 		}
 
 		[WebMethod(EnableSession = true)]

@@ -108,6 +108,23 @@
 				</div>
 				<br/><br>
 
+				<label>Final Destination:</label>
+				<div class="btn-group">
+					<button type="button" class="btn" id="btnFinalDest" disabled>The consignment's final destination</button>
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+					<ul class="dropdown-menu" id="lstFinalDests">
+						<!-- dropdown menu links -->
+					</ul>
+				</div>
+				<br/><br>
+
+				<label>Urgency:</label>
+				<div class="btn-group">
+					<button type="button" class="btn" onclick="urgency --; updateUrgency();">-</button>
+					<button type="button" class="btn" id="btnUrgency" disabled>2
+					</button><button type="button" class="btn" onclick="urgency ++; updateUrgency();">+</button>
+				</div><br/><br/>
+
 				<label>Rider / Driver:</label>
 				<div class="btn-group">
 					<button type="button" class="btn" id="btnRider" disabled>Allocated Rider's Name</button>
@@ -120,6 +137,16 @@
 			</div>
 
 			<div class="span4">
+
+				<label>Consignment Origin:</label>
+				<div class="btn-group">
+					<button type="button" class="btn" id="btnOrigin" disabled>Where the consignment originated</button>
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+					<ul class="dropdown-menu" id="lstOrigins">
+						<!-- dropdown menu links -->
+					</ul>
+				</div>
+				<br/><br>
 
 				<label>Consignment:</label>
 				<div class="btn-group">
@@ -167,16 +194,6 @@
 
 			<div class="span4">
 
-				<label>Consignment Origin:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnOrigin" disabled>Where the consignment originated</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstOrigins">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-				<br/><br>
-
 				<label>Collected From:</label>
 				<div class="btn-group">
 					<button type="button" class="btn" id="btnPickup" disabled>Where we picked up the consignment</button>
@@ -186,6 +203,9 @@
 					</ul>
 				</div>
 				<br/><br/>
+
+				<label>Pickup Date:</label>
+				<input type="text" id="txtPickupDate" class="date" />
 
 				<label>Pickup Time:</label>
 				<input type="text" id="txtPickupTime" placeholder="HH:MM" />
@@ -200,17 +220,11 @@
 				</div>
 				<br/><br/>
 
+				<label>Delivery / Exchange Date:</label>
+				<input type="text" id="txtDeliverDate" class="date" />
+
 				<label>Delivery / Exchange Time:</label>
 				<input type="text" id="txtDeliverTime" placeholder="HH:MM" />
-
-				<label>Final Destination:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnFinalDest" disabled>The consignment's final destination</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstFinalDests">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
 
 			</div>
 
@@ -235,6 +249,8 @@
 	var plateletsBox=0
 	var sampleBox=0;
 	var packageBox=0;
+
+	var urgency=2;
 
 	var runType = "";
 	
@@ -262,7 +278,20 @@
 	{
 		if (validate())
 		{
-			var json = "{}";
+			var json = "{'callDateTime':'" + $("#txtCallDate").val() + " " + $("#txtCallTime").val() + 
+			"', 'callFromLocationId':'" + callerLocationId + 
+			"', 'collectDateTime':'" + + 
+			"', 'collectionLocationId':'" + pickupLocationId + 
+			"', 'controllerMemberId':'" + controllerId + 
+			"', 'deliverDateTime':'" + + 
+			"', 'deliverToLocationId':'" + dropLocationId + 
+			"', 'dutyDate':'" + $("#txtShiftDate").val() + 
+			"', 'finalDestinationLocationId':'" + finalLocationId + 
+			"', 'originLocationId':'" + originLocationId + 
+			"', 'riderMemberId':'" + riderId + 
+			"', 'urgency':'" + + 
+			"', 'vehicleTypeId':'" + + 
+			"', 'productIdCsv':'" + + "'}";
 		}
 	}
 
@@ -323,6 +352,13 @@
 				niceAlert("What was the consignments final destination? (This may not be where we dropped off)"); return false;
 			}
 		}
+	}
+
+	function updateUrgency()
+	{
+		if (urgency < 1) { urgency = 1; }
+		if (urgency > 3) { urgency = 3; }
+		$("#btnUrgency").text(urgency);
 	}
 
 	function updateBoxCounts()

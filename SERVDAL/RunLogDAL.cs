@@ -35,6 +35,13 @@ namespace SERVDAL
 			db.SubmitChanges();
 		}
 
+		public int CreateRunLog(RunLog log)
+		{
+			db.RunLog.InsertOnSubmit(log);
+			db.SubmitChanges();
+			return log.RunLogID;
+		}
+
 		public void TruncateRawRunLog()
 		{
 			db.ExecuteCommand("truncate table RawRunLog");

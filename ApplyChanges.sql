@@ -1,4 +1,5 @@
-
+DROP TABLE IF EXISTS `SERV`.`RunLog_Product`;
+DROP TABLE IF EXISTS `SERV`.`RunLog`;
 DROP TABLE IF EXISTS `SERV`.`Location`;
 CREATE  TABLE IF NOT EXISTS `SERV`.`Location` (
   `LocationID` INT NOT NULL AUTO_INCREMENT ,
@@ -11,7 +12,7 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`Location` (
   `Enabled` TINYINT(1) NOT NULL DEFAULT true ,
   PRIMARY KEY (`LocationID`) )
 ENGINE = InnoDB;
-
+TRUNCATE TABLE `SERV`.`Location`;
 INSERT INTO `SERV`.`Location` (`LocationID`, `Location`, `Lat`, `Lng`, `Hospital`, `Changeover`, `BloodBank`, `Enabled`) VALUES (NULL, 'NBS Tooting', NULL, NULL, 0, 0, 1, 1);
 INSERT INTO `SERV`.`Location` (`LocationID`, `Location`, `Lat`, `Lng`, `Hospital`, `Changeover`, `BloodBank`, `Enabled`) VALUES (NULL, 'Hooley', NULL, NULL, 0, 1, 0, 1);
 INSERT INTO `SERV`.`Location` (`LocationID`, `Location`, `Lat`, `Lng`, `Hospital`, `Changeover`, `BloodBank`, `Enabled`) VALUES (NULL, 'Royal Surrey', NULL, NULL, 1, 0, 0, 1);
@@ -38,7 +39,7 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`VehicleType` (
   `Enabled` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`VehicleTypeID`) )
 ENGINE = InnoDB;
-
+TRUNCATE TABLE `SERV`.`VehicleType`;
 INSERT INTO `SERV`.`VehicleType` (`VehicleTypeID`, `VehicleType`, `Enabled`) VALUES (NULL, 'Bike', 1);
 INSERT INTO `SERV`.`VehicleType` (`VehicleTypeID`, `VehicleType`, `Enabled`) VALUES (NULL, 'Car', 1);
 INSERT INTO `SERV`.`VehicleType` (`VehicleTypeID`, `VehicleType`, `Enabled`) VALUES (NULL, 'TB1', 1);
@@ -54,7 +55,7 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`Product` (
   `Enabled` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`ProductID`) )
 ENGINE = InnoDB;
-
+TRUNCATE TABLE `SERV`.`Product`;
 INSERT INTO `SERV`.`Product` (`ProductID`, `Product`, `Enabled`) VALUES (NULL, 'Blood', 1);
 INSERT INTO `SERV`.`Product` (`ProductID`, `Product`, `Enabled`) VALUES (NULL, 'Platelets', 1);
 INSERT INTO `SERV`.`Product` (`ProductID`, `Product`, `Enabled`) VALUES (NULL, 'Plasma', 1);
@@ -79,7 +80,7 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`RunLog` (
   `CreatedByUserID` INT NOT NULL ,
   `CreateDate` TIMESTAMP NOT NULL ,
   `DutyDate` DATETIME NULL ,
-  `CallDateTime` VARCHAR(45) NULL ,
+  `CallDateTime` DATETIME NULL ,
   `CollectionLocationID` INT NOT NULL ,
   `CollectDateTime` DATETIME NULL ,
   `DeliverDateTime` DATETIME NULL ,

@@ -3774,7 +3774,7 @@ namespace SERVDataContract.DbLinq
 		
 		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
 		
-		private string _callDateTime;
+		private System.Nullable<System.DateTime> _callDateTime;
 		
 		private int _callFromLocationID;
 		
@@ -3825,7 +3825,7 @@ namespace SERVDataContract.DbLinq
 		
 		partial void OnCallDateTimeChanged();
 		
-		partial void OnCallDateTimeChanging(string value);
+		partial void OnCallDateTimeChanging(System.Nullable<System.DateTime> value);
 		
 		partial void OnCallFromLocationIDChanged();
 		
@@ -3903,9 +3903,9 @@ namespace SERVDataContract.DbLinq
 			this.OnCreated();
 		}
 		
-		[Column(Storage="_callDateTime", Name="CallDateTime", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[Column(Storage="_callDateTime", Name="CallDateTime", DbType="datetime", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
-		public string CallDateTime
+		public System.Nullable<System.DateTime> CallDateTime
 		{
 			get
 			{
@@ -3913,7 +3913,7 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_callDateTime == value) == false))
+				if ((_callDateTime != value))
 				{
 					this.OnCallDateTimeChanging(value);
 					this.SendPropertyChanging();
