@@ -19,6 +19,7 @@
 				<ul class="dropdown-menu" id="lstControllers">
 					<!-- dropdown menu links -->
 				</ul>
+
 			</div>
 
 			<h4>What sort of run are you recording?</h4>
@@ -108,28 +109,31 @@
 				</div>
 				<br/><br>
 
+				<label>Collected From:</label>
+				<div class="btn-group">
+					<button type="button" class="btn" id="btnPickup" disabled>Where we picked up the consignment</button>
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+					<ul class="dropdown-menu" id="lstPickups">
+						<!-- dropdown menu links -->
+					</ul>
+				</div>
+				<br/><br/>
+
+				<label>Taken To:</label>
+				<div class="btn-group">
+					<button type="button" class="btn" id="btnDrop" disabled>Where we took the consignment to</button>
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+					<ul class="dropdown-menu" id="lstDrops">
+						<!-- dropdown menu links -->
+					</ul>
+				</div>
+				<br/><br/>
+
 				<label>Final Destination:</label>
 				<div class="btn-group">
 					<button type="button" class="btn" id="btnFinalDest" disabled>The consignment's final destination</button>
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 					<ul class="dropdown-menu" id="lstFinalDests">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-				<br/><br>
-
-				<label>Urgency:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" onclick="urgency --; updateUrgency();">-</button>
-					<button type="button" class="btn" id="btnUrgency" disabled>2
-					</button><button type="button" class="btn" onclick="urgency ++; updateUrgency();">+</button>
-				</div><br/><br/>
-
-				<label>Rider / Driver:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnRider" disabled>Allocated Rider's Name</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstRiders">
 						<!-- dropdown menu links -->
 					</ul>
 				</div>
@@ -147,6 +151,13 @@
 					</ul>
 				</div>
 				<br/><br>
+
+				<label>Urgency:</label>
+				<div class="btn-group">
+					<button type="button" class="btn" onclick="urgency --; updateUrgency();">-</button>
+					<button type="button" class="btn" id="btnUrgency" disabled>2
+					</button><button type="button" class="btn" onclick="urgency ++; updateUrgency();">+</button>
+				</div><br/><br/>
 
 				<label>Consignment:</label>
 				<div class="btn-group">
@@ -181,24 +192,25 @@
 				</div>
 				<br/><br/>
 
+			</div>
+
+			<div class="span4">
+
+				<label>Rider / Driver:</label>
+				<div class="btn-group">
+					<button type="button" class="btn" id="btnRider" disabled>Allocated Rider's Name</button>
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+					<ul class="dropdown-menu" id="lstRiders">
+						<!-- dropdown menu links -->
+					</ul>
+				</div>
+				<br/><br/>
+
 				<label>Vehicle:</label>
 				<div class="btn-group">
 					<button type="button" class="btn" disabled id="btnVehicle">Select the vehicle</button>
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 					<ul class="dropdown-menu" id="lstVehicles">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-
-			</div>
-
-			<div class="span4">
-
-				<label>Collected From:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnPickup" disabled>Where we picked up the consignment</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstPickups">
 						<!-- dropdown menu links -->
 					</ul>
 				</div>
@@ -209,16 +221,6 @@
 
 				<label>Pickup Time:</label>
 				<input type="text" id="txtPickupTime" placeholder="HH:MM" />
-
-				<label>Taken To:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnDrop" disabled>Where we took the consignment to</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstDrops">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-				<br/><br/>
 
 				<label>Delivery / Exchange Date:</label>
 				<input type="text" id="txtDeliverDate" class="date" />
@@ -274,24 +276,82 @@
 		$("#entry").slideDown();
 	});
 
+	function productCsv()
+	{
+		var ret = "";
+		if (bloodBox > 0)
+		{
+			for (var x = 0; x < bloodBox; x++)
+			{
+				ret += "1,";
+			}
+		}
+		if (plasmaBox > 0)
+		{
+			for (var x = 0; x < plasmaBox; x++)
+			{
+				ret += "2,";
+			}
+		}
+		if (plateletsBox > 0)
+		{
+			for (var x = 0; x < plateletsBox; x++)
+			{
+				ret += "3,";
+			}
+		}
+		if (sampleBox > 0)
+		{
+			for (var x = 0; x < sampleBox; x++)
+			{
+				ret += "4,";
+			}
+		}
+		if (packageBox > 0)
+		{
+			for (var x = 0; x < packageBox; x++)
+			{
+				ret += "5,";
+			}
+		}
+		return ret;
+	}
+
 	function saveRun()
 	{
 		if (validate())
 		{
 			var json = "{'callDateTime':'" + $("#txtCallDate").val() + " " + $("#txtCallTime").val() + 
-			"', 'callFromLocationId':'" + callerLocationId + 
-			"', 'collectDateTime':'" + + 
-			"', 'collectionLocationId':'" + pickupLocationId + 
-			"', 'controllerMemberId':'" + controllerId + 
-			"', 'deliverDateTime':'" + + 
-			"', 'deliverToLocationId':'" + dropLocationId + 
-			"', 'dutyDate':'" + $("#txtShiftDate").val() + 
-			"', 'finalDestinationLocationId':'" + finalLocationId + 
-			"', 'originLocationId':'" + originLocationId + 
-			"', 'riderMemberId':'" + riderId + 
-			"', 'urgency':'" + + 
-			"', 'vehicleTypeId':'" + + 
-			"', 'productIdCsv':'" + + "'}";
+				"', 'callFromLocationId':'" + callerLocationId + 
+				"', 'collectDateTime':'" + $("#txtPickupDate").val() + " " + $("#txtPickupTime").val() + 
+				"', 'collectionLocationId':'" + pickupLocationId + 
+				"', 'controllerMemberId':'" + controllerId + 
+				"', 'deliverDateTime':'" + $("#txtDeliverDate").val() + " " + $("#txtDeliverTime").val() + 
+				"', 'deliverToLocationId':'" + dropLocationId + 
+				"', 'dutyDate':'" + $("#txtShiftDate").val() + 
+				"', 'finalDestinationLocationId':'" + finalLocationId + 
+				"', 'originLocationId':'" + originLocationId + 
+				"', 'riderMemberId':'" + riderId + 
+				"', 'urgency':'" + urgency + 
+				"', 'vehicleTypeId':'" + vehicleId + 
+				"', 'productIdCsv':'" + productCsv() + "'}";
+			$("#loading").slideDown();
+			$("#entry").slideUp();
+			// Hit it
+			callServerSide(
+				"Service/Service.asmx/LogRun", 
+				json,
+				function(json)
+				{
+					$("#loading").slideUp();
+					$("#success").slideDown();
+				},
+				function()
+				{
+					$("#loading").slideUp();
+					$("#error").slideDown();
+				}
+			);
 		}
 	}
 
@@ -323,6 +383,14 @@
 			{
 				niceAlert("What date did the call come in?"); return false;
 			}
+			if ($("#txtDeliverDate").val() == "") 
+			{
+				niceAlert("What date did we deliver?"); return false;
+			}
+			if ($("#txtPickupDate").val() == "") 
+			{
+				niceAlert("What date did we pickup?"); return false;
+			}
 			if ($("#txtCallTime").val() == "") 
 			{
 				niceAlert("What time did the call come in?"); return false;
@@ -351,7 +419,20 @@
 			{
 				niceAlert("What was the consignments final destination? (This may not be where we dropped off)"); return false;
 			}
+			if (!isValidTime($("#txtCallTime").val()))
+			{
+				niceAlert("Please use 24 hour HH:MM time formats (Call Time)"); return false;
+			}
+			if (!isValidTime($("#txtPickupTime").val()))
+			{
+				niceAlert("Please use 24 hour HH:MM time formats (Pickup Time)"); return false;
+			}
+			if (!isValidTime($("#txtDeliverTime").val()))
+			{
+				niceAlert("Please use 24 hour HH:MM time formats (Deliver Time)"); return false;
+			}
 		}
+		return true;
 	}
 
 	function updateUrgency()

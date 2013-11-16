@@ -93,22 +93,22 @@
 					<label>Admin editable only:</label>
 					
 					<label>Join Date:</label>
-					<input type="text" id="txtJoinDate" />
+					<input type="text" id="txtJoinDate" class="date"/>
 					
 					<label>Leave Date:</label>
-					<input type="text" id="txtLeaveDate" />
+					<input type="text" id="txtLeaveDate"  class="date"/>
 					
 					<label>Rider Assessment Date:</label>
-					<input type="text" id="txtAssessmentDate" />
+					<input type="text" id="txtAssessmentDate" class="date" />
 					
 					<label>Ad-Qual Type:</label>
 					<input type="text" id="txtAdQualType" />
 					
 					<label>Ad-Qual Date:</label>
-					<input type="text" id="txtAdQualDate" />
+					<input type="text" id="txtAdQualDate"  class="date"/>
 					
 					<label>Last GMP Date:</label>
-					<input type="text" id="txtGMPDate" />
+					<input type="text" id="txtGMPDate"  class="date"/>
 					
 					<div class="checkbox">
 						<label>
@@ -169,6 +169,7 @@
 		{
 			$("#memNav").show();
 		}
+		$(".date").datepicker({ dateFormat: 'dd M yy' });
 		DisplayMember(<%=this.MemberId%>);
 	});
 	

@@ -278,14 +278,23 @@ function JsonifyBasicMemberFromForm(memberId)
 		'"Notes":"' + $("#txtNotes").val() + '"}}';
 }
 
+function isValidTime(val)
+{
+	if (val.length != 5){ return false; }
+	return true;
+}
+
 function niceAlert(msg)
 {
+	alert(msg);
+	/*
 	$("#alertMessage").text(msg);
 	$("#alert").dialog({
 	  autoOpen: true,
 	  show: { effect: "slide", duration: 200 },
 	  hide: { effect: "slide", duration: 200 }
 	});
+*/
 }
 
 function callServerSide(url, data, success, error)
