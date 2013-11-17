@@ -4595,7 +4595,7 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_runLogProductID", Name="RunLog_ProductID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_runLogProductID", Name="RunLog_ProductID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public int RunLogProductID
 		{

@@ -365,16 +365,16 @@
 		{
 			niceAlert("You need to choose a Controller"); return false;
 		}
-		if (riderId == 0)
-		{
-			niceAlert("You need to choose a Rider"); return false;
-		}
-		if (vehicleId == 0)
-		{
-			niceAlert("What did the rider / driver travel on or in?"); return false;
-		}
 		if (runType=="blood")
 		{
+			if (riderId == 0)
+			{
+				niceAlert("You need to choose a Rider"); return false;
+			}
+			if (vehicleId == 0)
+			{
+				niceAlert("What did the rider / driver travel on or in?"); return false;
+			}
 			if ($("#txtShiftDate").val() == "") 
 			{
 				niceAlert("What shift date are you logging against?"); return false;

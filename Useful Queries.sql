@@ -52,5 +52,7 @@ select * from Tag;
 
 select * from Product;
 
+select * from CallLog;
+
 
 

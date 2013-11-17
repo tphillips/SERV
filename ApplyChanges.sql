@@ -1,4 +1,33 @@
 DROP TABLE IF EXISTS `SERV`.`RunLog_Product`;
+CREATE TABLE IF NOT EXISTS `SERV`.`RunLog_Product` (
+  `RunLog_ProductID` INT NOT NULL AUTO_INCREMENT ,
+  `RunLogID` INT NOT NULL ,
+  `ProductID` INT NOT NULL ,
+  `Quantity` INT NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (`RunLog_ProductID`) ,
+  INDEX `fk_RunLog_Product_RunLog1_idx` (`RunLogID` ASC) ,
+  INDEX `fk_RunLog_Product_Product1_idx` (`ProductID` ASC) ,
+  CONSTRAINT `fk_RunLog_Product_RunLog1`
+    FOREIGN KEY (`RunLogID` )
+    REFERENCES `SERV`.`RunLog` (`RunLogID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RunLog_Product_Product1`
+    FOREIGN KEY (`ProductID` )
+    REFERENCES `SERV`.`Product` (`ProductID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+
+/*
+----- V1.1 Applied
+------------------
+
+DROP TABLE IF EXISTS `SERV`.`RunLog_Product`;
+DROP TABLE IF EXISTS `SERV`.`Product`;
 DROP TABLE IF EXISTS `SERV`.`RunLog`;
 DROP TABLE IF EXISTS `SERV`.`Location`;
 CREATE  TABLE IF NOT EXISTS `SERV`.`Location` (
@@ -141,3 +170,4 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`RunLog_Product` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+*/

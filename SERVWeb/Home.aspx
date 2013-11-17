@@ -14,14 +14,25 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Coming Soon</h3>
+			<h3>Version 1.1</h3>
+			<h4>Recent Changes</h4>
 			<ul>
-				<li>Controller Logging - No more Google!</li>
-				<li>Run stats - See how many runs you / we have done &amp; how busy we are on different nights</li>
+				<li>More mobile friendly, try it!</li>
+				<li>Bulk SMS is here</li>
+				<li>Loads of work on the controller logging.  We may get to the new system for logging before the end of the month</li>
+				<li>The batch loader for the old logs kept in Google is working well</li>
+				<li>Title changes. The change password screen said "Login" . . . Doh</li>
 			</ul>
+
 		</div>
 		<div class="span2"></div>
 		<div class="span4">
+			<h3>Coming Soon</h3>
+			<ul>
+				<li>Menu structuring - the menu is still not very mobile friendly and will get messy soon</li>
+				<li>Controller Logging - No more Google!</li>
+				<li>Run stats - See how many runs you / we have done &amp; how busy we are on different nights</li>
+			</ul>
 			<h3>Known Issues</h3>
 			<ul>
 				<li>Lack of validation</li>

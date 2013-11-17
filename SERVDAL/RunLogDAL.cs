@@ -35,11 +35,37 @@ namespace SERVDAL
 			db.SubmitChanges();
 		}
 
-		public int CreateRunLog(RunLog log)
+		public int CreateRunLog(RunLog log, List<int> prods)
 		{
 			db.RunLog.InsertOnSubmit(log);
 			db.SubmitChanges();
+			LinkRunLogToProducts(log, prods);
 			return log.RunLogID;
+		}
+
+		static void LinkRunLogToProducts(RunLog log, List<int> prods)
+		{
+			Dictionary<int, int> prodD = new Dictionary<int, int>();
+			foreach (int p in prods)
+			{
+				if (prodD.ContainsKey(p))
+				{
+					prodD[p] = prodD[p] + 1;
+				}
+				else
+				{
+					prodD.Add(p, 1);
+				}
+			}
+			foreach (int p in prodD.Keys)
+			{
+				RunLogProduct rlp = new RunLogProduct();
+				rlp.ProductID = p;
+				rlp.RunLogID = log.RunLogID;
+				rlp.Quantity = prodD[p];
+				db.RunLogProduct.InsertOnSubmit(rlp);
+			}
+			db.SubmitChanges();
 		}
 
 		public void TruncateRawRunLog()

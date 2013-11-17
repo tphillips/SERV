@@ -10,7 +10,7 @@ namespace SERVIDAL
 		bool CreateRawRecord(SERVDataContract.DbLinq.RawRunLog raw);
 		void CreateRawRecords(List<SERVDataContract.DbLinq.RawRunLog> records);
 		void TruncateRawRunLog();
-		int CreateRunLog(SERVDataContract.DbLinq.RunLog log);
+		int CreateRunLog(SERVDataContract.DbLinq.RunLog log, List<int> prods);
 	}
 }
 

@@ -161,6 +161,11 @@ namespace SERVBLL
 			int controllerMemberId, int createdByUserId, DateTime deliverDateTime, int deliverToLocationId, DateTime dutyDate, 
 			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, string productIdCsv)
 		{
+			List<int> prods = new List<int>();
+			foreach (string p in productIdCsv.Split(','))
+			{
+				if (p.Trim() != string.Empty) { prods.Add(int.Parse(p)); }
+			}
 			SERVDataContract.DbLinq.RunLog log = new SERVDataContract.DbLinq.RunLog();
 			log.CallDateTime = callDateTime;
 			log.CallFromLocationID = callFromLocationId;
@@ -178,7 +183,7 @@ namespace SERVBLL
 			log.RiderMemberID = riderMemberId;
 			log.Urgency = urgency;
 			log.VehicleTypeID = vehicleTypeId;
-			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log) > 0;
+			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prods) > 0;
 		}
 
 	}
