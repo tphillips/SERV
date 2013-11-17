@@ -116,6 +116,7 @@
     <Content Include="css\ui-lightness\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="js\jquery-1.9.1.js" />
     <Content Include="js\jquery-ui-1.10.3.custom.min.js" />
+    <Content Include="js\ControllerLog.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
