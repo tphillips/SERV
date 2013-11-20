@@ -1,3 +1,12 @@
+
+ALTER TABLE`SERV`.`RunLog` ADD COLUMN
+  `HomeSafeDateTime` DATETIME NULL
+  
+
+/*
+----- V1.2 Applied
+------------------
+
 DROP TABLE IF EXISTS `SERV`.`RunLog_Product`;
 CREATE TABLE IF NOT EXISTS `SERV`.`RunLog_Product` (
   `RunLog_ProductID` INT NOT NULL AUTO_INCREMENT ,
@@ -20,9 +29,6 @@ CREATE TABLE IF NOT EXISTS `SERV`.`RunLog_Product` (
 ENGINE = InnoDB;
 
 
-
-
-/*
 ----- V1.1 Applied
 ------------------
 

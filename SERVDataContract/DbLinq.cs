@@ -6,8 +6,7 @@ namespace SERVDataContract.DbLinq
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Diagnostics;
-	
-	
+
 	public partial class SERVDB : DataContext
 	{
 		
@@ -4595,7 +4594,7 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_runLogProductID", Name="RunLog_ProductID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_runLogProductID", Name="RunLog_ProductID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public int RunLogProductID
 		{

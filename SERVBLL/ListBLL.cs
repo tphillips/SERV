@@ -8,22 +8,11 @@ using SERV.Utils;
 
 namespace SERVBLL
 {
-	public class ListBLL : ILListBLL
+	public class ListBLL : IListBLL
 	{
 
 		public ListBLL()
 		{
-		}
-
-		public List<Location> ListLocations()
-		{
-			List<Location> ret = new List<Location>();
-			List<SERVDataContract.DbLinq.Location> locs = SERVDALFactory.Factory.ListDAL().ListLocations();
-			foreach (SERVDataContract.DbLinq.Location l in locs)
-			{
-				ret.Add(new Location(l));
-			}
-			return ret;
 		}
 
 		public List<VehicleType> ListVehicleTypes()

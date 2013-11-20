@@ -28,5 +28,10 @@ namespace SERVDALFactory
 			return new ListDAL();
 		}
 
+		public static ILocationDAL LocationDAL()
+		{
+			return new LocationDAL();
+		}
+
 	}
 }

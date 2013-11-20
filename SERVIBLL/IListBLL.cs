@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SERVDataContract.DbLinq;
+using SERVDataContract;
 
-namespace SERVIDAL
+namespace SERVIBLL
 {
-	public interface IListDAL : IDisposable
+	public interface IListBLL
 	{
 		List<VehicleType> ListVehicleTypes();
 	}

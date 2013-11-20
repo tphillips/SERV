@@ -129,7 +129,7 @@ namespace SERVWeb
 		public List<Location> ListLocations()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.ListBLL().ListLocations();
+			return SERVBLLFactory.Factory.LocationBLL().ListLocations();
 		}
 
 		[WebMethod(EnableSession = true)]

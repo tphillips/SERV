@@ -44,15 +44,32 @@ where m.MemberID not in
 and rr.CollectFrom like 'East Surrey' or rr.CollectFrom like '%Redhill%';
 
 -- Recent run log activity
-select CallDate, CallTime, CONCAT(m.FirstName, ' ', m.LastName), Consignment, CollectFrom, Destination  from RawRunLog rr 
+select CallDate, CallTime, TIME(replace(CallTime, '.',':')), CONCAT(m.FirstName, ' ', m.LastName), Consignment, CollectFrom, Destination  from RawRunLog rr 
 LEFT join Member m on rr.Rider = (CONCAT(m.LastName, ' ', m.FirstName)) 
 order by CallDate desc, RawRunLogID desc LIMIT 100;
+
+-- Collection locations that cannot be resolved
+select distinct CollectFrom, l.* from RawRunLog rrl left join Location l on rrl.CollectFrom = l.Location
+where l.LocationID is null;
+
+-- Destination locations that cannot be resolved
+select distinct Destination, l.* from RawRunLog rrl left join Location l on rrl.Destination = l.Location
+where l.LocationID is null;
 
 select * from Tag;
 
 select * from Product;
 
 select * from CallLog;
+
+select * from RunLog rl 
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID;
+
+select * from Member m 
+join User u on u.MemberID = m.MemberID 
+where m.EmailAddress = 'servrunner@gmail.com';
+--update User set PasswordHash = '' where UserId = 7;
 
 
 

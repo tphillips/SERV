@@ -37,6 +37,7 @@
     <Compile Include="IRunLogDAL.cs" />
     <Compile Include="IMessageDAL.cs" />
     <Compile Include="IListDAL.cs" />
+    <Compile Include="ILocationDAL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

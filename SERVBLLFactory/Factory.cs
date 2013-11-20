@@ -22,9 +22,14 @@ namespace SERVBLLFactory
 			return new SERVBLL.MessageBLL();
 		}
 
-		public static ILListBLL ListBLL()
+		public static IListBLL ListBLL()
 		{
 			return new SERVBLL.ListBLL();
+		}
+
+		public static ILocationBLL LocationBLL()
+		{
+			return new SERVBLL.LocationBLL();
 		}
 
 	}

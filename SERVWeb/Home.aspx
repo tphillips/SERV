@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.1</h3>
+			<h3>Version 1.1.1</h3>
 			<h4>Recent Changes</h4>
 			<ul>
 				<li>More mobile friendly, try it!</li>

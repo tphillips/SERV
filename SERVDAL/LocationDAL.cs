@@ -10,27 +10,25 @@ using System.Linq;
 
 namespace SERVDAL
 {
-	public class ListDAL : IListDAL
+	public class LocationDAL : ILocationDAL
 	{
-
 		//static Logger log = new Logger();
 		static SERVDataContract.DbLinq.SERVDB db;
 
-		public ListDAL()
+		public LocationDAL()
 		{
 			db = new SERVDataContract.DbLinq.SERVDB(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
 		}
 
-		public List<VehicleType> ListVehicleTypes()
+		public List<Location> ListLocations()
 		{
-			return (from l in db.VehicleType select l).ToList();
+			return (from l in db.Location select l).ToList();
 		}
 
 		public void Dispose()
 		{
 			db.Dispose();
 		}
-
 	}
 }
 

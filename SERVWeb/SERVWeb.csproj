@@ -117,6 +117,7 @@
     <Content Include="js\jquery-1.9.1.js" />
     <Content Include="js\jquery-ui-1.10.3.custom.min.js" />
     <Content Include="js\ControllerLog.js" />
+    <Content Include="Locations.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -188,6 +189,12 @@
     </Compile>
     <Compile Include="ControllerLog.aspx.designer.cs">
       <DependentUpon>ControllerLog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Locations.aspx.cs">
+      <DependentUpon>Locations.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Locations.aspx.designer.cs">
+      <DependentUpon>Locations.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
