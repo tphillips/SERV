@@ -14,8 +14,14 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.1.1</h3>
+			<h3>Version 1.2.1</h3>
 			<h4>Recent Changes</h4>
+			<ul>
+				<li>Recent Runs List</li>
+				<li>Locations List</li>
+				<li>New menu structure</li>
+			</ul>
+			<h5>Previously</h5>
 			<ul>
 				<li>More mobile friendly, try it!</li>
 				<li>Bulk SMS is here</li>
@@ -29,7 +35,6 @@
 		<div class="span4">
 			<h3>Coming Soon</h3>
 			<ul>
-				<li>Menu structuring - the menu is still not very mobile friendly and will get messy soon</li>
 				<li>Controller Logging - No more Google!</li>
 				<li>Run stats - See how many runs you / we have done &amp; how busy we are on different nights</li>
 			</ul>

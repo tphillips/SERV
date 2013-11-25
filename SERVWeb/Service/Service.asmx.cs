@@ -4,6 +4,7 @@ using System.Web.Services;
 using System.Collections.Generic;
 using SERVDataContract;
 using SERVBLLFactory;
+using System.Data;
 
 
 namespace SERVWeb
@@ -163,6 +164,13 @@ namespace SERVWeb
 				throw new System.Security.Authentication.AuthenticationException();
 			}
 			return SERVBLLFactory.Factory.MessageBLL().SendSMSMessage(numbers, message, CurrentUser().UserID);
+		}
+
+		[WebMethod(EnableSession = true, TransactionOption=System.EnterpriseServices.TransactionOption.Disabled, CacheDuration=120)]
+		public DataTable Report_RecentRunLog()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.RunLogBLL().Report_RecentRunLog();
 		}
 
 		public User Login(string username, string passwordHash)

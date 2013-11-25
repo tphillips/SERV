@@ -44,8 +44,11 @@ where m.MemberID not in
 and rr.CollectFrom like 'East Surrey' or rr.CollectFrom like '%Redhill%';
 
 -- Recent run log activity
-select CallDate, CallTime, TIME(replace(CallTime, '.',':')), CONCAT(m.FirstName, ' ', m.LastName), Consignment, CollectFrom, Destination  from RawRunLog rr 
+select date(CallDate), CallTime, TIME(rpad(replace(CallTime, '.',':'), 5, '0')) as FixedCallTime, 
+	CONCAT(m.FirstName, ' ', m.LastName) as ResolvedMemberName, Consignment, CollectFrom, Destination, CONCAT(con.FirstName, ' ', con.LastName) as ResolvedController  
+from RawRunLog rr 
 LEFT join Member m on rr.Rider = (CONCAT(m.LastName, ' ', m.FirstName)) 
+LEFT join Member con on rr.Controller = (CONCAT(con.LastName, ' ', con.FirstName)) 
 order by CallDate desc, RawRunLogID desc LIMIT 100;
 
 -- Collection locations that cannot be resolved

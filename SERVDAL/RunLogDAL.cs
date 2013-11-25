@@ -73,6 +73,25 @@ namespace SERVDAL
 			db.ExecuteCommand("truncate table RawRunLog");
 		}
 
+		public DataTable Report_RecentRunLog()
+		{
+			string sql = 
+				"SELECT " +
+					"date(CallDate) as Date, " +
+					"TIME(rpad(replace(CallTime, '.',':'), 5, '0')) as Time, " +
+					"CONCAT(m.FirstName, ' ', m.LastName) as Rider, " +
+					"Consignment, " +
+					"CollectFrom as Origin, " +
+					"Destination, " +
+					"CONCAT(con.FirstName, ' ', con.LastName) as Controller " +
+				"FROM RawRunLog rr " +
+					"LEFT JOIN Member m on rr.Rider = (CONCAT(m.LastName, ' ', m.FirstName)) " +
+					"LEFT JOIN Member con on rr.Controller = (CONCAT(con.LastName, ' ', con.FirstName)) " +
+				"order by CallDate desc, RawRunLogID desc " +
+				"LIMIT 100;";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();

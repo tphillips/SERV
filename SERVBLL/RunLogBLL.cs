@@ -5,6 +5,7 @@ using SERVIBLL;
 using SERVDataContract;
 using SERVDALFactory;
 using SERV.Utils;
+using System.Data;
 
 namespace SERVBLL
 {
@@ -184,6 +185,11 @@ namespace SERVBLL
 			log.Urgency = urgency;
 			log.VehicleTypeID = vehicleTypeId;
 			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prods) > 0;
+		}
+
+		public DataTable Report_RecentRunLog()
+		{
+			return SERVDALFactory.Factory.RunLogDAL().Report_RecentRunLog();
 		}
 
 	}

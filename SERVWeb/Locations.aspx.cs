@@ -7,6 +7,19 @@ namespace SERVWeb
 
 	public partial class Locations : System.Web.UI.Page
 	{
+
+		protected int UserLevel
+		{
+			get 
+			{
+				return SERVGlobal.User.UserLevelID;
+			}
+		}
+
+		protected override void OnLoad (EventArgs e)
+		{
+			SERVGlobal.AssertAuthentication();
+		}
 	}
 }
 

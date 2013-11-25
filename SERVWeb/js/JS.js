@@ -197,6 +197,42 @@ function SearchMembers(userLevel, search)
 	);
 }
 
+function ListLocations(userLevel)
+{
+	callServerSide(
+		"Service/Service.asmx/ListLocations", 
+		"{}",
+		function(json)
+		{
+			var append = '<table class="table table-striped table-bordered table-condensed">' +
+			'<thead><tr><th></th><th>Location</th><th>Blood Bank</th><th>Change Over</th><th>Hospital</th><th>Lat</th><th>Lng</th></tr></thead><tbody>';
+			for(var x = 0; x < json.d.length; x++)
+			{
+				var name = json.d[x].LocationName
+				if (userLevel >= 3)
+				{
+					name = '<a href="ViewLocation.aspx?locationId=' + json.d[x].LocationID + '">' + name + '</a>';
+				}
+				var row="<tr><td>" + (x + 1) + "</td><td>" + name + "</td>" +
+					"<td>" + (json.d[x].BloodBank ? "X" : "") + "</td>" + 
+					"<td>" + (json.d[x].ChangeOver ? "X" : "") + "</td>" + 
+					"<td>" + (json.d[x].Hospital ? "X" : "") + "</td>" + 
+					"<td>" + json.d[x].Lat + "</td>" + 
+					"<td>" + json.d[x].Lng + "</td>" + 
+					"</tr>"
+				append += row;
+			}
+			append += "</tbody></table>";
+			$("#results").append(append);
+			$("#loading").slideUp();
+			$("#entry").slideDown();
+		},
+		function()
+		{
+		}
+	);
+}
+
 function addMemberTag(memberId, tag)
 {
 	$("#loading").slideDown();

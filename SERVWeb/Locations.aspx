@@ -24,7 +24,7 @@
 		{
 			$("#cmdAdd").hide();
 		}
-		SearchMembers(<%=this.UserLevel%>>, "");
+		ListLocations(<%=this.UserLevel%>);
 	});
 	
 	</script>

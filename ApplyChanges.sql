@@ -1,4 +1,7 @@
 
+/*
+----- V1.2.1 Applied
+------------------
 ALTER TABLE`SERV`.`RunLog` ADD COLUMN
   `HomeSafeDateTime` DATETIME NULL
   

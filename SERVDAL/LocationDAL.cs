@@ -22,7 +22,7 @@ namespace SERVDAL
 
 		public List<Location> ListLocations()
 		{
-			return (from l in db.Location select l).ToList();
+			return (from l in db.Location orderby l.Location1 descending select l).ToList();
 		}
 
 		public void Dispose()

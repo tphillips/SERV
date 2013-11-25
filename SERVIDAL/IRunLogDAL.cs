@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SERVDataContract.DbLinq;
+using System.Data;
 
 namespace SERVIDAL
 {
@@ -11,6 +12,7 @@ namespace SERVIDAL
 		void CreateRawRecords(List<SERVDataContract.DbLinq.RawRunLog> records);
 		void TruncateRawRunLog();
 		int CreateRunLog(SERVDataContract.DbLinq.RunLog log, List<int> prods);
+		DataTable Report_RecentRunLog();
 	}
 }
 

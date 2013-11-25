@@ -20,6 +20,10 @@ namespace SERVWeb
 			if (u != null)
 			{
 				SERVGlobal.User = u;
+				if (Request["dest"] != null && Request["dest"] != "")
+				{
+					Response.Redirect(Request["dest"].ToString());
+				}
 				Response.Redirect("Home.aspx");
 			}
 		}

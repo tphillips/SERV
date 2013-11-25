@@ -16,7 +16,7 @@ namespace SERVWeb
 			{
 				pnlLoggedIn.Visible = true;
 				pnlNotLoggedIn.Visible = false;
-				litLoginName.Text = string.Format("{0} {1}", SERVGlobal.User.Member.FirstName, SERVGlobal.User.Member.LastName);
+				litLoginName.Text = string.Format("{0}", SERVGlobal.User.Member.FirstName);
 				if (SERVGlobal.User.UserLevelID > (int)SERVDataContract.UserLevel.Volunteer)
 				{
 					pnlPowerUser.Visible = true;

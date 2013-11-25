@@ -26,14 +26,19 @@ namespace SERVWeb
 			System.Web.HttpContext.Current.Response.Redirect("Default.aspx");
 		}
 
+		public static void GotoLogin(string dest)
+		{
+			System.Web.HttpContext.Current.Response.Redirect("Login.aspx?dest=" + dest);
+		}
+
 		public static void AssertAuthentication()
 		{
-			if (User == null) { GotoDefault(); }
+			if (User == null) { GotoLogin(System.Web.HttpContext.Current.Request.Path); }
 		}
 
 		public static void AssertAuthentication(int minUserLevel)
 		{
-			if (User == null) { GotoDefault(); }
+			if (User == null) { GotoLogin(System.Web.HttpContext.Current.Request.Path); }
 			if (User.UserLevelID < minUserLevel)
 			{
 				System.Web.HttpContext.Current.Response.Redirect("Home.aspx");
