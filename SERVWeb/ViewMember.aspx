@@ -12,6 +12,7 @@
 		<hr/>
 		
 			<div class="row">
+
 				<fieldset>
 				<div class="span3">
 				
@@ -137,9 +138,10 @@
 					<textarea id="txtNotes" rows="2"></textarea>
 					
 				</div>
-				
 				</fieldset>
+
 			</div>
+
 		<br/>
 		<hr/>
 		<button type=button class="btn btn-primary btn-lg" onclick="SaveMember()">Save</button>

@@ -92,6 +92,21 @@ namespace SERVDAL
 			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 		}
 
+		public DataTable Report_Top10Riders()
+		{
+			string sql = 
+				"select Name from " +
+				"(select CONCAT(m.FirstName, ' ', m.LastName) Name, count(*) Runs " +
+				"from RawRunLog rr " +
+				"LEFT join Member m on rr.Rider = (CONCAT(m.LastName, ' ', m.FirstName)) " +
+				"where m.FirstName is not null " +
+				"group by Name " +
+				"order by Runs desc " +
+				"LIMIT 10) sub " +
+				"order by Name;";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();

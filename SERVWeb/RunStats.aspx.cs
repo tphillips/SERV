@@ -13,6 +13,8 @@ namespace SERVWeb
 			SERVGlobal.AssertAuthentication();
 			dgReport.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_RecentRunLog();
 			dgReport.DataBind();
+			dgTop10.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_Top10Riders();
+			dgTop10.DataBind();
 		}
 	}
 }

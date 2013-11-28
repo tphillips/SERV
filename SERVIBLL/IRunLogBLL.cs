@@ -13,6 +13,7 @@ namespace SERVIBLL
 		                int controllerMemberId, int createdByUserId, DateTime deliverDateTime, int deliverToLocationId, DateTime dutyDate, 
 						int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, string productIdCsv);
 		DataTable Report_RecentRunLog();
+		DataTable Report_Top10Riders();
 	}
 }
 

@@ -8,6 +8,7 @@ namespace SERVIDAL
 	public interface IMessageDAL : IDisposable
 	{
 		void LogSentSMSMessage(string numbers, string message, int senderUserID);
+		void LogSentEmailMessage(string address, string message, int senderUserID);
 	}
 }
 

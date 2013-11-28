@@ -50,7 +50,7 @@ namespace SERVWeb
 		public Member GetMember(int memberId)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevelID <= (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
+			if (CurrentUser().UserLevelID < (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
@@ -82,7 +82,7 @@ namespace SERVWeb
 		public void TagMember(int memberId, string tagName)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevelID <= (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
+			if (CurrentUser().UserLevelID < (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
@@ -93,7 +93,7 @@ namespace SERVWeb
 		public void UnTagMember(int memberId, string tagName)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevelID <= (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
+			if (CurrentUser().UserLevelID < (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
@@ -119,7 +119,7 @@ namespace SERVWeb
 		public List<string> ListMobileNumbersWithTags(string tagsCsv)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevelID <= (int)UserLevel.Controller)
+			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
@@ -159,11 +159,22 @@ namespace SERVWeb
 		public bool SendSMSMessage(string numbers, string message)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevelID <= (int)UserLevel.Controller)
+			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
 			return SERVBLLFactory.Factory.MessageBLL().SendSMSMessage(numbers, message, CurrentUser().UserID);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool SendTestEmail(string address)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Admin)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.MessageBLL().SendTestEmail(address, CurrentUser().UserID);
 		}
 
 		[WebMethod(EnableSession = true, TransactionOption=System.EnterpriseServices.TransactionOption.Disabled, CacheDuration=120)]

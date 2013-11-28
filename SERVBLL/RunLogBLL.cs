@@ -122,18 +122,18 @@ namespace SERVBLL
 						try 
 						{
 							raw.CallDate = DateTime.Parse(cols[1].Trim().Replace("\"", ""), new System.Globalization.CultureInfo("en-GB"));
-							raw.CallTime = cols[2].Trim().Replace("\"", "");
+							raw.CallTime = FixTime(cols[2].Trim());
 							raw.Destination = cols[3].Trim().Replace("\"", "");
 							raw.CollectFrom = cols[4].Trim().Replace("\"", "");
-							raw.CollectTime = cols[5].Trim().Replace("\"", "");
-							raw.DeliveryTime = cols[6].Trim().Replace("\"", "");
+							raw.CollectTime = FixTime(cols[5].Trim());
+							raw.DeliveryTime = FixTime(cols[6].Trim());
 							raw.Consignment = cols[7].Trim().Replace("\"", "");
 							raw.Urgency = cols[8].Trim().Replace("\"", "");
 							raw.Controller = cols[9].Trim().Replace("\"", "");
 							raw.Rider = cols[10].Trim().Replace("\"", "").Replace(".", "");
 							if (nameReplacements.ContainsKey(raw.Rider)) { raw.Rider = nameReplacements[raw.Rider]; }
 							raw.Notes = cols[11].Trim().Replace("\"", "");
-							raw.CollectTime2 = cols[12].Trim().Replace("\"", "");
+							raw.CollectTime2 = FixTime(cols[12].Trim());
 							raw.Vehicle = cols[13].Trim().Replace("\"", "");
 							//SERVDALFactory.Factory.RunLogDAL().CreateRawRecord(raw);
 							records.Add(raw);
@@ -156,6 +156,13 @@ namespace SERVBLL
 			SERVDALFactory.Factory.RunLogDAL().CreateRawRecords(records);
 			log.Info("Batch insert complete");
 			return true;
+		}
+
+		private string FixTime(string time)
+		{
+			time = time.Replace("\"", "").Replace(".", ":");
+			if (time.Contains(":"))	{ time = time.Split(':')[0].PadLeft(2, '0') + ":" + time.Split(':')[1].PadRight(2, '0'); }
+			return time;
 		}
 
 		public bool CreateRunLog(DateTime callDateTime, int callFromLocationId, DateTime collectDateTime, int collectionLocationId, 
@@ -190,6 +197,11 @@ namespace SERVBLL
 		public DataTable Report_RecentRunLog()
 		{
 			return SERVDALFactory.Factory.RunLogDAL().Report_RecentRunLog();
+		}
+
+		public DataTable Report_Top10Riders()
+		{
+			return SERVDALFactory.Factory.RunLogDAL().Report_Top10Riders();
 		}
 
 	}

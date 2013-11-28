@@ -14,15 +14,17 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.1</h3>
+			<h3>Version 1.2.2</h3>
 			<h4>Recent Changes</h4>
+			<ul>
+				<li>Top 10 Volunteers</li>
+				<li>Time fixes to raw log import</li>
+			</ul>
+			<h5>Previously</h5>
 			<ul>
 				<li>Recent Runs List</li>
 				<li>Locations List</li>
 				<li>New menu structure</li>
-			</ul>
-			<h5>Previously</h5>
-			<ul>
 				<li>More mobile friendly, try it!</li>
 				<li>Bulk SMS is here</li>
 				<li>Loads of work on the controller logging.  We may get to the new system for logging before the end of the month</li>

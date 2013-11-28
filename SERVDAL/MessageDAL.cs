@@ -41,6 +41,26 @@ namespace SERVDAL
 			}
 		}
 
+		public void LogSentEmailMessage(string address, string message, int senderUserID)
+		{
+			try
+			{
+				Message m = new Message();
+				m.Message1 = message;
+				m.SenderUserID = senderUserID;
+				m.Recipient = address;
+				m.MessageTypeID = (int)SERVDataContract.MessageType.Email;
+				m.SentDate = DateTime.Now;
+				m.RecipientMemberID = null;
+				db.Message.InsertOnSubmit(m);
+				db.SubmitChanges();
+			}
+			catch(Exception e)
+			{
+				log.Error(e.Message, e);
+			}
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();
