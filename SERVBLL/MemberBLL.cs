@@ -34,6 +34,26 @@ namespace SERVBLL
 			}
 		}
 
+		public Member GetByEmail(string email)
+		{
+			try
+			{
+				SERVDataContract.DbLinq.Member lret = SERVDALFactory.Factory.MemberDAL().GetByEmail(email);
+				Member ret = new Member(lret);
+				ret.Tags = new List<Tag>();
+				for(int x = 0; x < lret.MemberTag.Count; x++)
+				{
+					ret.Tags.Add(new Tag(lret.MemberTag[x].Tag));
+				}
+				return ret;
+			}
+			catch(Exception ex)
+			{
+				log.Error(ex.Message, ex);
+				return null;
+			}
+		}
+
 		public int Create(Member member)
 		{
 			SERVDataContract.DbLinq.Member m = new SERVDataContract.DbLinq.Member();
@@ -107,6 +127,11 @@ namespace SERVBLL
 				dal.SetUserLastLoginDate(u);
 				return new User(u);
 			}
+		}
+
+		public User GetUserForMember(int memberId)
+		{
+			return new User(SERVDALFactory.Factory.MemberDAL().GetUserForMember(memberId));
 		}
 
 		public void SetPassword(string username, string passwordHash)

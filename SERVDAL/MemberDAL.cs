@@ -28,6 +28,12 @@ namespace SERVDAL
 			SERVDataContract.DbLinq.Member mem = (from m in db.Member where m.MemberID == memberId select m).FirstOrDefault();
 			return mem;
 		}
+
+		public Member GetByEmail(string email)
+		{
+			SERVDataContract.DbLinq.Member mem = (from m in db.Member where m.EmailAddress == email select m).FirstOrDefault();
+			return mem;
+		}
 		
 		public int Create(Member member)
 		{
@@ -93,6 +99,13 @@ namespace SERVDAL
 		private int GetTagId(string tagName)
 		{
 			return Convert.ToInt32(DBHelperFactory.DBHelper().ExecuteScalar("select TagID from Tag where Tag = " + SERV.Utils.String.DBSafeString(tagName)));
+		}
+
+		public User GetUserForMember(int memberId)
+		{
+			SERVDataContract.DbLinq.User ret = (from u in db.User where u.Member.MemberID == memberId select u).FirstOrDefault();
+			if (ret == null) { return null; }
+			return ret;
 		}
 
 		public User Login(string username, string passwordHash)

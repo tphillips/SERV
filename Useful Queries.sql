@@ -117,10 +117,13 @@ join Product p on p.ProductID = rlp.ProductID;
 
 select * from Member m 
 join User u on u.MemberID = m.MemberID 
-where m.EmailAddress = 'servrunner@gmail.com';
-/*update User set PasswordHash = '' where UserId = 7;*/
+where m.LastName = 'Myers';
+/*update User set PasswordHash = '' where UserId = 72;*/
 
-
+select * from Member where LastName = 'Phillips';
+select * from User where MemberID = 182;
+/* update User set UserlevelID = 3 where UserID = 9; */
+/* update User set LastLoginDate = null where UserID = 77; */
 
 select * from RawRunLog where CallDate = '2013-07-15';
 

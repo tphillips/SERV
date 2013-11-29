@@ -14,15 +14,16 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.3</h3>
+			<h3>Version 1.2.4</h3>
 			<h4>Recent Changes</h4>
+			<ul>
+				<li>Membership Email dev work</li>
+			</ul>
+			<h5>Previously</h5>
 			<ul>
 				<li>Added show inactive members check on member list and hide leavers by default</li>
 				<li>Allow committee members to update members GMP date and Assessment date</li>
 				<li>Added some logging around member updates</li>
-			</ul>
-			<h5>Previously</h5>
-			<ul>
 				<li>Top 10 Volunteers</li>
 				<li>Time fixes to raw log import</li>
 				<li>Recent Runs List</li>

@@ -5,7 +5,8 @@ namespace SERVIBLL
 	public interface IMessageBLL
 	{
 		bool SendSMSMessage(string numbers, string message, int senderUserID);
-		bool SendTestEmail(string address, int senderUserId);
+		bool SendMembershipEmail(string address, int senderUserId, bool onlyNeverLoggedIn);
+		bool SendAllActiveMembersMembershipEmail(int senderUserID, bool onlyNeverLoggedIn);
 	}
 }
 

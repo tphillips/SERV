@@ -174,7 +174,19 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.MessageBLL().SendTestEmail(address, CurrentUser().UserID);
+			return SERVBLLFactory.Factory.MessageBLL().SendMembershipEmail(address, CurrentUser().UserID, false);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool SendMembershipEmails(string sure, bool onlyNeverLoggedIn)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Admin)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			if (sure != "YES"){ throw new InvalidExpressionException("You don't seem to be sure about that"); }
+			return SERVBLLFactory.Factory.MessageBLL().SendAllActiveMembersMembershipEmail(CurrentUser().UserID, onlyNeverLoggedIn);
 		}
 
 		[WebMethod(EnableSession = true, TransactionOption=System.EnterpriseServices.TransactionOption.Disabled, CacheDuration=120)]
