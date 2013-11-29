@@ -61,10 +61,10 @@ namespace SERVBLL
 			}
 		}
 
-		public List<Member> List(string search)
+		public List<Member> List(string search, bool onlyActive = true)
 		{
 			List<Member> ret = new List<Member>();
-			List<SERVDataContract.DbLinq.Member> members = SERVDALFactory.Factory.MemberDAL().List(search);
+			List<SERVDataContract.DbLinq.Member> members = SERVDALFactory.Factory.MemberDAL().List(search, onlyActive);
 			foreach(SERVDataContract.DbLinq.Member m in members)
 			{
 				ret.Add(new Member() 

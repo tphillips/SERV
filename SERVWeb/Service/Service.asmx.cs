@@ -102,10 +102,10 @@ namespace SERVWeb
 
 
 		[WebMethod(EnableSession = true)]
-		public List<Member> SearchMembers(string search)
+		public List<Member> SearchMembers(string search, bool onlyActive)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.MemberBLL().List(search);
+			return SERVBLLFactory.Factory.MemberBLL().List(search, onlyActive);
 		}
 
 		[WebMethod(EnableSession = true)]

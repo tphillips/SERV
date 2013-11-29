@@ -152,7 +152,7 @@
 	
 	$(function() 
 	{
-		if (<%=this.UserLevel%> < 4)
+		if (<%=this.UserLevel%> < 4) // Admin
 		{
 			$("#chkBlood").attr('disabled', true);
 			$("#chkAA").attr('disabled', true);
@@ -170,6 +170,11 @@
 		else
 		{
 			$("#memNav").show();
+		}
+		if (<%=this.UserLevel%> == 3) // Committee
+		{
+			$("#txtAssessmentDate").attr('disabled', false);
+			$("#txtGMPDate").attr('disabled', false);
 		}
 		$(".date").datepicker({ dateFormat: 'dd M yy' });
 		DisplayMember(<%=this.MemberId%>);

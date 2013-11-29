@@ -162,11 +162,12 @@ function writeVehicleTypes(target, onClick)
 	);
 }
 
-function SearchMembers(userLevel, search)
+function SearchMembers(userLevel, search, onlyActive)
 {
+	$("#results").text("");
 	callServerSide(
 		"Service/Service.asmx/SearchMembers", 
-		"{'search':'" + search + "'}",
+		"{'search':'" + search + "', 'onlyActive':" + onlyActive + "}",
 		function(json)
 		{
 			var append = '<table class="table table-striped table-bordered table-condensed">' +

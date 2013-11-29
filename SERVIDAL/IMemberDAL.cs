@@ -11,7 +11,7 @@ namespace SERVIDAL
 		int Create(Member member);
 		int Save(Member member);
 		int Update(Member member);
-		List<Member> List(string search);
+		List<Member> List(string search, bool onlyActive=true);
 		List<Tag> ListMemberTags(int memberId);
 		User Login(string username, string passwordHash);
 		void AddMemberTag(int memberId, string tagName);

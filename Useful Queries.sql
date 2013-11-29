@@ -9,6 +9,17 @@ select Name from
 	LIMIT 10) sub 
 order by Name;
 
+-- TOP Controllers
+select Name, Runs from 
+	(select Controller Name, count(*) Runs
+	from RawRunLog rr 
+	LEFT join Member m on rr.Controller = (CONCAT(m.LastName, ' ', m.FirstName))
+	where m.FirstName is not null
+	group by Name 
+	order by Runs desc 
+	LIMIT 100) sub 
+order by Runs desc;
+
 -- BAD RIDER NAMES IN CALL LOG / MISSING RIDERS
 select Rider, count(*), m.FirstName 
 from RawRunLog rr 
@@ -55,7 +66,6 @@ select * from User u join Member m on m.MemberID = u.MemberID where u.lastLoginD
 
 -- USERS WHO HAVE LOGGED IN
 select m.LastName, m.FirstName from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is not null order by m.LastName;
-
 
 -- Select all Mobile numbers for a set of tags
 select distinct m.MobileNumber, CONCAT(m.FirstName, ' ', m.LastName) Name from Member m 
@@ -110,5 +120,8 @@ join User u on u.MemberID = m.MemberID
 where m.EmailAddress = 'servrunner@gmail.com';
 /*update User set PasswordHash = '' where UserId = 7;*/
 
+
+
+select * from RawRunLog where CallDate = '2013-07-15';
 
 

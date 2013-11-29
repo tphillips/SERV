@@ -10,7 +10,7 @@ namespace SERVIBLL
         Member Get(int memberId);
         int Create(Member member);
 		int Save(Member member, User user);
-        List<Member> List(string search);
+		List<Member> List(string search, bool onlyActive = true);
 		User Login(string username, string passwordHash);
 		void AddMemberTag(int memberId, string tagName);
 		void RemoveMemberTag(int memberId, string tagName);

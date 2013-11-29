@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.Common;
 using SERV.Utils.Data;
 using System.Linq;
+using System.IO;
 
 namespace SERVDAL
 {
@@ -14,6 +15,7 @@ namespace SERVDAL
 	public class MemberDAL : IMemberDAL, IDisposable
 	{
 
+		Logger log = new Logger();
 		static SERVDataContract.DbLinq.SERVDB db;
 
 		public MemberDAL()
@@ -29,6 +31,7 @@ namespace SERVDAL
 		
 		public int Create(Member member)
 		{
+			log.LogStart();
 			db.Member.InsertOnSubmit(member);
 			db.SubmitChanges();
 			return member.MemberID;
@@ -41,13 +44,31 @@ namespace SERVDAL
 
 		public int Update(Member member)
 		{
+			log.LogStart();
+			db.Log = Console.Out;
 			db.SubmitChanges();
+			db.Log = null;
 			return member.MemberID;
 		}
 
-		public List<Member> List(string search)
+		public List<Member> List(string search, bool onlyActive = true)
 		{
-			return (from m in db.Member where m.FirstName.Contains(search) || m.LastName.Contains(search) orderby m.LastName select m).ToList();
+			List<Member> ret = new List<Member>();
+			if (onlyActive)
+			{
+				ret = (from m in db.Member
+				       where (m.FirstName.Contains(search) || m.LastName.Contains(search)) && m.LeaveDate == null
+				       orderby m.LastName
+				       select m).ToList();
+			}
+			else
+			{
+				ret = (from m in db.Member
+				       where (m.FirstName.Contains(search) || m.LastName.Contains(search))
+				       orderby m.LastName
+				       select m).ToList();
+			}
+			return ret;
 		}
 
 		public List<Tag> ListMemberTags(int memberId)
@@ -57,12 +78,14 @@ namespace SERVDAL
 		
 		public void AddMemberTag(int memberId, string tagName)
 		{
+			log.LogStart();
 			string sql = string.Format("insert into Member_Tag values ({0}, {1})", memberId, GetTagId(tagName));
 			db.ExecuteCommand(sql);
 		}
 		
 		public void RemoveMemberTag(int memberId, string tagName)
 		{
+			log.LogStart();
 			string sql = string.Format("delete from Member_Tag where MemberID = {0} and TagID = {1}", memberId, GetTagId(tagName));
 			db.ExecuteCommand(sql);
 		}
@@ -96,6 +119,7 @@ namespace SERVDAL
 
 		public void SetPasswordHash(string username, string passwordHash)
 		{
+			log.LogStart();
 			SERVDataContract.DbLinq.User ret = (from u in db.User where u.Member.EmailAddress == username select u).FirstOrDefault();
 			ret.PasswordHash = passwordHash;
 			db.SubmitChanges();

@@ -13,6 +13,9 @@ namespace SERVBLL
 	public class MessageBLL : IMessageBLL
 	{
 
+		private const string FROM = "NOREPLY@system.servssl.org.uk";
+		private const string SERVER = "localhost";
+
 		public MessageBLL()
 		{
 		}
@@ -28,8 +31,8 @@ namespace SERVBLL
 
 		public bool SendTestEmail(string address, int senderUserID)
 		{
-			System.Net.Mail.SmtpClient c = new SmtpClient("localhost");
-			MailMessage m = new MailMessage("NOREPLY@system.servssl.org.uk", address);
+			System.Net.Mail.SmtpClient c = new SmtpClient(SERVER);
+			MailMessage m = new MailMessage(FROM, address);
 			m.Body = "test";
 			m.Subject = "test";
 			SERVDALFactory.Factory.MessageDAL().LogSentEmailMessage(address, m.Subject + " :: " + m.Body, senderUserID);
