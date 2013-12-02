@@ -42,12 +42,22 @@ var dropLocationId = 0;
 var finalLocationId = 0;
 var vehicleId = 0;
 
+var locations = new Array();
+var locationNames = new Array();
+var members = new Array();
+var memberNames = new Array();
+var controllers = new Array();
+var controllerNames = new Array();
+
 $(function() 
 {
 	$(".date").datepicker({ dateFormat: 'dd M yy' });
-	listControllers();
-	listRiders();
-	listLocations();
+	$( ".locations" ).autocomplete({ source: locationNames });
+	$( ".controllers" ).autocomplete({ source: controllerNames });
+	$( ".riders" ).autocomplete({ source: memberNames });
+	listControllers(null);
+	listMembersWithTag("Rider,Driver,Blood", null);
+	listLocations(null);
 	listVehicleTypes();
 	$("#loading").slideUp();
 	$("#entry").slideDown();
@@ -143,21 +153,60 @@ function saveBloodRun()
 	);
 }
 
+function getControllerId(controllerName)
+{
+	for(var x = 0; x < controllers.length; x++)
+	{
+		if ((controllers[x].LastName + ' ' + controllers[x].FirstName) == controllerName)
+		{
+			return controllers[x].MemberID;
+		}
+	}
+	return 0;
+}
+
+function getMemberId(memberName)
+{
+	for(var x = 0; x < members.length; x++)
+	{
+		if ((members[x].LastName + ' ' + members[x].FirstName) == memberName)
+		{
+			return members[x].MemberID;
+		}
+	}
+	return 0;
+}
+
+function getLocationId(locationName)
+{
+	for(var x = 0; x < locations.length; x++)
+	{
+		if (locations[x].LocationName == locationName)
+		{
+			return locations[x].LocationID;
+		}
+	}
+	return 0;
+}
+
 function validate()
 {
+
 	if (runType == "")
 	{
 		niceAlert("You need to choose a Run Type");	return false;
 	}
+	controllerId = getControllerId($("#txtController").val())
 	if (controllerId == 0)
 	{
-		niceAlert("You need to choose a Controller"); return false;
+		niceAlert("You need to choose a Controller.  You MUST choose an item from the list or type it exactly."); return false;
 	}
 	if (runType=="blood")
 	{
+		riderId = getMemberId($("#txtRider").val())
 		if (riderId == 0)
 		{
-			niceAlert("You need to choose a Rider"); return false;
+			niceAlert("You need to choose a Rider.  You MUST choose an item from the list or type it exactly."); return false;
 		}
 		if (vehicleId == 0)
 		{
@@ -187,25 +236,30 @@ function validate()
 		{
 			niceAlert("What did the rider / driver carry?"); return false;
 		}
+		callerLocationId = getLocationId($("#txtCaller").val());
 		if (callerLocationId == 0)
 		{
-			niceAlert("Who called SERV NOW?"); return false;
+			niceAlert("Who called SERV NOW?  You MUST choose an item from the list or type it exactly."); return false;
 		}
+		originLocationId = getLocationId($("#txtOrigin").val());
 		if (originLocationId == 0)
 		{
-			niceAlert("What was the consignments origin? (This may not be where we collected from)"); return false;
+			niceAlert("What was the consignments origin? (This may not be where we collected from)  You MUST choose an item from the list or type it exactly."); return false;
 		}
+		pickupLocationId = getLocationId($("#txtPickup").val());
 		if (pickupLocationId == 0)
 		{
-			niceAlert("Where did we pickup from?"); return false;
+			niceAlert("Where did we pickup from?  You MUST choose an item from the list or type it exactly."); return false;
 		}
+		dropLocationId = getLocationId($("#txtDrop").val());
 		if (dropLocationId == 0)
 		{
-			niceAlert("Where did we drop off?"); return false;
+			niceAlert("Where did we drop off?  You MUST choose an item from the list or type it exactly."); return false;
 		}
+		finalLocationId = getLocationId($("#txtFinalDest").val());
 		if (finalLocationId == 0)
 		{
-			niceAlert("What was the consignments final destination? (This may not be where we dropped off)"); return false;
+			niceAlert("What was the consignments final destination? (This may not be where we dropped off).  You MUST choose an item from the list or type it exactly."); return false;
 		}
 		if (!isValidTime($("#txtCallTime").val()))
 		{
@@ -284,26 +338,6 @@ function showWaterPanel()
 	$("#Water").slideDown();
 }
 
-function listControllers()
-{
-	writeMembersWithTagAsListItems("Controller", "lstControllers", controllerSelected);
-}
-
-function listRiders()
-{
-	writeMembersWithTagAsListItems("Rider,Driver,Blood", "lstRiders", riderSelected);
-}
-
-function listLocations()
-{
-	writeLocations("lstCallers", callerSelected);
-	// relying on jQuery ajax caching here . . .
-	writeLocations("lstOrigins", originSelected);
-	writeLocations("lstPickups", pickupSelected);
-	writeLocations("lstDrops", dropSelected);
-	writeLocations("lstFinalDests", finalDestSelected);
-}
-
 function listVehicleTypes()
 {
 	writeVehicleTypes("lstVehicles", vehicleSelected);
@@ -314,45 +348,4 @@ function vehicleSelected(vehicleTypeId, vehicleType)
 	$("#btnVehicle").text(vehicleType);
 	vehicleId = vehicleTypeId;
 }
-
-function callerSelected(locationId, locationName)
-{
-	$("#btnCaller").text(locationName);
-	callerLocationId = locationId;
-}
-
-function originSelected(locationId, locationName)
-{
-	$("#btnOrigin").text(locationName);
-	originLocationId = locationId;
-}
-
-function pickupSelected(locationId, locationName)
-{
-	$("#btnPickup").text(locationName);
-	pickupLocationId = locationId;
-}
-
-function dropSelected(locationId, locationName)
-{
-	$("#btnDrop").text(locationName);
-	dropLocationId = locationId;
-}
-
-function finalDestSelected(locationId, locationName)
-{
-	$("#btnFinalDest").text(locationName);
-	finalLocationId = locationId;
-}
-
-function controllerSelected(memberId, firstName, lastName)
-{
-	$("#btnController").text(firstName + " " + lastName);
-	controllerId = memberId;
-}
-
-function riderSelected(memberId, firstName, lastName)
-{
-	$("#btnRider").text(firstName + " " + lastName);
-	riderId = memberId;
-}
+	

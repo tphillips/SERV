@@ -14,14 +14,7 @@
 		
 		<div class="span12">
 
-			<div class="btn-group">
-				<button type="button" class="btn" disabled id="btnController">Select The Controller's Name (Probably You!)</button>
-				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-				<ul class="dropdown-menu" id="lstControllers">
-					<!-- dropdown menu links -->
-				</ul>
-
-			</div>
+			<input type="text" id="txtController" class="controllers" placeholder="Choose the controller" />
 
 			<h4>What sort of run are you recording?</h4>
 			<div class="btn-group" data-toggle="buttons-radio">
@@ -101,57 +94,23 @@
 				<input type="text" id="txtCallTime" class="time" placeholder="HH:MM" />
 
 				<label>Call From:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" disabled id="btnCaller">Select who called SERV NOW</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstCallers">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-				<br/><br>
+				<input type="text" id="txtCaller" class="locations" placeholder="Type and Choose"/>
 
 				<label>Collected From:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnPickup" disabled>Where we picked up the consignment</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstPickups">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-				<br/><br/>
+				<input type="text" id="txtPickup" class="locations" placeholder="Type and Choose"/>
 
 				<label>Taken To:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnDrop" disabled>Where we took the consignment to</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstDrops">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-				<br/><br/>
+				<input type="text" id="txtDrop" class="locations" placeholder="Type and Choose"/>
 
 				<label>Final Destination:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnFinalDest" disabled>The consignment's final destination</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstFinalDests">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
+				<input type="text" id="txtFinalDest" class="locations" placeholder="Type and Choose" />
 
 			</div>
 
 			<div class="span4">
 
 				<label>Consignment Origin:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnOrigin" disabled>Where the consignment originated</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstOrigins">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-				<br/><br>
+				<input type="text" id="txtOrigin" class="locations" placeholder="Type and Choose" />
 
 				<label>Urgency:</label>
 				<div class="btn-group">
@@ -198,14 +157,7 @@
 			<div class="span4">
 
 				<label>Rider / Driver:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" id="btnRider" disabled>Allocated Rider's Name</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu" id="lstRiders">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-				<br/><br/>
+				<input type="text" id="txtRider" class="riders" placeholder="Choose the rider / driver" />
 
 				<label>Vehicle:</label>
 				<div class="btn-group">

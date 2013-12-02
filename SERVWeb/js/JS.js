@@ -154,6 +154,47 @@ function getNumbersForTags(tags, target)
 	);
 }
 
+
+function listMembersWithTag(tag, callBack)
+{
+	callServerSide(
+		"Service/Service.asmx/ListMembersWithTags", 
+		"{'tagsCsv':'" + tag + "'}",
+		function(json)
+		{
+			for(var x = 0; x < json.d.length; x++)
+			{
+				members[members.length] = json.d[x];
+				memberNames[memberNames.length] = json.d[x].LastName + ' ' + json.d[x].FirstName;
+			}
+			if (callBack != null) { callBack(); }
+		},
+		function()
+		{
+		}
+	);
+}
+
+function listControllers(callBack)
+{
+	callServerSide(
+		"Service/Service.asmx/ListMembersWithTags", 
+		"{'tagsCsv':'controller'}",
+		function(json)
+		{
+			for(var x = 0; x < json.d.length; x++)
+			{
+				controllers[controllers.length] = json.d[x];
+				controllerNames[controllerNames.length] = json.d[x].LastName + ' ' + json.d[x].FirstName;
+			}
+			if (callBack != null) { callBack(); }
+		},
+		function()
+		{
+		}
+	);
+}
+
 function writeMembersWithTagAsListItems(tag, target, onClick)
 {
 	callServerSide(
@@ -177,6 +218,17 @@ function writeMembersWithTagAsListItems(tag, target, onClick)
 
 function writeLocations(target, onClick)
 {
+	for(var x = 0; x < locations.length; x++)
+	{
+		$("#" + target).append("<li id=\"" + target + x + "\"><a>" + locations[x].LocationName + "</a></li>");
+		$("#" + target + x).click({param1: locations[x]}, function(event) {
+			onClick(event.data.param1.LocationID, event.data.param1.LocationName, event.data.param1.Hospital, event.data.param1.ChangeOver, event.data.param1.BloodBank);
+		});
+	}
+}
+
+function listLocations(callBack)
+{
 	callServerSide(
 		"Service/Service.asmx/ListLocations", 
 		"{}",
@@ -184,11 +236,10 @@ function writeLocations(target, onClick)
 		{
 			for(var x = 0; x < json.d.length; x++)
 			{
-				$("#" + target).append("<li id=\"" + target + x + "\"><a>" + json.d[x].LocationName + "</a></li>");
-				$("#" + target + x).click({param1: json.d[x]}, function(event) {
-					onClick(event.data.param1.LocationID, event.data.param1.LocationName);
-				});
+				locations[locations.length] = json.d[x];
+				locationNames[locationNames.length] = json.d[x].LocationName;
 			}
+			if (callBack != null) { callBack(); }
 		},
 		function()
 		{
