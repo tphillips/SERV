@@ -1,7 +1,6 @@
 <%@ Page Language="C#" Inherits="SERVWeb.ViewLocation" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
-<asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">
-</asp:Content>
+<asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Location</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
 	<script language="JavaScript" src="js/JS.js"></script>
