@@ -134,6 +134,35 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
+		public Location GetLocation(int locationId)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.LocationBLL().Get(locationId);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool SaveLocation(Location location)
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.LocationBLL().Save(location, CurrentUser()) == location.LocationID;
+		}
+
+		public int CreateBlankLocation(User user)
+		{
+			if (user == null || user.UserLevelID < (int)UserLevel.Controller)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			Location m = new Location();
+			m.LocationName = "-";
+			return SERVBLLFactory.Factory.LocationBLL().Create(m);
+		}
+
+		[WebMethod(EnableSession = true)]
 		public List<VehicleType> ListVehicleTypes()
 		{
 			Authenticate();

@@ -8,6 +8,9 @@ namespace SERVIBLL
 	public interface ILocationBLL
 	{
 		List<Location> ListLocations();
+		Location Get(int locationId);
+		int Save(Location location, SERVDataContract.User user);
+		int Create(Location m);
 	}
 }
 

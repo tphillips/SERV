@@ -12,7 +12,7 @@ namespace SERVDAL
 {
 	public class LocationDAL : ILocationDAL
 	{
-		//static Logger log = new Logger();
+		static Logger log = new Logger();
 		static SERVDataContract.DbLinq.SERVDB db;
 
 		public LocationDAL()
@@ -22,7 +22,30 @@ namespace SERVDAL
 
 		public List<Location> ListLocations()
 		{
-			return (from l in db.Location orderby l.Location1 descending select l).ToList();
+			return (from l in db.Location orderby l.Location1 select l).ToList();
+		}
+
+		public Location Get(int locationId)
+		{
+			SERVDataContract.DbLinq.Location loc = (from l in db.Location where l.LocationID == locationId select l).FirstOrDefault();
+			return loc;
+		}
+
+		public int Update(Location l)
+		{
+			log.LogStart();
+			db.Log = Console.Out;
+			db.SubmitChanges();
+			db.Log = null;
+			return l.LocationID;
+		}
+
+		public int Create(Location l)
+		{
+			log.LogStart();
+			db.Location.InsertOnSubmit(l);
+			db.SubmitChanges();
+			return l.LocationID;
 		}
 
 		public void Dispose()

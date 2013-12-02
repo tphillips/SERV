@@ -58,6 +58,61 @@ function DisplayMember(memberId)
 	);
 }
 
+function DisplayLocation(locationId)
+{
+	callServerSide(
+		"Service/Service.asmx/GetLocation", 
+		"{'locationId':" + locationId + "}",
+		function(json)
+		{
+			$("#lblTitle").text(json.d.LocationName);
+			$("#txtLocationName").val(json.d.LocationName);
+			$("#txtLat").val(json.d.Lat);
+			$("#txtLng").val(json.d.Lng);
+			$("#chkHospital").prop('checked', json.d.Hospital == 1);
+			$("#chkChangeOver").prop('checked', json.d.ChangeOver == 1);
+			$("#chkBloodBank").prop('checked', json.d.BloodBank == 1);
+			
+			$("#loading").slideUp();
+			$("#entry").slideDown();
+
+			initializeMap();
+		},
+		function()
+		{
+		}
+	);
+}
+
+function SaveLocation(locationId)
+{
+	$("#loading").slideDown();
+	$("#entry").slideUp();
+	var json = JsonifyLocationFromForm(locationId);
+	callServerSide(
+		"Service/Service.asmx/SaveLocation", 
+		json,
+		function(json)
+		{
+			$("#loading").slideUp();
+			$("#success").slideDown();
+		},
+		function()
+		{
+			$("#loading").slideUp();
+			$("#error").slideDown();
+		}
+	);
+}
+
+function JsonifyLocationFromForm(locationId)
+{
+	return '{"location":{"LocationID":' + locationId + ',' + 
+		'"LocationName":"' + $("#txtLocationName").val() + '","Hospital":"' + ($("#chkHospital").prop('checked') ? "1" : "0") + '",' + 
+		'"Lat":"' + $("#txtLat").val() + '","Lng":"' + $("#txtLng").val() + '",' + 
+		'"ChangeOver":"' + ($("#chkChangeOver").prop('checked')? "1" : "0") + '","BloodBank":"' + ($("#chkBloodBank").prop('checked')? "1" : "0") + '", "Enabled":"1"}}';
+}
+
 function sendSMSMessage(numbers, message)
 {
 	$("#loading").slideDown();
@@ -209,11 +264,7 @@ function ListLocations(userLevel)
 			'<thead><tr><th></th><th>Location</th><th>Blood Bank</th><th>Change Over</th><th>Hospital</th><th>Lat</th><th>Lng</th></tr></thead><tbody>';
 			for(var x = 0; x < json.d.length; x++)
 			{
-				var name = json.d[x].LocationName
-				if (userLevel >= 3)
-				{
-					name = '<a href="ViewLocation.aspx?locationId=' + json.d[x].LocationID + '">' + name + '</a>';
-				}
+				var name ='<a href="ViewLocation.aspx?locationId=' + json.d[x].LocationID + '">' + json.d[x].LocationName + '</a>';
 				var row="<tr><td>" + (x + 1) + "</td><td>" + name + "</td>" +
 					"<td>" + (json.d[x].BloodBank ? "X" : "") + "</td>" + 
 					"<td>" + (json.d[x].ChangeOver ? "X" : "") + "</td>" + 

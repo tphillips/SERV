@@ -20,35 +20,50 @@ namespace SERVDataContract
 		{
 			this.LocationID = metal.LocationID;
 			this.LocationName = metal.Location1;
-			this.BloodBank = metal.BloodBank == 1;
-			this.ChangeOver = metal.Changeover == 1;
-			this.Enabled = metal.Enabled == 1;
-			this.Hospital = metal.Hospital == 1;
+			this.BloodBank = metal.BloodBank;
+			this.ChangeOver = metal.Changeover;
+			this.Enabled = metal.Enabled;
+			this.Hospital = metal.Hospital;
 			this.Lat = metal.Lat;
 			this.Lng = metal.Lng;
 		}
 
 		[DataMember]
 		public int LocationID {get;set;}
+
 		[DataMember]
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
 		public string LocationName {get;set;}
 
-		[DataMember]
-		public bool BloodBank {get;set;}
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
+		public string Location1 {get { return LocationName; }}
 
 		[DataMember]
-		public bool ChangeOver {get;set;}
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
+		public sbyte BloodBank {get;set;}
 
 		[DataMember]
-		public bool Hospital {get;set;}
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
+		public sbyte ChangeOver {get;set;}
 
 		[DataMember]
-		public bool Enabled {get;set;}
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
+		public sbyte Changeover {get { return ChangeOver; }}
 
 		[DataMember]
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
+		public sbyte Hospital {get;set;}
+
+		[DataMember]
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
+		public sbyte Enabled {get;set;}
+
+		[DataMember]
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
 		public string Lat {get;set;}
 
 		[DataMember]
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
 		public string Lng {get;set;}
 
 	}
