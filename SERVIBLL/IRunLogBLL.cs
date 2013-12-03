@@ -14,6 +14,7 @@ namespace SERVIBLL
 						int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, string productIdCsv);
 		DataTable Report_RecentRunLog();
 		DataTable Report_Top10Riders();
+		DataTable Report_RunButNoLogin();
 	}
 }
 

@@ -22,6 +22,14 @@
 				<asp:DataGrid runat="server" id="dgReport" CssClass="table table-striped table-bordered table-condensed"/>
 			</div>
 		</div>
+		<div class="row">
+			<div class="span12">
+				<h3>Active Member - No Login</h3>
+				<p>This report shows members who have done a run since May 13 but not yet logged into the new system.</p>  
+				<asp:DataGrid runat="server" id="dgRunNoLogin" CssClass="table table-striped table-bordered table-condensed"/>
+				<asp:Label runat="server" id="lblRunNoLogin" />
+			</div>
+		</div>
 	</div>
 	
 	<script>

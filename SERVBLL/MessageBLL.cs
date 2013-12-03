@@ -6,6 +6,7 @@ using SERVDataContract;
 using SERVDALFactory;
 using SERV.Utils;
 using System.Net.Mail;
+using System.Threading;
 
 namespace SERVBLL
 {
@@ -13,11 +14,12 @@ namespace SERVBLL
 	public class MessageBLL : IMessageBLL
 	{
 
+		private static System.Net.Mail.SmtpClient c = new SmtpClient(SERVER);
 		private static Logger log = new Logger();
 
 		private const string FROM = "noreply@system.servssl.org.uk";
 		private const string SERVER = "localhost";
-		private const string FOOTER = "\r\n\r\n\r\nThis message was sent from an unattended mailbox by the SERV SSL System.  Do not reply to this mail.  If you need to make contact, please use the Forum to PM Tristan Phillips.\r\n";
+		private const string FOOTER = "\r\n\r\n\r\nThis message was sent from an unattended mailbox by the SERV SSL Membership System.  Do not reply to this mail.  If you need to make contact, please use the Forum to PM Tristan Phillips.\r\n";
 
 		public MessageBLL()
 		{
@@ -32,17 +34,16 @@ namespace SERVBLL
 			return true;
 		}
 
-		public bool SendMemberUpdateEmail(Member m, User u, int senderUserID, bool onlyNeverLoggedIn)
+		public bool SendMemberUpdateEmail(Member m, User u, int senderUserID)
 		{
 			DateTime? lastLoginDate = u.LastLoginDate;
-			if (onlyNeverLoggedIn && lastLoginDate != null){ log.Debug("Skipping as member has logged in"); return true;}
 			string tags = "";
 			foreach (Tag t in m.Tags)
 			{
 				tags += "\"" + t.TagName + "\"   ";
 			}
 			string body = "Hi " + m.FirstName + ",\r\n\r\n" +
-				"This is a periodical email from the SERV SSL system to confirm the data we hold about you.\r\n\r\n" +
+			              "This is a periodical email from the SERV SSL Membership System to confirm the data we hold about you.\r\n\r\n" +
 					(
 				    lastLoginDate == null ? 
 						"We notice you have not yet logged into your account.  " +
@@ -78,7 +79,7 @@ namespace SERVBLL
 				try
 				{
 					log.Debug(string.Format("Sending membership update to {0}", m.EmailAddress));
-					SendMembershipEmail(m.EmailAddress, senderUserID, onlyNeverLoggedIn);
+					SendMembershipEmail(m, senderUserID, onlyNeverLoggedIn);
 				}
 				catch(Exception e)
 				{
@@ -92,24 +93,46 @@ namespace SERVBLL
 		{
 			log.LogStart();
 			log.Debug(string.Format("{0} >> {1} :: {2} seder: {3}", address, subject, body, senderUserID));
-			System.Net.Mail.SmtpClient c = new SmtpClient(SERVER);
 			MailMessage m = new MailMessage(FROM, address);
 			m.Body = body;
 			m.Subject = subject;
 			SERVDALFactory.Factory.MessageDAL().LogSentEmailMessage(address, m.Subject + " :: " + m.Body, senderUserID);
-			c.Send(m);
+			ParameterizedThreadStart pts = new ParameterizedThreadStart(_DoSendMail);
+			Thread t = new Thread(pts);
+			t.IsBackground = true;
+			t.Start(m);
 			return true;
 		}
 
-		public bool SendMembershipEmail(string address, int senderUserID, bool onlyNeverLoggedIn)
+		private void _DoSendMail(object mail)
 		{
-			Member m = new MemberBLL().GetByEmail(address);
+			MailMessage m = (MailMessage)mail;
+			c.Send(m);
+			log.Debug(string.Format("Sent a mail to {0}", m.To));
+		}
+
+		public bool SendMembershipEmail(string emailAddress, int senderUserID, bool onlyNeverLoggedIn)
+		{
+			Member m = new MemberBLL().GetByEmail(emailAddress);
+			return SendMembershipEmail(m, senderUserID, onlyNeverLoggedIn);
+		}
+
+		public bool SendMembershipEmail(Member m, int senderUserID, bool onlyNeverLoggedIn)
+		{
 			if (m != null)
 			{
 				User u = new MemberBLL().GetUserForMember(m.MemberID);
 				if (u != null)
 				{
-					return SendMemberUpdateEmail(m, u, senderUserID, onlyNeverLoggedIn);
+					if (u.LastLoginDate == null || !onlyNeverLoggedIn)
+					{
+						return SendMemberUpdateEmail(m, u, senderUserID);
+					}
+					else
+					{
+						log.Debug("Skipping as member has logged in");
+						return true;
+					}
 				}
 			}
 			return false;

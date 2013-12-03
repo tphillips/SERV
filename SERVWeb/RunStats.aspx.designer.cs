@@ -21,6 +21,10 @@ namespace SERVWeb {
 		
 		protected System.Web.UI.WebControls.DataGrid dgReport;
 		
+		protected System.Web.UI.WebControls.DataGrid dgRunNoLogin;
+		
+		protected System.Web.UI.WebControls.Label lblRunNoLogin;
+		
 		public new SERVWeb.Master Master {
 			get {
 				return ((SERVWeb.Master)(base.Master));

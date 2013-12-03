@@ -107,6 +107,20 @@ namespace SERVDAL
 			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 		}
 
+		public DataTable Report_RunButNoLogin()
+		{
+			string sql = "select CONCAT(m.FirstName, ' ', m.LastName) as Rider, date(m.JoinDate) as Joined, m.EmailAddress as Email, date(max(rr.CallDate)) as LastRun, count(*) as Runs " +
+			             "from RawRunLog rr  " +
+			             "LEFT join Member m on rr.Rider = (CONCAT(m.LastName, ' ', m.FirstName))  " +
+			             "where m.MemberID not in " +
+			             "(select m.MemberID from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is not null) " +
+			             "and rr.CallDate > '2013-05-01' " +
+			             "and m.LeaveDate is null " +
+			             "group by m.MemberID " +
+			             "order by max(rr.CallDate) desc;";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();

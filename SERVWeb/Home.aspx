@@ -14,13 +14,17 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.5</h3>
+			<h3>Version 1.2.7</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Adding and Editing locations</li>
+				<li>Added a report to show members who are activley running but have not logged into the system.</li>
+				<li>Threaded sending mails when sending out membership status mails</li>
+				<li>Made membership status mails more efficient</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Controller form now using type-ahead, try it out</li>
+				<li>Adding and Editing locations</li>
 				<li>Membership Email dev work</li>
 				<li>Added show inactive members check on member list and hide leavers by default</li>
 				<li>Allow committee members to update members GMP date and Assessment date</li>

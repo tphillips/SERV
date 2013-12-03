@@ -14,6 +14,7 @@ namespace SERVIDAL
 		int CreateRunLog(SERVDataContract.DbLinq.RunLog log, List<int> prods);
 		DataTable Report_RecentRunLog();
 		DataTable Report_Top10Riders();
+		DataTable Report_RunButNoLogin();
 	}
 }
 
