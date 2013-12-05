@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using SERVDataContract;
 using SERVBLLFactory;
 using System.Data;
-
+using System.Threading;
 
 namespace SERVWeb
 {
@@ -215,7 +215,29 @@ namespace SERVWeb
 				throw new System.Security.Authentication.AuthenticationException();
 			}
 			if (sure != "YES"){ throw new InvalidExpressionException("You don't seem to be sure about that"); }
-			return SERVBLLFactory.Factory.MessageBLL().SendAllActiveMembersMembershipEmail(CurrentUser().UserID, onlyNeverLoggedIn);
+			ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendAllActiveMembersMembershipEmail);
+			SendMembershipEmailArgs args = new SendMembershipEmailArgs();
+			args.CurrentUserID = CurrentUser().UserID;
+			args.OnlyNeverLoggedIn = onlyNeverLoggedIn;
+			Thread t = new Thread(pts);
+			t.IsBackground = true;
+			t.Start(args);
+			return true;
+		}
+
+		struct SendMembershipEmailArgs
+		{
+			public int CurrentUserID;
+			public bool OnlyNeverLoggedIn;
+		}
+
+		private void _SendAllActiveMembersMembershipEmail(object args)
+		{
+			DateTime s = log.LogStart();
+			SendMembershipEmailArgs a = (SendMembershipEmailArgs)args;
+			SERVBLLFactory.Factory.MessageBLL().SendAllActiveMembersMembershipEmail(a.CurrentUserID, a.OnlyNeverLoggedIn);
+			log.LogEnd();
+			log.LogPerformace(s);
 		}
 
 		[WebMethod(EnableSession = true, TransactionOption=System.EnterpriseServices.TransactionOption.Disabled, CacheDuration=120)]

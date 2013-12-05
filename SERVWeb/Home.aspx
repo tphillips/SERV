@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.7</h3>
+			<h3>Version 1.2.7.3</h3>
 			<h4>Recent Changes</h4>
 			<ul>
 				<li>Added a report to show members who are activley running but have not logged into the system.</li>

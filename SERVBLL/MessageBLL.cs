@@ -37,6 +37,7 @@ namespace SERVBLL
 		public bool SendMemberUpdateEmail(Member m, User u, int senderUserID)
 		{
 			DateTime? lastLoginDate = u.LastLoginDate;
+			m = new MemberBLL().Get(m.MemberID);
 			string tags = "";
 			foreach (Tag t in m.Tags)
 			{
@@ -47,8 +48,9 @@ namespace SERVBLL
 					(
 				    lastLoginDate == null ? 
 						"We notice you have not yet logged into your account.  " +
-						"It is essential that you do so to keep your contact details and volunteering preferences up to date.  " +
-				              "Please goto http://system.servssl.org.uk ASAP.\r\n\r\n" 
+				              "It is essential that you do so to keep your contact details and volunteering preferences up to date.\r\n\r\n  " +
+				              "Please goto http://system.servssl.org.uk ASAP.\r\n" +
+				              "More information regarding the new Membership System and login instructions can be found in this SERV Forum topic: http://servssl.org.uk/members/index.php?/topic/1437-serv-system-action-required-by-all/\r\n\r\n" 
 						: 
 					    "You last logged onto the system on " + ((DateTime)lastLoginDate).ToString("dd MMM yy HH:mm") + "\r\n\r\n"
 				    ) +
@@ -80,6 +82,7 @@ namespace SERVBLL
 				{
 					log.Debug(string.Format("Sending membership update to {0}", m.EmailAddress));
 					SendMembershipEmail(m, senderUserID, onlyNeverLoggedIn);
+					Thread.Sleep(20);
 				}
 				catch(Exception e)
 				{
