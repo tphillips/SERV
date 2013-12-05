@@ -124,11 +124,35 @@ join User u on u.MemberID = m.MemberID
 where m.LastName = 'Myers';
 /*update User set PasswordHash = '' where UserId = 72;*/
 
-select * from Member where LastName = 'Phillips';
-select * from User where MemberID = 182;
+select * from Member where LastName = 'Snelling';
+select * from User where MemberID = 197;
 /* update User set UserlevelID = 3 where UserID = 9; */
 /* update User set LastLoginDate = null where UserID = 77; */
 
 select * from RawRunLog where CallDate = '2013-07-15';
 
-
+/*
+	Select the average number of calls by day of week and make a riders required prediction based on average call numbers
+	The riders Required is Calls * @riderfactor (rounded up)
+	The Call averages are based on the last @daysback days
+	The select has to work out the ShiftStart date or calls after midnight would be counted against the next days numbers
+*/
+SET @daysback = -240;
+SET @daysinweek = 7;
+SET @bloodrunafterhour = 17;
+SET @riderfactor = 0.5;
+SELECT @weeks := count(distinct (Calldate)) / @daysinweek from RawRunLog where CallDate > AddDate(CURRENT_DATE,@daysback);
+SELECT dayname(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end) as ShiftDay
+	, round(count(*) / @weeks) as AverageCalls
+	, round((count(*) / @weeks) * @riderfactor) as RidersRequired
+FROM RawRunLog
+WHERE CallDate > AddDate(CURRENT_DATE,@daysback)
+AND(Consignment like "%blood%" 
+	or Consignment like "%platelets%" 
+	or Consignment like "%plasma%" 
+	or Consignment like "%ffp%" 
+	or Consignment like "%sample%"
+	or Consignment like "%drugs%"
+	or Consignment like "%package%")
+GROUP BY dayname(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end)
+ORDER BY dayofweek(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end);
