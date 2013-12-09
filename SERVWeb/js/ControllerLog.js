@@ -59,6 +59,7 @@ $(function()
 	listMembersWithTag("Rider,Driver,Blood", null);
 	listLocations(null);
 	listVehicleTypes();
+	showCurrentController();
 	$("#loading").slideUp();
 	$("#entry").slideDown();
 });
@@ -187,6 +188,18 @@ function getLocationId(locationName)
 		}
 	}
 	return 0;
+}
+
+function getLocation(locationName)
+{
+	for(var x = 0; x < locations.length; x++)
+	{
+		if (locations[x].LocationName == locationName)
+		{
+			return locations[x];
+		}
+	}
+	return null;
 }
 
 function validate()
@@ -347,5 +360,51 @@ function vehicleSelected(vehicleTypeId, vehicleType)
 {
 	$("#btnVehicle").text(vehicleType);
 	vehicleId = vehicleTypeId;
+}
+
+function callerSelected()
+{
+	var loc = getLocation($("#txtCaller").val());
+	if (loc != null)
+	{
+		if (loc.Hospital)
+		{
+			if ($("#txtFinalDest").val() == "")
+			{
+				$("#txtFinalDest").val(loc.LocationName);
+			}
+		}
+	}
+}
+
+
+function collectedFromSelected()
+{
+	var loc = getLocation($("#txtPickup").val());
+	if (loc != null)
+	{
+		if (loc.BloodBank)
+		{
+			if ($("#txtOrigin").val() == "")
+			{
+				$("#txtOrigin").val(loc.LocationName);
+			}
+		}
+	}
+}
+
+function takenToSelected()
+{
+	var loc = getLocation($("#txtDrop").val());
+	if (loc != null)
+	{
+		if (loc.Hospital)
+		{
+			if ($("#txtFinalDest").val() == "")
+			{
+				$("#txtFinalDest").val(loc.LocationName);
+			}
+		}
+	}
 }
 	

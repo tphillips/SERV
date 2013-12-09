@@ -93,13 +93,13 @@
 				<input type="text" id="txtCallTime" class="time" placeholder="HH:MM" />
 
 				<label>Call From:</label>
-				<input type="text" id="txtCaller" class="locations" placeholder="Type and Choose"/>
+				<input type="text" id="txtCaller" class="locations" placeholder="Type and Choose" onchange="callerSelected();"/>
 
 				<label>Collected From:</label>
-				<input type="text" id="txtPickup" class="locations" placeholder="Type and Choose"/>
+				<input type="text" id="txtPickup" class="locations" placeholder="Type and Choose" onchange="collectedFromSelected();"/>
 
 				<label>Taken To:</label>
-				<input type="text" id="txtDrop" class="locations" placeholder="Type and Choose"/>
+				<input type="text" id="txtDrop" class="locations" placeholder="Type and Choose" onchange="takenToSelected();"/>
 
 				<label>Final Destination:</label>
 				<input type="text" id="txtFinalDest" class="locations" placeholder="Type and Choose" />
@@ -192,6 +192,12 @@
 
 </div>
 
+<script>
+	function showCurrentController() 
+	{
+		$("#txtController").val("<%=this.MemberName%>");
+	}
+</script>
 
 </asp:Content>
 

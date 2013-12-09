@@ -24,6 +24,14 @@ namespace SERVWeb
 			}
 		}
 
+		protected string MemberName
+		{
+			get 
+			{
+				return string.Format("{0} {1}", SERVGlobal.User.Member.LastName, SERVGlobal.User.Member.FirstName);
+			}
+		}
+
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication((int)SERVDataContract.UserLevel.Controller, "Sorry, only controllers and above have access to contribute to the controller log.");

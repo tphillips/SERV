@@ -66,7 +66,6 @@ select * from User u join Member m on m.MemberID = u.MemberID where u.lastLoginD
 -- USERS WHO HAVE NOT LOGGED IN
 select * from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is null;
 
-
 -- USERS WHO HAVE LOGGED IN
 select m.LastName, m.FirstName from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is not null order by m.LastName;
 
