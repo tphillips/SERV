@@ -31,17 +31,10 @@
 
 		<div id="AA" style="display:none">
 
-			<div class="span12">
+			<div class="span6">
 
 				<label>Rider / Driver:</label>
-				<div class="btn-group">
-					<button type="button" class="btn" disabled>Select the Rider's Name</button>
-					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<!-- dropdown menu links -->
-					</ul>
-				</div>
-				<br/><br>
+				<input type="text" id="txtAaRider" class="riders" placeholder="Choose the rider / driver" />
 
 				<label>Run Date:</label>
 				<input type="text" id="txtAAShiftDate" class="date" />
@@ -67,6 +60,37 @@
 			
 			</div>
 
+			<div class="span6">
+
+				<label>Out:</label>
+				<div class="btn-group">
+					<button type="button" class="btn" disabled style="width:90px;">RH</button>
+					<button type="button" class="btn" onclick="bloodBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnBloodBox" disabled>0
+					</button><button type="button" class="btn" onclick="bloodBox ++; updateBoxCounts();">+</button>
+				</div><br/><br/>
+				<div class="btn-group">
+					<button type="button" class="btn" disabled style="width:90px;">RH</button>
+					<button type="button" class="btn" onclick="bloodBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnBloodBox" disabled>0
+					</button><button type="button" class="btn" onclick="bloodBox ++; updateBoxCounts();">+</button>
+				</div><br/><br/>
+
+				<label>Back:</label>
+				<div class="btn-group">
+					<button type="button" class="btn" disabled style="width:90px;">RH</button>
+					<button type="button" class="btn" onclick="bloodBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnBloodBox" disabled>0
+					</button><button type="button" class="btn" onclick="bloodBox ++; updateBoxCounts();">+</button>
+				</div><br/><br/>
+				<div class="btn-group">
+					<button type="button" class="btn" disabled style="width:90px;">RH</button>
+					<button type="button" class="btn" onclick="bloodBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnBloodBox" disabled>0
+					</button><button type="button" class="btn" onclick="bloodBox ++; updateBoxCounts();">+</button>
+				</div><br/><br/>
+
+			</div>
 		</div>
 
 		<div id="Milk" style="display:none">
@@ -93,13 +117,13 @@
 				<input type="text" id="txtCallTime" class="time" placeholder="HH:MM" />
 
 				<label>Call From:</label>
-				<input type="text" id="txtCaller" class="locations" placeholder="Type and Choose" onchange="callerSelected();"/>
+				<input type="text" id="txtCaller" class="locations" placeholder="Type and Choose" onblur="callerSelected();"/>
 
 				<label>Collected From:</label>
-				<input type="text" id="txtPickup" class="locations" placeholder="Type and Choose" onchange="collectedFromSelected();"/>
+				<input type="text" id="txtPickup" class="locations" placeholder="Type and Choose" onblur="collectedFromSelected();"/>
 
 				<label>Taken To:</label>
-				<input type="text" id="txtDrop" class="locations" placeholder="Type and Choose" onchange="takenToSelected();"/>
+				<input type="text" id="txtDrop" class="locations" placeholder="Type and Choose" onblur="takenToSelected();"/>
 
 				<label>Final Destination:</label>
 				<input type="text" id="txtFinalDest" class="locations" placeholder="Type and Choose" />

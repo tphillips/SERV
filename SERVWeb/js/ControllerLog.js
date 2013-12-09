@@ -92,7 +92,7 @@ function productCsv()
 	{
 		for (var x = 0; x < sampleBox; x++)
 		{
-			ret += SMAPLE + ",";
+			ret += SAMPLE + ",";
 		}
 	}
 	if (packageBox > 0)
@@ -338,7 +338,8 @@ function showMilkPanel()
 	$("#AA").slideUp();
 	$("#Water").slideUp();
 	$("#Milk").slideUp();
-	$("#Milk").slideDown();
+	$("#Milk").slideUp();
+	$("#blood").slideDown();
 }
 
 function showWaterPanel()
@@ -348,7 +349,8 @@ function showWaterPanel()
 	$("#AA").slideUp();
 	$("#Water").slideUp();
 	$("#Milk").slideUp();
-	$("#Water").slideDown();
+	$("#Water").slideUp();
+	$("#blood").slideDown();
 }
 
 function listVehicleTypes()
@@ -398,7 +400,7 @@ function takenToSelected()
 	var loc = getLocation($("#txtDrop").val());
 	if (loc != null)
 	{
-		if (loc.Hospital)
+		if (!loc.Handover)
 		{
 			if ($("#txtFinalDest").val() == "")
 			{
