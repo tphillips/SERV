@@ -26,7 +26,7 @@ namespace SERVWeb
 
 		protected override void OnLoad (EventArgs e)
 		{
-			SERVGlobal.AssertAuthentication();
+			SERVGlobal.AssertAuthentication((int)SERVDataContract.UserLevel.Controller, "Sorry, only controllers and above have access to contribute to the controller log.");
 		}
 
 	}

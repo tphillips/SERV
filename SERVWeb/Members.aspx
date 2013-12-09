@@ -3,8 +3,6 @@
 
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Members</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
-
-	<script language="JavaScript" src="js/JS.js"></script>
 	
 	<div id="entry" style="display:none">
 		<h3>Member List</h3>

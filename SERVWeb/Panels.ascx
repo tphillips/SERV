@@ -13,3 +13,12 @@
 	<h2>Success!</h2>	
 	<p ><span id="successMessage">Super . . .</span></p>	
 </div>
+
+<div id="message" style="display:none" class="hero-unit">
+	<h2>Please note:</h2>	
+	<p ><span id="successMessage"><span id="lblMessage"></span></span></p>	
+</div>
+
+<div id="alert" style="display:none" title="SERV">
+	<p><span id="alertMessage">Default message</span></p>
+</div>

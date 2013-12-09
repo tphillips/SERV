@@ -19,4 +19,6 @@
 	$("#loading").hide();
 </script>
 
+<asp:Literal runat="server" id="litServerClient"></asp:Literal>
+
 </asp:Content>

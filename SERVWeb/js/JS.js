@@ -425,15 +425,23 @@ function isValidTime(val)
 
 function niceAlert(msg)
 {
-	alert(msg);
-	/*
 	$("#alertMessage").text(msg);
 	$("#alert").dialog({
-	  autoOpen: true,
-	  show: { effect: "slide", duration: 200 },
-	  hide: { effect: "slide", duration: 200 }
+		modal: true,
+		dialogClass: "no-close",
+		autoOpen: true,
+		show: { effect: "shake", duration: 100 },
+		hide: { effect: "slide", duration: 100 },
+		buttons: 
+		[
+			{
+			  text: "OK",
+			  click: function() {
+			    $( this ).dialog( "close" );
+			  }
+			}
+		]
 	});
-*/
 }
 
 function callServerSide(url, data, success, error)

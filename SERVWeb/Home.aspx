@@ -14,15 +14,22 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.7.3</h3>
+			<h3>Version 1.2.8</h3>
 			<h4>Recent Changes</h4>
+			<ul>
+				<li>Fixing niceAlert()</li>
+				<li>Adding controller log to power user menu</li>
+				<li>Adding authentication to controller log</li>
+				<li>Adding generic messaging to home.aspx</li>
+				<li>Moving generic js include to master</li>
+				<li>Login feedback</li>
+				<li>Updating jQueryUI custo build for dialog()</li>
+			</ul>
+			<h5>Previously</h5>
 			<ul>
 				<li>Added a report to show members who are activley running but have not logged into the system.</li>
 				<li>Threaded sending mails when sending out membership status mails</li>
 				<li>Made membership status mails more efficient</li>
-			</ul>
-			<h5>Previously</h5>
-			<ul>
 				<li>Controller form now using type-ahead, try it out</li>
 				<li>Adding and Editing locations</li>
 				<li>Membership Email dev work</li>
@@ -61,6 +68,7 @@
 	<script>
 		$("#loading").hide();
 		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); window.setTimeout('$("#success").slideUp()',4000); }
+		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
 	</script>
 	
 </asp:Content>

@@ -1,11 +1,8 @@
 <%@ Page Language="C#" Inherits="SERVWeb.SMS" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
 
-
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">SMS</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
-
-<script language="JavaScript" src="js/JS.js"></script>
 
 <div id="entry">
 <h3>Bulk SMS</h3>

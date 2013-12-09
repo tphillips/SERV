@@ -32,8 +32,9 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="SMS.aspx">Bulk SMS</a></li>
+						<li><a href="ControllerLog.aspx">Controller Logging</a></li>
 						<li class="divider"></li>
+						<li><a href="SMS.aspx">Bulk SMS</a></li>
 					</ul>
 				</li>
 			</asp:Literal>

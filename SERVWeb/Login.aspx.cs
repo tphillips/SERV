@@ -26,6 +26,10 @@ namespace SERVWeb
 				}
 				Response.Redirect("Home.aspx");
 			}
+			else
+			{
+				litServerClient.Text = "<script>niceAlert(\"Sorry, either your email address or password is incorrect.  For help logging in for the first time, please consult the forum.\");</script>";
+			}
 		}
 
 	}

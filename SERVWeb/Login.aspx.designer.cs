@@ -13,9 +13,17 @@ namespace SERVWeb {
 	
 	public partial class Login {
 		
-		protected System.Web.UI.HtmlControls.HtmlGenericControl titlePlaceholderContent;
+		protected System.Web.UI.WebControls.Content titlePlaceholderContent;
+		
+		protected System.Web.UI.WebControls.Content contentPlaceholderContent;
+		
 		protected System.Web.UI.WebControls.TextBox txtEmail;
+		
 		protected System.Web.UI.WebControls.TextBox txtPassword;
+		
+		protected System.Web.UI.WebControls.Button cmdLogin;
+		
+		protected System.Web.UI.WebControls.Literal litServerClient;
 		
 		public new SERVWeb.Master Master {
 			get {

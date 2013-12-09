@@ -36,12 +36,12 @@ namespace SERVWeb
 			if (User == null) { GotoLogin(System.Web.HttpContext.Current.Request.Path); }
 		}
 
-		public static void AssertAuthentication(int minUserLevel)
+		public static void AssertAuthentication(int minUserLevel, string rejectionMessage)
 		{
 			if (User == null) { GotoLogin(System.Web.HttpContext.Current.Request.Path); }
 			if (User.UserLevelID < minUserLevel)
 			{
-				System.Web.HttpContext.Current.Response.Redirect("Home.aspx");
+				System.Web.HttpContext.Current.Response.Redirect("Home.aspx?message=" + rejectionMessage);
 			}
 		}
 

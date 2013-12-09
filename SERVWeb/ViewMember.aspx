@@ -4,8 +4,6 @@
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Member</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 	
-	<script language="JavaScript" src="js/JS.js"></script>
-	
 	<div id="entry" style="display:none">
 		<h3><span id="lblTitle"></span> <span id="memNav" style="display:none"><a class="btn" href="ViewMember.aspx?memberId=<%=this.MemberId-1%>"><</a> <a class="btn" href="ViewMember.aspx?memberId=<%=this.MemberId+1%>">></a></span></h3>
 		<button type=button class="btn btn-primary btn-lg" onclick="SaveMember()">Save</button>

@@ -3,7 +3,6 @@
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Controller Log</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
-<script language="JavaScript" src="js/JS.js"></script>
 <script language="JavaScript" src="js/ControllerLog.js"></script>
 
 <div id="entry" style="display:none">
@@ -190,10 +189,6 @@
 	</div>
 	<hr/>
 	<button type=button class="btn btn-primary btn-lg" onclick="saveRun()">Save Run</button>
-
-	<div id="alert" style="display:none" title="SERV">
-		<p><span id="alertMessage">Default message</span></p>
-	</div>
 
 </div>
 

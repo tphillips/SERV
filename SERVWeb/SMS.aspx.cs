@@ -10,7 +10,7 @@ namespace SERVWeb
 
 		protected override void OnLoad (EventArgs e)
 		{
-			SERVGlobal.AssertAuthentication((int)SERVDataContract.UserLevel.Controller);
+			SERVGlobal.AssertAuthentication((int)SERVDataContract.UserLevel.Controller, "Sorry, you don't have access to the Bulk SMS tool.");
 		}
 
 		protected void cmdSendClick (object src, EventArgs e)

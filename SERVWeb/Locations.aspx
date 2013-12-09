@@ -2,8 +2,6 @@
 <%@ MasterType VirtualPath="~/Master.master" %>
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Locations</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
-
-	<script language="JavaScript" src="js/JS.js"></script>
 	
 	<div id="entry" style="display:none">
 		<h3>Location List</h3>

@@ -35,6 +35,18 @@ namespace SERVWeb
 			}
 		}
 
+		protected string Message
+		{
+			get
+			{
+				if (Request["message"] == null)
+				{
+					return "";
+				}
+				return Request["message"].ToString();
+			}
+		}
+
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication();
