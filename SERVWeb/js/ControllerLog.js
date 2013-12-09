@@ -62,7 +62,21 @@ $(function()
 	showCurrentController();
 	$("#loading").slideUp();
 	$("#entry").slideDown();
+	window.setTimeout("keepAlive()", 20000);
 });
+
+function keepAlive()
+{
+	callServerSide(
+		"Service/Service.asmx/KeepAlive", 
+		"{}",
+		function(json)
+		{
+			window.setTimeout("keepAlive()", 20000);
+		},
+		null
+	);
+}
 
 function productCsv()
 {
@@ -134,6 +148,7 @@ function saveBloodRun()
 			"', 'urgency':'" + urgency + 
 			"', 'vehicleTypeId':'" + vehicleId + 
 			"', 'productIdCsv':'" + productCsv() + 
+			"', 'notes':'" + $("#txtNotes").val() + 
 		"'}";
 	$("#loading").slideDown();
 	$("#entry").slideUp();
@@ -408,5 +423,11 @@ function takenToSelected()
 			}
 		}
 	}
+	document.title = $("#txtRider").val() + " -> " + $("#txtDrop").val();
+}
+
+function riderSelected()
+{
+	document.title = $("#txtRider").val() + " -> " + $("#txtDrop").val();
 }
 	

@@ -34,7 +34,7 @@
 			<div class="span6">
 
 				<label>Rider / Driver:</label>
-				<input type="text" id="txtAaRider" class="riders" placeholder="Choose the rider / driver" />
+				<input type="text" id="txtAaRider" class="riders" placeholder="Choose the rider / driver" onblur="riderSelected()" />
 
 				<label>Run Date:</label>
 				<input type="text" id="txtAAShiftDate" class="date" />
@@ -180,7 +180,7 @@
 			<div class="span4">
 
 				<label>Rider / Driver:</label>
-				<input type="text" id="txtRider" class="riders" placeholder="Choose the rider / driver" />
+				<input type="text" id="txtRider" class="riders" placeholder="Choose the rider / driver" onblur="riderSelected()"/>
 
 				<label>Vehicle:</label>
 				<div class="btn-group">
@@ -204,6 +204,8 @@
 				<label>Delivery / Exchange Time:</label>
 				<input type="text" id="txtDeliverTime" placeholder="HH:MM" />
 
+				<label>Notes:</label>
+				<textarea id="txtNotes" maxlength="599"></textarea>
 			</div>
 
 		</div>

@@ -151,6 +151,13 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.LocationBLL().Save(location, CurrentUser()) == location.LocationID;
 		}
 
+		[WebMethod(EnableSession = true)]
+		public bool KeepAlive()
+		{
+			Authenticate();
+			return true;
+		}
+
 		public int CreateBlankLocation(User user)
 		{
 			if (user == null || user.UserLevelID < (int)UserLevel.Controller)
@@ -172,7 +179,8 @@ namespace SERVWeb
 		[WebMethod(EnableSession = true)]
 		public bool LogRun(string callDateTime, int callFromLocationId, string collectDateTime, int collectionLocationId, 
 			int controllerMemberId, string deliverDateTime, int deliverToLocationId, string dutyDate, 
-			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, string productIdCsv)
+			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, 
+			int vehicleTypeId, string productIdCsv, string notes)
 		{
 			Authenticate();
 			DateTime _callDateTime = DateTime.Parse(callDateTime);
@@ -181,7 +189,7 @@ namespace SERVWeb
 			DateTime _dutyDate = DateTime.Parse(dutyDate);
 			return SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
 				controllerMemberId, CurrentUser().UserID, _deliverDateTime, deliverToLocationId, _dutyDate, 
-				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv);
+				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, notes);
 		}
 
 		[WebMethod(EnableSession = true)]

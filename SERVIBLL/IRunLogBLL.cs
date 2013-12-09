@@ -11,7 +11,8 @@ namespace SERVIBLL
 		bool ImportRawRunLog();
 		bool CreateRunLog(DateTime callDateTime, int callFromLocationId, DateTime collectDateTime, int collectionLocationId, 
 		                int controllerMemberId, int createdByUserId, DateTime deliverDateTime, int deliverToLocationId, DateTime dutyDate, 
-						int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, string productIdCsv);
+						int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, 
+						string productIdCsv, string notes);
 		DataTable Report_RecentRunLog();
 		DataTable Report_Top10Riders();
 		DataTable Report_RunButNoLogin();

@@ -177,5 +177,22 @@ AND(Consignment like "%blood%"
 	or Consignment like "%cd%"
 	or Consignment like "%package%")
 group by dayname(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end), Hour(CallTime)
-ORDER BY dayofweek(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end), Hour(CallTime)
+ORDER BY dayofweek(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end), Hour(CallTime);
 
+select * from UserLevel;
+
+update User set UserLevelID = 2 where
+UserID in(5,
+7,
+10,
+12,
+15,
+16,
+26,
+66,
+73,
+74,
+96,
+97,
+104,
+131);
