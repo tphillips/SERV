@@ -24,7 +24,7 @@
 						<li><a href="Members.aspx">Member List</a></li>
 						<li><a href="Locations.aspx">Locations List</a></li>
 						<li class="divider"></li>
-						<li><a href="RunStats.aspx">Run Statistics</a></li>
+						<li><a href="RunStats.aspx">Reports and Stats</a></li>
 					</ul>
 				</li>
 			</asp:Literal>

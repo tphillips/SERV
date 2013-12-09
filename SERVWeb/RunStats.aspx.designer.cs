@@ -19,6 +19,10 @@ namespace SERVWeb {
 		
 		protected System.Web.UI.WebControls.DataGrid dgTop10;
 		
+		protected System.Web.UI.WebControls.GridView dgHeatMap;
+		
+		protected System.Web.UI.WebControls.DataGrid dgAvgPerDay;
+		
 		protected System.Web.UI.WebControls.DataGrid dgReport;
 		
 		protected System.Web.UI.WebControls.DataGrid dgRunNoLogin;

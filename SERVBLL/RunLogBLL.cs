@@ -209,6 +209,16 @@ namespace SERVBLL
 			return SERVDALFactory.Factory.RunLogDAL().Report_RunButNoLogin();
 		}
 
+		public DataTable Report_AverageCallsPerDay()
+		{
+			return SERVDALFactory.Factory.RunLogDAL().Report_AverageCallsPerDay();
+		}
+
+		public DataTable Report_CallsPerHourHeatMap()
+		{
+			return SERVDALFactory.Factory.RunLogDAL().Report_CallsPerHourHeatMap();
+		}
+
 	}
 }
 

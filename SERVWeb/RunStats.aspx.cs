@@ -19,6 +19,11 @@ namespace SERVWeb
 			dgRunNoLogin.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_RunButNoLogin();
 			dgRunNoLogin.DataBind();
 			lblRunNoLogin.Text = string.Format("{0} Result(s)", ((DataTable)dgRunNoLogin.DataSource).Rows.Count);
+			dgAvgPerDay.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_AverageCallsPerDay();
+			dgAvgPerDay.DataBind();
+
+			dgHeatMap.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_CallsPerHourHeatMap();
+			dgHeatMap.DataBind();
 		}
 	}
 }

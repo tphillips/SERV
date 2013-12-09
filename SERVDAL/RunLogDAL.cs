@@ -121,6 +121,52 @@ namespace SERVDAL
 			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 		}
 
+		public DataTable Report_AverageCallsPerDay()
+		{
+			string sql = "SELECT dayname(case when Hour(CallTime) > 17 then CallDate else AddDate(CallDate, -1) end) as ShiftDay " +
+			             ", round(count(*) / 34.28) as AverageCalls " +
+			             //", ceil((count(*) / @weeks) * @riderfactor) as RidersRequired " +
+			             "FROM RawRunLog " +
+			             "WHERE CallDate > AddDate(CURRENT_DATE, -240) " +
+			             "AND(Consignment like '%blood%' " +
+			             "or Consignment like '%plate%' " +
+			             "or Consignment like '%plas%' " +
+			             "or Consignment like '%ffp%' " +
+			             "or Consignment like '%sample%' " +
+			             "or Consignment like '%drugs%' " +
+			             "or Consignment like '%cd%' " +
+			             "or Consignment like '%data%' " +
+			             "or Consignment like '%disk%' " +
+			             "or Consignment like '%disc%' " +
+			             "or Consignment like '%package%') " +
+			             "GROUP BY dayname(case when Hour(CallTime) > 17 then CallDate else AddDate(CallDate, -1) end) " +
+			             "ORDER BY dayofweek(case when Hour(CallTime) > 17 then CallDate else AddDate(CallDate, -1) end);";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
+		public DataTable Report_CallsPerHourHeatMap()
+		{
+			string sql = "select dayname(case when Hour(CallTime) > 17 then CallDate else AddDate(CallDate, -1) end) as Day, " +
+						"Hour(CallTime) as Hour, count(*) as Calls " +
+						"from RawRunLog " +
+						"WHERE CallDate > AddDate(CURRENT_DATE, -240) " +
+						"AND Hour(CallTime) >= 0 AND Hour(CallTime) <= 23 " +
+						"AND(Consignment like '%blood%' " +
+						"or Consignment like '%plate%' " +
+						"or Consignment like '%plas%' " +
+						"or Consignment like '%ffp%' " +
+						"or Consignment like '%sample%' " +
+						"or Consignment like '%drugs%' " +
+						"or Consignment like '%cd%' " +
+						"or Consignment like '%data%' " +
+						"or Consignment like '%disk%' " +
+						"or Consignment like '%disc%' " +
+						"or Consignment like '%package%') " +
+			             "group by dayname(case when Hour(CallTime) > 17 then CallDate else AddDate(CallDate, -1) end), Hour(CallTime) " +
+			             "ORDER BY dayofweek(case when Hour(CallTime) > 17 then CallDate else AddDate(CallDate, -1) end), Hour(CallTime)";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();
