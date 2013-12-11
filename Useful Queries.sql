@@ -158,7 +158,6 @@ AND(Consignment like "%blood%"
 GROUP BY dayname(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end)
 ORDER BY dayofweek(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end);
 
-
 /*
 Day vs Call Hour punchcard data
 Select the number of calls by day of week and hour

@@ -14,13 +14,14 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.8.4</h3>
+			<h3>Version 1.2.8.5</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Notes entry on the controller form</li>
+				<li>New Report</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Notes entry on the controller form</li>
 				<li>Bug fixes to the controller log when dealing with samples</li>
 				<li>Controller logging intelligence</li>
 				<li>Controller log title shows selected rider and destination to ease multi-tab use</li>

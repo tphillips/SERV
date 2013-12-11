@@ -167,6 +167,14 @@ namespace SERVDAL
 			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 		}
 
+		public DataTable Report_TodaysUsers()
+		{
+			string sql = "select CONCAT(m.FirstName, ' ', m.LastName) as Member " +
+				"from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate > CURRENT_DATE() " +
+				"order by lastLoginDate desc;";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();

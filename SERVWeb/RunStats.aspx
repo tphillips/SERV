@@ -5,9 +5,14 @@
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 	
 	<div id="entry" style="display:none">
-		<p>Jump To: <a href="#top10">Top 10 Volunteers</a> | <a href="#recentRuns">Recent Runs</a> | <a href="#averageRuns">Average Runs Per Day</a> | <a href="#activeNoLogin">Active Member - No Login</a> | <a href="#callsPerHour">Call Per Hour Heatmap</a></p>
+		<p>Jump To: <a href="#todaysUsers">Todays Users</a> | <a href="#top10">Top 10 Volunteers</a> | <a href="#recentRuns">Recent Runs</a> | <a href="#averageRuns">Average Runs Per Day</a> | <a href="#activeNoLogin">Active Member - No Login</a> | <a href="#callsPerHour">Call Per Hour Heatmap</a></p>
 		<div class="row">
 			<div class="span3">
+
+				<a id="todaysUsers"></a>
+				<h3>Todays Users</h3>
+				<p>Users who have logged on today.</p>  
+				<asp:DataGrid runat="server" id="dgTodaysUsers" CssClass="table table-striped table-bordered table-condensed"/>
 
 				<a id="top10"></a>
 				<h3>Top 10 Volunteers</h3>

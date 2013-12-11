@@ -12,6 +12,8 @@ namespace SERVWeb
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication();
+			dgTodaysUsers.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_TodaysUsers();
+			dgTodaysUsers.DataBind();
 			dgReport.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_RecentRunLog();
 			dgReport.DataBind();
 			dgTop10.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_Top10Riders();

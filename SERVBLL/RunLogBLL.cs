@@ -101,9 +101,23 @@ namespace SERVBLL
 			log.Debug("Truncating RawRunLog");
 			SERVDALFactory.Factory.RunLogDAL().TruncateRawRunLog();
 			string docURI = "https://docs.google.com/spreadsheet/pub?key=0Avzf69R2XNmVdExyQkpRa3Rtb1d1cHBqM2dINDB1N0E&single=true&gid=0&output=csv";
-			log.Info("Downloading RunLog");
 			System.Net.ServicePointManager.ServerCertificateValidationCallback += SERV.Utils.Authentication.AcceptAllCertificates;
-			string csv = new System.Net.WebClient().DownloadString(docURI);
+			bool OK = false;
+			string csv = "";
+			while (!OK)
+			{
+				log.Info("Downloading RunLog");
+				try
+				{
+					csv = new System.Net.WebClient().DownloadString(docURI);
+					OK = true;
+				}
+				catch(Exception ex)
+				{
+					log.Error(ex.Message, ex);
+				}
+			}
+			log.Info("Download OK");
 			csv = CleanTextBlocks(csv);
 			string[] rows = csv.Split('\n');
 			int rowNum = 0;
@@ -219,6 +233,11 @@ namespace SERVBLL
 		public DataTable Report_CallsPerHourHeatMap()
 		{
 			return SERVDALFactory.Factory.RunLogDAL().Report_CallsPerHourHeatMap();
+		}
+
+		public DataTable Report_TodaysUsers()
+		{
+			return SERVDALFactory.Factory.RunLogDAL().Report_TodaysUsers();
 		}
 
 	}

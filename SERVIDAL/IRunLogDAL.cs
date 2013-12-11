@@ -17,6 +17,7 @@ namespace SERVIDAL
 		DataTable Report_RunButNoLogin();
 		DataTable Report_AverageCallsPerDay();
 		DataTable Report_CallsPerHourHeatMap();
+		DataTable Report_TodaysUsers();
 	}
 }
 
