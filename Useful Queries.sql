@@ -63,6 +63,10 @@ select * from User u join Member m on m.MemberID = u.MemberID where u.PasswordHa
 -- USERS WHO HAVE LOGGED IN
 select * from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is not null order by lastLoginDate desc; 
 
+-- USERS WHO HAVE LOGGED IN TODAY
+select CONCAT(m.FirstName, ' ', m.LastName) as Member from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate > CURRENT_DATE() order by lastLoginDate desc; 
+
+
 -- USERS WHO HAVE NOT LOGGED IN
 select * from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is null;
 

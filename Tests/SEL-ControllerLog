@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://127.0.0.1:8080/" />
+<title>SEL-ControllerLog</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SEL-ControllerLog</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Login.aspx?dest=/ControllerLog.aspx</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ctl00_contentPlaceholder_cmdLogin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=button.btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=txtShiftDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=18</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=txtCallDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=18</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtCallTime</td>
+	<td>12:00</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='blood']/div/label[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=body</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtCaller</td>
+	<td>Frimley Park</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtPickup</td>
+	<td>NBS Tooting</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtDrop</td>
+	<td>Frimley Park</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[26]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[26]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[34]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtRider</td>
+	<td>Other An</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.span4 &gt; div.btn-group &gt; a.btn.dropdown-toggle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=txtPickupDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtPickupDate</td>
+	<td>18 Dec 2013</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='blood']/div[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtPickupTime</td>
+	<td>12:30</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtDeliverDate</td>
+	<td>18 Dec 2013</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='blood']/div[3]/label[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtDeliverTime</td>
+	<td>13:00</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtNotes</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtFinalDest</td>
+	<td>Frimley Park</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtOrigin</td>
+	<td>NBS Tooting</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.span4 &gt; div.btn-group &gt; a.btn.dropdown-toggle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Florence</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[44]</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

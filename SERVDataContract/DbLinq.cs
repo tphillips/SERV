@@ -1,3 +1,4 @@
+
 namespace SERVDataContract.DbLinq
 {
 	using System;
@@ -6,7 +7,8 @@ namespace SERVDataContract.DbLinq
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Diagnostics;
-
+	
+	
 	public partial class SERVDB : DataContext
 	{
 		
@@ -47,30 +49,6 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		public Table<Calendar> Calendar
-		{
-			get
-			{
-				return this.GetTable <Calendar>();
-			}
-		}
-		
-		public Table<Duty> Duty
-		{
-			get
-			{
-				return this.GetTable <Duty>();
-			}
-		}
-		
-		public Table<FleetVehicle> FleetVehicle
-		{
-			get
-			{
-				return this.GetTable <FleetVehicle>();
-			}
-		}
-		
 		public Table<Location> Location
 		{
 			get
@@ -87,14 +65,6 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		public Table<MemberDuty> MemberDuty
-		{
-			get
-			{
-				return this.GetTable <MemberDuty>();
-			}
-		}
-		
 		public Table<MemberStatus> MemberStatus
 		{
 			get
@@ -108,14 +78,6 @@ namespace SERVDataContract.DbLinq
 			get
 			{
 				return this.GetTable <MemberTag>();
-			}
-		}
-		
-		public Table<MemberType> MemberType
-		{
-			get
-			{
-				return this.GetTable <MemberType>();
 			}
 		}
 		
@@ -214,8 +176,6 @@ namespace SERVDataContract.DbLinq
 		
 		private System.Nullable<int> _eveningNo;
 		
-		private EntitySet<Member> _member;
-		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
 		
@@ -239,7 +199,6 @@ namespace SERVDataContract.DbLinq
 		
 		public Availability()
 		{
-			_member = new EntitySet<Member>(new Action<Member>(this.Member_Attach), new Action<Member>(this.Member_Detach));
 			this.OnCreated();
 		}
 		
@@ -326,457 +285,6 @@ namespace SERVDataContract.DbLinq
 				}
 			}
 		}
-		
-		#region Children
-		[Association(Storage="_member", OtherKey="AvailabilityID", ThisKey="AvailabilityID", Name="fk_Member_Availability1")]
-		[DebuggerNonUserCode()]
-		public EntitySet<Member> Member
-		{
-			get
-			{
-				return this._member;
-			}
-			set
-			{
-				this._member = value;
-			}
-		}
-		#endregion
-		
-		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
-		
-		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
-			if ((h != null))
-			{
-				h(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(string propertyName)
-		{
-			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
-			if ((h != null))
-			{
-				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		#region Attachment handlers
-		private void Member_Attach(Member entity)
-		{
-			this.SendPropertyChanging();
-			entity.Availability = this;
-		}
-		
-		private void Member_Detach(Member entity)
-		{
-			this.SendPropertyChanging();
-			entity.Availability = null;
-		}
-		#endregion
-	}
-	
-	[Table(Name="SERV.Calendar")]
-	public partial class Calendar : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	{
-		
-		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
-		
-		private int _calendarID;
-		
-		private int _dutyID;
-		
-		private EntityRef<Duty> _duty = new EntityRef<Duty>();
-		
-		#region Extensibility Method Declarations
-		partial void OnCreated();
-		
-		partial void OnCalendarIDChanged();
-		
-		partial void OnCalendarIDChanging(int value);
-		
-		partial void OnDutyIDChanged();
-		
-		partial void OnDutyIDChanging(int value);
-		#endregion
-		
-		
-		public Calendar()
-		{
-			this.OnCreated();
-		}
-		
-		[Column(Storage="_calendarID", Name="CalendarID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int CalendarID
-		{
-			get
-			{
-				return this._calendarID;
-			}
-			set
-			{
-				if ((_calendarID != value))
-				{
-					this.OnCalendarIDChanging(value);
-					this.SendPropertyChanging();
-					this._calendarID = value;
-					this.SendPropertyChanged("CalendarID");
-					this.OnCalendarIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_dutyID", Name="DutyID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int DutyID
-		{
-			get
-			{
-				return this._dutyID;
-			}
-			set
-			{
-				if ((_dutyID != value))
-				{
-					if (_duty.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnDutyIDChanging(value);
-					this.SendPropertyChanging();
-					this._dutyID = value;
-					this.SendPropertyChanged("DutyID");
-					this.OnDutyIDChanged();
-				}
-			}
-		}
-		
-		#region Parents
-		[Association(Storage="_duty", OtherKey="DutyID", ThisKey="DutyID", Name="fk_Calendar_Duty1", IsForeignKey=true)]
-		[DebuggerNonUserCode()]
-		public Duty Duty
-		{
-			get
-			{
-				return this._duty.Entity;
-			}
-			set
-			{
-				if (((this._duty.Entity == value) == false))
-				{
-					if ((this._duty.Entity != null))
-					{
-						Duty previousDuty = this._duty.Entity;
-						this._duty.Entity = null;
-						previousDuty.Calendar.Remove(this);
-					}
-					this._duty.Entity = value;
-					if ((value != null))
-					{
-						value.Calendar.Add(this);
-						_dutyID = value.DutyID;
-					}
-					else
-					{
-						_dutyID = default(int);
-					}
-				}
-			}
-		}
-		#endregion
-		
-		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
-		
-		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
-			if ((h != null))
-			{
-				h(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(string propertyName)
-		{
-			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
-			if ((h != null))
-			{
-				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[Table(Name="SERV.Duty")]
-	public partial class Duty : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	{
-		
-		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
-		
-		private string _duty1;
-		
-		private int _dutyID;
-		
-		private EntitySet<Calendar> _calendar;
-		
-		private EntitySet<MemberDuty> _memberDuty;
-		
-		#region Extensibility Method Declarations
-		partial void OnCreated();
-		
-		partial void OnDuty1Changed();
-		
-		partial void OnDuty1Changing(string value);
-		
-		partial void OnDutyIDChanged();
-		
-		partial void OnDutyIDChanging(int value);
-		#endregion
-		
-		
-		public Duty()
-		{
-			_calendar = new EntitySet<Calendar>(new Action<Calendar>(this.Calendar_Attach), new Action<Calendar>(this.Calendar_Detach));
-			_memberDuty = new EntitySet<MemberDuty>(new Action<MemberDuty>(this.MemberDuty_Attach), new Action<MemberDuty>(this.MemberDuty_Detach));
-			this.OnCreated();
-		}
-		
-		[Column(Storage="_duty1", Name="Duty", DbType="varchar(45)", AutoSync=AutoSync.Never)]
-		[DebuggerNonUserCode()]
-		public string Duty1
-		{
-			get
-			{
-				return this._duty1;
-			}
-			set
-			{
-				if (((_duty1 == value) == false))
-				{
-					this.OnDuty1Changing(value);
-					this.SendPropertyChanging();
-					this._duty1 = value;
-					this.SendPropertyChanged("Duty1");
-					this.OnDuty1Changed();
-				}
-			}
-		}
-		
-		[Column(Storage="_dutyID", Name="DutyID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int DutyID
-		{
-			get
-			{
-				return this._dutyID;
-			}
-			set
-			{
-				if ((_dutyID != value))
-				{
-					this.OnDutyIDChanging(value);
-					this.SendPropertyChanging();
-					this._dutyID = value;
-					this.SendPropertyChanged("DutyID");
-					this.OnDutyIDChanged();
-				}
-			}
-		}
-		
-		#region Children
-		[Association(Storage="_calendar", OtherKey="DutyID", ThisKey="DutyID", Name="fk_Calendar_Duty1")]
-		[DebuggerNonUserCode()]
-		public EntitySet<Calendar> Calendar
-		{
-			get
-			{
-				return this._calendar;
-			}
-			set
-			{
-				this._calendar = value;
-			}
-		}
-		
-		[Association(Storage="_memberDuty", OtherKey="DutyID", ThisKey="DutyID", Name="fk_Member_Duty_Duty1")]
-		[DebuggerNonUserCode()]
-		public EntitySet<MemberDuty> MemberDuty
-		{
-			get
-			{
-				return this._memberDuty;
-			}
-			set
-			{
-				this._memberDuty = value;
-			}
-		}
-		#endregion
-		
-		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
-		
-		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
-			if ((h != null))
-			{
-				h(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(string propertyName)
-		{
-			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
-			if ((h != null))
-			{
-				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		#region Attachment handlers
-		private void Calendar_Attach(Calendar entity)
-		{
-			this.SendPropertyChanging();
-			entity.Duty = this;
-		}
-		
-		private void Calendar_Detach(Calendar entity)
-		{
-			this.SendPropertyChanging();
-			entity.Duty = null;
-		}
-		
-		private void MemberDuty_Attach(MemberDuty entity)
-		{
-			this.SendPropertyChanging();
-			entity.Duty = this;
-		}
-		
-		private void MemberDuty_Detach(MemberDuty entity)
-		{
-			this.SendPropertyChanging();
-			entity.Duty = null;
-		}
-		#endregion
-	}
-	
-	[Table(Name="SERV.FleetVehicle")]
-	public partial class FleetVehicle : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	{
-		
-		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
-		
-		private int _fleetVehicleID;
-		
-		private int _memberID;
-		
-		private EntityRef<Member> _member = new EntityRef<Member>();
-		
-		#region Extensibility Method Declarations
-		partial void OnCreated();
-		
-		partial void OnFleetVehicleIDChanged();
-		
-		partial void OnFleetVehicleIDChanging(int value);
-		
-		partial void OnMemberIDChanged();
-		
-		partial void OnMemberIDChanging(int value);
-		#endregion
-		
-		
-		public FleetVehicle()
-		{
-			this.OnCreated();
-		}
-		
-		[Column(Storage="_fleetVehicleID", Name="FleetVehicleID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int FleetVehicleID
-		{
-			get
-			{
-				return this._fleetVehicleID;
-			}
-			set
-			{
-				if ((_fleetVehicleID != value))
-				{
-					this.OnFleetVehicleIDChanging(value);
-					this.SendPropertyChanging();
-					this._fleetVehicleID = value;
-					this.SendPropertyChanged("FleetVehicleID");
-					this.OnFleetVehicleIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_memberID", Name="MemberID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int MemberID
-		{
-			get
-			{
-				return this._memberID;
-			}
-			set
-			{
-				if ((_memberID != value))
-				{
-					if (_member.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMemberIDChanging(value);
-					this.SendPropertyChanging();
-					this._memberID = value;
-					this.SendPropertyChanged("MemberID");
-					this.OnMemberIDChanged();
-				}
-			}
-		}
-		
-		#region Parents
-		[Association(Storage="_member", OtherKey="MemberID", ThisKey="MemberID", Name="fk_FleetVehicle_Member1", IsForeignKey=true)]
-		[DebuggerNonUserCode()]
-		public Member Member
-		{
-			get
-			{
-				return this._member.Entity;
-			}
-			set
-			{
-				if (((this._member.Entity == value) == false))
-				{
-					if ((this._member.Entity != null))
-					{
-						Member previousMember = this._member.Entity;
-						this._member.Entity = null;
-						previousMember.FleetVehicle.Remove(this);
-					}
-					this._member.Entity = value;
-					if ((value != null))
-					{
-						value.FleetVehicle.Add(this);
-						_memberID = value.MemberID;
-					}
-					else
-					{
-						_memberID = default(int);
-					}
-				}
-			}
-		}
-		#endregion
 		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
 		
@@ -1153,21 +661,11 @@ namespace SERVDataContract.DbLinq
 		
 		private string _town;
 		
-		private EntitySet<FleetVehicle> _fleetVehicle;
-		
 		private EntitySet<MemberTag> _memberTag;
-		
-		private EntitySet<MemberDuty> _memberDuty;
-		
-		private EntitySet<Message> _message;
 		
 		private EntitySet<RunLog> _runLog;
 		
 		private EntitySet<User> _user;
-		
-		private EntityRef<Availability> _availability = new EntityRef<Availability>();
-		
-		private EntityRef<MemberStatus> _memberStatus = new EntityRef<MemberStatus>();
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
@@ -1292,10 +790,7 @@ namespace SERVDataContract.DbLinq
 		
 		public Member()
 		{
-			_fleetVehicle = new EntitySet<FleetVehicle>(new Action<FleetVehicle>(this.FleetVehicle_Attach), new Action<FleetVehicle>(this.FleetVehicle_Detach));
 			_memberTag = new EntitySet<MemberTag>(new Action<MemberTag>(this.MemberTag_Attach), new Action<MemberTag>(this.MemberTag_Detach));
-			_memberDuty = new EntitySet<MemberDuty>(new Action<MemberDuty>(this.MemberDuty_Attach), new Action<MemberDuty>(this.MemberDuty_Detach));
-			_message = new EntitySet<Message>(new Action<Message>(this.Message_Attach), new Action<Message>(this.Message_Detach));
 			_runLog = new EntitySet<RunLog>(new Action<RunLog>(this.RunLog_Attach), new Action<RunLog>(this.RunLog_Detach));
 			_user = new EntitySet<User>(new Action<User>(this.User_Attach), new Action<User>(this.User_Detach));
 			this.OnCreated();
@@ -1418,10 +913,6 @@ namespace SERVDataContract.DbLinq
 			{
 				if ((_availabilityID != value))
 				{
-					if (_availability.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnAvailabilityIDChanging(value);
 					this.SendPropertyChanging();
 					this._availabilityID = value;
@@ -1716,10 +1207,6 @@ namespace SERVDataContract.DbLinq
 			{
 				if ((_memberStatusID != value))
 				{
-					if (_memberStatus.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnMemberStatusIDChanging(value);
 					this.SendPropertyChanging();
 					this._memberStatusID = value;
@@ -1919,20 +1406,6 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		#region Children
-		[Association(Storage="_fleetVehicle", OtherKey="MemberID", ThisKey="MemberID", Name="fk_FleetVehicle_Member1")]
-		[DebuggerNonUserCode()]
-		public EntitySet<FleetVehicle> FleetVehicle
-		{
-			get
-			{
-				return this._fleetVehicle;
-			}
-			set
-			{
-				this._fleetVehicle = value;
-			}
-		}
-		
 		[Association(Storage="_memberTag", OtherKey="MemberID", ThisKey="MemberID", Name="fk_Member_Capability_Member1")]
 		[DebuggerNonUserCode()]
 		public EntitySet<MemberTag> MemberTag
@@ -1944,34 +1417,6 @@ namespace SERVDataContract.DbLinq
 			set
 			{
 				this._memberTag = value;
-			}
-		}
-		
-		[Association(Storage="_memberDuty", OtherKey="MemberID", ThisKey="MemberID", Name="fk_Member_Duty_Member1")]
-		[DebuggerNonUserCode()]
-		public EntitySet<MemberDuty> MemberDuty
-		{
-			get
-			{
-				return this._memberDuty;
-			}
-			set
-			{
-				this._memberDuty = value;
-			}
-		}
-		
-		[Association(Storage="_message", OtherKey="RecipientMemberID", ThisKey="MemberID", Name="fk_Message_Member1")]
-		[DebuggerNonUserCode()]
-		public EntitySet<Message> Message
-		{
-			get
-			{
-				return this._message;
-			}
-			set
-			{
-				this._message = value;
 			}
 		}
 		
@@ -2004,72 +1449,6 @@ namespace SERVDataContract.DbLinq
 		}
 		#endregion
 		
-		#region Parents
-		[Association(Storage="_availability", OtherKey="AvailabilityID", ThisKey="AvailabilityID", Name="fk_Member_Availability1", IsForeignKey=true)]
-		[DebuggerNonUserCode()]
-		public Availability Availability
-		{
-			get
-			{
-				return this._availability.Entity;
-			}
-			set
-			{
-				if (((this._availability.Entity == value) == false))
-				{
-					if ((this._availability.Entity != null))
-					{
-						Availability previousAvailability = this._availability.Entity;
-						this._availability.Entity = null;
-						previousAvailability.Member.Remove(this);
-					}
-					this._availability.Entity = value;
-					if ((value != null))
-					{
-						value.Member.Add(this);
-						_availabilityID = value.AvailabilityID;
-					}
-					else
-					{
-						_availabilityID = null;
-					}
-				}
-			}
-		}
-		
-		[Association(Storage="_memberStatus", OtherKey="MemberStatusID", ThisKey="MemberStatusID", Name="fk_Member_MemberStatus1", IsForeignKey=true)]
-		[DebuggerNonUserCode()]
-		public MemberStatus MemberStatus
-		{
-			get
-			{
-				return this._memberStatus.Entity;
-			}
-			set
-			{
-				if (((this._memberStatus.Entity == value) == false))
-				{
-					if ((this._memberStatus.Entity != null))
-					{
-						MemberStatus previousMemberStatus = this._memberStatus.Entity;
-						this._memberStatus.Entity = null;
-						previousMemberStatus.Member.Remove(this);
-					}
-					this._memberStatus.Entity = value;
-					if ((value != null))
-					{
-						value.Member.Add(this);
-						_memberStatusID = value.MemberStatusID;
-					}
-					else
-					{
-						_memberStatusID = default(int);
-					}
-				}
-			}
-		}
-		#endregion
-		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -2093,18 +1472,6 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		#region Attachment handlers
-		private void FleetVehicle_Attach(FleetVehicle entity)
-		{
-			this.SendPropertyChanging();
-			entity.Member = this;
-		}
-		
-		private void FleetVehicle_Detach(FleetVehicle entity)
-		{
-			this.SendPropertyChanging();
-			entity.Member = null;
-		}
-		
 		private void MemberTag_Attach(MemberTag entity)
 		{
 			this.SendPropertyChanging();
@@ -2112,30 +1479,6 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		private void MemberTag_Detach(MemberTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Member = null;
-		}
-		
-		private void MemberDuty_Attach(MemberDuty entity)
-		{
-			this.SendPropertyChanging();
-			entity.Member = this;
-		}
-		
-		private void MemberDuty_Detach(MemberDuty entity)
-		{
-			this.SendPropertyChanging();
-			entity.Member = null;
-		}
-		
-		private void Message_Attach(Message entity)
-		{
-			this.SendPropertyChanging();
-			entity.Member = this;
-		}
-		
-		private void Message_Detach(Message entity)
 		{
 			this.SendPropertyChanging();
 			entity.Member = null;
@@ -2167,204 +1510,6 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.Member_Duty")]
-	public partial class MemberDuty : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	{
-		
-		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
-		
-		private int _dutyID;
-		
-		private int _memberDutyID;
-		
-		private int _memberID;
-		
-		private EntityRef<Duty> _duty = new EntityRef<Duty>();
-		
-		private EntityRef<Member> _member = new EntityRef<Member>();
-		
-		#region Extensibility Method Declarations
-		partial void OnCreated();
-		
-		partial void OnDutyIDChanged();
-		
-		partial void OnDutyIDChanging(int value);
-		
-		partial void OnMemberDutyIDChanged();
-		
-		partial void OnMemberDutyIDChanging(int value);
-		
-		partial void OnMemberIDChanged();
-		
-		partial void OnMemberIDChanging(int value);
-		#endregion
-		
-		
-		public MemberDuty()
-		{
-			this.OnCreated();
-		}
-		
-		[Column(Storage="_dutyID", Name="DutyID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int DutyID
-		{
-			get
-			{
-				return this._dutyID;
-			}
-			set
-			{
-				if ((_dutyID != value))
-				{
-					if (_duty.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnDutyIDChanging(value);
-					this.SendPropertyChanging();
-					this._dutyID = value;
-					this.SendPropertyChanged("DutyID");
-					this.OnDutyIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_memberDutyID", Name="Member_DutyID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int MemberDutyID
-		{
-			get
-			{
-				return this._memberDutyID;
-			}
-			set
-			{
-				if ((_memberDutyID != value))
-				{
-					this.OnMemberDutyIDChanging(value);
-					this.SendPropertyChanging();
-					this._memberDutyID = value;
-					this.SendPropertyChanged("MemberDutyID");
-					this.OnMemberDutyIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_memberID", Name="MemberID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int MemberID
-		{
-			get
-			{
-				return this._memberID;
-			}
-			set
-			{
-				if ((_memberID != value))
-				{
-					if (_member.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMemberIDChanging(value);
-					this.SendPropertyChanging();
-					this._memberID = value;
-					this.SendPropertyChanged("MemberID");
-					this.OnMemberIDChanged();
-				}
-			}
-		}
-		
-		#region Parents
-		[Association(Storage="_duty", OtherKey="DutyID", ThisKey="DutyID", Name="fk_Member_Duty_Duty1", IsForeignKey=true)]
-		[DebuggerNonUserCode()]
-		public Duty Duty
-		{
-			get
-			{
-				return this._duty.Entity;
-			}
-			set
-			{
-				if (((this._duty.Entity == value) == false))
-				{
-					if ((this._duty.Entity != null))
-					{
-						Duty previousDuty = this._duty.Entity;
-						this._duty.Entity = null;
-						previousDuty.MemberDuty.Remove(this);
-					}
-					this._duty.Entity = value;
-					if ((value != null))
-					{
-						value.MemberDuty.Add(this);
-						_dutyID = value.DutyID;
-					}
-					else
-					{
-						_dutyID = default(int);
-					}
-				}
-			}
-		}
-		
-		[Association(Storage="_member", OtherKey="MemberID", ThisKey="MemberID", Name="fk_Member_Duty_Member1", IsForeignKey=true)]
-		[DebuggerNonUserCode()]
-		public Member Member
-		{
-			get
-			{
-				return this._member.Entity;
-			}
-			set
-			{
-				if (((this._member.Entity == value) == false))
-				{
-					if ((this._member.Entity != null))
-					{
-						Member previousMember = this._member.Entity;
-						this._member.Entity = null;
-						previousMember.MemberDuty.Remove(this);
-					}
-					this._member.Entity = value;
-					if ((value != null))
-					{
-						value.MemberDuty.Add(this);
-						_memberID = value.MemberID;
-					}
-					else
-					{
-						_memberID = default(int);
-					}
-				}
-			}
-		}
-		#endregion
-		
-		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
-		
-		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
-			if ((h != null))
-			{
-				h(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(string propertyName)
-		{
-			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
-			if ((h != null))
-			{
-				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[Table(Name="SERV.MemberStatus")]
 	public partial class MemberStatus : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
@@ -2374,8 +1519,6 @@ namespace SERVDataContract.DbLinq
 		private string _memberStatus1;
 		
 		private int _memberStatusID;
-		
-		private EntitySet<Member> _member;
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
@@ -2392,7 +1535,6 @@ namespace SERVDataContract.DbLinq
 		
 		public MemberStatus()
 		{
-			_member = new EntitySet<Member>(new Action<Member>(this.Member_Attach), new Action<Member>(this.Member_Detach));
 			this.OnCreated();
 		}
 		
@@ -2438,22 +1580,6 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		#region Children
-		[Association(Storage="_member", OtherKey="MemberStatusID", ThisKey="MemberStatusID", Name="fk_Member_MemberStatus1")]
-		[DebuggerNonUserCode()]
-		public EntitySet<Member> Member
-		{
-			get
-			{
-				return this._member;
-			}
-			set
-			{
-				this._member = value;
-			}
-		}
-		#endregion
-		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -2475,20 +1601,6 @@ namespace SERVDataContract.DbLinq
 				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
 			}
 		}
-		
-		#region Attachment handlers
-		private void Member_Attach(Member entity)
-		{
-			this.SendPropertyChanging();
-			entity.MemberStatus = this;
-		}
-		
-		private void Member_Detach(Member entity)
-		{
-			this.SendPropertyChanging();
-			entity.MemberStatus = null;
-		}
-		#endregion
 	}
 	
 	[Table(Name="SERV.Member_Tag")]
@@ -2634,99 +1746,6 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.MemberType")]
-	public partial class MemberType : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	{
-		
-		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
-		
-		private string _memberType1;
-		
-		private int _memberTypeID;
-		
-		#region Extensibility Method Declarations
-		partial void OnCreated();
-		
-		partial void OnMemberType1Changed();
-		
-		partial void OnMemberType1Changing(string value);
-		
-		partial void OnMemberTypeIDChanged();
-		
-		partial void OnMemberTypeIDChanging(int value);
-		#endregion
-		
-		
-		public MemberType()
-		{
-			this.OnCreated();
-		}
-		
-		[Column(Storage="_memberType1", Name="MemberType", DbType="varchar(45)", AutoSync=AutoSync.Never)]
-		[DebuggerNonUserCode()]
-		public string MemberType1
-		{
-			get
-			{
-				return this._memberType1;
-			}
-			set
-			{
-				if (((_memberType1 == value) == false))
-				{
-					this.OnMemberType1Changing(value);
-					this.SendPropertyChanging();
-					this._memberType1 = value;
-					this.SendPropertyChanged("MemberType1");
-					this.OnMemberType1Changed();
-				}
-			}
-		}
-		
-		[Column(Storage="_memberTypeID", Name="MemberTypeID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
-		[DebuggerNonUserCode()]
-		public int MemberTypeID
-		{
-			get
-			{
-				return this._memberTypeID;
-			}
-			set
-			{
-				if ((_memberTypeID != value))
-				{
-					this.OnMemberTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._memberTypeID = value;
-					this.SendPropertyChanged("MemberTypeID");
-					this.OnMemberTypeIDChanged();
-				}
-			}
-		}
-		
-		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
-		
-		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
-			if ((h != null))
-			{
-				h(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(string propertyName)
-		{
-			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
-			if ((h != null))
-			{
-				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[Table(Name="SERV.Message")]
 	public partial class Message : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
@@ -2746,8 +1765,6 @@ namespace SERVDataContract.DbLinq
 		private int _senderUserID;
 		
 		private System.DateTime _sentDate;
-		
-		private EntityRef<Member> _member = new EntityRef<Member>();
 		
 		private EntityRef<MessageType> _messageType = new EntityRef<MessageType>();
 		
@@ -2891,10 +1908,6 @@ namespace SERVDataContract.DbLinq
 			{
 				if ((_recipientMemberID != value))
 				{
-					if (_member.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnRecipientMemberIDChanging(value);
 					this.SendPropertyChanging();
 					this._recipientMemberID = value;
@@ -2951,38 +1964,6 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		#region Parents
-		[Association(Storage="_member", OtherKey="MemberID", ThisKey="RecipientMemberID", Name="fk_Message_Member1", IsForeignKey=true)]
-		[DebuggerNonUserCode()]
-		public Member Member
-		{
-			get
-			{
-				return this._member.Entity;
-			}
-			set
-			{
-				if (((this._member.Entity == value) == false))
-				{
-					if ((this._member.Entity != null))
-					{
-						Member previousMember = this._member.Entity;
-						this._member.Entity = null;
-						previousMember.Message.Remove(this);
-					}
-					this._member.Entity = value;
-					if ((value != null))
-					{
-						value.Message.Add(this);
-						_recipientMemberID = value.MemberID;
-					}
-					else
-					{
-						_recipientMemberID = null;
-					}
-				}
-			}
-		}
-		
 		[Association(Storage="_messageType", OtherKey="MessageTypeID", ThisKey="MessageTypeID", Name="fk_Message_MessageType1", IsForeignKey=true)]
 		[DebuggerNonUserCode()]
 		public MessageType MessageType
@@ -3795,6 +2776,8 @@ namespace SERVDataContract.DbLinq
 		
 		private int _finalDestinationLocationID;
 		
+		private System.Nullable<System.DateTime> _homeSafeDateTime;
+		
 		private sbyte _isTransfer;
 		
 		private string _notes;
@@ -3865,6 +2848,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnFinalDestinationLocationIDChanged();
 		
 		partial void OnFinalDestinationLocationIDChanging(int value);
+		
+		partial void OnHomeSafeDateTimeChanged();
+		
+		partial void OnHomeSafeDateTimeChanging(System.Nullable<System.DateTime> value);
 		
 		partial void OnIsTransferChanged();
 		
@@ -4137,6 +3124,27 @@ namespace SERVDataContract.DbLinq
 					this._finalDestinationLocationID = value;
 					this.SendPropertyChanged("FinalDestinationLocationID");
 					this.OnFinalDestinationLocationIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_homeSafeDateTime", Name="HomeSafeDateTime", DbType="datetime", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<System.DateTime> HomeSafeDateTime
+		{
+			get
+			{
+				return this._homeSafeDateTime;
+			}
+			set
+			{
+				if ((_homeSafeDateTime != value))
+				{
+					this.OnHomeSafeDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._homeSafeDateTime = value;
+					this.SendPropertyChanged("HomeSafeDateTime");
+					this.OnHomeSafeDateTimeChanged();
 				}
 			}
 		}
@@ -4594,7 +3602,7 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_runLogProductID", Name="RunLog_ProductID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_runLogProductID", Name="RunLog_ProductID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public int RunLogProductID
 		{

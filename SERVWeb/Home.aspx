@@ -14,13 +14,19 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.8.5</h3>
+			<h3>Version 1.2.8.8</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>New Report</li>
+				<li>Fixing an issue with multibox runs</li>
+				<li>More intelligence around handovers in logging</li>
+				<li>More AA run work</li>
+				<li>Added a google map link on member profile page</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Controller logging tab renames</li>
+				<li>Bug fix on controller form where blood box count could not be incremented.  (Good to see people are testing it then!)</li>
+				<li>New Report</li>
 				<li>Notes entry on the controller form</li>
 				<li>Bug fixes to the controller log when dealing with samples</li>
 				<li>Controller logging intelligence</li>
@@ -33,7 +39,7 @@
 				<li>Adding generic messaging to home.aspx</li>
 				<li>Moving generic js include to master</li>
 				<li>Login feedback</li>
-				<li>Updating jQueryUI custo build for dialog()</li>
+				<li>Updating jQueryUI custom build for dialog()</li>
 				<li>Added a report to show members who are activley running but have not logged into the system.</li>
 				<li>Threaded sending mails when sending out membership status mails</li>
 				<li>Made membership status mails more efficient</li>
@@ -60,12 +66,11 @@
 		<div class="span4">
 			<h3>Coming Soon</h3>
 			<ul>
-				<li>Controller Logging - No more Google!</li>
-				<li>Run stats - See how many runs you / we have done &amp; how busy we are on different nights</li>
+				<li>Who knows . . .</li>
 			</ul>
 			<h3>Known Issues</h3>
 			<ul>
-				<li>Lack of validation</li>
+				<li>None</li>
 			</ul>
 			<p>Found an issue? PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</p>
 		</div>

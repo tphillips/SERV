@@ -51,7 +51,7 @@
 					<input type="text" id="txtCounty" />
 					
 					<label>Post Code:</label>
-					<input type="text" id="txtPostCode" />
+					<input type="text" id="txtPostCode" /> <a target="_blank" id="lnkPostCode">...</a>
 					
 					<label>Next Of Kin:</label>
 					<input type="text" id="txtNOK" />

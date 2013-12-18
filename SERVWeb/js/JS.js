@@ -19,6 +19,7 @@ function DisplayMember(memberId)
 			$("#txtTown").val(json.d.Town);
 			$("#txtCounty").val(json.d.County);
 			$("#txtPostCode").val(json.d.PostCode);
+			$("#lnkPostCode").attr("href", "https://www.google.co.uk/maps/preview#!q=" + json.d.PostCode);
 			
 			$("#txtOccupation").val(json.d.Occupation);
 			$("#txtNOK").val(json.d.NextOfKin);

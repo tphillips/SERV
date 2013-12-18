@@ -17,11 +17,8 @@
 
 			<h4>What sort of run are you recording?</h4>
 			<div class="btn-group" data-toggle="buttons-radio">
-			    <button type="button" class="btn" onclick="showBloodPanel()">Blood Run</button>
+			    <button type="button" class="btn" onclick="showBloodPanel()">Blood Run / Other</button>
 			    <button type="button" class="btn" onclick="showAAPanel()">Air Ambulance</button>
-			    <button type="button" class="btn" onclick="showMilkPanel()">Milk Run</button>
-			    <button type="button" class="btn" onclick="showWaterPanel()">Water Run</button>
-			    <button type="button" class="btn" onclick="showBloodPanel()">Other</button>
 			</div>
 			<br/><br/>
 
@@ -34,13 +31,13 @@
 			<div class="span6">
 
 				<label>Rider / Driver:</label>
-				<input type="text" id="txtAaRider" class="riders" placeholder="Choose the rider / driver" onblur="riderSelected()" />
+				<input type="text" id="txtAaRider" class="riders" placeholder="Choose the rider / driver" />
 
 				<label>Run Date:</label>
 				<input type="text" id="txtAAShiftDate" class="date" />
 
 				<label>Collect Time:</label>
-				<input type="text" id="txtAARunDate" placeholder="HH:MM" />
+				<input type="text" id="txtAAPickupTime" placeholder="HH:MM" />
 
 				<label>Deliver Time:</label>
 				<input type="text" id="txtAADeliverTime" placeholder="HH:MM" />
@@ -50,13 +47,13 @@
 
 				<label>Vehicle:</label>
 				<div class="btn-group">
-					<button type="button" class="btn" disabled>Select the vehicle</button>
+					<button type="button" class="btn" disabled id="btnAAVehicle">Select the vehicle</button>
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu" id="lstAAVehicles">
 						<!-- dropdown menu links -->
 					</ul>
 				</div>
-				<br/><br>
+				<br/><br/>
 			
 			</div>
 
@@ -65,29 +62,29 @@
 				<label>Out:</label>
 				<div class="btn-group">
 					<button type="button" class="btn" disabled style="width:90px;">RH</button>
-					<button type="button" class="btn" onclick="bloodBox --; updateBoxCounts();">-</button>
-					<button type="button" class="btn" id="btnBloodBox" disabled>0
-					</button><button type="button" class="btn" onclick="bloodBox ++; updateBoxCounts();">+</button>
+					<button type="button" class="btn" onclick="outBox1 --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnOutBox1" disabled>0
+					</button><button type="button" class="btn" onclick="outBox1 ++; updateBoxCounts();">+</button>
 				</div><br/><br/>
 				<div class="btn-group">
 					<button type="button" class="btn" disabled style="width:90px;">RH</button>
-					<button type="button" class="btn" onclick="bloodBox --; updateBoxCounts();">-</button>
-					<button type="button" class="btn" id="btnBloodBox" disabled>0
-					</button><button type="button" class="btn" onclick="bloodBox ++; updateBoxCounts();">+</button>
+					<button type="button" class="btn" onclick="outBox2 --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnOutBox2" disabled>0
+					</button><button type="button" class="btn" onclick="outBox2 ++; updateBoxCounts();">+</button>
 				</div><br/><br/>
 
 				<label>Back:</label>
 				<div class="btn-group">
 					<button type="button" class="btn" disabled style="width:90px;">RH</button>
-					<button type="button" class="btn" onclick="bloodBox --; updateBoxCounts();">-</button>
-					<button type="button" class="btn" id="btnBloodBox" disabled>0
-					</button><button type="button" class="btn" onclick="bloodBox ++; updateBoxCounts();">+</button>
+					<button type="button" class="btn" onclick="inBox1 --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnInBox1" disabled>0
+					</button><button type="button" class="btn" onclick="inBox1 ++; updateBoxCounts();">+</button>
 				</div><br/><br/>
 				<div class="btn-group">
 					<button type="button" class="btn" disabled style="width:90px;">RH</button>
-					<button type="button" class="btn" onclick="bloodBox --; updateBoxCounts();">-</button>
-					<button type="button" class="btn" id="btnBloodBox" disabled>0
-					</button><button type="button" class="btn" onclick="bloodBox ++; updateBoxCounts();">+</button>
+					<button type="button" class="btn" onclick="inBox2 --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnInBox2" disabled>0
+					</button><button type="button" class="btn" onclick="inBox2 ++; updateBoxCounts();">+</button>
 				</div><br/><br/>
 
 			</div>
@@ -172,8 +169,14 @@
 					<button type="button" class="btn" onclick="packageBox --; updateBoxCounts();">-</button>
 					<button type="button" class="btn" id="btnPackageBox" disabled>0
 					</button><button type="button" class="btn" onclick="packageBox ++; updateBoxCounts();">+</button>
+				</div><br/><br/>
+				<div class="btn-group">
+					<button type="button" class="btn" disabled style="width:90px;">Milk</button>
+					<button type="button" class="btn" onclick="milkBox --; updateBoxCounts();">-</button>
+					<button type="button" class="btn" id="btnMilkBox" disabled>0
+					</button><button type="button" class="btn" onclick="milkBox ++; updateBoxCounts();">+</button>
 				</div>
-				<br/><br/>
+
 
 			</div>
 
