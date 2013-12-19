@@ -14,10 +14,10 @@ namespace SERVBLL
 		{
 		}
 
-		public List<Location> ListLocations()
+		public List<Location> ListLocations(string search)
 		{
 			List<Location> ret = new List<Location>();
-			List<SERVDataContract.DbLinq.Location> locs = SERVDALFactory.Factory.LocationDAL().ListLocations();
+			List<SERVDataContract.DbLinq.Location> locs = SERVDALFactory.Factory.LocationDAL().ListLocations(search);
 			foreach (SERVDataContract.DbLinq.Location l in locs)
 			{
 				ret.Add(new Location(l));

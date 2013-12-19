@@ -14,16 +14,18 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.8.8</h3>
+			<h3>Version 1.2.9</h3>
 			<h4>Recent Changes</h4>
+			<ul>
+				<li>Air Ambulance Controller Logging! The controller logging code is now complete, let testing begin</li>
+				<li>Show all locations on a map in the list locations screen</li>
+			</ul>
+			<h5>Previously</h5>
 			<ul>
 				<li>Fixing an issue with multibox runs</li>
 				<li>More intelligence around handovers in logging</li>
 				<li>More AA run work</li>
 				<li>Added a google map link on member profile page</li>
-			</ul>
-			<h5>Previously</h5>
-			<ul>
 				<li>Controller logging tab renames</li>
 				<li>Bug fix on controller form where blood box count could not be incremented.  (Good to see people are testing it then!)</li>
 				<li>New Report</li>

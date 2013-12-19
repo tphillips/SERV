@@ -48,7 +48,6 @@ var dropLocationId = 0;
 var finalLocationId = 0;
 var vehicleId = 0;
 
-var aaControllerId = 0;
 var aaRiderId = 0;
 var aaVehicleId = 0;
 
@@ -133,6 +132,23 @@ function productCsv()
 			ret += HUMAN_MILK + ",";
 		}
 	}
+
+	return ret;
+}
+
+function outCsv()
+{
+	var ret = "";
+	if (outBox1 > 0) { ret += RH1 + (outBox1-1) + ","; }
+	if (outBox2 > 0) { ret += RH1 + (outBox2-1) + ","; }
+	return ret;
+}	
+
+function inCsv()
+{
+	var ret = "";
+	if (inBox1 > 0) { ret += RH1 + (inBox1-1) + ","; }
+	if (inBox2 > 0) { ret += RH1 + (inBox2-1) + ","; }
 	return ret;
 }
 
@@ -143,6 +159,10 @@ function saveRun()
 		if (runType == "blood")
 		{
 			saveBloodRun();
+		}
+		if (runType == "aa")
+		{
+			saveAARun();
 		}
 	}
 }
@@ -191,14 +211,15 @@ function saveAARun()
 {
 	var json = 
 		"{" +
-			"'collectDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAAPickupTime").val() + 
-			"', 'controllerMemberId':'" + controllerId + 
+			"'dutyDate':'" + $("#txtAAShiftDate").val() +
+			"', 'collectDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAAPickupTime").val() + 
 			"', 'deliverDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAADeliverTime").val() + 
-			"', 'dutyDate':'" + $("#txtAAShiftDate").val() + 
-			"', 'riderMemberId':'" + riderId + 
-			"', 'vehicleTypeId':'" + vehicleId + 
-			"', 'boxesOutCsv':'" + productCsv() + 
-			"', 'boxesInCsv':'" + productCsv() + 
+			"', 'returnDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAAReturnTime").val() + 
+			"', 'controllerMemberId':'" + controllerId + 
+			"', 'riderMemberId':'" + aaRiderId + 
+			"', 'vehicleTypeId':'" + aaVehicleId + 
+			"', 'boxesOutCsv':'" + outCsv() + 
+			"', 'boxesInCsv':'" + inCsv() + 
 			"', 'notes':'" + $("#txtNotes").val() + 
 		"'}";
 	$("#loading").slideDown();
@@ -271,7 +292,6 @@ function getLocation(locationName)
 
 function validate()
 {
-
 	if (runType == "")
 	{
 		niceAlert("You need to choose a Run Type");	return false;
@@ -283,6 +303,35 @@ function validate()
 	}
 	if (runType=="aa")
 	{
+		aaRiderId = getMemberId($("#txtAARider").val())
+		if (aaRiderId == 0)
+		{
+			niceAlert("You need to choose a Rider.  You MUST choose an item from the list or type it exactly."); return false;
+		}
+		if ($("#txtAAShiftDate").val() == "") 
+		{
+			niceAlert("What AA shift date are you logging against?"); return false;
+		}
+		if (outBox1 + inBox1 + outBox2 + inBox2 == 0)
+		{
+			niceAlert("Please choose the box numbers we took to / from KSSAA."); return false;
+		}
+		if (aaVehicleId == 0)
+		{
+			niceAlert("What did the rider / driver travel on or in?"); return false;
+		}
+		if ($("#txtAAPickupTime").val() == "") 
+		{
+			niceAlert("What time did the rider pickup?"); return false;
+		}
+		if ($("#txtAADeliverTime").val() == "") 
+		{
+			niceAlert("What time did the rider deliver?"); return false;
+		}
+		if ($("#txtAAReturnTime").val() == "") 
+		{
+			niceAlert("What time did the rider return?"); return false;
+		}
 	}
 	if (runType=="blood")
 	{
@@ -465,8 +514,7 @@ function callerSelected()
 		}
 	}
 }
-
-
+	
 function collectedFromSelected()
 {
 	var loc = getLocation($("#txtPickup").val());

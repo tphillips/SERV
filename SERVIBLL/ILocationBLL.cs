@@ -7,7 +7,7 @@ namespace SERVIBLL
 {
 	public interface ILocationBLL
 	{
-		List<Location> ListLocations();
+		List<Location> ListLocations(string search);
 		Location Get(int locationId);
 		int Save(Location location, SERVDataContract.User user);
 		int Create(Location m);

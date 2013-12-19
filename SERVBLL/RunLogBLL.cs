@@ -210,6 +210,79 @@ namespace SERVBLL
 			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prods) > 0;
 		}
 
+		public bool CreateAARunLog(DateTime dutyDate, DateTime collectDateTime, int controllerMemberId, 
+			int createdByUserId, DateTime deliverDateTime, DateTime returnDateTime, int riderMemberId, 
+			int vehicleTypeId, string boxesOutCsv, string boxesInCsv, string notes)
+		{
+			List<int> prodsOut = new List<int>();
+			foreach (string p in boxesOutCsv.Split(','))
+			{
+				if (p.Trim() != string.Empty) { prodsOut.Add(int.Parse(p)); }
+			}
+			List<int> prodsIn = new List<int>();
+			foreach (string p in boxesInCsv.Split(','))
+			{
+				if (p.Trim() != string.Empty) { prodsIn.Add(int.Parse(p)); }
+			}
+			// Out trip
+			if (prodsOut.Count > 0)
+			{
+				SERVDataContract.DbLinq.RunLog log = new SERVDataContract.DbLinq.RunLog();
+				log.CallDateTime = null;
+				log.CallFromLocationID = FindAADeliverLocationID();
+				log.CollectDateTime = collectDateTime;
+				log.CollectionLocationID = FindAAPickupLocationID();
+				log.ControllerMemberID = controllerMemberId;
+				log.CreateDate = DateTime.Now;
+				log.CreatedByUserID = createdByUserId;
+				log.DeliverDateTime = deliverDateTime;
+				log.DeliverToLocationID = FindAADeliverLocationID();
+				log.DutyDate = dutyDate;
+				log.FinalDestinationLocationID = FindAADeliverLocationID();
+				log.IsTransfer = 0;
+				log.OriginLocationID = FindAAPickupLocationID();
+				log.RiderMemberID = riderMemberId;
+				log.Urgency = 1;
+				log.VehicleTypeID = vehicleTypeId;
+				log.Notes = notes;
+				SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prodsOut);
+			}
+			// In Trip
+			if (prodsIn.Count > 0)
+			{
+				SERVDataContract.DbLinq.RunLog log = new SERVDataContract.DbLinq.RunLog();
+				log.CallDateTime = null;
+				log.CallFromLocationID = FindAADeliverLocationID();
+				log.CollectDateTime = deliverDateTime;
+				log.CollectionLocationID = FindAADeliverLocationID();
+				log.ControllerMemberID = controllerMemberId;
+				log.CreateDate = DateTime.Now;
+				log.CreatedByUserID = createdByUserId;
+				log.DeliverDateTime = returnDateTime;
+				log.DeliverToLocationID = FindAAPickupLocationID();
+				log.DutyDate = dutyDate;
+				log.FinalDestinationLocationID = FindAAPickupLocationID();
+				log.IsTransfer = 0;
+				log.OriginLocationID = FindAADeliverLocationID();
+				log.RiderMemberID = riderMemberId;
+				log.Urgency = 1;
+				log.VehicleTypeID = vehicleTypeId;
+				log.Notes = notes;
+				SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prodsIn);
+			}
+			return true;
+		}
+
+		int FindAAPickupLocationID()
+		{
+			return new LocationBLL().ListLocations("East Surrey")[0].LocationID;
+		}
+
+		int FindAADeliverLocationID()
+		{
+			return new LocationBLL().ListLocations("Redhill Aerodrome")[0].LocationID;
+		}
+
 		public DataTable Report_RecentRunLog()
 		{
 			return SERVDALFactory.Factory.RunLogDAL().Report_RecentRunLog();

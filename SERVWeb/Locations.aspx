@@ -3,15 +3,22 @@
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Locations</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 	
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-Wccd0zvGm6GyENJJs7d3lQNmysym9o&sensor=true"></script>
+
 	<div id="entry" style="display:none">
 		<h3>Location List</h3>
 		<div class="row">
-			<div class="span12">
+			<div class="span7">
 				<div id="results">
+				</div>
+			</div>
+			<div class="span5">
+				<div id="map_canvas" class="img-rounded" style="width:100%; height:550px; border:1px solid gainsboro;">
 				</div>
 			</div>
 		</div>
 		<a type=button id="cmdAdd" class="btn btn-primary btn-lg" href="ViewLocation.aspx?new=yes">Add a New Location</a>
+
 	</div>
 	
 	<script>
@@ -24,7 +31,7 @@
 		}
 		ListLocations(<%=this.UserLevel%>);
 	});
-	
+
 	</script>
 
 </asp:Content>

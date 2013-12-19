@@ -17,8 +17,8 @@
 
 			<h4>What sort of run are you recording?</h4>
 			<div class="btn-group" data-toggle="buttons-radio">
-			    <button type="button" class="btn" onclick="showBloodPanel()">Blood Run / Other</button>
-			    <button type="button" class="btn" onclick="showAAPanel()">Air Ambulance</button>
+			    <button type="button" class="btn" onclick="showBloodPanel()" id="btnBloodRun">Blood Run / Other</button>
+			    <button type="button" class="btn" onclick="showAAPanel()" id="btnAARun">Air Ambulance</button>
 			</div>
 			<br/><br/>
 
@@ -28,10 +28,10 @@
 
 		<div id="AA" style="display:none">
 
-			<div class="span6">
+			<div class="span4">
 
 				<label>Rider / Driver:</label>
-				<input type="text" id="txtAaRider" class="riders" placeholder="Choose the rider / driver" />
+				<input type="text" id="txtAARider" class="riders" placeholder="Choose the rider / driver" />
 
 				<label>Run Date:</label>
 				<input type="text" id="txtAAShiftDate" class="date" />
@@ -50,14 +50,13 @@
 					<button type="button" class="btn" disabled id="btnAAVehicle">Select the vehicle</button>
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 					<ul class="dropdown-menu" id="lstAAVehicles">
-						<!-- dropdown menu links -->
 					</ul>
 				</div>
 				<br/><br/>
 			
 			</div>
 
-			<div class="span6">
+			<div class="span4">
 
 				<label>Out:</label>
 				<div class="btn-group">
@@ -86,6 +85,9 @@
 					<button type="button" class="btn" id="btnInBox2" disabled>0
 					</button><button type="button" class="btn" onclick="inBox2 ++; updateBoxCounts();">+</button>
 				</div><br/><br/>
+
+				<label>Notes:</label>
+				<textarea id="txtNotes" maxlength="599"></textarea>
 
 			</div>
 		</div>
@@ -177,7 +179,6 @@
 					</button><button type="button" class="btn" onclick="milkBox ++; updateBoxCounts();">+</button>
 				</div>
 
-
 			</div>
 
 			<div class="span4">
@@ -190,7 +191,6 @@
 					<button type="button" class="btn" disabled id="btnVehicle">Select the vehicle</button>
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 					<ul class="dropdown-menu" id="lstVehicles">
-						<!-- dropdown menu links -->
 					</ul>
 				</div>
 				<br/><br/>
@@ -222,10 +222,12 @@
 </div>
 
 <script>
+
 	function showCurrentController() 
 	{
 		$("#txtController").val("<%=this.MemberName%>");
 	}
+
 </script>
 
 </asp:Content>

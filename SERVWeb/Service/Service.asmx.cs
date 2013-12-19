@@ -130,7 +130,7 @@ namespace SERVWeb
 		public List<Location> ListLocations()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.LocationBLL().ListLocations();
+			return SERVBLLFactory.Factory.LocationBLL().ListLocations("");
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -190,6 +190,21 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
 				controllerMemberId, CurrentUser().UserID, _deliverDateTime, deliverToLocationId, _dutyDate, 
 				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, notes);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool LogAARun(string dutyDate, string collectDateTime, string deliverDateTime, string returnDateTime,
+			int controllerMemberId, int riderMemberId, 
+			int vehicleTypeId, string boxesOutCsv, string boxesInCsv, string notes)
+		{
+			Authenticate();
+			DateTime _collectDateTime = DateTime.Parse(collectDateTime);
+			DateTime _deliverDateTime = DateTime.Parse(deliverDateTime);
+			DateTime _returnDateTime = DateTime.Parse(returnDateTime);
+			DateTime _dutyDate = DateTime.Parse(dutyDate);
+			return SERVBLLFactory.Factory.RunLogBLL().CreateAARunLog(_dutyDate, _collectDateTime,  
+				controllerMemberId, CurrentUser().UserID, _deliverDateTime, _returnDateTime,
+				riderMemberId, vehicleTypeId, boxesOutCsv, boxesInCsv, notes);
 		}
 
 		[WebMethod(EnableSession = true)]

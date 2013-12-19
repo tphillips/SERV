@@ -20,9 +20,9 @@ namespace SERVDAL
 			db = new SERVDataContract.DbLinq.SERVDB(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
 		}
 
-		public List<Location> ListLocations()
+		public List<Location> ListLocations(string search)
 		{
-			return (from l in db.Location orderby l.Location1 select l).ToList();
+			return (from l in db.Location where l.Location1.Contains(search) orderby l.Location1 select l).ToList();
 		}
 
 		public Location Get(int locationId)

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://127.0.0.1:8080/" />
+<title>SEL-ControllerLogAA</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SEL-ControllerLogAA</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Login.aspx?dest=/ControllerLog.aspx</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=ctl00_contentPlaceholder_cmdLogin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Tools</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Controller Logging</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtAARider</td>
+	<td>Other An</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=txtAAShiftDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=19</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.span4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtAAPickupTime</td>
+	<td>19:00</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtAADeliverTime</td>
+	<td>19:10</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtAAReturnTime</td>
+	<td>19:20</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a.btn.dropdown-toggle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Bike</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[11]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[11]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[15]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[15]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[15]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[19]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[19]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[19]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[19]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=txtNotes</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[48]</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

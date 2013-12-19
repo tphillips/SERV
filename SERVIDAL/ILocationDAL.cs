@@ -7,7 +7,7 @@ namespace SERVIDAL
 {
 	public interface ILocationDAL : IDisposable
 	{
-		List<Location> ListLocations();
+		List<Location> ListLocations(string search);
 		SERVDataContract.DbLinq.Location Get(int locationId);
 		int Update(SERVDataContract.DbLinq.Location l);
 		int Create(SERVDataContract.DbLinq.Location l);
