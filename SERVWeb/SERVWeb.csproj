@@ -112,6 +112,8 @@
     <Content Include="img\hospital-building.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\pin.png" />
+    <Content Include="OpsMap.aspx" />
+    <Content Include="js\opsMap.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -201,6 +203,12 @@
     </Compile>
     <Compile Include="ViewLocation.aspx.designer.cs">
       <DependentUpon>ViewLocation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpsMap.aspx.cs">
+      <DependentUpon>OpsMap.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpsMap.aspx.designer.cs">
+      <DependentUpon>OpsMap.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

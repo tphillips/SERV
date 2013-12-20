@@ -94,7 +94,8 @@ namespace SERVBLL
 					LastName = m.LastName,
 					EmailAddress = m.EmailAddress,
 					MobileNumber = m.MobileNumber,
-					Town = m.Town
+					Town = m.Town,
+					PostCode = m.PostCode
 				});
 			}
 			return ret;

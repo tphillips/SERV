@@ -8,12 +8,8 @@
 	<div id="entry" style="display:none">
 		<h3>Location List</h3>
 		<div class="row">
-			<div class="span7">
+			<div class="span12">
 				<div id="results">
-				</div>
-			</div>
-			<div class="span5">
-				<div id="map_canvas" class="img-rounded" style="width:100%; height:550px; border:1px solid gainsboro;">
 				</div>
 			</div>
 		</div>

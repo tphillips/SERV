@@ -63,6 +63,9 @@ namespace SERVDAL
 				rlp.ProductID = p;
 				rlp.RunLogID = log.RunLogID;
 				rlp.Quantity = prodD[p];
+				log.Description += string.Format("{0} x {1} ", prodD[p], (from prod in db.Product
+				                                                          where prod.ProductID == p
+				                                                          select prod).FirstOrDefault().Product1);
 				db.RunLogProduct.InsertOnSubmit(rlp);
 			}
 			db.SubmitChanges();

@@ -182,7 +182,7 @@ namespace SERVBLL
 		public bool CreateRunLog(DateTime callDateTime, int callFromLocationId, DateTime collectDateTime, int collectionLocationId, 
 			int controllerMemberId, int createdByUserId, DateTime deliverDateTime, int deliverToLocationId, DateTime dutyDate, 
 			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, 
-			string productIdCsv, string notes)
+			string productIdCsv, DateTime? homeSafeDateTime, string notes)
 		{
 			List<int> prods = new List<int>();
 			foreach (string p in productIdCsv.Split(','))
@@ -206,7 +206,9 @@ namespace SERVBLL
 			log.RiderMemberID = riderMemberId;
 			log.Urgency = urgency;
 			log.VehicleTypeID = vehicleTypeId;
+			log.HomeSafeDateTime = homeSafeDateTime;
 			log.Notes = notes;
+			log.Boxes = prods.Count;
 			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prods) > 0;
 		}
 
@@ -245,6 +247,7 @@ namespace SERVBLL
 				log.Urgency = 1;
 				log.VehicleTypeID = vehicleTypeId;
 				log.Notes = notes;
+				log.Boxes = prodsOut.Count;
 				SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prodsOut);
 			}
 			// In Trip
@@ -268,6 +271,7 @@ namespace SERVBLL
 				log.Urgency = 1;
 				log.VehicleTypeID = vehicleTypeId;
 				log.Notes = notes;
+				log.Boxes = prodsIn.Count;
 				SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prodsIn);
 			}
 			return true;

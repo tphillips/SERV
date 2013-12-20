@@ -28,16 +28,18 @@
 					</ul>
 				</li>
 			</asp:Literal>
-			<asp:Literal runat="server" id="pnlPowerUser">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="ControllerLog.aspx">Controller Logging</a></li>
-						<li class="divider"></li>
-						<li><a href="SMS.aspx">Bulk SMS</a></li>
+						<li><a href="OpsMap.aspx">Operations Map</a></li>
+						<asp:Literal runat="server" id="pnlPowerUser">
+							<li class="divider"></li>
+							<li><a href="ControllerLog.aspx">Controller Logging</a></li>
+							<li class="divider"></li>
+							<li><a href="SMS.aspx">Bulk SMS</a></li>
+						</asp:Literal>
 					</ul>
 				</li>
-			</asp:Literal>
 		</ul>
 		<p class="navbar-text pull-right"><asp:Literal runat="server" id="litLoginName"/></p>
 	</div>

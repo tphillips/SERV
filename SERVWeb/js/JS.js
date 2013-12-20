@@ -312,16 +312,6 @@ function ListLocations(userLevel)
 		"{}",
 		function(json)
 		{
-
-			var ll = new google.maps.LatLng(51.501974479325135,-0.13295898437502274);
-
-			var mapOptions = {
-				center:ll,
-				zoom: 9,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			};
-
-			var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 			var append = '<table class="table table-striped table-bordered table-condensed">' +
 			'<thead><tr><th></th><th>Location</th><th>Bloodbank</th><th>Handover</th><th>Hospital</th><th>Lat</th><th>Lng</th></tr></thead><tbody>';
 			for(var x = 0; x < json.d.length; x++)
@@ -335,18 +325,6 @@ function ListLocations(userLevel)
 					"<td>" + (json.d[x].Lng ? json.d[x].Lng.substr(0,8) : "???") + "</td>" + 
 					"</tr>"
 				append += row;
-
-				if (json.d[x].Lat != "" && json.d[x].Lat != null && json.d[x].Lng != "" && json.d[x].Lng != null)
-				{
-					ll = new google.maps.LatLng(json.d[x].Lat, json.d[x].Lng);
-					var marker = new google.maps.Marker({
-						position: ll,
-						map: map,
-						draggable: false,
-						title:json.d[x].LocationName
-					});
-				}
-
 			}
 			append += "</tbody></table>";
 			$("#results").append(append);

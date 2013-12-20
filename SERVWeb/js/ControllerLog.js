@@ -185,6 +185,7 @@ function saveBloodRun()
 			"', 'urgency':'" + urgency + 
 			"', 'vehicleTypeId':'" + vehicleId + 
 			"', 'productIdCsv':'" + productCsv() + 
+			"', 'homeSafeDateTime':'" + $("#txtHomeSafeDate").val() + " " + $("#txtHomeSafeTime").val() +
 			"', 'notes':'" + $("#txtNotes").val() + 
 		"'}";
 	$("#loading").slideDown();
@@ -220,7 +221,7 @@ function saveAARun()
 			"', 'vehicleTypeId':'" + aaVehicleId + 
 			"', 'boxesOutCsv':'" + outCsv() + 
 			"', 'boxesInCsv':'" + inCsv() + 
-			"', 'notes':'" + $("#txtNotes").val() + 
+			"', 'notes':'" + $("#txtAANotes").val() + 
 		"'}";
 	$("#loading").slideDown();
 	$("#entry").slideUp();
@@ -514,7 +515,22 @@ function callerSelected()
 		}
 	}
 }
-	
+
+function originSelected()
+{
+	var loc = getLocation($("#txtOrigin").val());
+	if (loc != null)
+	{
+		if (loc.BloodBank)
+		{
+			if ($("#txtPickup").val() == "")
+			{
+				$("#txtPickup").val(loc.LocationName);
+			}
+		}
+	}
+}
+
 function collectedFromSelected()
 {
 	var loc = getLocation($("#txtPickup").val());

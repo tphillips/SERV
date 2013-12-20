@@ -33,13 +33,13 @@ namespace SERVWeb
 
 		public static void AssertAuthentication()
 		{
-			if (User == null) { GotoLogin(System.Web.HttpContext.Current.Request.Path); }
+			if (SERVGlobal.User == null) { GotoLogin(System.Web.HttpContext.Current.Request.Path); }
 		}
 
 		public static void AssertAuthentication(int minUserLevel, string rejectionMessage)
 		{
-			if (User == null) { GotoLogin(System.Web.HttpContext.Current.Request.Path); }
-			if (User.UserLevelID < minUserLevel)
+			if (SERVGlobal.User == null) { GotoLogin(System.Web.HttpContext.Current.Request.Path); }
+			if (SERVGlobal.User.UserLevelID < minUserLevel)
 			{
 				System.Web.HttpContext.Current.Response.Redirect("Home.aspx?message=" + rejectionMessage);
 			}

@@ -6,22 +6,29 @@
 	
 	<div class="hero-unit">
 		<h2>Hey <%=this.Username%>,</h2>	
-		<p>Now that you have logged in, please make sure you <a href="ChangePassword.aspx">change your password</a>.  You can then <a href="ViewMember.aspx?self=yes">view and edit your profile</a> to make sure it is all correct, or take a look at the <a href="Members.aspx">members list</a>.</p>	
+		<p>Now that you have logged in, please make sure you <a href="ChangePassword.aspx">change your password</a>.  
+		You can then <a href="ViewMember.aspx?self=yes">view and edit your profile</a> to make sure it is all correct, or take a look at the <a href="Members.aspx">Members List</a> 
+		or any of the other things you can find in the menus above.</p>	
+		<p>Be sure to checkout the <a href="OpsMap.aspx">Operations Map</a> &amp; the <a href="RunStats.aspx">Stat Reports</a>.</p>
 		<p>You will notice an "Admin editable only" section in your profile.  If you need something changed in there, please PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</a>.</p>
 		<p>There will be loads of cool things coming along in this new system, and the majority of the benefits will be realised if we all keep our volunteer profiles and preferences up to date.  If you have any suggestions or comments, then feel free to PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</a>.</p>
+		<p>Oh, one more thing before you go . . . Don't use Internet Explorer to view this site. It's a terrible browser and you will be FAR better off using Chrome or Firefox.</p>
 	</div>
-	
+
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.9</h3>
+			<h3>Version 1.2.9.7</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Air Ambulance Controller Logging! The controller logging code is now complete, let testing begin</li>
-				<li>Show all locations on a map in the list locations screen</li>
+				<li>Added home safe time to blood controllers log form</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				Adding some denormalized data to RunLog records for ease of reporting
+				<li>Operations Map, with loads of cool features (it has it's own menu at the bottom of the screen)</li>
+				<li>Air Ambulance Controller Logging! The controller logging code is now complete, let testing begin</li>
+				<li>Show all locations on a map in the list locations screen</li>
 				<li>Fixing an issue with multibox runs</li>
 				<li>More intelligence around handovers in logging</li>
 				<li>More AA run work</li>
@@ -72,7 +79,7 @@
 			</ul>
 			<h3>Known Issues</h3>
 			<ul>
-				<li>None</li>
+				<li>Do <strong>not</strong> use IE.  Use Chrome or Firefox.</li>
 			</ul>
 			<p>Found an issue? PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</p>
 		</div>

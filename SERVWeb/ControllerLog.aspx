@@ -87,7 +87,7 @@
 				</div><br/><br/>
 
 				<label>Notes:</label>
-				<textarea id="txtNotes" maxlength="599"></textarea>
+				<textarea id="txtAANotes" maxlength="599"></textarea>
 
 			</div>
 		</div>
@@ -118,6 +118,9 @@
 				<label>Call From:</label>
 				<input type="text" id="txtCaller" class="locations" placeholder="Type and Choose" onblur="callerSelected();"/>
 
+				<label>Consignment Origin:</label>
+				<input type="text" id="txtOrigin" class="locations" placeholder="Type and Choose" onblur="originSelected();"/>
+
 				<label>Collected From:</label>
 				<input type="text" id="txtPickup" class="locations" placeholder="Type and Choose" onblur="collectedFromSelected();"/>
 
@@ -130,9 +133,6 @@
 			</div>
 
 			<div class="span4">
-
-				<label>Consignment Origin:</label>
-				<input type="text" id="txtOrigin" class="locations" placeholder="Type and Choose" />
 
 				<label>Urgency:</label>
 				<div class="btn-group">
@@ -178,10 +178,7 @@
 					<button type="button" class="btn" id="btnMilkBox" disabled>0
 					</button><button type="button" class="btn" onclick="milkBox ++; updateBoxCounts();">+</button>
 				</div>
-
-			</div>
-
-			<div class="span4">
+				<br/><br/>
 
 				<label>Rider / Driver:</label>
 				<input type="text" id="txtRider" class="riders" placeholder="Choose the rider / driver" onblur="riderSelected()"/>
@@ -195,6 +192,10 @@
 				</div>
 				<br/><br/>
 
+			</div>
+
+			<div class="span4">
+
 				<label>Pickup Date:</label>
 				<input type="text" id="txtPickupDate" class="date" />
 
@@ -206,6 +207,12 @@
 
 				<label>Delivery / Exchange Time:</label>
 				<input type="text" id="txtDeliverTime" placeholder="HH:MM" />
+
+				<label>Home Safe Date:</label>
+				<input type="text" id="txtHomeSafeDate" class="date" />
+
+				<label>Home Safe Time:</label>
+				<input type="text" id="txtHomeSafeTime" placeholder="HH:MM" />
 
 				<label>Notes:</label>
 				<textarea id="txtNotes" maxlength="599"></textarea>

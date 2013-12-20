@@ -118,8 +118,11 @@ select * from CallLog;
 select * from Member where MobileNumber = '07734819559';
 
 select * from RunLog rl 
-join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
-join Product p on p.ProductID = rlp.ProductID;
+/*join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID*/
+/*join Product p on p.ProductID = rlp.ProductID*/
+join Member m on m.MemberID = rl.RiderMemberID
+join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID
+order by rl.RunLogID;
 
 select * from Member m 
 join User u on u.MemberID = m.MemberID 

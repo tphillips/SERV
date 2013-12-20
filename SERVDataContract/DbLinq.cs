@@ -2754,6 +2754,8 @@ namespace SERVDataContract.DbLinq
 		
 		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
 		
+		private int _boxes;
+		
 		private System.Nullable<System.DateTime> _callDateTime;
 		
 		private int _callFromLocationID;
@@ -2771,6 +2773,8 @@ namespace SERVDataContract.DbLinq
 		private System.Nullable<System.DateTime> _deliverDateTime;
 		
 		private int _deliverToLocationID;
+		
+		private string _description;
 		
 		private System.Nullable<System.DateTime> _dutyDate;
 		
@@ -2804,6 +2808,10 @@ namespace SERVDataContract.DbLinq
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
+		
+		partial void OnBoxesChanged();
+		
+		partial void OnBoxesChanging(int value);
 		
 		partial void OnCallDateTimeChanged();
 		
@@ -2840,6 +2848,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnDeliverToLocationIDChanged();
 		
 		partial void OnDeliverToLocationIDChanging(int value);
+		
+		partial void OnDescriptionChanged();
+		
+		partial void OnDescriptionChanging(string value);
 		
 		partial void OnDutyDateChanged();
 		
@@ -2887,6 +2899,27 @@ namespace SERVDataContract.DbLinq
 		{
 			_runLogProduct = new EntitySet<RunLogProduct>(new Action<RunLogProduct>(this.RunLogProduct_Attach), new Action<RunLogProduct>(this.RunLogProduct_Detach));
 			this.OnCreated();
+		}
+		
+		[Column(Storage="_boxes", Name="Boxes", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int Boxes
+		{
+			get
+			{
+				return this._boxes;
+			}
+			set
+			{
+				if ((_boxes != value))
+				{
+					this.OnBoxesChanging(value);
+					this.SendPropertyChanging();
+					this._boxes = value;
+					this.SendPropertyChanged("Boxes");
+					this.OnBoxesChanged();
+				}
+			}
 		}
 		
 		[Column(Storage="_callDateTime", Name="CallDateTime", DbType="datetime", AutoSync=AutoSync.Never)]
@@ -3082,6 +3115,27 @@ namespace SERVDataContract.DbLinq
 					this._deliverToLocationID = value;
 					this.SendPropertyChanged("DeliverToLocationID");
 					this.OnDeliverToLocationIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_description", Name="Description", DbType="varchar(300)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Description
+		{
+			get
+			{
+				return this._description;
+			}
+			set
+			{
+				if (((_description == value) == false))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
 				}
 			}
 		}

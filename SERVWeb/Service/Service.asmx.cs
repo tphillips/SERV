@@ -180,16 +180,18 @@ namespace SERVWeb
 		public bool LogRun(string callDateTime, int callFromLocationId, string collectDateTime, int collectionLocationId, 
 			int controllerMemberId, string deliverDateTime, int deliverToLocationId, string dutyDate, 
 			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, 
-			int vehicleTypeId, string productIdCsv, string notes)
+			int vehicleTypeId, string productIdCsv, string homeSafeDateTime, string notes)
 		{
 			Authenticate();
 			DateTime _callDateTime = DateTime.Parse(callDateTime);
 			DateTime _collectDateTime = DateTime.Parse(collectDateTime);
 			DateTime _deliverDateTime = DateTime.Parse(deliverDateTime);
 			DateTime _dutyDate = DateTime.Parse(dutyDate);
+			DateTime? _homeSafeDateTime = null;
+			if (!string.IsNullOrEmpty(homeSafeDateTime)){ _homeSafeDateTime = DateTime.Parse(homeSafeDateTime); }
 			return SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
 				controllerMemberId, CurrentUser().UserID, _deliverDateTime, deliverToLocationId, _dutyDate, 
-				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, notes);
+				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, _homeSafeDateTime, notes);
 		}
 
 		[WebMethod(EnableSession = true)]

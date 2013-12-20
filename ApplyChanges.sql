@@ -1,5 +1,12 @@
 
+
+
 /*
+
+ALTER TABLE `SERV`.`RunLog` ADD COLUMN `Boxes` INT NOT NULL DEFAULT 0;
+ALTER TABLE `SERV`.`RunLog` ADD COLUMN `Description` VARCHAR(300) NULL;
+
+
 ----- V1.2.1 Applied
 ------------------
 ALTER TABLE`SERV`.`RunLog` ADD COLUMN
