@@ -124,6 +124,11 @@ join Member m on m.MemberID = rl.RiderMemberID
 join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID
 order by rl.RunLogID;
 
+/*
+de--lete from RunLog_Product;
+de--lete from RunLog;
+*/
+
 select * from Member m 
 join User u on u.MemberID = m.MemberID 
 where m.LastName = 'Goodman';

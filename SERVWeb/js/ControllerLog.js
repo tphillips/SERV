@@ -333,6 +333,18 @@ function validate()
 		{
 			niceAlert("What time did the rider return?"); return false;
 		}
+		if (!isValidTime($("#txtAAPickupTime").val()))
+		{
+			niceAlert("Please use 24 hour HH:MM time formats (Pickup Time)"); return false;
+		}
+		if (!isValidTime($("#txtAADeliverTime").val()))
+		{
+			niceAlert("Please use 24 hour HH:MM time formats (Deliver Time)"); return false;
+		}
+		if (!isValidTime($("#txtAAReturnTime").val()))
+		{
+			niceAlert("Please use 24 hour HH:MM time formats (Return Time)"); return false;
+		}
 	}
 	if (runType=="blood")
 	{
@@ -405,6 +417,10 @@ function validate()
 		if (!isValidTime($("#txtDeliverTime").val()))
 		{
 			niceAlert("Please use 24 hour HH:MM time formats (Deliver Time)"); return false;
+		}
+		if (!isValidTime($("#txtHomeSafeTime").val()))
+		{
+			niceAlert("Please use 24 hour HH:MM time formats (Home Safe Time)"); return false;
 		}
 	}
 	return true;
