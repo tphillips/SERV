@@ -137,10 +137,6 @@ namespace SERVWeb
 		public Location GetLocation(int locationId)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
-			{
-				throw new System.Security.Authentication.AuthenticationException();
-			}
 			return SERVBLLFactory.Factory.LocationBLL().Get(locationId);
 		}
 

@@ -131,7 +131,7 @@ de--lete from RunLog;
 
 select * from Member m 
 join User u on u.MemberID = m.MemberID 
-where m.LastName = 'Goodman';
+where m.LastName = 'Browning';
 /*update User set PasswordHash = '' where UserId = 31;*/
 
 select * from Member where LastName = 'Snelling';

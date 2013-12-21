@@ -186,10 +186,11 @@ function saveBloodRun()
 			"', 'vehicleTypeId':'" + vehicleId + 
 			"', 'productIdCsv':'" + productCsv() + 
 			"', 'homeSafeDateTime':'" + $("#txtHomeSafeDate").val() + " " + $("#txtHomeSafeTime").val() +
-			"', 'notes':'" + $("#txtNotes").val() + 
+			"', 'notes':'" + $("#txtNotes").val().replace(/'/g, '') + 
 		"'}";
 	$("#loading").slideDown();
 	$("#entry").slideUp();
+	$("#error").slideUp();
 	// Hit it
 	callServerSide(
 		"Service/Service.asmx/LogRun", 
@@ -221,10 +222,11 @@ function saveAARun()
 			"', 'vehicleTypeId':'" + aaVehicleId + 
 			"', 'boxesOutCsv':'" + outCsv() + 
 			"', 'boxesInCsv':'" + inCsv() + 
-			"', 'notes':'" + $("#txtAANotes").val() + 
+			"', 'notes':'" + $("#txtAANotes").val().replace(/'/g, '') + 
 		"'}";
 	$("#loading").slideDown();
 	$("#entry").slideUp();
+	$("#error").slideUp();
 	// Hit it
 	callServerSide(
 		"Service/Service.asmx/LogAARun", 
