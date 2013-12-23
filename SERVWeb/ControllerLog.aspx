@@ -135,9 +135,9 @@
 
 				<label>Urgency:</label>
 				<div class="btn-group">
-					<button type="button" class="btn" onclick="urgency --; updateUrgency();">-</button>
+					<button type="button" class="btn" onclick="urgency ++; updateUrgency();">-</button>
 					<button type="button" class="btn" id="btnUrgency" disabled>2
-					</button><button type="button" class="btn" onclick="urgency ++; updateUrgency();">+</button>
+					</button><button type="button" class="btn" onclick="urgency --; updateUrgency();">+</button>
 				</div><br/><br/>
 
 				<label>Consignment:</label>

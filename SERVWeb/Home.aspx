@@ -21,7 +21,10 @@
 			<h3>Version 1.2.9.7.2</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Raw run log import - make less process intensive with more logging</li>
+				<li>Raw run log import - make less process intensive (circa 50%) with more logging</li>
+				<li>Html tweaks to controller log</li>
+				<li>Controller log auto scrolling on selecting Blood Run (for OpsMap compatibility)</li>
+				<li>Priority + now priority number-- (Requested by GS, makes sense)</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>

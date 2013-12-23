@@ -202,7 +202,7 @@ function geocodeResult(results, status)
 {
 	if (status == 'OK' && results.length > 0) 
 	{
-		addMarker(results[0].geometry.location, "Member", bikeIcon);
+		addDraggableMarker(results[0].geometry.location, "Member", bikeIcon);
 	}
 }
 
@@ -240,6 +240,18 @@ function showLocations()
 		{
 		}
 	);
+}
+
+function addDraggableMarker(latLon, name, icon)
+{
+	var marker = new google.maps.Marker({
+		position: latLon,
+		draggable: true,
+		title:name,
+		map: map,
+		icon: icon
+	});
+	//pois[pois.length] = marker;
 }
 
 function addMarker(latLon, name, icon)
