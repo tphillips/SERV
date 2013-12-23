@@ -66,7 +66,7 @@
 		</div>    
 
 		<div id="controllerLog" style="display:none" title="Controller Log">
-			<iframe style="width:100%; height;600px" height="600px" frameborder="0" src="ControllerLog.aspx?NoTopMenu=1">
+			<iframe style="width:100%; height;620px" height="620px" frameborder="0" src="ControllerLog.aspx?NoTopMenu=1">
 			</iframe>
 		</div>
 

@@ -18,14 +18,15 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.2.9.7.1</h3>
+			<h3>Version 1.2.9.7.2</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Modified permissions around vewing a locations details</li>
-				<li>Bug fix on controller logging around free format notes</li>
+				<li>Raw run log import - make less process intensive with more logging</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Modified permissions around vewing a locations details</li>
+				<li>Bug fix on controller logging around free format notes</li>
 				<li>Added home safe time to blood controllers log form</li>
 				Adding some denormalized data to RunLog records for ease of reporting
 				<li>Operations Map, with loads of cool features (it has it's own menu at the bottom of the screen)</li>

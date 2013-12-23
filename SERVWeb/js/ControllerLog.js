@@ -467,6 +467,9 @@ function showBloodPanel()
 	$("#Water").slideUp();
 	$("#Milk").slideUp();
 	$("#blood").slideDown();
+	$('html, body').animate({
+        scrollTop: $("#blood").offset().top
+    }, 1000);
 }
 
 function showAAPanel()

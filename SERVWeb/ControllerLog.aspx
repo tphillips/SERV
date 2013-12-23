@@ -10,19 +10,18 @@
 	<h3>Controller Log</h3>
 
 	<div class="row">
-		
 		<div class="span12">
-
 			<input type="text" id="txtController" class="controllers" placeholder="Choose the controller" />
-
 			<h4>What sort of run are you recording?</h4>
 			<div class="btn-group" data-toggle="buttons-radio">
 			    <button type="button" class="btn" onclick="showBloodPanel()" id="btnBloodRun">Blood Run / Other</button>
 			    <button type="button" class="btn" onclick="showAAPanel()" id="btnAARun">Air Ambulance</button>
 			</div>
 			<br/><br/>
-
 		</div>
+	</div>
+	
+	<div class="row">
 
 		<fieldset>
 

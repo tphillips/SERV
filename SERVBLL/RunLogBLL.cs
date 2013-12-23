@@ -87,6 +87,12 @@ namespace SERVBLL
 					csv = csv.Remove(x, 1);
 					stop--;
 				}
+				if (x % 200 == 0) { System.Threading.Thread.Sleep(5); }
+				if (x % 1000 == 0)
+				{
+					log.Info(string.Format("Processed {0} of {1} csv chars", x, stop));
+					System.Threading.Thread.Sleep(10);  // take a breath
+				}
 			}
 			csv = csv.Replace("    ", " ");
 			csv = csv.Replace("   ", " ");
@@ -118,7 +124,9 @@ namespace SERVBLL
 				}
 			}
 			log.Info("Download OK");
+			log.Info("Cleaning CSV");
 			csv = CleanTextBlocks(csv);
+			log.Info("Processing Rows");
 			string[] rows = csv.Split('\n');
 			int rowNum = 0;
 			string prevRow = "";
@@ -165,9 +173,19 @@ namespace SERVBLL
 				}
 				rowNum++;
 				prevRow = row;
+				System.Threading.Thread.Sleep(5);
+				if (rowNum % 100 == 0)
+				{
+					log.Info("Starting batch insert of " + records.Count + " records");
+					SERVDALFactory.Factory.RunLogDAL().CreateRawRecords(records);
+					records = new List<SERVDataContract.DbLinq.RawRunLog>();
+					System.Threading.Thread.Sleep(50);
+				}
 			}
 			log.Info("Starting batch insert of " + records.Count + " records");
 			SERVDALFactory.Factory.RunLogDAL().CreateRawRecords(records);
+			log.Info("Taking out the trash");
+			GC.Collect();
 			log.Info("Batch insert complete");
 			return true;
 		}

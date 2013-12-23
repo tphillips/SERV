@@ -33,6 +33,13 @@ function initialize()
 	weatherLayer = new google.maps.weather.WeatherLayer({
 		temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS
 	});
+	initDialogues();
+	window.setTimeout("keepAlive()", 20000);
+	showLocations();
+}
+
+function initDialogues()
+{
 	$("#routeDialog").dialog({
 		width:550,
 		show: { effect: "clip", duration: 200 },
@@ -57,8 +64,6 @@ function initialize()
 		hide: { effect: "clip", duration: 200 },
 		autoOpen: false
 	});
-	window.setTimeout("keepAlive()", 20000);
-	showLocations();
 }
 
 function keepAlive()
