@@ -14,10 +14,6 @@ namespace SERV.Utils
 		/// <summary>
 		/// Given a string (2013-04-08 10:14:23.767 CDT) returns a string (2013-04-08 10:14:23.767 +5:00) which can be converter to datetime succesfully. Otherwise just returns the provided string.
 		/// </summary>
-		/// <remarks>
-		/// Initially used to help with converting dates provided by the reviews service to date-time.
-		/// Reviews service typically returns CTD, this function returns a string that can be converted to a DateTime that will then be aligned to this server's current timezone.
-		/// </remarks>
 		public static string WorldTimeSuffixesToUTCAdjustments(string dateInString)
 		{
 			if (WorldTimeSuffixesToUTCAdjustmentsHelper(ref dateInString, "CDT", "+5:00"))
