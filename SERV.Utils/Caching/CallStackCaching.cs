@@ -14,9 +14,9 @@ namespace SERV.Utils.Caching
 		// How many method calls to ignore from the end of the stack, probably not needed if IGNORE_ASSEMBLIES_IN_SIG is right
 		const int STACK_WALK = 0;
 		const int FILE_SIG_PADDING = 700;
-		const string IGNORE_ASSEMBLIES_IN_SIG = "System,System.Web,System.Web.RegularExpressions,App_Web_,Mono,Mono.WebServer2,DBHelperProvider,ODHR.Utils,mscorlib,System.Web.Extensions,";
+		const string IGNORE_ASSEMBLIES_IN_SIG = "System,System.Web,System.Web.RegularExpressions,App_Web_,Mono,Mono.WebServer2,DBHelperProvider,SERV.Utils,mscorlib,System.Web.Extensions,";
 		const string IGNORE_ASSEMBLIES_IN_SIG2 = "App_Web_";
-		const string DEFAULT_CACHE_MATRIX_HEADER = "# This cache matrix file controls the behaviour of caching for all apps that use the ODHR stack.  \r\n" +
+		const string DEFAULT_CACHE_MATRIX_HEADER = "# This cache matrix file controls the behaviour of caching for all apps that use the stack.  \r\n" +
 			"# The matrix consists of 3 columns; Cache Signature, Cache True/False, and Cache TTL Override.  \r\n" +
 				"# The Cache Sig is a signature generated from the call stack each time a data access method is called.  \r\n" +
 				"# The signature identifies the precise source of the call, allowing individual settings to be specified for each combo of application, BLL method & DAL method. \r\n" +
@@ -29,10 +29,8 @@ namespace SERV.Utils.Caching
 				"# Using CacheMatrix.aspx in the admin app the matrix can be viewed and edited in place.\r\n" +
 				"# Usefully, the whole file can be copied and pasted into a csv, and edited in excel. \r\n" +
 				"# Remember, each node will have its own matrix and own set of cache files. So synchronicity will need to be considered.  There is purposefully no use of the sync service. \r\n" +
-				"# The cache matrix is stored in the same location as the cache files.\r\n\r\n" +
-				"# An example entry:\r\n" +
-				"# ODHRDAL.CustomerDAL.List():ODHRBLL.CustomerBLL.List():ODHRServiceImplementation.ODHRService.ListCustomers():AdminWeb.FindCustomer.ExecuteSearch():AdminWeb.FindCustomer.Page_Load(): ,False,0\n";
-		
+				"# The cache matrix is stored in the same location as the cache files.\r\n\r\n";
+				
 		private static readonly Logger Log = new Logger();
 		private static bool ConfigLoaded = false;
 		private static string cacheMatrixFileContents;
