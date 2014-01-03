@@ -1,7 +1,7 @@
 SERV
 ====
 
-SERV system.  Can be used by any blood running group or collection & delivery type business.
+System (for) Emergency Rider Volunteers.  Can be used by any blood running group or collection & delivery type business.
 
 Currently used by SERV SSL for:
 
