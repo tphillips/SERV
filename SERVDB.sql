@@ -2,34 +2,9 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
+DROP SCHEMA IF EXISTS `SERV` ;
 CREATE SCHEMA IF NOT EXISTS `SERV` DEFAULT CHARACTER SET koi8r ;
 USE `SERV` ;
-
--- -----------------------------------------------------
--- Table `SERV`.`MemberStatus`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SERV`.`MemberStatus` ;
-
-CREATE  TABLE IF NOT EXISTS `SERV`.`MemberStatus` (
-  `MemberStatusID` INT NOT NULL AUTO_INCREMENT ,
-  `MemberStatus` VARCHAR(45) NULL ,
-  PRIMARY KEY (`MemberStatusID`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `SERV`.`Availability`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SERV`.`Availability` ;
-
-CREATE  TABLE IF NOT EXISTS `SERV`.`Availability` (
-  `AvailabilityID` INT NOT NULL ,
-  `DayNo` INT NULL ,
-  `EveningNo` INT NULL ,
-  `Available` TINYINT(1) NULL ,
-  PRIMARY KEY (`AvailabilityID`) )
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `SERV`.`Member`
@@ -66,19 +41,7 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`Member` (
   `LegalConfirmation` TINYINT(1) NULL ,
   `LeaveDate` DATETIME NULL ,
   `LastGDPGMPDate` DATETIME NULL ,
-  PRIMARY KEY (`MemberID`) ,
-  INDEX `fk_Member_MemberStatus1_idx` (`MemberStatusID` ASC) ,
-  INDEX `fk_Member_Availability1_idx` (`AvailabilityID` ASC) ,
-  CONSTRAINT `fk_Member_MemberStatus1`
-    FOREIGN KEY (`MemberStatusID` )
-    REFERENCES `SERV`.`MemberStatus` (`MemberStatusID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Member_Availability1`
-    FOREIGN KEY (`AvailabilityID` )
-    REFERENCES `SERV`.`Availability` (`AvailabilityID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`MemberID`) )
 ENGINE = InnoDB;
 
 
@@ -122,32 +85,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SERV`.`Duty`
+-- Table `SERV`.`Availability`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `SERV`.`Duty` ;
+DROP TABLE IF EXISTS `SERV`.`Availability` ;
 
-CREATE  TABLE IF NOT EXISTS `SERV`.`Duty` (
-  `DutyID` INT NOT NULL AUTO_INCREMENT ,
-  `Duty` VARCHAR(45) NULL ,
-  PRIMARY KEY (`DutyID`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `SERV`.`Calendar`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SERV`.`Calendar` ;
-
-CREATE  TABLE IF NOT EXISTS `SERV`.`Calendar` (
-  `CalendarID` INT NOT NULL ,
-  `DutyID` INT NOT NULL ,
-  PRIMARY KEY (`CalendarID`) ,
-  INDEX `fk_Calendar_Duty1_idx` (`DutyID` ASC) ,
-  CONSTRAINT `fk_Calendar_Duty1`
-    FOREIGN KEY (`DutyID` )
-    REFERENCES `SERV`.`Duty` (`DutyID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+CREATE  TABLE IF NOT EXISTS `SERV`.`Availability` (
+  `AvailabilityID` INT NOT NULL ,
+  `DayNo` INT NULL ,
+  `EveningNo` INT NULL ,
+  `Available` TINYINT(1) NULL ,
+  PRIMARY KEY (`AvailabilityID`) )
 ENGINE = InnoDB;
 
 
@@ -177,14 +124,8 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`Message` (
   `RecipientMemberID` INT NULL ,
   `MessageTypeID` INT NOT NULL ,
   PRIMARY KEY (`MessageID`) ,
-  INDEX `fk_Message_Member1_idx` (`RecipientMemberID` ASC) ,
   INDEX `fk_Message_MessageType1_idx` (`MessageTypeID` ASC) ,
   INDEX `fk_Message_User1_idx` (`SenderUserID` ASC) ,
-  CONSTRAINT `fk_Message_Member1`
-    FOREIGN KEY (`RecipientMemberID` )
-    REFERENCES `SERV`.`Member` (`MemberID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Message_MessageType1`
     FOREIGN KEY (`MessageTypeID` )
     REFERENCES `SERV`.`MessageType` (`MessageTypeID` )
@@ -199,45 +140,14 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SERV`.`Member_Duty`
+-- Table `SERV`.`MemberStatus`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `SERV`.`Member_Duty` ;
+DROP TABLE IF EXISTS `SERV`.`MemberStatus` ;
 
-CREATE  TABLE IF NOT EXISTS `SERV`.`Member_Duty` (
-  `Member_DutyID` INT NOT NULL ,
-  `MemberID` INT NOT NULL ,
-  `DutyID` INT NOT NULL ,
-  INDEX `fk_Member_Duty_Member1_idx` (`MemberID` ASC) ,
-  INDEX `fk_Member_Duty_Duty1_idx` (`DutyID` ASC) ,
-  PRIMARY KEY (`Member_DutyID`) ,
-  CONSTRAINT `fk_Member_Duty_Member1`
-    FOREIGN KEY (`MemberID` )
-    REFERENCES `SERV`.`Member` (`MemberID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Member_Duty_Duty1`
-    FOREIGN KEY (`DutyID` )
-    REFERENCES `SERV`.`Duty` (`DutyID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `SERV`.`FleetVehicle`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SERV`.`FleetVehicle` ;
-
-CREATE  TABLE IF NOT EXISTS `SERV`.`FleetVehicle` (
-  `FleetVehicleID` INT NOT NULL ,
-  `MemberID` INT NOT NULL ,
-  PRIMARY KEY (`FleetVehicleID`) ,
-  INDEX `fk_FleetVehicle_Member1_idx` (`MemberID` ASC) ,
-  CONSTRAINT `fk_FleetVehicle_Member1`
-    FOREIGN KEY (`MemberID` )
-    REFERENCES `SERV`.`Member` (`MemberID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+CREATE  TABLE IF NOT EXISTS `SERV`.`MemberStatus` (
+  `MemberStatusID` INT NOT NULL AUTO_INCREMENT ,
+  `MemberStatus` VARCHAR(45) NULL ,
+  PRIMARY KEY (`MemberStatusID`) )
 ENGINE = InnoDB;
 
 
@@ -271,57 +181,6 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`Member_Tag` (
   CONSTRAINT `fk_Member_Capability_Capability1`
     FOREIGN KEY (`TagID` )
     REFERENCES `SERV`.`Tag` (`TagID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `SERV`.`CalendarEntry`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `SERV`.`CalendarEntry` ;
-
-CREATE  TABLE IF NOT EXISTS `SERV`.`CalendarEntry` (
-  `CalendarEntryID` INT NOT NULL AUTO_INCREMENT ,
-  `DateTime` DATETIME NOT NULL ,
-  `Notes` VARCHAR(200) NULL ,
-  `CalendarID` INT NOT NULL ,
-  `MemberID` INT NOT NULL ,
-  `PrimaryRoleTagID` INT NOT NULL ,
-  `CreatedByUserID` INT NOT NULL ,
-  `ModdedByUserID` INT NOT NULL ,
-  `Created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-  `Modded` TIMESTAMP NULL ,
-  `Recurrance` VARCHAR(3) NULL ,
-  PRIMARY KEY (`CalendarEntryID`) ,
-  INDEX `fk_CalendarEntry_Calendar1_idx` (`CalendarID` ASC) ,
-  INDEX `fk_CalendarEntry_Member1_idx` (`MemberID` ASC) ,
-  INDEX `fk_CalendarEntry_Capability1_idx` (`PrimaryRoleTagID` ASC) ,
-  INDEX `fk_CalendarEntry_User1_idx` (`CreatedByUserID` ASC) ,
-  INDEX `fk_CalendarEntry_User2_idx` (`ModdedByUserID` ASC) ,
-  CONSTRAINT `fk_CalendarEntry_Calendar1`
-    FOREIGN KEY (`CalendarID` )
-    REFERENCES `SERV`.`Calendar` (`CalendarID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_CalendarEntry_Member1`
-    FOREIGN KEY (`MemberID` )
-    REFERENCES `SERV`.`Member` (`MemberID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_CalendarEntry_Capability1`
-    FOREIGN KEY (`PrimaryRoleTagID` )
-    REFERENCES `SERV`.`Tag` (`TagID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_CalendarEntry_User1`
-    FOREIGN KEY (`CreatedByUserID` )
-    REFERENCES `SERV`.`User` (`UserID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_CalendarEntry_User2`
-    FOREIGN KEY (`ModdedByUserID` )
-    REFERENCES `SERV`.`User` (`UserID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -419,6 +278,9 @@ CREATE  TABLE IF NOT EXISTS `SERV`.`RunLog` (
   `CallFromLocationID` INT NOT NULL ,
   `RiderMemberID` INT NOT NULL ,
   `DeliverToLocationID` INT NOT NULL ,
+  `HomeSafeDateTime` DATETIME NULL ,
+  `Boxes` INT NOT NULL DEFAULT 0 ,
+  `Description` VARCHAR(300) NULL ,
   PRIMARY KEY (`RunLogID`) ,
   INDEX `fk_RunLog_VehicleType1_idx` (`VehicleTypeID` ASC) ,
   INDEX `fk_RunLog_User1_idx` (`CreatedByUserID` ASC) ,
@@ -453,21 +315,21 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SERV`.`RunLog_Product` ;
 
 CREATE  TABLE IF NOT EXISTS `SERV`.`RunLog_Product` (
-  `RunLog_ProductID` INT NOT NULL ,
+  `RunLog_ProductID` INT NOT NULL AUTO_INCREMENT ,
   `RunLogID` INT NOT NULL ,
   `ProductID` INT NOT NULL ,
   `Quantity` INT NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`RunLog_ProductID`) ,
-  INDEX `fk_RunLog_Product_RunLog1_idx` (`RunLogID` ASC) ,
   INDEX `fk_RunLog_Product_Product1_idx` (`ProductID` ASC) ,
-  CONSTRAINT `fk_RunLog_Product_RunLog1`
-    FOREIGN KEY (`RunLogID` )
-    REFERENCES `SERV`.`RunLog` (`RunLogID` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `fk_RunLog_Product_RunLog1_idx` (`RunLogID` ASC) ,
   CONSTRAINT `fk_RunLog_Product_Product1`
     FOREIGN KEY (`ProductID` )
     REFERENCES `SERV`.`Product` (`ProductID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_RunLog_Product_RunLog1`
+    FOREIGN KEY (`RunLogID` )
+    REFERENCES `SERV`.`RunLog` (`RunLogID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -479,13 +341,11 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- Data for table `SERV`.`MemberStatus`
+-- Data for table `SERV`.`Member`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SERV`;
-INSERT INTO `SERV`.`MemberStatus` (`MemberStatusID`, `MemberStatus`) VALUES (NULL, 'Active');
-INSERT INTO `SERV`.`MemberStatus` (`MemberStatusID`, `MemberStatus`) VALUES (NULL, 'Training');
-INSERT INTO `SERV`.`MemberStatus` (`MemberStatusID`, `MemberStatus`) VALUES (NULL, 'Inactive');
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`) VALUES (NULL, 'LOCAL', 'DEV', NULL, 'tris.phillips@gmail.com', '07429386911', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -502,14 +362,11 @@ INSERT INTO `SERV`.`UserLevel` (`UserLevelID`, `UserLevel`) VALUES (NULL, 'Admin
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `SERV`.`Duty`
+-- Data for table `SERV`.`User`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SERV`;
-INSERT INTO `SERV`.`Duty` (`DutyID`, `Duty`) VALUES (NULL, 'Blood');
-INSERT INTO `SERV`.`Duty` (`DutyID`, `Duty`) VALUES (NULL, 'Milk');
-INSERT INTO `SERV`.`Duty` (`DutyID`, `Duty`) VALUES (NULL, 'Water');
-INSERT INTO `SERV`.`Duty` (`DutyID`, `Duty`) VALUES (NULL, 'Air Ambulance');
+INSERT INTO `SERV`.`User` (`UserID`, `MemberID`, `UserLevelID`, `PasswordHash`, `LastLoginDate`) VALUES (NULL, 1, 4, '', NULL);
 
 COMMIT;
 
@@ -524,6 +381,17 @@ INSERT INTO `SERV`.`MessageType` (`MessageTypeID`, `MessageType`) VALUES (NULL, 
 COMMIT;
 
 -- -----------------------------------------------------
+-- Data for table `SERV`.`MemberStatus`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SERV`;
+INSERT INTO `SERV`.`MemberStatus` (`MemberStatusID`, `MemberStatus`) VALUES (NULL, 'Active');
+INSERT INTO `SERV`.`MemberStatus` (`MemberStatusID`, `MemberStatus`) VALUES (NULL, 'Training');
+INSERT INTO `SERV`.`MemberStatus` (`MemberStatusID`, `MemberStatus`) VALUES (NULL, 'Inactive');
+
+COMMIT;
+
+-- -----------------------------------------------------
 -- Data for table `SERV`.`Tag`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -531,6 +399,13 @@ USE `SERV`;
 INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, 'Rider');
 INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, 'Driver');
 INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, 'Controller');
+INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, 'EmergencyList');
+INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, '4x4');
+INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, 'Fundraiser');
+INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, 'Blood');
+INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, 'AA');
+INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, 'Milk');
+INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (NULL, 'Water');
 
 COMMIT;
 
