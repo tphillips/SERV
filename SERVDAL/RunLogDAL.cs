@@ -178,6 +178,25 @@ namespace SERVDAL
 			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 		}
 
+		public DataTable Report_RunLog()
+		{
+			string sql = "select RunLogID as ID, date(DutyDate) as 'Duty Date', coalesce(CallDateTime, 'N/A') as 'Call Date & Time', cf.Location as 'Call From', cl.Location as 'From', " +
+			             "dl.Location as 'To', time(rl.CollectDateTime) as Collected, time(rl.DeliverDateTime) as Delivered, " +
+			             //"timediff(rl.DeliverDateTime, rl.CollectDateTime) as 'Run Time', " +
+			             "fl.Location as 'Destination', concat(m.FirstName, ' ', m.LastName) as Rider, v.VehicleType as 'Vehicle', rl.Description as 'Consignment', " +
+			             "concat(c.FirstName, ' ', c.LastName) as Controller from RunLog rl " +
+			             "join Member m on m.MemberID = rl.RiderMemberID " +
+			             "join Member c on c.MemberID = rl.ControllerMemberID " +
+			             "join Location cf on cf.LocationID = rl.CallFromLocationID " +
+			             "join Location cl on cl.LocationID = rl.CollectionLocationID " +
+			             "join Location dl on dl.LocationID = rl.DeliverToLocationID " +
+			             "join Location fl on fl.LocationID = rl.FinalDestinationLocationID " +
+			             "join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
+			             "where DutyDate > '2013-12-31' or CallDateTime > '2013-12-31' " +
+			             "order by rl.DutyDate desc, rl.CallDateTime desc;";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();

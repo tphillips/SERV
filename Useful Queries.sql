@@ -117,12 +117,26 @@ select * from CallLog;
 
 select * from Member where MobileNumber = '07734819559';
 
-select * from RunLog rl 
-/*join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID*/
-/*join Product p on p.ProductID = rlp.ProductID*/
+select RunLogID as ID, date(DutyDate) as 'Duty Date', CallDateTime as 'Call Date Time', cf.Location as 'Call From', cl.Location as 'Collected From', 
+	dl.Location as 'Taken To', time(rl.CollectDateTime) as Collected, time(rl.DeliverDateTime) as Delivered, 
+	timediff(rl.DeliverDateTime, rl.CollectDateTime) as 'Journey Time',
+	fl.Location as 'Final Destination', concat(m.FirstName, ' ', m.LastName) as Rider, v.VehicleType, rl.Description, 
+	concat(c.FirstName, ' ', c.LastName) as Controller from RunLog rl 
 join Member m on m.MemberID = rl.RiderMemberID
+join Member c on c.MemberID = rl.ControllerMemberID
+join Location cf on cf.LocationID = rl.CallFromLocationID
+join Location cl on cl.LocationID = rl.CollectionLocationID
+join Location dl on dl.LocationID = rl.DeliverToLocationID
+join Location fl on fl.LocationID = rl.FinalDestinationLocationID
 join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID
-order by rl.RunLogID;
+where DutyDate > '2013-12-31' or CallDateTime > '2013-12-31'
+order by rl.CallDateTime desc;
+
+select * from RunLog;
+
+/* 
+delete from RunLog_Product where RunLogID < 42;
+delete from RunLog where RunLogID < 42; */
 
 /*
 de--lete from RunLog_Product;
@@ -131,7 +145,7 @@ de--lete from RunLog;
 
 select * from Member m 
 join User u on u.MemberID = m.MemberID 
-where m.LastName = 'Browning';
+where m.LastName = 'Twist';
 /*update User set PasswordHash = '' where UserId = 31;*/
 
 select * from Member where LastName = 'Snelling';

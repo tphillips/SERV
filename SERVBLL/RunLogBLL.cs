@@ -335,6 +335,11 @@ namespace SERVBLL
 			return SERVDALFactory.Factory.RunLogDAL().Report_TodaysUsers();
 		}
 
+		public DataTable Report_RunLog()
+		{
+			return SERVDALFactory.Factory.RunLogDAL().Report_RunLog();
+		}
+
 	}
 }
 

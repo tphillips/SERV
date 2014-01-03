@@ -17,6 +17,8 @@ namespace SERVWeb {
 		
 		protected System.Web.UI.WebControls.Content contentPlaceholderContent;
 		
+		protected System.Web.UI.WebControls.DataGrid dgRunLog;
+		
 		protected System.Web.UI.WebControls.DataGrid dgTodaysUsers;
 		
 		protected System.Web.UI.WebControls.DataGrid dgTop10;

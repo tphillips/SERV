@@ -64,10 +64,12 @@ $(function()
 	$( ".locations" ).autocomplete({ source: locationNames });
 	$( ".controllers" ).autocomplete({ source: controllerNames });
 	$( ".riders" ).autocomplete({ source: memberNames });
+	asyncRequests = false;
 	listControllers(null);
 	listMembersWithTag("Rider,Driver,Blood", null);
 	listLocations(null);
 	listVehicleTypes();
+	asyncRequests = true;
 	showCurrentController();
 	$("#loading").slideUp();
 	$("#entry").slideDown();

@@ -1,3 +1,5 @@
+var asyncRequests = true;
+
 function DisplayMember(memberId)
 {
 	callServerSide(
@@ -455,6 +457,7 @@ function callServerSide(url, data, success, error)
 		type: "POST",
 		url: url,
 		data: data,
+		async: asyncRequests,
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: success,
