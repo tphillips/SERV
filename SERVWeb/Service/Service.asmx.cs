@@ -184,7 +184,7 @@ namespace SERVWeb
 			DateTime _deliverDateTime = DateTime.Parse(deliverDateTime);
 			DateTime _dutyDate = DateTime.Parse(dutyDate);
 			DateTime? _homeSafeDateTime = null;
-			if (!string.IsNullOrEmpty(homeSafeDateTime)){ _homeSafeDateTime = DateTime.Parse(homeSafeDateTime); }
+			if (!string.IsNullOrEmpty(homeSafeDateTime.Replace(":","").Trim())){ _homeSafeDateTime = DateTime.Parse(homeSafeDateTime); }
 			return SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
 				controllerMemberId, CurrentUser().UserID, _deliverDateTime, deliverToLocationId, _dutyDate, 
 				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, _homeSafeDateTime, notes);

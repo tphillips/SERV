@@ -423,8 +423,7 @@ function JsonifyBasicMemberFromForm(memberId)
 function isValidTime(val)
 {
 	if (val.length != 5){ return false; }
-	if (val.indexOf(":") == -1) { return false; }
-	if (val.indexOf(".") != -1) { return false; }
+	if (val.indexOf(":") == -1 && val.indexOf(".") == -1) { return false; }
 	if (val.indexOf("-") != -1) { return false; }
 	if (val.indexOf("+") != -1) { return false; }
 	return true;

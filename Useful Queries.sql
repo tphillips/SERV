@@ -145,7 +145,7 @@ de--lete from RunLog;
 
 select * from Member m 
 join User u on u.MemberID = m.MemberID 
-where m.LastName = 'Twist';
+where m.LastName = 'Bowers';
 /*update User set PasswordHash = '' where UserId = 31;*/
 
 select * from Member where LastName = 'Snelling';
@@ -221,3 +221,6 @@ UserID in(5,
 97,
 104,
 131);
+
+
+update RunLog set DutyDate = '2014-01-03' where RunLogID = 73

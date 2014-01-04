@@ -35,6 +35,7 @@
 						<asp:Literal runat="server" id="pnlPowerUser">
 							<li class="divider"></li>
 							<li><a href="ControllerLog.aspx">Controller Logging</a></li>
+							<li><a href="ControllerLog.aspx" target="_blank">Controller Logging (New Tab)</a></li>
 							<li class="divider"></li>
 							<li><a href="SMS.aspx">Bulk SMS</a></li>
 						</asp:Literal>

@@ -24,3 +24,11 @@
 <div id="alert" style="display:none" title="SERV">
 	<p><span id="alertMessage">Default message</span></p>
 </div>
+
+<!--
+<div class="alert">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>CAUTION!</strong> A release will be performed in the next <strong>30 minutes</strong>!!<br/>
+  When the new code is released, your session will be terminated. <strong>Any unsaved entries you have made will be lost.</strong>
+</div>
+  -->

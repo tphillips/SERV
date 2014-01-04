@@ -25,13 +25,25 @@ namespace SERVWeb
 			}
 		}
 
+		protected string Message
+		{
+			get
+			{
+				if (Request["message"] == null)
+				{
+					return "";
+				}
+				return Request["message"].ToString();
+			}
+		}
+
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication();
 			if (Request["new"] != null)
 			{
 				int blank = SERVGlobal.Service.CreateBlankLocation(SERVGlobal.User);
-				Response.Redirect("ViewLocation.aspx?locationId=" + blank);
+				Response.Redirect("ViewLocation.aspx?locationId=" + blank + "&message=Make sure the location you intend on adding does not already exist!");
 			}
 		}
 

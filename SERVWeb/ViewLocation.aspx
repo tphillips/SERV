@@ -8,6 +8,16 @@
 	<div id="entry" style="display:none">
 		<h3>View / Edit Location: <span id="lblTitle"></span></h3>
 		<div class="row">
+			<div class="span6">
+				<div class="alert">
+				  <button type="button" class="close" data-dismiss="alert">&times;</button>
+				  <strong>Warning!</strong> Do not rename old or redundant locations to make new ones!!<br/>
+				  That would cause any runs that went to or from the old location to show that they went to or from what you rename it to.
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
 
 			<fieldset>
 				<div class="span3">
@@ -48,7 +58,8 @@
 
 	$(function() 
 	{
-		if (<%=this.UserLevel%> < 2) // Controller
+		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
+		if (<%=this.UserLevel%> < 3) // Committee
 		{
 			$("#cmdSave").attr('disabled', true);
 		}

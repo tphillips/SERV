@@ -21,7 +21,7 @@
 	
 	$(function() 
 	{
-		if (<%=this.UserLevel%> < 4)
+		if (<%=this.UserLevel%> < 3)
 		{
 			$("#cmdAdd").hide();
 		}

@@ -173,12 +173,12 @@ function saveBloodRun()
 {
 	var json = 
 		"{" +
-			"'callDateTime':'" + $("#txtCallDate").val() + " " + $("#txtCallTime").val() + 
+			"'callDateTime':'" + $("#txtCallDate").val() + " " + $("#txtCallTime").val().replace(/\./g, ':') + 
 			"', 'callFromLocationId':'" + callerLocationId + 
-			"', 'collectDateTime':'" + $("#txtPickupDate").val() + " " + $("#txtPickupTime").val() + 
+			"', 'collectDateTime':'" + $("#txtPickupDate").val() + " " + $("#txtPickupTime").val().replace(/\./g, ':') + 
 			"', 'collectionLocationId':'" + pickupLocationId + 
 			"', 'controllerMemberId':'" + controllerId + 
-			"', 'deliverDateTime':'" + $("#txtDeliverDate").val() + " " + $("#txtDeliverTime").val() + 
+			"', 'deliverDateTime':'" + $("#txtDeliverDate").val() + " " + $("#txtDeliverTime").val().replace(/\./g, ':') + 
 			"', 'deliverToLocationId':'" + dropLocationId + 
 			"', 'dutyDate':'" + $("#txtShiftDate").val() + 
 			"', 'finalDestinationLocationId':'" + finalLocationId + 
@@ -187,7 +187,7 @@ function saveBloodRun()
 			"', 'urgency':'" + urgency + 
 			"', 'vehicleTypeId':'" + vehicleId + 
 			"', 'productIdCsv':'" + productCsv() + 
-			"', 'homeSafeDateTime':'" + $("#txtHomeSafeDate").val() + " " + $("#txtHomeSafeTime").val() +
+			"', 'homeSafeDateTime':'" + $("#txtHomeSafeDate").val() + " " + $("#txtHomeSafeTime").val().replace(/\./g, ':') +
 			"', 'notes':'" + $("#txtNotes").val().replace(/'/g, '') + 
 		"'}";
 	$("#loading").slideDown();
@@ -216,9 +216,9 @@ function saveAARun()
 	var json = 
 		"{" +
 			"'dutyDate':'" + $("#txtAAShiftDate").val() +
-			"', 'collectDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAAPickupTime").val() + 
-			"', 'deliverDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAADeliverTime").val() + 
-			"', 'returnDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAAReturnTime").val() + 
+			"', 'collectDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAAPickupTime").val().replace(/\./g, ':') + 
+			"', 'deliverDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAADeliverTime").val().replace(/\./g, ':') + 
+			"', 'returnDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAAReturnTime").val().replace(/\./g, ':') + 
 			"', 'controllerMemberId':'" + controllerId + 
 			"', 'riderMemberId':'" + aaRiderId + 
 			"', 'vehicleTypeId':'" + aaVehicleId + 
@@ -422,9 +422,9 @@ function validate()
 		{
 			niceAlert("Please use 24 hour HH:MM time formats (Deliver Time)"); return false;
 		}
-		if (!isValidTime($("#txtHomeSafeTime").val()))
+		if ($("#txtHomeSafeTime").val() != "" && !isValidTime($("#txtHomeSafeTime").val()))
 		{
-			niceAlert("Please use 24 hour HH:MM time formats (Home Safe Time)"); return false;
+			niceAlert("Please use 24 hour HH:MM time formats (Home Safe Time, you can leave it blank)"); return false;
 		}
 	}
 	return true;
@@ -432,9 +432,10 @@ function validate()
 
 function updateUrgency()
 {
-	if (urgency < MIN_URGENCY) { urgency = MIN_URGENCY; }
-	if (urgency > MAX_URGENCY) { urgency = MAX_URGENCY; }
-	$("#btnUrgency").text(urgency);
+	$("#btnUrgency1").attr('disabled', false);
+	$("#btnUrgency2").attr('disabled', false);
+	$("#btnUrgency3").attr('disabled', false);
+	$("#btnUrgency" + urgency).attr('disabled', true);
 }
 
 function updateBoxCounts()

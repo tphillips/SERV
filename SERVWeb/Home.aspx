@@ -18,13 +18,20 @@
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.3.0.1</h3>
+			<h3>Version 1.3.1</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>2014 Run log report</li>
+				<li>Controllers can now use .'s in times</li>
+				<li>Controllers can now leave home safe date and time blank</li>
+				<li>Urgency on controller logging is now 3 buttons (Just for Geoff ;))</li>
+				<li>Warning when modifying a location</li>
+				<li>Permission issues fixed around location addition and editing - committee level required</li>
+				<li>Added a new menu item in the toolbar to open the controller logging sheet in a new tab</li>
+				<li>Added a release coming warning</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>2014 Run log report</li>
 				<li>Version increment for Controller logging go live</li>
 				<li>Async requests off for $.ajax();</li>
 				<li>Raw run log import - make less process intensive (circa 50%) with more logging</li>
