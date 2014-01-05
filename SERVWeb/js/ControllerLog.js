@@ -76,19 +76,6 @@ $(function()
 	window.setTimeout("keepAlive()", 20000);
 });
 
-function keepAlive()
-{
-	callServerSide(
-		"Service/Service.asmx/KeepAlive", 
-		"{}",
-		function(json)
-		{
-			window.setTimeout("keepAlive()", 20000);
-		},
-		null
-	);
-}
-
 function productCsv()
 {
 	var ret = "";

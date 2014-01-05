@@ -420,6 +420,30 @@ function JsonifyBasicMemberFromForm(memberId)
 		'"Notes":"' + $("#txtNotes").val() + '"}}';
 }
 
+function keepAlive()
+{
+	callServerSide(
+		"Service/Service.asmx/KeepAlive", 
+		"{}",
+		function(json)
+		{
+			$("#icoSessionStatus").removeClass("icon-red");
+			$("#icoSessionStatus").removeClass("icon-green");
+			window.setTimeout('$("#icoSessionStatus").addClass("icon-green");',500);
+			window.setTimeout("keepAlive()", 20000);
+		},
+		promptForLogin
+	);
+}
+
+function promptForLogin()
+{
+	$("#icoSessionStatus").removeClass("icon-green");
+	$("#icoSessionStatus").addClass("icon-red");
+	niceAlert("Session error!! This should not happen, but it did.  Open a new tab and login to the SERV system again.  If you are attempting to make a sumbission, for example logging a run, you NEED to log back in before that will work.  There is no need to close this tab and lose your work.");
+	window.setTimeout("keepAlive()", 40000);
+}
+
 function isValidTime(val)
 {
 	if (val.length != 5){ return false; }

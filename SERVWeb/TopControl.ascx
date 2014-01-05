@@ -42,6 +42,6 @@
 					</ul>
 				</li>
 		</ul>
-		<p class="navbar-text pull-right"><asp:Literal runat="server" id="litLoginName"/></p>
+		<p class="navbar-text pull-right"><span id="lblLoginName"><asp:Literal runat="server" id="litLoginName"/></span></p>
 	</div>
 </nav>

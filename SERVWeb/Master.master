@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/css/style.css" />
         <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.10.3.custom.min.css" />
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/css/icons.css" />
         <script src="/js/jquery-1.10.1.min.js"></script>
         <script src="/js/jquery-ui-1.10.3.custom.min.js"></script>
         <script language="JavaScript" src="js/JS.js"></script>
