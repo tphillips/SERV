@@ -1,5 +1,71 @@
 var asyncRequests = true;
 
+function showCals() //TODO: refactor
+{
+	$.ajax(
+	{
+		url : "bloodCalendarInclude.htm",
+		dataType: "text",
+		success : function (data) {
+			var res = "";
+			data = data.replace(/       /g, "\n");
+			var parts = data.split("\n");
+			var first = true;
+			for (i = 0; i < parts.length; i ++) 
+			{
+				var part = $.trim(parts[i]); 
+				if (part != "")
+				{
+					part = part.replace(/       /g, "<br/>");
+					part = part.replace(/!/g, "<span style='color:red'>");
+					part = part.replace(/\*/g, "<span style='color:blue'>");
+					if (first)
+					{
+						first = false;
+						res = "<h4>" + part + "</h4><ul>";
+					}
+					else
+					{
+				    	res = res + "<li>" + part +  "</li>";
+				    }
+			    }
+			}
+		    $('#pnlBloodCal').html(res + "</ul>");
+		}
+	});
+	$.ajax(
+	{
+		url : "aaCalendarInclude.htm",
+		dataType: "text",
+		success : function (data) {
+			var res = "";
+			data = data.replace(/       /g, "\n");
+			var parts = data.split("\n");
+			var first = true;
+			for (i = 0; i < parts.length; i ++) 
+			{
+				var part = $.trim(parts[i]); 
+				if (part != "")
+				{
+					part = part.replace(/       /g, "<br/>");
+					part = part.replace(/!/g, "<span style='color:red'>");
+					part = part.replace(/\*/g, "<span style='color:blue'>");
+					if (first)
+					{
+						first = false;
+						res = "<h4>" + part + "</h4><ul>";
+					}
+					else
+					{
+				    	res = res + "<li>" + part +  "</li>";
+				    }
+			    }
+			}
+		    $('#pnlAACal').html(res + "</ul>");
+		}
+	});
+}
+
 function DisplayMember(memberId)
 {
 	callServerSide(

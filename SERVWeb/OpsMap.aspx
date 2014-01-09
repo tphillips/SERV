@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/css/style.css" />
         <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.10.3.custom.min.css" />
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/css/icons.css" />
         <script src="/js/jquery-1.10.1.min.js"></script>
         <script src="/js/jquery-ui-1.10.3.custom.min.js"></script>
         <script language="JavaScript" src="js/JS.js"></script>
@@ -29,7 +30,9 @@
 		<script type="text/javascript" src="js/opsMap.js"></script>
 			
 		<SERV:TopControl runat="server" id="topControl" />
-        
+
+		<div id="map_canvas" style="width:100%; height:100%;"></div>	
+	
         <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 			<div class="navbar-inner">
 				<ul class="nav">
@@ -53,8 +56,6 @@
 				</ul>
 			</div>
 		</nav>
-
-		<div id="map_canvas" style="width:100%; height:100%; border-top:1px solid gainsboro"></div>	
             
     	<div id="routeDialog" style="display:none" title="Load an 'itn' Route">
 			<p>

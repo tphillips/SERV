@@ -7,25 +7,40 @@
 	<div class="hero-unit">
 		<h2>Hey <%=this.Username%>,</h2>	
 		<p>Now that you have logged in, please make sure you <a href="ChangePassword.aspx">change your password</a>.  
-		You can then <a href="ViewMember.aspx?self=yes">view and edit your profile</a> to make sure it is all correct, or take a look at the <a href="Members.aspx">Members List</a> 
-		or any of the other things you can find in the menus above.</p>	
-		<p>Be sure to checkout the <a href="OpsMap.aspx">Operations Map</a> &amp; the <a href="RunStats.aspx">Stat Reports</a>.</p>
+		You can then <a href="ViewMember.aspx?self=yes">view and edit your profile</a> to make sure it is all correct, or take a look at the <a href="Members.aspx">Members List</a>, <a href="OpsMap.aspx">Operations Map</a> or <a href="RunStats.aspx">Stat Reports</a>.</p>	
 		<p>You will notice an "Admin editable only" section in your profile.  If you need something changed in there, please PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</a>.</p>
-		<p>There will be loads of cool things coming along in this new system, and the majority of the benefits will be realised if we all keep our volunteer profiles and preferences up to date.  If you have any suggestions or comments, then feel free to PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</a>.</p>
 		<p>Oh, one more thing before you go . . . Don't use Internet Explorer to view this site. It's a terrible browser and you will be FAR better off using Chrome or Firefox.</p>
 	</div>
 
 	<div class="row">
 		<div class="span1"></div>
 		<div class="span4">
-			<h3>Version 1.3.1</h3>
+			<h3>Today's Blood Calendar</h3>
+			<div id="pnlBloodCal">...
+			</div>
+		</div>
+		<div class="span2"></div>
+		<div class="span4">
+			<h3>Today's AA Calendar</h3>
+			<div id="pnlAACal">...
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span1"></div>
+		<div class="span4">
+			<h3>Version 1.3.2.1</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Added a session status icon which will go red if the user session is terminated for any reason, 
-					on the controller log a message prompting re-login is show.</li>
+				<li>Added a hover over description of the various states of the session keep alive icon.</li>
+				<li>Added calendar info to home screen.</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Added a session status icon which will go red if the user session is terminated for any reason, 
+					on the controller log a message prompting re-login is shown</li>
+				<li>Tweaks to ops map</li>
 				<li>Controllers can now use .'s in times</li>
 				<li>Controllers can now leave home safe date and time blank</li>
 				<li>Urgency on controller logging is now 3 buttons (Just for Geoff ;))</li>
@@ -108,6 +123,7 @@
 		$("#loading").hide();
 		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); window.setTimeout('$("#success").slideUp()',4000); }
 		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
+		showCals();
 	</script>
 	
 </asp:Content>

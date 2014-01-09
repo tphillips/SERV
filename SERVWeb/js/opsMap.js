@@ -66,19 +66,6 @@ function initDialogues()
 	});
 }
 
-function keepAlive()
-{
-	callServerSide(
-		"Service/Service.asmx/KeepAlive", 
-		"{}",
-		function(json)
-		{
-			window.setTimeout("keepAlive()", 20000);
-		},
-		null
-	);
-}
-
 function showMembers()
 {
 	$("#lnkShowMembers").hide();

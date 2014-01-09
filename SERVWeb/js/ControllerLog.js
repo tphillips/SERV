@@ -73,7 +73,7 @@ $(function()
 	showCurrentController();
 	$("#loading").slideUp();
 	$("#entry").slideDown();
-	window.setTimeout("keepAlive()", 20000);
+	keepAlive();
 });
 
 function productCsv()

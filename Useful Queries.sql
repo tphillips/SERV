@@ -206,6 +206,7 @@ ORDER BY dayofweek(case when Hour(CallTime) > @bloodrunafterhour then CallDate e
 
 select * from UserLevel;
 
+/*
 update User set UserLevelID = 2 where
 UserID in(5,
 7,
@@ -222,6 +223,20 @@ UserID in(5,
 104,
 131);
 
-
-/*update RunLog set DutyDate = '2014-01-03' where RunLogID = 73;*/
+update RunLog set DutyDate = '2014-01-07' where RunLogID = 106;
 delete from Location where LocationID = 48;
+*/
+
+-- Riders who have done a run since may and their run counts
+select m.MemberID, concat(m.Firstname, ' ', m.LastName), 
+	count(*) from RawRunLog rr 
+LEFT join Member m on rr.Rider = (CONCAT(m.LastName, ' ', m.FirstName)) 
+and rr.CallDate > '2013-05-01'
+and m.LeaveDate is null
+where LastName is not null
+group by m.MemberID
+order by count(*) desc;
+
+
+-- Select riders who have left
+select FirstName, LastName, LeaveDate from Member where LeaveDate is not null;

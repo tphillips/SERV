@@ -16,7 +16,10 @@ namespace SERVWeb
 			{
 				pnlLoggedIn.Visible = true;
 				pnlNotLoggedIn.Visible = false;
-				litLoginName.Text = string.Format("{0} <i id=\"icoSessionStatus\" class=\"icon-certificate icon-green\"></i>", SERVGlobal.User.Member.FirstName);
+				litLoginName.Text = string.Format("{0} <i title=\"Keep Alive \nGreen: Your session is alive and being kept alive. \n" +
+					"Grey: You are logged in but your session is not being activley kept alive (normal). \n" +
+					"Red: Keep alive failed and you need to login again (you can do that on another tab).\" " +
+					"id=\"icoSessionStatus\" class=\"icon-globe\"></i>", SERVGlobal.User.Member.FirstName);
 				if (SERVGlobal.User.UserLevelID > (int)SERVDataContract.UserLevel.Volunteer)
 				{
 					pnlPowerUser.Visible = true;
