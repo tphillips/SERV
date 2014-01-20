@@ -13,7 +13,7 @@
 				</div>
 			</div>
 		</div>
-		<a type=button id="cmdAdd" class="btn btn-primary btn-lg" href="ViewLocation.aspx?new=yes">Add a New Location</a>
+		<a type=button id="cmdAdd" class="btn btn-primary btn-lg" href="ViewLocation.aspx?new=yes"><i class="icon-plus icon-white"></i> Add a New Location</a>
 
 	</div>
 	

@@ -42,6 +42,7 @@
     <Compile Include="MessageBLL.cs" />
     <Compile Include="ListBLL.cs" />
     <Compile Include="LocationBLL.cs" />
+    <Compile Include="BuddhaBLL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

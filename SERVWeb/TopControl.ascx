@@ -10,34 +10,46 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">SERV <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="Home.aspx">Home</a></li>
+						<li><a href="Home.aspx"><i class="icon-home"></i> Home</a></li>
 						<li class="divider"></li>
-						<li><a href="ChangePassword.aspx">Change Password</a></li>
-						<li><a href="Login.aspx?Logout=yes">Logout</a></li>
+						<li><a href="ChangePassword.aspx"><i class="icon-lock"></i> Change Password</a></li>
+						<li><a href="Login.aspx?Logout=yes"><i class="icon-off"></i> Logout</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">View <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="ViewMember.aspx?self=yes">Your Profile</a></li>
+						<li><a href="ViewMember.aspx?self=yes"><i class="icon-user"></i> Your Profile</a></li>
 						<li class="divider"></li>
-						<li><a href="Members.aspx">Member List</a></li>
-						<li><a href="Locations.aspx">Locations List</a></li>
+						<li><a href="Members.aspx"><i class="icon-list"></i> Member List</a></li>
+						<li><a href="Locations.aspx"><i class="icon-map-marker"></i> Locations List</a></li>
 						<li class="divider"></li>
-						<li><a href="RunStats.aspx">Reports and Stats</a></li>
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="RunStats.aspx"><i class="icon-print"></i> Reports and Stats</a>
+							<ul class="dropdown-menu">
+								<li><a href="RunStats.aspx#runLog">2014 Runs</a></li>
+								<li><a href="RunStats.aspx#todaysUsers">Todays Users</a></li>
+								<li><a href="RunStats.aspx#top10">Top 10 Volunteers</a></li>
+								<li><a href="RunStats.aspx#averageRuns">Average Runs Per Day</a></li>
+								<li><a href="RunStats.aspx#callsPerHour">Call Per Hour Heatmap</a></li>
+								<li><a href="RunStats.aspx#recentRuns">2013 Runs</a></li>
+								<li><a href="RunStats.aspx#top102013">Top 10 Volunteers 2013</a></li>
+								<li><a href="RunStats.aspx#activeNoLogin">Active Member - No Login</a></li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 			</asp:Literal>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="OpsMap.aspx">Operations Map</a></li>
+						<li><a href="OpsMap.aspx"><i class="icon-globe"></i> Operations Map</a></li>
 						<asp:Literal runat="server" id="pnlPowerUser">
 							<li class="divider"></li>
-							<li><a href="ControllerLog.aspx">Controller Logging</a></li>
-							<li><a href="ControllerLog.aspx" target="_blank">Controller Logging (New Tab)</a></li>
+							<li><a href="ControllerLog.aspx"><i class="icon-edit"></i> Controller Logging</a></li>
+							<li><a href="ControllerLog.aspx" target="_blank"><i class="icon-chevron-right"></i> Controller Logging (New Tab)</a></li>
 							<li class="divider"></li>
-							<li><a href="SMS.aspx">Bulk SMS</a></li>
+							<li><a href="SMS.aspx"><i class="icon-envelope"></i> Bulk SMS</a></li>
 						</asp:Literal>
 					</ul>
 				</li>

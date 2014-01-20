@@ -23,6 +23,21 @@ namespace SERVWeb
 			}
 		}
 
+		protected string FullName
+		{
+			get
+			{
+				if (SERVGlobal.User != null)
+				{
+					return SERVGlobal.User.Member.FirstName + " " + SERVGlobal.User.Member.LastName;
+				}
+				else
+				{
+					return "";
+				}
+			}
+		}
+
 		protected string Success
 		{
 			get

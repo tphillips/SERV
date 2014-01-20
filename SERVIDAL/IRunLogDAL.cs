@@ -13,6 +13,7 @@ namespace SERVIDAL
 		void TruncateRawRunLog();
 		int CreateRunLog(SERVDataContract.DbLinq.RunLog log, List<int> prods);
 		DataTable Report_RecentRunLog();
+		DataTable Report_Top102013Riders();
 		DataTable Report_Top10Riders();
 		DataTable Report_RunButNoLogin();
 		DataTable Report_AverageCallsPerDay();

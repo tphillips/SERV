@@ -7,3 +7,6 @@
 .icon-green {
   background-image: url("../img/glyphicons-halflings-green.png");
 }
+
+
+.calToday i { background-image: url("../img/glyphicons-halflings-green.png");}

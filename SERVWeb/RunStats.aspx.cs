@@ -20,6 +20,8 @@ namespace SERVWeb
 			dgReport.DataBind();
 			dgTop10.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_Top10Riders();
 			dgTop10.DataBind();
+			dgTop102013.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_Top102013Riders();
+			dgTop102013.DataBind();
 			dgRunNoLogin.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_RunButNoLogin();
 			dgRunNoLogin.DataBind();
 			lblRunNoLogin.Text = string.Format("{0} Result(s)", ((DataTable)dgRunNoLogin.DataSource).Rows.Count);

@@ -315,6 +315,11 @@ namespace SERVBLL
 			return SERVDALFactory.Factory.RunLogDAL().Report_Top10Riders();
 		}
 
+		public DataTable Report_Top102013Riders()
+		{
+			return SERVDALFactory.Factory.RunLogDAL().Report_Top102013Riders();
+		}
+
 		public DataTable Report_RunButNoLogin()
 		{
 			return SERVDALFactory.Factory.RunLogDAL().Report_RunButNoLogin();

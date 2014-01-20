@@ -13,5 +13,15 @@ h1, h2, h3, h4
   display: none;
 }
 
+.calDay
+{
+  font-size:small;
+  float-left;
+}
+
+.calDay h4 { margin-top: 0px; margin-bottom:3px; border: 1px solid gainsboro; padding 2px; padding-left:3px; background-color: whitesmoke; font-size:small; font-weight: bold; }
+.calDay ul { margin-bottom: 0px; }
+.calDay ul,li { list-style-type: none; margin-left:0px; margin-top:1px; padding:0px; }
+.calDay li { border: 1px solid gainsboro; padding-left:3px;}
 
 

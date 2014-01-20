@@ -49,6 +49,14 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		public Table<Karma> Karma
+		{
+			get
+			{
+				return this.GetTable <Karma>();
+			}
+		}
+		
 		public Table<Location> Location
 		{
 			get
@@ -282,6 +290,180 @@ namespace SERVDataContract.DbLinq
 					this._eveningNo = value;
 					this.SendPropertyChanged("EveningNo");
 					this.OnEveningNoChanged();
+				}
+			}
+		}
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
+			if ((h != null))
+			{
+				h(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(string propertyName)
+		{
+			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
+			if ((h != null))
+			{
+				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="SERV.Karma")]
+	public partial class Karma : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private System.DateTime _allocationDateTime;
+		
+		private int _karmaID;
+		
+		private int _memberID;
+		
+		private int _points;
+		
+		private string _reason;
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnAllocationDateTimeChanged();
+		
+		partial void OnAllocationDateTimeChanging(System.DateTime value);
+		
+		partial void OnKarmaIDChanged();
+		
+		partial void OnKarmaIDChanging(int value);
+		
+		partial void OnMemberIDChanged();
+		
+		partial void OnMemberIDChanging(int value);
+		
+		partial void OnPointsChanged();
+		
+		partial void OnPointsChanging(int value);
+		
+		partial void OnReasonChanged();
+		
+		partial void OnReasonChanging(string value);
+		#endregion
+		
+		
+		public Karma()
+		{
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_allocationDateTime", Name="AllocationDateTime", DbType="timestamp", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public System.DateTime AllocationDateTime
+		{
+			get
+			{
+				return this._allocationDateTime;
+			}
+			set
+			{
+				if ((_allocationDateTime != value))
+				{
+					this.OnAllocationDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._allocationDateTime = value;
+					this.SendPropertyChanged("AllocationDateTime");
+					this.OnAllocationDateTimeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_karmaID", Name="KarmaID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int KarmaID
+		{
+			get
+			{
+				return this._karmaID;
+			}
+			set
+			{
+				if ((_karmaID != value))
+				{
+					this.OnKarmaIDChanging(value);
+					this.SendPropertyChanging();
+					this._karmaID = value;
+					this.SendPropertyChanged("KarmaID");
+					this.OnKarmaIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_memberID", Name="MemberID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int MemberID
+		{
+			get
+			{
+				return this._memberID;
+			}
+			set
+			{
+				if ((_memberID != value))
+				{
+					this.OnMemberIDChanging(value);
+					this.SendPropertyChanging();
+					this._memberID = value;
+					this.SendPropertyChanged("MemberID");
+					this.OnMemberIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_points", Name="Points", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int Points
+		{
+			get
+			{
+				return this._points;
+			}
+			set
+			{
+				if ((_points != value))
+				{
+					this.OnPointsChanging(value);
+					this.SendPropertyChanging();
+					this._points = value;
+					this.SendPropertyChanged("Points");
+					this.OnPointsChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_reason", Name="Reason", DbType="varchar(100)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public string Reason
+		{
+			get
+			{
+				return this._reason;
+			}
+			set
+			{
+				if (((_reason == value) == false))
+				{
+					this.OnReasonChanging(value);
+					this.SendPropertyChanging();
+					this._reason = value;
+					this.SendPropertyChanged("Reason");
+					this.OnReasonChanged();
 				}
 			}
 		}

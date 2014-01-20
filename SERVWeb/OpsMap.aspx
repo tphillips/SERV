@@ -39,18 +39,18 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Map <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li id="lnkShowMembers"><a href="#" onclick="showMembers();">Show Members On Map</a></li>
-							<li><a href="#" onclick="showHideWeather();">Show / Hide Weather</a></li>
-							<li><a href="#" onclick="showHideTraffic();">Show / Hide Traffic</a></li>
+							<li id="lnkShowMembers"><a href="#" onclick="showMembers();"><i class="icon-map-marker"></i> Show Members On Map</a></li>
+							<li><a href="#" onclick="showHideWeather();"><i class="icon-cog"></i> Show / Hide Weather</a></li>
+							<li><a href="#" onclick="showHideTraffic();"><i class="icon-warning-sign"></i> Show / Hide Traffic</a></li>
 							<li class="divider"></li>
-							<li><a href="#" onclick="$('#memberList').dialog('open');">Show Member List</a></li>
-							<li><a href="#" onclick="$('#locationsList').dialog('open');">Show Locations List</a></li>
+							<li><a href="#" onclick="$('#memberList').dialog('open');"><i class="icon-list"></i> Show Member List</a></li>
+							<li><a href="#" onclick="$('#locationsList').dialog('open');"><i class="icon-list"></i> Show Locations List</a></li>
 							<li class="divider"></li>
-							<li><a href="#" onclick="showLoadRouteFile();">Load a TomTom ".itn" Route File</a></li>
+							<li><a href="#" onclick="showLoadRouteFile();"><i class="icon-resize-horizontal"></i> Load a TomTom ".itn" Route File</a></li>
 							<li class="divider"></li>
-							<li><a href="#" onclick="showControllerLog();">Log a New Run</a></li>
+							<li><a href="#" onclick="showControllerLog();"><i class="icon-pencil"></i> Log a New Run</a></li>
 							<li class="divider"></li>
-							<li><a href="#" onclick="window.location.reload();">Reset</a></li>
+							<li><a href="#" onclick="window.location.reload();"><i class="icon-globe"></i> Reset</a></li>
 						</ul>
 					</li>
 				</ul>

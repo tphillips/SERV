@@ -9,6 +9,16 @@ select Name from
 	LIMIT 10) sub 
 order by Name;
 
+-- TOP 10 RIDERS
+select Name , Runs from 
+	(select CONCAT(m.FirstName, ' ', m.LastName) Name, count(*) Runs
+	from RunLog rl 
+	LEFT join Member m on m.MemberID = rl.RiderMemberID
+	group by Name 
+	order by Runs desc 
+	LIMIT 20) top 
+order by Runs desc;
+
 -- TOP Controllers
 select Name, Runs from 
 	(select Controller Name, count(*) Runs
@@ -145,7 +155,8 @@ de--lete from RunLog;
 
 select * from Member m 
 join User u on u.MemberID = m.MemberID 
-where m.LastName = 'Bowers';
+where m.LastName = 'Cooper';
+/*update User set PasswordHash = '' where UserID = 17*/
 /*update User set UserLevelID = 3 where UserId = 7;*/
 
 select * from Member where LastName = 'Snelling';
@@ -223,9 +234,14 @@ UserID in(5,
 104,
 131);
 
-update RunLog set DutyDate = '2014-01-07' where RunLogID = 106;
+update RunLog set VehicleTypeID = 7 where RunLogID = 152;
+select * from RunLog where RunLogID = 161
 delete from Location where LocationID = 48;
 */
+
+select * from VehicleType;
+
+select * from Location;
 
 -- Riders who have done a run since may and their run counts
 select m.MemberID, concat(m.Firstname, ' ', m.LastName), 

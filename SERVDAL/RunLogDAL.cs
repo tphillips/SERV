@@ -100,6 +100,20 @@ namespace SERVDAL
 			string sql = 
 				"select Name from " +
 				"(select CONCAT(m.FirstName, ' ', m.LastName) Name, count(*) Runs " +
+				"from RunLog rl " +
+				"LEFT join Member m on m.MemberID = rl.RiderMemberID " +
+				"group by Name " +
+				"order by Runs desc " +
+				"LIMIT 10) top " +
+				"order by Name;";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
+		public DataTable Report_Top102013Riders()
+		{
+			string sql = 
+				"select Name from " +
+				"(select CONCAT(m.FirstName, ' ', m.LastName) Name, count(*) Runs " +
 				"from RawRunLog rr " +
 				"LEFT join Member m on rr.Rider = (CONCAT(m.LastName, ' ', m.FirstName)) " +
 				"where m.FirstName is not null " +

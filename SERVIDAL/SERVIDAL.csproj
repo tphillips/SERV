@@ -40,6 +40,7 @@
     <Compile Include="IMessageDAL.cs" />
     <Compile Include="IListDAL.cs" />
     <Compile Include="ILocationDAL.cs" />
+    <Compile Include="IBuddhaDAL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

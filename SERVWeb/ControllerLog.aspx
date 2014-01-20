@@ -223,7 +223,7 @@
 
 	</div>
 	<hr/>
-	<button type=button class="btn btn-primary btn-lg" onclick="saveRun()">Save Run</button>
+	<button type=button class="btn btn-primary btn-lg" onclick="saveRun()"><i class="icon-ok icon-white"></i> Save Run</button>
 
 </div>
 
