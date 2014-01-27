@@ -9,6 +9,7 @@ namespace SERVIBLL
 		bool SendMembershipEmail(Member m, int senderUserId, bool onlyNeverLoggedIn);
 		bool SendMembershipEmail(string emailAddress, int senderUserID, bool onlyNeverLoggedIn);
 		bool SendAllActiveMembersMembershipEmail(int senderUserID, bool onlyNeverLoggedIn);
+		void SendPasswordResetEmail(Member m, string newPass, int userID);
 	}
 }
 
