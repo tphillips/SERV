@@ -121,6 +121,7 @@
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="bloodCalendarInclude.htm" />
+    <Content Include="PasswordReset.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -216,6 +217,12 @@
     </Compile>
     <Compile Include="OpsMap.aspx.designer.cs">
       <DependentUpon>OpsMap.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordReset.aspx.cs">
+      <DependentUpon>PasswordReset.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordReset.aspx.designer.cs">
+      <DependentUpon>PasswordReset.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

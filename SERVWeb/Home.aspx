@@ -62,14 +62,15 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.3.3</h3>
+			<h3>Version 1.3.4</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Adding more calendar days highlighting current users name where shown</li>
-				<li>Icons</li>
+				<li>Password resetting</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Adding more calendar days highlighting current users name where shown</li>
+				<li>Icons</li>
 				<li>Added the new top 10 riders report for 2014 onwards, driven by the new controller logging form</li>
 				<li>Added a hover over description of the various states of the session keep alive icon.</li>
 				<li>Added calendar info to home screen.</li>

@@ -19,5 +19,6 @@ namespace SERVIBLL
 		void SetPassword(string username, string passwordHash);
 		List<string> ListMobileNumbersWithTags(string tagsCsv);
 		List<Member> ListMembersWithTags(string tagsCsv);
+		void SendPasswordReset(string username);
 	}
 }

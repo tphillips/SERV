@@ -234,9 +234,13 @@ UserID in(5,
 104,
 131);
 
-update RunLog set VehicleTypeID = 7 where RunLogID = 152;
-select * from RunLog where RunLogID = 161
-delete from Location where LocationID = 48;
+update RunLog set CollectDateTime = '2014-01-20 11:40', DeliverDateTime = '2014-01-20 11:50:00' where RunLogID = 205;
+select * from RunLog where RunLogID = 147;
+
+
+delete from RunLog where RunLogID = 147;
+delete from RunLog_Product where RunLogID = 147;
+
 */
 
 select * from VehicleType;
