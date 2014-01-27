@@ -155,8 +155,8 @@ de--lete from RunLog;
 
 select * from Member m 
 join User u on u.MemberID = m.MemberID 
-where m.LastName = 'Cooper';
-/*update User set PasswordHash = '' where UserID = 17*/
+where m.LastName = 'Brewin';
+/*update User set PasswordHash = '' where UserID = 9*/
 /*update User set UserLevelID = 3 where UserId = 7;*/
 
 select * from Member where LastName = 'Snelling';
@@ -260,3 +260,16 @@ order by count(*) desc;
 
 -- Select riders who have left
 select FirstName, LastName, LeaveDate from Member where LeaveDate is not null;
+
+-- Select riders who have left
+select FirstName, LastName, EmailAddress, LastGDPGMPDate from Member;
+
+
+select * from Message  order by MessageID desc limit 10;
+
+
+
+
+
+
+
