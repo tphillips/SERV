@@ -32,6 +32,21 @@ namespace SERVWeb
 			}
 		}
 
+		protected int RunLogID
+		{
+			get 
+			{
+				if (Request["RunLogID"] != null)
+				{
+					return int.Parse(Request["RunLogID"]);
+				}
+				else
+				{
+					return -1;
+				}
+			}
+		}
+
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication((int)SERVDataContract.UserLevel.Controller, "Sorry, only controllers and above have access to contribute to the controller log.");

@@ -19,6 +19,13 @@ namespace SERVDAL
 			db = new SERVDataContract.DbLinq.SERVDB(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]);
 		}
 
+		public RunLog Get(int runLogID)
+		{
+			return (from rl in db.RunLog
+			        where rl.RunLogID == runLogID
+			        select rl).First();
+		}
+
 		public bool CreateRawRecord(RawRunLog raw)
 		{
 			db.RawRunLog.InsertOnSubmit(raw);

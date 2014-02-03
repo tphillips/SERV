@@ -191,6 +191,12 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
+		public RunLog GetRunLog(int runLogID)
+		{
+			return SERVBLLFactory.Factory.RunLogBLL().Get(runLogID);
+		}
+
+		[WebMethod(EnableSession = true)]
 		public bool LogAARun(string dutyDate, string collectDateTime, string deliverDateTime, string returnDateTime,
 			int controllerMemberId, int riderMemberId, 
 			int vehicleTypeId, string boxesOutCsv, string boxesInCsv, string notes)

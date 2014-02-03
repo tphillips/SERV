@@ -295,6 +295,11 @@ namespace SERVBLL
 			return true;
 		}
 
+		public RunLog Get(int runLogID)
+		{
+			return new RunLog(SERVDALFactory.Factory.RunLogDAL().Get(runLogID));
+		}
+
 		int FindAAPickupLocationID()
 		{
 			return new LocationBLL().ListLocations("East Surrey")[0].LocationID;

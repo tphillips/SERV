@@ -8,6 +8,7 @@ namespace SERVIDAL
 {
 	public interface IRunLogDAL : IDisposable
 	{
+		SERVDataContract.DbLinq.RunLog Get(int runLogID);
 		bool CreateRawRecord(SERVDataContract.DbLinq.RawRunLog raw);
 		void CreateRawRecords(List<SERVDataContract.DbLinq.RawRunLog> records);
 		void TruncateRawRunLog();

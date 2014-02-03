@@ -267,6 +267,71 @@ select FirstName, LastName, EmailAddress, LastGDPGMPDate from Member;
 
 select * from Message  order by MessageID desc limit 10;
 
+select * from Product;
+select * from RunLog;
+
+set @StartDate = '2014-01-01';
+set @EndDate = '2014-02-01';
+select p.Product, sum(rlp.Quantity) as BoxesCarried from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID
+where (CallDateTime < @EndDate and CallDateTime > @StartDate)
+OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate)
+group by Product;
+
+select count(distinct rl.RunLogID) as BloodProductRuns from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID
+where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
+OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
+AND rlp.ProductID in (1,2,3); -- Blood platelets & plasma
+
+select count(distinct rl.RunLogID) as SampleRuns from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID
+where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
+OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
+AND rlp.ProductID in (4); -- Samples
+
+select count(distinct rl.RunLogID) as MilkRuns from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID
+where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
+OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
+AND rlp.ProductID in (5); -- Milk
+
+select count(distinct rl.RunLogID) as DrugRuns from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID
+where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
+OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
+AND rlp.ProductID in (15); -- Drugs
+
+select count(distinct rl.RunLogID) as PackageRuns from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID
+where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
+OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
+AND rlp.ProductID in (16); -- Package
+
+select count(distinct rl.RunLogID) as AARuns from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID
+where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
+OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
+AND rlp.ProductID in (7,8,9,10,11,12,13,14); -- AA
+
+select l.Location as FinalDestination, count(*) from RunLog rl 
+join Location l on l.LocationID = rl.FinalDestinationLocationID
+where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
+OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
+group by l.Location;
+
+select l.Location as PickupLocation, count(*) from RunLog rl 
+join Location l on l.LocationID = rl.CollectionLocationID
+where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
+OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
+group by l.Location;
 
 
 
