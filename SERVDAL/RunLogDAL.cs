@@ -83,6 +83,11 @@ namespace SERVDAL
 			db.ExecuteCommand("truncate table RawRunLog");
 		}
 
+		public DataTable RunReport(SERVDataContract.Report report)
+		{
+			return DBHelperFactory.DBHelper().ExecuteDataTable(report.Query);
+		}
+
 		public DataTable Report_RecentRunLog()
 		{
 			string sql = 
@@ -215,6 +220,17 @@ namespace SERVDAL
 			             "join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
 			             "where DutyDate > '2013-12-31' or CallDateTime > '2013-12-31' " +
 			             "order by rl.DutyDate desc, rl.CallDateTime desc;";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
+		public DataTable Report_BoxesByProductByMonth()
+		{
+			string sql = "select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			             ", p.Product, sum(rlp.Quantity) as BoxesCarried from RunLog rl " +
+			             "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+			             "join Product p on p.ProductID = rlp.ProductID " +
+			             "group by Month, Product " +
+			             "order by month(rl.DutyDate), Product;";
 			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 		}
 

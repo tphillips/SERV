@@ -21,14 +21,8 @@ namespace SERVIBLL
 			DateTime deliverDateTime, DateTime returnDateTime, int riderMemberId, int vehicleTypeId, 
 			string boxesOutCsv, string boxesInCsv, string notes);
 
-		DataTable Report_RecentRunLog();
-		DataTable Report_Top10Riders();
-		DataTable Report_Top102013Riders();
-		DataTable Report_RunButNoLogin();
-		DataTable Report_AverageCallsPerDay();
-		DataTable Report_CallsPerHourHeatMap();
-		DataTable Report_TodaysUsers();
-		DataTable Report_RunLog();
+		List<Report> RunReports();
+
 	}
 }
 

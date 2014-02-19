@@ -17,24 +17,6 @@ namespace SERVWeb {
 		
 		protected System.Web.UI.WebControls.Content contentPlaceholderContent;
 		
-		protected System.Web.UI.WebControls.DataGrid dgRunLog;
-		
-		protected System.Web.UI.WebControls.DataGrid dgTodaysUsers;
-		
-		protected System.Web.UI.WebControls.DataGrid dgTop10;
-		
-		protected System.Web.UI.WebControls.DataGrid dgTop102013;
-		
-		protected System.Web.UI.WebControls.GridView dgHeatMap;
-		
-		protected System.Web.UI.WebControls.DataGrid dgAvgPerDay;
-		
-		protected System.Web.UI.WebControls.DataGrid dgReport;
-		
-		protected System.Web.UI.WebControls.DataGrid dgRunNoLogin;
-		
-		protected System.Web.UI.WebControls.Label lblRunNoLogin;
-		
 		public new SERVWeb.Master Master {
 			get {
 				return ((SERVWeb.Master)(base.Master));

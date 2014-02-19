@@ -6,29 +6,46 @@ namespace SERVWeb
 	using System.Web.UI;
 	using SERVBLLFactory;
 	using System.Data;
+	using SERVDataContract;
+	using System.Collections.Generic;
+	using System.Web.UI.WebControls;
 
 	public partial class RunStats : System.Web.UI.Page
 	{
+
+		private int _idx = 0;
+		private int idx
+		{
+			get
+			{
+				//_idx++;
+				return _idx;
+			}
+		}
+
 		protected override void OnLoad (EventArgs e)
 		{
+			base.OnLoad(e);
+			List<Report> reports = SERVBLLFactory.Factory.RunLogBLL().RunReports();
+			ContentPlaceHolder contentPlaceholderContent = (ContentPlaceHolder)Master.FindControl("contentPlaceholder");
+			foreach (Report r in reports)
+			{
+				contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { Text = "<div class=\"row\">" });
+				contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { Text = "<div class=\"span12\">" });
+				contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { Text = "<a id=\"" + r.Anchor + "\"></a>" });
+				contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { Text = "<h3>" + r.Heading + "</h3>" });
+				contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { Text = "<p>" + r.Description + "</p> " });
+				DataGrid dg = new DataGrid();
+				dg.CssClass = "table table-striped table-bordered table-condensed";
+				dg.DataSource = r.Results;
+				dg.DataBind();
+				contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, dg);
+				contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { Text = "</div>" });
+				contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { Text = "</div>" });
+			}
+
 			SERVGlobal.AssertAuthentication();
-			dgRunLog.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_RunLog();
-			dgRunLog.DataBind();
-			dgTodaysUsers.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_TodaysUsers();
-			dgTodaysUsers.DataBind();
-			dgReport.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_RecentRunLog();
-			dgReport.DataBind();
-			dgTop10.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_Top10Riders();
-			dgTop10.DataBind();
-			dgTop102013.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_Top102013Riders();
-			dgTop102013.DataBind();
-			dgRunNoLogin.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_RunButNoLogin();
-			dgRunNoLogin.DataBind();
-			lblRunNoLogin.Text = string.Format("{0} Result(s)", ((DataTable)dgRunNoLogin.DataSource).Rows.Count);
-			dgAvgPerDay.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_AverageCallsPerDay();
-			dgAvgPerDay.DataBind();
-			dgHeatMap.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_CallsPerHourHeatMap();
-			dgHeatMap.DataBind();
+
 		}
 	}
 }

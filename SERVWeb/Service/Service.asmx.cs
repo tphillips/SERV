@@ -267,13 +267,6 @@ namespace SERVWeb
 			log.LogPerformace(s);
 		}
 
-		[WebMethod(EnableSession = true, TransactionOption=System.EnterpriseServices.TransactionOption.Disabled, CacheDuration=120)]
-		public DataTable Report_RecentRunLog()
-		{
-			Authenticate();
-			return SERVBLLFactory.Factory.RunLogBLL().Report_RecentRunLog();
-		}
-
 		public User Login(string username, string passwordHash)
 		{
 			return SERVBLLFactory.Factory.MemberBLL().Login(username, passwordHash);

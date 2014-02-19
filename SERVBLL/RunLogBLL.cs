@@ -310,44 +310,247 @@ namespace SERVBLL
 			return new LocationBLL().ListLocations("Redhill Aerodrome")[0].LocationID;
 		}
 
-		public DataTable Report_RecentRunLog()
+		public List<Report> RunReports()
 		{
-			return SERVDALFactory.Factory.RunLogDAL().Report_RecentRunLog();
-		}
+			List<Report> reports = new List<Report>();
 
-		public DataTable Report_Top10Riders()
-		{
-			return SERVDALFactory.Factory.RunLogDAL().Report_Top10Riders();
-		}
+			Report rep = new Report();
+			rep.Heading = "Recent Runs";
+			rep.Description = "Real time information from the controller log.";
+			rep.Anchor = "runLog";
+			rep.Query = "select RunLogID as ID, date(DutyDate) as 'Duty Date', coalesce(CallDateTime, 'N/A') as 'Call Date & Time', cf.Location as 'Call From', cl.Location as 'From', " +
+			            "dl.Location as 'To', time(rl.CollectDateTime) as Collected, time(rl.DeliverDateTime) as Delivered, " +
+			            //"timediff(rl.DeliverDateTime, rl.CollectDateTime) as 'Run Time', " +
+			            "fl.Location as 'Destination', concat(m.FirstName, ' ', m.LastName) as Rider, v.VehicleType as 'Vehicle', rl.Description as 'Consignment', " +
+			            "concat(c.FirstName, ' ', c.LastName) as Controller from RunLog rl " +
+			            "join Member m on m.MemberID = rl.RiderMemberID " +
+			            "join Member c on c.MemberID = rl.ControllerMemberID " +
+			            "join Location cf on cf.LocationID = rl.CallFromLocationID " +
+			            "join Location cl on cl.LocationID = rl.CollectionLocationID " +
+			            "join Location dl on dl.LocationID = rl.DeliverToLocationID " +
+			            "join Location fl on fl.LocationID = rl.FinalDestinationLocationID " +
+			            "join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
+			            "where DutyDate > '2013-12-31' or CallDateTime > '2013-12-31' " +
+			            "order by rl.DutyDate desc, rl.CallDateTime desc LIMIT 30;";
+			reports.Add(rep);
 
-		public DataTable Report_Top102013Riders()
-		{
-			return SERVDALFactory.Factory.RunLogDAL().Report_Top102013Riders();
-		}
+			rep = new Report();
+			rep.Heading = "Top 10 Rider / Drivers";
+			rep.Description = "Based on number of runs done in 2014 and on. Ordered by name.";
+			rep.Anchor = "top10";
+			rep.Query = "select Name from " +
+			            "(select CONCAT(m.FirstName, ' ', m.LastName) Name, count(*) Runs " +
+			            "from RunLog rl " +
+			            "LEFT join Member m on m.MemberID = rl.RiderMemberID " +
+			            "group by Name " +
+			            "order by Runs desc " +
+			            "LIMIT 10) top " +
+			            "order by Name;";
+			reports.Add(rep);
 
-		public DataTable Report_RunButNoLogin()
-		{
-			return SERVDALFactory.Factory.RunLogDAL().Report_RunButNoLogin();
-		}
+			rep = new Report();
+			rep.Heading = "Top 3 Controllers";
+			rep.Description = "Based on number of runs controlled in 2014 and on. Ordered by name.";
+			rep.Anchor = "top10Controllers";
+			rep.Query = "select Name from " +
+			            "(select CONCAT(m.FirstName, ' ', m.LastName) Name, count(*) Runs " +
+			            "from RunLog rl " +
+			            "LEFT join Member m on m.MemberID = rl.ControllerMemberID " +
+			            "group by Name " +
+			            "order by Runs desc " +
+			            "LIMIT 3) top " +
+			            "order by Name;";
+			reports.Add(rep);
 
-		public DataTable Report_AverageCallsPerDay()
-		{
-			return SERVDALFactory.Factory.RunLogDAL().Report_AverageCallsPerDay();
-		}
+			rep = new Report();
+			rep.Heading = "Todays Users";
+			rep.Description = "Users who have logged on today.";
+			rep.Anchor = "todaysUsers";
+			rep.Query = "select CONCAT(m.FirstName, ' ', m.LastName) as Member " +
+			            "from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate > CURRENT_DATE() " +
+			            "order by lastLoginDate desc;";
+			reports.Add(rep);
 
-		public DataTable Report_CallsPerHourHeatMap()
-		{
-			return SERVDALFactory.Factory.RunLogDAL().Report_CallsPerHourHeatMap();
-		}
+			rep = new Report();
+			rep.Heading = "Boxes by Product by Month";
+			rep.Description = "The count of <strong>boxes carried</strong> (not runs!), by product, by month.";
+			rep.Anchor = "boxesByProdByMonth";
+			rep.Query =  "select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			            ", p.Product, sum(rlp.Quantity) as Boxes from RunLog rl " +
+			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+			            "join Product p on p.ProductID = rlp.ProductID " +
+			            "group by Month, Product " +
+			            "order by month(rl.DutyDate), Product;";
+			reports.Add(rep);
 
-		public DataTable Report_TodaysUsers()
-		{
-			return SERVDALFactory.Factory.RunLogDAL().Report_TodaysUsers();
-		}
+			rep = new Report();
+			rep.Heading = "Blood Product Runs by Month";
+			rep.Description = "The count of runs carrying a blood product (Blood, Platelets & Plasma).";
+			rep.Anchor = "bloodRunsByMonth";
+			rep.Query =  "select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			            ", count(distinct rl.RunLogID) as Runs from RunLog rl " +
+			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+			            "join Product p on p.ProductID = rlp.ProductID " +
+			            "AND rlp.ProductID in (1,2,3) " +
+			            "group by Month " +
+			            "order by month(rl.DutyDate);";
+			reports.Add(rep);
 
-		public DataTable Report_RunLog()
-		{
-			return SERVDALFactory.Factory.RunLogDAL().Report_RunLog();
+			rep = new Report();
+			rep.Heading = "Core Runs by Month";
+			rep.Description = "Runs by month excluding AA and Milk.";
+			rep.Anchor = "coreRunsByMonth";
+			rep.Query =  "select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			            ", count(distinct rl.RunLogID) as Runs from RunLog rl " +
+			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+			            "join Product p on p.ProductID = rlp.ProductID " +
+			            "AND rlp.ProductID in (1,2,3, 4, 15,16) " +
+			            "group by Month " +
+			            "order by month(rl.DutyDate);";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Sample Runs by Month";
+			rep.Description = "Sample runs by month.";
+			rep.Anchor = "sampleRunsByMonth";
+			rep.Query =  "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			            ", count(distinct rl.RunLogID) as Runs from RunLog rl " +
+			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+			            "join Product p on p.ProductID = rlp.ProductID " +
+			            "AND rlp.ProductID in (4) " +
+			            "group by Month " +
+			            "order by month(rl.DutyDate);";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Package Runs by Month";
+			rep.Description = "Package runs by month.";
+			rep.Anchor = "packageRunsByMonth";
+			rep.Query =  "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			            ", count(distinct rl.RunLogID) as Runs from RunLog rl " +
+			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+			            "join Product p on p.ProductID = rlp.ProductID " +
+			            "AND rlp.ProductID in (16) " +
+			            "group by Month " +
+			            "order by month(rl.DutyDate);";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Milk Runs by Month";
+			rep.Description = "Milk runs by month.";
+			rep.Anchor = "milkRunsByMonth";
+			rep.Query =  "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			            ", count(distinct rl.RunLogID) as Runs from RunLog rl " +
+			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+			            "join Product p on p.ProductID = rlp.ProductID " +
+			            "AND rlp.ProductID in (5) " +
+			            "group by Month " +
+			            "order by month(rl.DutyDate);";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "AA Runs by Month";
+			rep.Description = "AA runs by month.";
+			rep.Anchor = "aaRunsByMonth";
+			rep.Query =  "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			            ", count(distinct rl.RunLogID) as Runs from RunLog rl " +
+			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+			            "join Product p on p.ProductID = rlp.ProductID " +
+			            "AND rlp.ProductID in (7,8,9,10,11,12,13,14) " +
+			            "group by Month " +
+			            "order by month(rl.DutyDate);";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Runs by Member Month";
+			rep.Description = "Runs by member by month.";
+			rep.Anchor = "memberRunsByMonth";
+			rep.Query =  "select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			            ", concat(m.FirstName, ' ', m.LastName) as Member, count(*) as Runs from RunLog rl  " +
+			            "join Member m on m.MemberID = rl.RiderMemberID " +
+			            "group by Month, Member " +
+			            "order by month(rl.DutyDate), count(*) desc;";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Runs by Final Destination by Month";
+			rep.Description = "Runs by final destination (where the product ended up) by month.";
+			rep.Anchor = "finalDestByMonth";
+			rep.Query =  "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			            ", l.Location as Location, count(*) Runs from RunLog rl  " +
+			            "join Location l on l.LocationID = rl.FinalDestinationLocationID " +
+			            "group by Month, l.Location " +
+			            "order by month(rl.DutyDate), Runs desc;";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Runs by Pickup Location by Month";
+			rep.Description = "Runs by pickup location by month.";
+			rep.Anchor = "pickupDestByMonth";
+			rep.Query = "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+						", l.Location as Location, count(*) as Runs from RunLog rl " +
+						"join Location l on l.LocationID = rl.CollectionLocationID " +
+						"group by Month, l.Location " +
+						"order by month(rl.DutyDate), Runs desc;";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Runs by Drop Off Location by Month";
+			rep.Description = "Runs by drop off location by month.";
+			rep.Anchor = "dropoffDestByMonth";
+			rep.Query = "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+						", l.Location as Location, count(*) as Runs from RunLog rl " +
+						"join Location l on l.LocationID = rl.DeliverToLocationID " +
+						"group by Month, l.Location " +
+						"order by month(rl.DutyDate), Runs desc;";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Runs by Caller by Month";
+			rep.Description = "Runs by Caller by month.";
+			rep.Anchor = "callerByMonth";
+			rep.Query = "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+						", l.Location as Caller, count(*) as Runs from RunLog rl " +
+			            "join Location l on l.LocationID = rl.CallFromLocationID " +
+			            "group by Month, l.Location " +
+			            "order by month(rl.DutyDate), Runs desc;";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Active Member - No Login";
+			rep.Description = "This report shows members who have done a run since Jan 14 but not yet logged into the new system.";
+			rep.Anchor = "activeNoLogin";
+			rep.Query = "select CONCAT(m.FirstName, ' ', m.LastName) as Rider, date(m.JoinDate) as Joined, m.EmailAddress as Email, date(max(rr.CallDateTime)) as LastRun, count(*) as Runs " +
+			            "from RunLog rr  " +
+			            "LEFT join Member m on rr.RiderMemberID = m.MemberID  " +
+			            "where m.MemberID not in " +
+			            "(select m.MemberID from User u join Member m on m.MemberID = u.MemberID where u.lastLoginDate is not null) " +
+			            "and rr.CallDateTime > '2014-01-01' " +
+			            "and m.LeaveDate is null " +
+			            "group by m.MemberID " +
+			            "order by max(rr.CallDateTime) desc;";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Last Month's Statistics";
+			rep.Description = "High level stats for last month.";
+			rep.Anchor = "lastMonth";
+			rep.Query = "call LastMonthRunStats;";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "This Month's Statistics";
+			rep.Description = "High level stats for this month to date.";
+			rep.Anchor = "thisMonth";
+			rep.Query = "call ThisMonthRunStats;";
+			reports.Add(rep);
+
+			foreach (Report r in reports)
+			{
+				r.Results = SERVDALFactory.Factory.RunLogDAL().RunReport(r);
+			}
+
+			return reports;
 		}
 
 	}

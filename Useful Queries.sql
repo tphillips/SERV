@@ -155,7 +155,7 @@ de--lete from RunLog;
 
 select * from Member m 
 join User u on u.MemberID = m.MemberID 
-where m.LastName = 'Brewin';
+where m.LastName = 'Holmes';
 /*update User set PasswordHash = '' where UserID = 9*/
 /*update User set UserLevelID = 3 where UserId = 7;*/
 
@@ -219,29 +219,19 @@ select * from UserLevel;
 
 /*
 update User set UserLevelID = 2 where
-UserID in(5,
-7,
-10,
-12,
-15,
-16,
-26,
-66,
-73,
-74,
-96,
-97,
-104,
-131);
+UserID in(53);
 
-update RunLog set CollectDateTime = '2014-01-20 11:40', DeliverDateTime = '2014-01-20 11:50:00' where RunLogID = 205;
-select * from RunLog where RunLogID = 147;
+update RunLog set RiderMemberID = 234 where RunLogID = 483;
+select * from RunLog where RunLogID = 483;
 
 
 delete from RunLog where RunLogID = 147;
 delete from RunLog_Product where RunLogID = 147;
 
 */
+
+select * from Member where LastName = 'Kirkham';
+select * from User where MemberID = 158;
 
 select * from VehicleType;
 
@@ -267,73 +257,149 @@ select FirstName, LastName, EmailAddress, LastGDPGMPDate from Member;
 
 select * from Message  order by MessageID desc limit 10;
 
+SET @TODATE= date_format((date_add(CURRENT_DATE, INTERVAL 1 MONTH)), '%Y-%m-01 00:00:00');
+SET @FROMDATE= date_format(CURRENT_DATE, '%Y-%m-01 00:00:00');
+
+select sum(rlp.Quantity) into @BLOOD from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 1;
+
+select sum(rlp.Quantity) into @PLATELETS from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 2;
+
+select sum(rlp.Quantity) into @PLASMA from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 3;
+
+select sum(rlp.Quantity) into @SAMPLE from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 4;
+
+select sum(rlp.Quantity) into @MILK from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 5;
+
+select sum(rlp.Quantity) into @AA from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID in (7,8,9,10,11,12,13);
+
+select sum(rlp.Quantity) into @PACKAGE from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 16;
+
+select count(*) into @RUNS from RunLog where DutyDate > @FROMDATE and DutyDate < @TODATE;
+
+select concat(monthname(@FROMDATE), ' ', year(@FROMDATE)) as Month, 
+@RUNS as 'Total Runs', @BLOOD as 'Blood Boxes', 
+@PLATELETS as 'Platelet Boxes', @PLASMA as 'Plasma Boxes', @SAMPLE as 'Samples', @MILK as 'Milk', @AA as 'AA Boxes', 
+@PACKAGE as 'Packages';
+
+select p.productID, p.Product, sum(rlp.Quantity) as BoxesCarried from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID
+where rl.DutyDate > @FROMDATE and rl.DutyDate < @TODATE
+group by p.productID,Product
+order by p.productID,Product;
+
+
 select * from Product;
 select * from RunLog;
 
-set @StartDate = '2014-01-01';
-set @EndDate = '2014-02-01';
-select p.Product, sum(rlp.Quantity) as BoxesCarried from RunLog rl
+select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+	, p.Product, sum(rlp.Quantity) as BoxesCarried from RunLog rl
 join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
 join Product p on p.ProductID = rlp.ProductID
-where (CallDateTime < @EndDate and CallDateTime > @StartDate)
-OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate)
-group by Product;
+group by Month, Product
+order by month(rl.DutyDate), Product;
 
-select count(distinct rl.RunLogID) as BloodProductRuns from RunLog rl
+select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, count(distinct rl.RunLogID) as BloodProductRuns from RunLog rl
 join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
 join Product p on p.ProductID = rlp.ProductID
-where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
-OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
-AND rlp.ProductID in (1,2,3); -- Blood platelets & plasma
+AND rlp.ProductID in (1,2,3) -- Blood platelets & plasma
+group by Month
+order by month(rl.DutyDate);
 
-select count(distinct rl.RunLogID) as SampleRuns from RunLog rl
+select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, count(distinct rl.RunLogID) as BloodPlasmaPlateletSamplePackageDrugRuns from RunLog rl
 join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
 join Product p on p.ProductID = rlp.ProductID
-where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
-OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
-AND rlp.ProductID in (4); -- Samples
+AND rlp.ProductID in (1,2,3, 4, 15,16) -- Blood platelets,plasma, sample, package, drugs
+group by Month
+order by month(rl.DutyDate);
 
-select count(distinct rl.RunLogID) as MilkRuns from RunLog rl
+select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, count(distinct rl.RunLogID) as SampleRuns from RunLog rl
 join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
 join Product p on p.ProductID = rlp.ProductID
-where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
-OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
-AND rlp.ProductID in (5); -- Milk
+AND rlp.ProductID in (4) -- Samples
+group by Month
+order by month(rl.DutyDate);
 
-select count(distinct rl.RunLogID) as DrugRuns from RunLog rl
+select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, count(distinct rl.RunLogID) as MilkRuns from RunLog rl
 join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
 join Product p on p.ProductID = rlp.ProductID
-where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
-OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
-AND rlp.ProductID in (15); -- Drugs
+AND rlp.ProductID in (5) -- Milk
+group by Month
+order by month(rl.DutyDate);
 
-select count(distinct rl.RunLogID) as PackageRuns from RunLog rl
+select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, count(distinct rl.RunLogID) as DrugRuns from RunLog rl
 join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
 join Product p on p.ProductID = rlp.ProductID
-where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
-OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
-AND rlp.ProductID in (16); -- Package
+AND rlp.ProductID in (15) -- Drugs
+group by Month
+order by month(rl.DutyDate);
 
-select count(distinct rl.RunLogID) as AARuns from RunLog rl
+select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, count(distinct rl.RunLogID) as PackageRuns from RunLog rl
 join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
 join Product p on p.ProductID = rlp.ProductID
-where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
-OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
-AND rlp.ProductID in (7,8,9,10,11,12,13,14); -- AA
+AND rlp.ProductID in (16) -- Package
+group by Month
+order by month(rl.DutyDate);
 
-select l.Location as FinalDestination, count(*) from RunLog rl 
+select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, count(distinct rl.RunLogID) as AARuns from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+join Product p on p.ProductID = rlp.ProductID
+AND rlp.ProductID in (7,8,9,10,11,12,13,14) -- AA
+group by Month
+order by month(rl.DutyDate);
+
+select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, concat(m.FirstName, ' ', m.LastName) as RiderDriver, count(*) as Runs from RunLog rl 
+join Member m on m.MemberID = rl.RiderMemberID
+group by Month, RiderDriver
+order by month(rl.DutyDate), count(*) desc;
+
+select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, l.Location as FinalDestination, count(*) Runs from RunLog rl 
 join Location l on l.LocationID = rl.FinalDestinationLocationID
-where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
-OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
-group by l.Location;
+group by Month, l.Location
+order by month(rl.DutyDate), Runs desc;
 
-select l.Location as PickupLocation, count(*) from RunLog rl 
+select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, l.Location as PickupLocation, count(*) as Runs from RunLog rl 
 join Location l on l.LocationID = rl.CollectionLocationID
-where ((CallDateTime < @EndDate and CallDateTime > @StartDate)
-OR (CallDateTime is null and DutyDate > @StartDate and DutyDate < @EndDate))
-group by l.Location;
+group by Month, l.Location
+order by month(rl.DutyDate), Runs desc;
 
+select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, l.Location as DropOffLocation, count(*) as Runs from RunLog rl 
+join Location l on l.LocationID = rl.DeliverToLocationID
+group by Month, l.Location
+order by month(rl.DutyDate), Runs desc;
 
+select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month
+, l.Location as Caller, count(*) as Runs from RunLog rl 
+join Location l on l.LocationID = rl.CallFromLocationID
+group by Month, l.Location
+order by month(rl.DutyDate), Runs desc;
+
+call LastMonthRunStats;
 
 
 

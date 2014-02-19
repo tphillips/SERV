@@ -27,14 +27,11 @@
 						<li class="dropdown-submenu">
 							<a tabindex="-1" href="RunStats.aspx"><i class="icon-print"></i> Reports and Stats</a>
 							<ul class="dropdown-menu">
-								<li><a href="RunStats.aspx#runLog">2014 Runs</a></li>
+								<li><a href="RunStats.aspx#runLog">Recent Runs</a></li>
 								<li><a href="RunStats.aspx#todaysUsers">Todays Users</a></li>
 								<li><a href="RunStats.aspx#top10">Top 10 Volunteers</a></li>
-								<li><a href="RunStats.aspx#averageRuns">Average Runs Per Day</a></li>
-								<li><a href="RunStats.aspx#callsPerHour">Call Per Hour Heatmap</a></li>
-								<li><a href="RunStats.aspx#recentRuns">2013 Runs</a></li>
-								<li><a href="RunStats.aspx#top102013">Top 10 Volunteers 2013</a></li>
-								<li><a href="RunStats.aspx#activeNoLogin">Active Member - No Login</a></li>
+								<li><a href="RunStats.aspx#top10Controllers">Top 10 Volunteers</a></li>
+								<li><a href="RunStats.aspx#boxesByProdByMonth">Stats</a></li>
 							</ul>
 						</li>
 					</ul>
