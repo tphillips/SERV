@@ -32,6 +32,7 @@
 								<li><a href="RunStats.aspx#top10">Top 10 Volunteers</a></li>
 								<li><a href="RunStats.aspx#top10Controllers">Top 10 Volunteers</a></li>
 								<li><a href="RunStats.aspx#boxesByProdByMonth">Stats</a></li>
+								<li><a href="RecentRuns.aspx">Recent Runs (Controller View)</a></li>
 							</ul>
 						</li>
 					</ul>

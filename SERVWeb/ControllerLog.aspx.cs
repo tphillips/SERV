@@ -49,7 +49,10 @@ namespace SERVWeb
 
 		protected override void OnLoad (EventArgs e)
 		{
-			SERVGlobal.AssertAuthentication((int)SERVDataContract.UserLevel.Controller, "Sorry, only controllers and above have access to contribute to the controller log.");
+			if (RunLogID < 0)
+			{
+				SERVGlobal.AssertAuthentication((int)SERVDataContract.UserLevel.Controller, "Sorry, only controllers and above have access to contribute to the controller log.");
+			}
 		}
 
 	}

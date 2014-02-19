@@ -69,12 +69,90 @@ $(function()
 	listMembersWithTag("Rider,Driver,Blood", null);
 	listLocations(null);
 	listVehicleTypes();
-	asyncRequests = true;
 	showCurrentController();
-	$("#loading").slideUp();
-	$("#entry").slideDown();
+	if (runLogID > 0)
+	{
+		LoadRunLog();
+	}
+	else
+	{
+		$("#loading").slideUp();
+		$("#entry").slideDown();
+	}
+	asyncRequests = true;
 	keepAlive();
 });
+
+function LoadRunLog()
+{
+	if (runLogID > 0)
+	{
+		
+		$("#loading").slideDown();
+		$("#entry").slideUp();
+		callServerSide(
+			"Service/Service.asmx/GetRunLog", 
+			"{'runLogID': " + runLogID + "}",
+			function(json)
+			{
+				
+				if (json.d.ControllerMemberID != currentMemberID && userLevel < 4)
+				{
+					$("#cmdSave").hide();
+					$("#readOnlyWarn").slideDown();
+				}
+				else
+				{
+					$("#editWarn").slideDown();
+				}
+
+				jsonObj = json;
+				vm = ko.mapping.fromJS(json.d)
+				ko.applyBindings(vm);
+
+				$("#txtCaller").val(getLocationName(json.d.CallFromLocationID));
+				$("#txtOrigin").val(getLocationName(json.d.OriginLocationID));
+				$("#txtPickup").val(getLocationName(json.d.CollectionLocationID));
+				$("#txtDrop").val(getLocationName(json.d.DeliverToLocationID));
+				$("#txtFinalDest").val(getLocationName(json.d.FinalDestinationLocationID));
+				$("#txtController").val(getControllerName(json.d.ControllerMemberID));
+				$("#txtRider").val(getMemberName(json.d.RiderMemberID));
+				vehicleSelected(json.d.VehicleTypeID, json.d.Vehicle);
+				for(var prod in json.d.Products)
+				{
+					if (prod == BLOOD) { bloodBox = json.d.Products[prod]; }
+					if (prod == PLASMA) { plasmaBox = json.d.Products[prod]; }
+					if (prod == PLATELETS) { plateletsBox = json.d.Products[prod]; }
+					if (prod == SAMPLE) { sampleBox = json.d.Products[prod]; }
+					if (prod == HUMAN_MILK) { milkBox = json.d.Products[prod]; }
+					if (prod == PACKAGE) { packageBox = json.d.Products[prod]; }
+				}
+				updateBoxCounts();
+				urgency = json.d.Urgency; 
+				updateUrgency();
+				
+				if (!json.d.BloodRun)
+				{
+					niceAlert("Sorry, editing an AA run is not yet supported, you can look though!");
+					$("#cmdSave").hide();
+				}
+
+				$("#loading").slideUp();
+				$("#entry").slideDown();
+
+				showBloodPanel();
+				$("#runTypeDiv").slideUp();
+
+			},
+			function()
+			{
+				$("#loading").slideUp();
+				$("#error").slideDown();
+				$("#entry").slideDown();
+			}
+		);
+	}
+}
 
 function productCsv()
 {
@@ -158,9 +236,14 @@ function saveRun()
 
 function saveBloodRun()
 {
+	if (runLogID > 0)
+	{
+		niceAlert("Please note:  As you EDITED that run, it will be assigned a new run ID! It will no longer be run " + runLogID + ".");
+	}
 	var json = 
 		"{" +
-			"'callDateTime':'" + $("#txtCallDate").val() + " " + $("#txtCallTime").val().replace(/\./g, ':') + 
+			"'runLogID':" + runLogID + 
+			",'callDateTime':'" + $("#txtCallDate").val() + " " + $("#txtCallTime").val().replace(/\./g, ':') + 
 			"', 'callFromLocationId':'" + callerLocationId + 
 			"', 'collectDateTime':'" + $("#txtPickupDate").val() + " " + $("#txtPickupTime").val().replace(/\./g, ':') + 
 			"', 'collectionLocationId':'" + pickupLocationId + 
@@ -188,6 +271,7 @@ function saveBloodRun()
 		{
 			$("#loading").slideUp();
 			$("#success").slideDown();
+			window.setTimeout('window.location.href="RecentRuns.aspx"', 3000);
 		},
 		function()
 		{
@@ -224,6 +308,7 @@ function saveAARun()
 		{
 			$("#loading").slideUp();
 			$("#success").slideDown();
+			window.setTimeout('window.location.href="RecentRuns.aspx"', 3000);
 		},
 		function()
 		{
@@ -246,6 +331,18 @@ function getControllerId(controllerName)
 	return 0;
 }
 
+function getControllerName(controllerId)
+{
+	for(var x = 0; x < controllers.length; x++)
+	{
+		if (controllers[x].MemberID == controllerId)
+		{
+			return controllers[x].LastName + ' ' + controllers[x].FirstName;
+		}
+	}
+	return 0;
+}
+
 function getMemberId(memberName)
 {
 	for(var x = 0; x < members.length; x++)
@@ -258,6 +355,19 @@ function getMemberId(memberName)
 	return 0;
 }
 
+function getMemberName(memberId)
+{
+	for(var x = 0; x < members.length; x++)
+	{
+		if (members[x].MemberID == memberId)
+		{
+			return members[x].LastName + ' ' + members[x].FirstName;
+		}
+	}
+	return 0;
+}
+
+
 function getLocationId(locationName)
 {
 	for(var x = 0; x < locations.length; x++)
@@ -265,6 +375,18 @@ function getLocationId(locationName)
 		if (locations[x].LocationName == locationName)
 		{
 			return locations[x].LocationID;
+		}
+	}
+	return 0;
+}
+
+function getLocationName(locationId)
+{
+	for(var x = 0; x < locations.length; x++)
+	{
+		if (locations[x].LocationID == locationId)
+		{
+			return locations[x].LocationName;
 		}
 	}
 	return 0;
@@ -457,9 +579,12 @@ function showBloodPanel()
 	$("#Water").slideUp();
 	$("#Milk").slideUp();
 	$("#blood").slideDown();
-	$('html, body').animate({
-        scrollTop: $("#blood").offset().top
-    }, 1000);
+	if (runLogID < 0)
+	{
+		$('html, body').animate({
+	        scrollTop: $("#blood").offset().top
+	    }, 1000);
+	}
 }
 
 function showAAPanel()

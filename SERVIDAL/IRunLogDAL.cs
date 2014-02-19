@@ -13,7 +13,9 @@ namespace SERVIDAL
 		void CreateRawRecords(List<SERVDataContract.DbLinq.RawRunLog> records);
 		void TruncateRawRunLog();
 		int CreateRunLog(SERVDataContract.DbLinq.RunLog log, List<int> prods);
+		void DeleteRunLog(int runLogID);
 		DataTable RunReport(SERVDataContract.Report report);
+		DataTable Report_RunLog();
 	}
 }
 

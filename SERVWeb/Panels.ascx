@@ -13,7 +13,7 @@
 <div id="success" style="display:none" class="hero-unit">
 	<h2>Success!</h2>	
 	<p><span id="successMessage">Super . . .</span> </p>	
-	<button type=button class="btn btn-success btn-lg" onclick="window.location.href=window.location.href;">Again Please!</button>
+	<button id="cmdAgain" type=button class="btn btn-success btn-lg" onclick="window.location.href=window.location.href;">Again Please!</button>
 </div>
 
 <div id="message" style="display:none" class="hero-unit">

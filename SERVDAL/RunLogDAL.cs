@@ -23,7 +23,7 @@ namespace SERVDAL
 		{
 			return (from rl in db.RunLog
 			        where rl.RunLogID == runLogID
-			        select rl).First();
+				select rl).FirstOrDefault();
 		}
 
 		public bool CreateRawRecord(RawRunLog raw)
@@ -48,6 +48,17 @@ namespace SERVDAL
 			db.SubmitChanges();
 			LinkRunLogToProducts(log, prods);
 			return log.RunLogID;
+		}
+
+		public void DeleteRunLog(int runLogID)
+		{
+			RunLog d = Get(runLogID);
+			foreach (RunLogProduct rlp in d.RunLogProduct)
+			{
+				db.RunLogProduct.DeleteOnSubmit(rlp);
+			}
+			db.RunLog.DeleteOnSubmit(d);
+			db.SubmitChanges();
 		}
 
 		static void LinkRunLogToProducts(RunLog log, List<int> prods)
@@ -87,6 +98,8 @@ namespace SERVDAL
 		{
 			return DBHelperFactory.DBHelper().ExecuteDataTable(report.Query);
 		}
+
+		/*
 
 		public DataTable Report_RecentRunLog()
 		{
@@ -204,9 +217,24 @@ namespace SERVDAL
 			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 		}
 
+
+
+		public DataTable Report_BoxesByProductByMonth()
+		{
+			string sql = "select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
+			             ", p.Product, sum(rlp.Quantity) as BoxesCarried from RunLog rl " +
+			             "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+			             "join Product p on p.ProductID = rlp.ProductID " +
+			             "group by Month, Product " +
+			             "order by month(rl.DutyDate), Product;";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
+		*/
+
 		public DataTable Report_RunLog()
 		{
-			string sql = "select RunLogID as ID, date(DutyDate) as 'Duty Date', coalesce(CallDateTime, 'N/A') as 'Call Date & Time', cf.Location as 'Call From', cl.Location as 'From', " +
+			string sql = "select RunLogID as ID, date(DutyDate) as 'DutyDate', coalesce(CallDateTime, 'N/A') as 'CallDateTime', cf.Location as 'CallFrom', cl.Location as 'From', " +
 			             "dl.Location as 'To', time(rl.CollectDateTime) as Collected, time(rl.DeliverDateTime) as Delivered, " +
 			             //"timediff(rl.DeliverDateTime, rl.CollectDateTime) as 'Run Time', " +
 			             "fl.Location as 'Destination', concat(m.FirstName, ' ', m.LastName) as Rider, v.VehicleType as 'Vehicle', rl.Description as 'Consignment', " +
@@ -219,18 +247,7 @@ namespace SERVDAL
 			             "join Location fl on fl.LocationID = rl.FinalDestinationLocationID " +
 			             "join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
 			             "where DutyDate > '2013-12-31' or CallDateTime > '2013-12-31' " +
-			             "order by rl.DutyDate desc, rl.CallDateTime desc;";
-			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
-		}
-
-		public DataTable Report_BoxesByProductByMonth()
-		{
-			string sql = "select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
-			             ", p.Product, sum(rlp.Quantity) as BoxesCarried from RunLog rl " +
-			             "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
-			             "join Product p on p.ProductID = rlp.ProductID " +
-			             "group by Month, Product " +
-			             "order by month(rl.DutyDate), Product;";
+			             "order by rl.DutyDate desc, rl.CallDateTime desc LIMIT 300;";
 			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 		}
 

@@ -173,7 +173,7 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
-		public bool LogRun(string callDateTime, int callFromLocationId, string collectDateTime, int collectionLocationId, 
+		public bool LogRun(int runLogID, string callDateTime, int callFromLocationId, string collectDateTime, int collectionLocationId, 
 			int controllerMemberId, string deliverDateTime, int deliverToLocationId, string dutyDate, 
 			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, 
 			int vehicleTypeId, string productIdCsv, string homeSafeDateTime, string notes)
@@ -185,9 +185,14 @@ namespace SERVWeb
 			DateTime _dutyDate = DateTime.Parse(dutyDate);
 			DateTime? _homeSafeDateTime = null;
 			if (!string.IsNullOrEmpty(homeSafeDateTime.Replace(":","").Trim())){ _homeSafeDateTime = DateTime.Parse(homeSafeDateTime); }
-			return SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
+			bool res = SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
 				controllerMemberId, CurrentUser().UserID, _deliverDateTime, deliverToLocationId, _dutyDate, 
 				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, _homeSafeDateTime, notes);
+			if (runLogID > 0)
+			{
+				SERVBLLFactory.Factory.RunLogBLL().DeleteRun(runLogID);
+			}
+			return res;
 		}
 
 		[WebMethod(EnableSession = true)]

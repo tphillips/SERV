@@ -28,6 +28,9 @@ namespace SERVWeb
 			base.OnLoad(e);
 			List<Report> reports = SERVBLLFactory.Factory.RunLogBLL().RunReports();
 			ContentPlaceHolder contentPlaceholderContent = (ContentPlaceHolder)Master.FindControl("contentPlaceholder");
+			contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { 
+				Text = "<div class=\"alert\">\n  <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n  " +
+				       "<strong>Please Note:</strong> This data is cached for 2 minutes.  If you log or update a run, you may need to wait before you see it displayed here.</div>" });
 			foreach (Report r in reports)
 			{
 				contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { Text = "<div class=\"row\">" });

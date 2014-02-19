@@ -7,15 +7,28 @@
 
 <div id="entry" style="display:none">
 
+	<div class="alert" id="editWarn" style="display:none">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>CAUTION!</strong> You are <strong>editing an existing run</strong>!! Are you sure that is what you want?<br/>
+		When you save your changes, the run will be assigned a new ID.  The old run ID will be deleted.</strong>
+	</div>
+
+	<div class="alert" id="readOnlyWarn" style="display:none">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>Read Only:</strong> You are unable to save changes to this run as you are not the controller who logged it, nor are you an administrator.</strong>
+	</div>
+
 	<h3>Controller Log</h3>
 
 	<div class="row">
 		<div class="span12">
 			<input type="text" id="txtController" class="controllers" placeholder="Choose the controller" />
-			<h4>What sort of run are you recording?</h4>
-			<div class="btn-group" data-toggle="buttons-radio">
-			    <button type="button" class="btn" onclick="showBloodPanel()" id="btnBloodRun">Blood Run / Other</button>
-			    <button type="button" class="btn" onclick="showAAPanel()" id="btnAARun">Air Ambulance</button>
+			<div id="runTypeDiv">
+				<h4>What sort of run are you recording?</h4>
+				<div class="btn-group" data-toggle="buttons-radio">
+				    <button type="button" class="btn" onclick="showBloodPanel()" id="btnBloodRun">Blood Run / Other</button>
+				    <button type="button" class="btn" onclick="showAAPanel()" id="btnAARun">Air Ambulance</button>
+				</div>
 			</div>
 			<br/><br/>
 		</div>
@@ -106,13 +119,13 @@
 			<div class="span4">
 
 				<label>Shift Start Date:</label>
-				<input type="text" id="txtShiftDate" class="date" />
+				<input type="text" id="txtShiftDate" class="date" data-bind="value: vm.DutyDateString" />
 
 				<label>Call Date:</label>
-				<input type="text" id="txtCallDate" class="date" />
+				<input type="text" id="txtCallDate" class="date" data-bind="value: vm.CallDate"/>
 
 				<label>Call Time:</label>
-				<input type="text" id="txtCallTime" class="time" placeholder="HH:MM" />
+				<input type="text" id="txtCallTime" class="time" placeholder="HH:MM" data-bind="value: vm.CallTime"/>
 
 				<label>Call From:</label>
 				<input type="text" id="txtCaller" class="locations" placeholder="Type and Choose" onblur="callerSelected();"/>
@@ -196,25 +209,25 @@
 			<div class="span4">
 
 				<label>Pickup Date:</label>
-				<input type="text" id="txtPickupDate" class="date" />
+				<input type="text" id="txtPickupDate" class="date" data-bind="value: vm.CollectDate"/>
 
 				<label>Pickup Time:</label>
-				<input type="text" id="txtPickupTime" placeholder="HH:MM" />
+				<input type="text" id="txtPickupTime" placeholder="HH:MM" data-bind="value: vm.CollectTime"/>
 
 				<label>Delivery / Exchange Date:</label>
-				<input type="text" id="txtDeliverDate" class="date" />
+				<input type="text" id="txtDeliverDate" class="date" data-bind="value: vm.DeliverDate"/>
 
 				<label>Delivery / Exchange Time:</label>
-				<input type="text" id="txtDeliverTime" placeholder="HH:MM" />
+				<input type="text" id="txtDeliverTime" placeholder="HH:MM" data-bind="value: vm.DeliverTime"/>
 
 				<label>Home Safe Date:</label>
-				<input type="text" id="txtHomeSafeDate" class="date" />
+				<input type="text" id="txtHomeSafeDate" class="date" data-bind="value: vm.HomeSafeDate"/>
 
 				<label>Home Safe Time:</label>
-				<input type="text" id="txtHomeSafeTime" placeholder="HH:MM" />
+				<input type="text" id="txtHomeSafeTime" placeholder="HH:MM" data-bind="value: vm.HomeSafeTime"/>
 
 				<label>Notes:</label>
-				<textarea id="txtNotes" maxlength="599"></textarea>
+				<textarea id="txtNotes" maxlength="599" data-bind="value: vm.Notes"></textarea>
 			</div>
 
 		</div>
@@ -223,11 +236,17 @@
 
 	</div>
 	<hr/>
-	<button type=button class="btn btn-primary btn-lg" onclick="saveRun()"><i class="icon-ok icon-white"></i> Save Run</button>
+	<button type=button class="btn btn-primary btn-lg" id="cmdSave" onclick="saveRun()"><i class="icon-ok icon-white"></i> Save Run</button>
 
 </div>
 
 <script>
+
+	$("#cmdAgain").hide();
+
+	currentMemberID = <%=this.MemberId%>;
+	runLogID = <%=this.RunLogID%>;
+	userLevel = <%=this.UserLevel%>;
 
 	function showCurrentController() 
 	{

@@ -122,6 +122,10 @@
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="bloodCalendarInclude.htm" />
     <Content Include="PasswordReset.aspx" />
+    <Content Include="js\knockout.mapping.js" />
+    <Content Include="js\knockout-min.js" />
+    <Content Include="js\jquery-1.10.1.min.js" />
+    <Content Include="RecentRuns.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -223,6 +227,12 @@
     </Compile>
     <Compile Include="PasswordReset.aspx.designer.cs">
       <DependentUpon>PasswordReset.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RecentRuns.aspx.cs">
+      <DependentUpon>RecentRuns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RecentRuns.aspx.designer.cs">
+      <DependentUpon>RecentRuns.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

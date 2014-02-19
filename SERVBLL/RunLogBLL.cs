@@ -295,9 +295,29 @@ namespace SERVBLL
 			return true;
 		}
 
+		public void DeleteRun(int runLogID)
+		{
+			SERVDALFactory.Factory.RunLogDAL().DeleteRunLog(runLogID);
+		}
+
 		public RunLog Get(int runLogID)
 		{
-			return new RunLog(SERVDALFactory.Factory.RunLogDAL().Get(runLogID));
+			SERVDataContract.DbLinq.RunLog metal = SERVDALFactory.Factory.RunLogDAL().Get(runLogID);
+			RunLog ret = new RunLog(metal);
+			ret.Products = new Dictionary<string, int>();
+			foreach (SERVDataContract.DbLinq.RunLogProduct rlp in metal.RunLogProduct)
+			{
+				if (ret.Products.ContainsKey(rlp.ProductID.ToString()))
+				{
+					ret.Products[rlp.ProductID.ToString()] = ret.Products[rlp.ProductID.ToString()] + rlp.Quantity;
+				}
+				else
+				{
+					ret.Products.Add(rlp.ProductID.ToString(), rlp.Quantity);
+				}
+			}
+			ret.Vehicle = metal.VehicleType.VehicleType1;
+			return ret;
 		}
 
 		int FindAAPickupLocationID()
@@ -551,6 +571,11 @@ namespace SERVBLL
 			}
 
 			return reports;
+		}
+
+		public DataTable Report_RunLog()
+		{
+			return SERVDALFactory.Factory.RunLogDAL().Report_RunLog();
 		}
 
 	}
