@@ -227,6 +227,15 @@ namespace SERVBLL
 			log.HomeSafeDateTime = homeSafeDateTime;
 			log.Notes = notes;
 			log.Boxes = prods.Count;
+			// Not completed run
+			if (riderMemberId == -1)
+			{
+				log.RiderMemberID = null;
+				log.CollectDateTime = null;
+				log.DeliverDateTime = null;
+				log.HomeSafeDateTime = null;
+				log.VehicleTypeID = null;
+			}
 			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prods) > 0;
 		}
 
@@ -316,7 +325,7 @@ namespace SERVBLL
 					ret.Products.Add(rlp.ProductID.ToString(), rlp.Quantity);
 				}
 			}
-			ret.Vehicle = metal.VehicleType.VehicleType1;
+			ret.Vehicle = metal.VehicleTypeID != null ? metal.VehicleType.VehicleType1 : "";
 			return ret;
 		}
 
@@ -339,17 +348,17 @@ namespace SERVBLL
 			rep.Description = "Real time information from the controller log.";
 			rep.Anchor = "runLog";
 			rep.Query = "select RunLogID as ID, date(DutyDate) as 'Duty Date', coalesce(CallDateTime, 'N/A') as 'Call Date & Time', cf.Location as 'Call From', cl.Location as 'From', " +
-			            "dl.Location as 'To', time(rl.CollectDateTime) as Collected, time(rl.DeliverDateTime) as Delivered, " +
+			            "dl.Location as 'To', coalesce(time(rl.CollectDateTime), 'NOT ACCEPTED') as Collected, time(rl.DeliverDateTime) as Delivered, " +
 			            //"timediff(rl.DeliverDateTime, rl.CollectDateTime) as 'Run Time', " +
 			            "fl.Location as 'Destination', concat(m.FirstName, ' ', m.LastName) as Rider, v.VehicleType as 'Vehicle', rl.Description as 'Consignment', " +
 			            "concat(c.FirstName, ' ', c.LastName) as Controller from RunLog rl " +
-			            "join Member m on m.MemberID = rl.RiderMemberID " +
+			            "left join Member m on m.MemberID = rl.RiderMemberID " +
 			            "join Member c on c.MemberID = rl.ControllerMemberID " +
 			            "join Location cf on cf.LocationID = rl.CallFromLocationID " +
 			            "join Location cl on cl.LocationID = rl.CollectionLocationID " +
 			            "join Location dl on dl.LocationID = rl.DeliverToLocationID " +
 			            "join Location fl on fl.LocationID = rl.FinalDestinationLocationID " +
-			            "join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
+			            "left join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
 			            "where DutyDate > '2013-12-31' or CallDateTime > '2013-12-31' " +
 			            "order by rl.DutyDate desc, rl.CallDateTime desc LIMIT 30;";
 			reports.Add(rep);
@@ -362,6 +371,7 @@ namespace SERVBLL
 			            "(select CONCAT(m.FirstName, ' ', m.LastName) Name, count(*) Runs " +
 			            "from RunLog rl " +
 			            "LEFT join Member m on m.MemberID = rl.RiderMemberID " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Name " +
 			            "order by Runs desc " +
 			            "LIMIT 10) top " +
@@ -399,6 +409,7 @@ namespace SERVBLL
 			            ", p.Product, sum(rlp.Quantity) as Boxes from RunLog rl " +
 			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
 			            "join Product p on p.ProductID = rlp.ProductID " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month, Product " +
 			            "order by month(rl.DutyDate), Product;";
 			reports.Add(rep);
@@ -412,6 +423,7 @@ namespace SERVBLL
 			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
 			            "join Product p on p.ProductID = rlp.ProductID " +
 			            "AND rlp.ProductID in (1,2,3) " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month " +
 			            "order by month(rl.DutyDate);";
 			reports.Add(rep);
@@ -425,6 +437,7 @@ namespace SERVBLL
 			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
 			            "join Product p on p.ProductID = rlp.ProductID " +
 			            "AND rlp.ProductID in (1,2,3, 4, 15,16) " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month " +
 			            "order by month(rl.DutyDate);";
 			reports.Add(rep);
@@ -438,6 +451,7 @@ namespace SERVBLL
 			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
 			            "join Product p on p.ProductID = rlp.ProductID " +
 			            "AND rlp.ProductID in (4) " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month " +
 			            "order by month(rl.DutyDate);";
 			reports.Add(rep);
@@ -451,6 +465,7 @@ namespace SERVBLL
 			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
 			            "join Product p on p.ProductID = rlp.ProductID " +
 			            "AND rlp.ProductID in (16) " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month " +
 			            "order by month(rl.DutyDate);";
 			reports.Add(rep);
@@ -464,6 +479,7 @@ namespace SERVBLL
 			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
 			            "join Product p on p.ProductID = rlp.ProductID " +
 			            "AND rlp.ProductID in (5) " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month " +
 			            "order by month(rl.DutyDate);";
 			reports.Add(rep);
@@ -477,6 +493,7 @@ namespace SERVBLL
 			            "join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
 			            "join Product p on p.ProductID = rlp.ProductID " +
 			            "AND rlp.ProductID in (7,8,9,10,11,12,13,14) " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month " +
 			            "order by month(rl.DutyDate);";
 			reports.Add(rep);
@@ -488,6 +505,7 @@ namespace SERVBLL
 			rep.Query =  "select concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
 			            ", concat(m.FirstName, ' ', m.LastName) as Member, count(*) as Runs from RunLog rl  " +
 			            "join Member m on m.MemberID = rl.RiderMemberID " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month, Member " +
 			            "order by month(rl.DutyDate), count(*) desc;";
 			reports.Add(rep);
@@ -499,6 +517,7 @@ namespace SERVBLL
 			rep.Query =  "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
 			            ", l.Location as Location, count(*) Runs from RunLog rl  " +
 			            "join Location l on l.LocationID = rl.FinalDestinationLocationID " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month, l.Location " +
 			            "order by month(rl.DutyDate), Runs desc;";
 			reports.Add(rep);
@@ -510,6 +529,7 @@ namespace SERVBLL
 			rep.Query = "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
 						", l.Location as Location, count(*) as Runs from RunLog rl " +
 						"join Location l on l.LocationID = rl.CollectionLocationID " +
+			            "where rl.RiderMemberID is not null " +
 						"group by Month, l.Location " +
 						"order by month(rl.DutyDate), Runs desc;";
 			reports.Add(rep);
@@ -521,6 +541,7 @@ namespace SERVBLL
 			rep.Query = "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
 						", l.Location as Location, count(*) as Runs from RunLog rl " +
 						"join Location l on l.LocationID = rl.DeliverToLocationID " +
+			            "where rl.RiderMemberID is not null " +
 						"group by Month, l.Location " +
 						"order by month(rl.DutyDate), Runs desc;";
 			reports.Add(rep);
@@ -532,6 +553,7 @@ namespace SERVBLL
 			rep.Query = "select  concat(MONTHNAME(rl.DutyDate), ' ', year(rl.DutyDate)) as Month " +
 						", l.Location as Caller, count(*) as Runs from RunLog rl " +
 			            "join Location l on l.LocationID = rl.CallFromLocationID " +
+			            "where rl.RiderMemberID is not null " +
 			            "group by Month, l.Location " +
 			            "order by month(rl.DutyDate), Runs desc;";
 			reports.Add(rep);

@@ -2970,13 +2970,13 @@ namespace SERVDataContract.DbLinq
 		
 		private int _originLocationID;
 		
-		private int _riderMemberID;
+		private System.Nullable<int> _riderMemberID;
 		
 		private int _runLogID;
 		
 		private int _urgency;
 		
-		private int _vehicleTypeID;
+		private System.Nullable<int> _vehicleTypeID;
 		
 		private EntitySet<RunLogProduct> _runLogProduct;
 		
@@ -3061,7 +3061,7 @@ namespace SERVDataContract.DbLinq
 		
 		partial void OnRiderMemberIDChanged();
 		
-		partial void OnRiderMemberIDChanging(int value);
+		partial void OnRiderMemberIDChanging(System.Nullable<int> value);
 		
 		partial void OnRunLogIDChanged();
 		
@@ -3073,7 +3073,7 @@ namespace SERVDataContract.DbLinq
 		
 		partial void OnVehicleTypeIDChanged();
 		
-		partial void OnVehicleTypeIDChanging(int value);
+		partial void OnVehicleTypeIDChanging(System.Nullable<int> value);
 		#endregion
 		
 		
@@ -3448,9 +3448,9 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_riderMemberID", Name="RiderMemberID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_riderMemberID", Name="RiderMemberID", DbType="int", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
-		public int RiderMemberID
+		public System.Nullable<int> RiderMemberID
 		{
 			get
 			{
@@ -3515,9 +3515,9 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_vehicleTypeID", Name="VehicleTypeID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_vehicleTypeID", Name="VehicleTypeID", DbType="int", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
-		public int VehicleTypeID
+		public System.Nullable<int> VehicleTypeID
 		{
 			get
 			{
@@ -3615,7 +3615,7 @@ namespace SERVDataContract.DbLinq
 					}
 					else
 					{
-						_riderMemberID = default(int);
+						_riderMemberID = null;
 					}
 				}
 			}
@@ -3679,7 +3679,7 @@ namespace SERVDataContract.DbLinq
 					}
 					else
 					{
-						_vehicleTypeID = default(int);
+						_vehicleTypeID = null;
 					}
 				}
 			}

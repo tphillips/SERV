@@ -179,15 +179,23 @@ namespace SERVWeb
 			int vehicleTypeId, string productIdCsv, string homeSafeDateTime, string notes)
 		{
 			Authenticate();
-			DateTime _callDateTime = DateTime.Parse(callDateTime);
-			DateTime _collectDateTime = DateTime.Parse(collectDateTime);
-			DateTime _deliverDateTime = DateTime.Parse(deliverDateTime);
+			// Fix dates and times
 			DateTime _dutyDate = DateTime.Parse(dutyDate);
+			DateTime _callDateTime = DateTime.Parse(callDateTime);
+			DateTime _collectDateTime = DateTime.MinValue;
+			DateTime _deliverDateTime = DateTime.MinValue;
 			DateTime? _homeSafeDateTime = null;
-			if (!string.IsNullOrEmpty(homeSafeDateTime.Replace(":","").Trim())){ _homeSafeDateTime = DateTime.Parse(homeSafeDateTime); }
+			if (riderMemberId > 0)
+			{
+				_collectDateTime = DateTime.Parse(collectDateTime);
+				_deliverDateTime = DateTime.Parse(deliverDateTime);
+				if (!string.IsNullOrEmpty(homeSafeDateTime.Replace(":","").Trim())){ _homeSafeDateTime = DateTime.Parse(homeSafeDateTime); }
+			}
+			// Log it
 			bool res = SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
 				controllerMemberId, CurrentUser().UserID, _deliverDateTime, deliverToLocationId, _dutyDate, 
 				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, _homeSafeDateTime, notes);
+			// If we were updating a record, delete the old one
 			if (runLogID > 0)
 			{
 				SERVBLLFactory.Factory.RunLogBLL().DeleteRun(runLogID);

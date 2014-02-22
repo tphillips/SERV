@@ -236,13 +236,17 @@
 
 	</div>
 	<hr/>
-	<button type=button class="btn btn-primary btn-lg" id="cmdSave" onclick="saveRun()"><i class="icon-ok icon-white"></i> Save Run</button>
-
+	<div class="row">
+		<div class="span6">
+			<button type=button class="btn btn-primary btn-lg" id="cmdSave" onclick="saveRun()"><i class="icon-ok icon-white"></i> Save Run</button> 
+		</div>
+		<div class="span6 pull-right" style="text-align:right">
+			<button type=button class="btn btn-lg" id="cmdNotRun" onclick="saveNotRun()" style="display:none"><i class="icon-remove icon-red"></i> Not Completed</button>
+		</div>
+	</div>
 </div>
 
 <script>
-
-	$("#cmdAgain").hide();
 
 	currentMemberID = <%=this.MemberId%>;
 	runLogID = <%=this.RunLogID%>;

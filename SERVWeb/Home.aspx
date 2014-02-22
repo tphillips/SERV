@@ -62,15 +62,16 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.4</h3>
+			<h3>Version 1.4.1</h3>
 			<h4>Recent Changes</h4>
+			<ul>
+				<li>Added ability for controllers to log runs that were turned down.</li>
+			</ul>
+			<h5>Previously</h5>
 			<ul>
 				<li>Added the ability to view / edit blood runs from a new report, visible under "View" > "Reports and Stats" > "Recent Runs (Controller View)".  
 				Anybody can view a run's details, controllers can edit the runs that they created and administrators can edit all runs.  Currently AA runs can only be viewed.  
 				Editing a run will assign the run a new ID.</li>
-			</ul>
-			<h5>Previously</h5>
-			<ul>
 				<li>Darren's very own shiny report on the stats page ;)</li>
 				<li>Brand new reports!!</li>
 				<li>Password resetting</li>

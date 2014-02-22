@@ -234,18 +234,21 @@ namespace SERVDAL
 
 		public DataTable Report_RunLog()
 		{
-			string sql = "select RunLogID as ID, date(DutyDate) as 'DutyDate', coalesce(CallDateTime, 'N/A') as 'CallDateTime', cf.Location as 'CallFrom', cl.Location as 'From', " +
-			             "dl.Location as 'To', time(rl.CollectDateTime) as Collected, time(rl.DeliverDateTime) as Delivered, " +
+			string sql = "select RunLogID as ID, date(DutyDate) as 'DutyDate', " +
+						"coalesce(CallDateTime, 'N/A') as 'CallDateTime', cf.Location as 'CallFrom', cl.Location as 'From', " +
+			             "dl.Location as 'To', coalesce(time(rl.CollectDateTime), 'NOT ACCEPTED') as Collected, " +
+			             "time(rl.DeliverDateTime) as Delivered, " +
 			             //"timediff(rl.DeliverDateTime, rl.CollectDateTime) as 'Run Time', " +
-			             "fl.Location as 'Destination', concat(m.FirstName, ' ', m.LastName) as Rider, v.VehicleType as 'Vehicle', rl.Description as 'Consignment', " +
+			             "fl.Location as 'Destination', concat(m.FirstName, ' ', m.LastName) as Rider, " +
+			             "v.VehicleType as 'Vehicle', rl.Description as 'Consignment', " +
 			             "concat(c.FirstName, ' ', c.LastName) as Controller from RunLog rl " +
-			             "join Member m on m.MemberID = rl.RiderMemberID " +
+			             "left join Member m on m.MemberID = rl.RiderMemberID " +
 			             "join Member c on c.MemberID = rl.ControllerMemberID " +
 			             "join Location cf on cf.LocationID = rl.CallFromLocationID " +
 			             "join Location cl on cl.LocationID = rl.CollectionLocationID " +
 			             "join Location dl on dl.LocationID = rl.DeliverToLocationID " +
 			             "join Location fl on fl.LocationID = rl.FinalDestinationLocationID " +
-			             "join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
+			             "left join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
 			             "where DutyDate > '2013-12-31' or CallDateTime > '2013-12-31' " +
 			             "order by rl.DutyDate desc, rl.CallDateTime desc LIMIT 300;";
 			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);

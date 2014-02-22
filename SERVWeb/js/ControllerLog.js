@@ -34,6 +34,7 @@ var outBox1 = 0;
 var outBox2 = 0;
 var inBox1 = 0;
 var inBox2 = 0;
+var notCompletedPresses = 0;
 
 var urgency = DEFAULT_URGENCY;
 
@@ -142,6 +143,7 @@ function LoadRunLog()
 
 				showBloodPanel();
 				$("#runTypeDiv").slideUp();
+				$("cmdNotRun").slideUp();
 
 			},
 			function()
@@ -221,7 +223,7 @@ function inCsv()
 
 function saveRun()
 {
-	if (validate())
+	if (validate(false))
 	{
 		if (runType == "blood")
 		{
@@ -230,6 +232,24 @@ function saveRun()
 		if (runType == "aa")
 		{
 			saveAARun();
+		}
+	}
+}
+
+function saveNotRun()
+{
+	if (notCompletedPresses == 0)
+	{
+		niceAlert("You pressed 'Not Completed' if this is REALLY what you wanted, press it again.");
+		notCompletedPresses ++;
+		return;
+	}
+	if (validate(true))
+	{
+		if (runType == "blood")
+		{
+			riderId = -1;
+			saveBloodRun();
 		}
 	}
 }
@@ -271,7 +291,7 @@ function saveBloodRun()
 		{
 			$("#loading").slideUp();
 			$("#success").slideDown();
-			window.setTimeout('window.location.href="RecentRuns.aspx"', 3000);
+			//window.setTimeout('window.location.href="RecentRuns.aspx"', 3000);
 		},
 		function()
 		{
@@ -308,7 +328,7 @@ function saveAARun()
 		{
 			$("#loading").slideUp();
 			$("#success").slideDown();
-			window.setTimeout('window.location.href="RecentRuns.aspx"', 3000);
+			//window.setTimeout('window.location.href="RecentRuns.aspx"', 3000);
 		},
 		function()
 		{
@@ -364,7 +384,7 @@ function getMemberName(memberId)
 			return members[x].LastName + ' ' + members[x].FirstName;
 		}
 	}
-	return 0;
+	return "";
 }
 
 
@@ -404,7 +424,7 @@ function getLocation(locationName)
 	return null;
 }
 
-function validate()
+function validate(notRun)
 {
 	if (runType == "")
 	{
@@ -461,14 +481,38 @@ function validate()
 	}
 	if (runType=="blood")
 	{
-		riderId = getMemberId($("#txtRider").val())
-		if (riderId == 0)
+		
+		if (!notRun)
 		{
-			niceAlert("You need to choose a Rider.  You MUST choose an item from the list or type it exactly."); return false;
-		}
-		if (vehicleId == 0)
-		{
-			niceAlert("What did the rider / driver travel on or in?"); return false;
+			riderId = getMemberId($("#txtRider").val())
+			if (riderId == 0)
+			{
+				niceAlert("You need to choose a Rider.  You MUST choose an item from the list or type it exactly."); return false;
+			}
+			if (vehicleId == 0)
+			{
+				niceAlert("What did the rider / driver travel on or in?"); return false;
+			}
+			if ($("#txtDeliverDate").val() == "") 
+			{
+				niceAlert("What date did we deliver?"); return false;
+			}
+			if ($("#txtPickupDate").val() == "") 
+			{
+				niceAlert("What date did we pickup?"); return false;
+			}
+			if (!isValidTime($("#txtPickupTime").val()))
+			{
+				niceAlert("Please use 24 hour HH:MM time formats (Pickup Time)"); return false;
+			}
+			if (!isValidTime($("#txtDeliverTime").val()))
+			{
+				niceAlert("Please use 24 hour HH:MM time formats (Deliver Time)"); return false;
+			}
+			if ($("#txtHomeSafeTime").val() != "" && !isValidTime($("#txtHomeSafeTime").val()))
+			{
+				niceAlert("Please use 24 hour HH:MM time formats (Home Safe Time, you can leave it blank)"); return false;
+			}
 		}
 		if ($("#txtShiftDate").val() == "") 
 		{
@@ -477,14 +521,6 @@ function validate()
 		if ($("#txtCallDate").val() == "") 
 		{
 			niceAlert("What date did the call come in?"); return false;
-		}
-		if ($("#txtDeliverDate").val() == "") 
-		{
-			niceAlert("What date did we deliver?"); return false;
-		}
-		if ($("#txtPickupDate").val() == "") 
-		{
-			niceAlert("What date did we pickup?"); return false;
 		}
 		if ($("#txtCallTime").val() == "") 
 		{
@@ -522,18 +558,6 @@ function validate()
 		if (!isValidTime($("#txtCallTime").val()))
 		{
 			niceAlert("Please use 24 hour HH:MM time formats (Call Time)"); return false;
-		}
-		if (!isValidTime($("#txtPickupTime").val()))
-		{
-			niceAlert("Please use 24 hour HH:MM time formats (Pickup Time)"); return false;
-		}
-		if (!isValidTime($("#txtDeliverTime").val()))
-		{
-			niceAlert("Please use 24 hour HH:MM time formats (Deliver Time)"); return false;
-		}
-		if ($("#txtHomeSafeTime").val() != "" && !isValidTime($("#txtHomeSafeTime").val()))
-		{
-			niceAlert("Please use 24 hour HH:MM time formats (Home Safe Time, you can leave it blank)"); return false;
 		}
 	}
 	return true;
@@ -574,6 +598,7 @@ function updateBoxCounts()
 function showBloodPanel()
 {
 	runType="blood";
+	$("#cmdNotRun").slideDown();
 	$("#blood").slideUp();
 	$("#AA").slideUp();
 	$("#Water").slideUp();
@@ -590,6 +615,7 @@ function showBloodPanel()
 function showAAPanel()
 {
 	runType="aa";
+	$("#cmdNotRun").slideUp();
 	$("#blood").slideUp();
 	$("#AA").slideUp();
 	$("#Water").slideUp();

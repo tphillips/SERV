@@ -218,8 +218,8 @@ ORDER BY dayofweek(case when Hour(CallTime) > @bloodrunafterhour then CallDate e
 select * from UserLevel;
 
 /*
-update User set UserLevelID = 2 where
-UserID in(53);
+update User set UserLevelID = 4 where
+UserID in(7);
 
 update RunLog set RiderMemberID = 234 where RunLogID = 483;
 select * from RunLog where RunLogID = 483;
@@ -230,8 +230,8 @@ delete from RunLog_Product where RunLogID = 147;
 
 */
 
-select * from Member where LastName = 'Kirkham';
-select * from User where MemberID = 158;
+select * from Member where LastName = 'Bowers';
+select * from User where MemberID = 112;
 
 select * from VehicleType;
 
