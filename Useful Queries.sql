@@ -159,8 +159,8 @@ where m.LastName = 'Holmes';
 /*update User set PasswordHash = '' where UserID = 9*/
 /*update User set UserLevelID = 3 where UserId = 7;*/
 
-select * from Member where LastName = 'Snelling';
-select * from User where MemberID = 199;
+select * from Member where LastName = 'Stanton';
+select * from User where MemberID = 200;
 /* update User set UserlevelID = 3 where UserID = 9; */
 /* update User set LastLoginDate = null where UserID = 77; */
 

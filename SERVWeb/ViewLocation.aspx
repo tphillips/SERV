@@ -61,7 +61,7 @@
 		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
 		if (<%=this.UserLevel%> < 3) // Committee
 		{
-			$("#cmdSave").attr('disabled', true);
+			$("#cmdSave").slideUp();
 		}
 		DisplayLocation(<%=this.LocationId%>);
 	});

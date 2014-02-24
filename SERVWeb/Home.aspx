@@ -65,7 +65,8 @@
 			<h3>Version 1.4.1</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Added ability for controllers to log runs that were turned down.</li>
+				<li>Added ability for controllers to log runs that were turned down.  All reports adjusted to not show runs that were not competed</li>
+				<li>Fixed a location editing permissions issue - Thanks Duncan</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
