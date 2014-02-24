@@ -15,6 +15,7 @@ function checkCover
 	#echo Checking cover for $day $month $year - 1st second of $tday $tmonth $tyear
 	
 	pass=`cat .calPasswd`
+	email=`cat .emailAddress`
 
 	gcalcli --user serv.surrey@gmail.com --pw $pass --cal "Air Ambulance" agenda "$day $month 20$year 01:00" "$tday $tmonth 20$tyear" > .riders
 
@@ -87,5 +88,5 @@ else
 	echo "All covered!" > .cover
 fi
 
-mail -s "Air Ambulance Cover Analysis" "Tris.Phillips@gmail.com" < .cover
+mail -s "Air Ambulance Cover Analysis" $email < .cover
 
