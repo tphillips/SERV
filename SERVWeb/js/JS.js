@@ -151,6 +151,8 @@ function DisplayMember(memberId)
 				if (json.d.Tags[x].TagName == "Milk") { $("#chkMilk").prop('checked', true); }
 				if (json.d.Tags[x].TagName == "Water") { $("#chkWater").prop('checked', true); }
 				if (json.d.Tags[x].TagName == "Controller") { $("#chkController").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "OnRota") { $("#chkOnRota").prop('checked', true); }
+				if (json.d.Tags[x].TagName == "Committee") { $("#chkCommittee").prop('checked', true); }
 			}
 			
 			$("#loading").slideUp();
@@ -382,7 +384,7 @@ function SearchMembers(userLevel, search, onlyActive)
 		function(json)
 		{
 			var append = '<table class="table table-striped table-bordered table-condensed">' +
-			'<thead><tr><th></th><th>First Name</th><th>Last Name</th><th>Mobile</th><th>Town</th></tr></thead><tbody>';
+			'<thead><tr><th></th><th>First Name</th><th>Last Name</th><th>Mobile</th><th>Town</th><th>Tags</th></tr></thead><tbody>';
 			for(var x = 0; x < json.d.length; x++)
 			{
 				var name = json.d[x].LastName
@@ -395,6 +397,7 @@ function SearchMembers(userLevel, search, onlyActive)
 					//"<td>" + json.d[x].EmailAddress + "</td>" + 
 					"<td>" + json.d[x].MobileNumber + "</td>" + 
 					"<td>" + json.d[x].Town + "</td>" + 
+					"<td nowrap><small>" + json.d[x].TagsText + "</small></td>" +
 					"</tr>"
 				append += row;
 			}

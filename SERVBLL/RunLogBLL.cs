@@ -574,6 +574,19 @@ namespace SERVBLL
 			reports.Add(rep);
 
 			rep = new Report();
+			rep.Heading = "Latest Run Date by Member";
+			rep.Description = "This report shows the last run date by member in 2014.";
+			rep.Anchor = "lastRunByMember";
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', m.MobileNumber as Phone,  coalesce(date(LastDuty), '<span style=\"color:red\">NOTHING IN 2014</span>') as 'Last Run' from Member m " +
+			            "left join " +
+			            "( " +
+			            "select RiderMemberID, max(DutyDate) as LastDuty from RunLog group by RiderMemberID " +
+			            ") rl on m.MemberID = rl.RiderMemberID " +
+			            "where m.LeaveDate is null " +
+			            "order by LastName;";
+			reports.Add(rep);
+
+			rep = new Report();
 			rep.Heading = "Last Month's Statistics";
 			rep.Description = "High level stats for last month.";
 			rep.Anchor = "lastMonth";

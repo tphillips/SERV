@@ -197,6 +197,24 @@ namespace SERVDataContract
 		[DataMember]
 		public List<Tag> Tags { get; set; }
 
+		[DataMember]
+		public string TagsText
+		{
+			get
+			{
+				string ret = "";
+				foreach (Tag t in Tags)
+				{
+					ret += t.TagName + " | ";
+				}
+				if (ret.Length > 2)
+				{
+					ret = ret.Substring(0,ret.Length -2);
+				}
+				return ret;
+			}
+		}
+
 	}
 
 }

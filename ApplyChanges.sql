@@ -1,3 +1,115 @@
+
+/* 
+insert into Tag(Tag) values('OnRota'); 
+insert into Tag(Tag) values('Committee'); 
+
+select CONCAT('insert into Member_Tag values (',MemberID, ',' , 4, ');') from Member where memberID not in 
+(
+	select MemberID from Member_Tag where TagID = 4
+);
+
+
+insert into Member_Tag values (108,4);
+insert into Member_Tag values (110,4);
+insert into Member_Tag values (111,4);
+insert into Member_Tag values (112,4);
+insert into Member_Tag values (113,4);
+insert into Member_Tag values (114,4);
+insert into Member_Tag values (116,4);
+insert into Member_Tag values (117,4);
+insert into Member_Tag values (118,4);
+insert into Member_Tag values (119,4);
+insert into Member_Tag values (121,4);
+insert into Member_Tag values (122,4);
+insert into Member_Tag values (123,4);
+insert into Member_Tag values (124,4);
+insert into Member_Tag values (125,4);
+insert into Member_Tag values (126,4);
+insert into Member_Tag values (127,4);
+insert into Member_Tag values (129,4);
+insert into Member_Tag values (130,4);
+insert into Member_Tag values (131,4);
+insert into Member_Tag values (133,4);
+insert into Member_Tag values (134,4);
+insert into Member_Tag values (135,4);
+insert into Member_Tag values (137,4);
+insert into Member_Tag values (138,4);
+insert into Member_Tag values (140,4);
+insert into Member_Tag values (141,4);
+insert into Member_Tag values (143,4);
+insert into Member_Tag values (144,4);
+insert into Member_Tag values (145,4);
+insert into Member_Tag values (146,4);
+insert into Member_Tag values (147,4);
+insert into Member_Tag values (148,4);
+insert into Member_Tag values (149,4);
+insert into Member_Tag values (150,4);
+insert into Member_Tag values (151,4);
+insert into Member_Tag values (152,4);
+insert into Member_Tag values (153,4);
+insert into Member_Tag values (154,4);
+insert into Member_Tag values (155,4);
+insert into Member_Tag values (156,4);
+insert into Member_Tag values (159,4);
+insert into Member_Tag values (160,4);
+insert into Member_Tag values (162,4);
+insert into Member_Tag values (163,4);
+insert into Member_Tag values (164,4);
+insert into Member_Tag values (165,4);
+insert into Member_Tag values (166,4);
+insert into Member_Tag values (168,4);
+insert into Member_Tag values (169,4);
+insert into Member_Tag values (170,4);
+insert into Member_Tag values (173,4);
+insert into Member_Tag values (177,4);
+insert into Member_Tag values (178,4);
+insert into Member_Tag values (179,4);
+insert into Member_Tag values (181,4);
+insert into Member_Tag values (183,4);
+insert into Member_Tag values (185,4);
+insert into Member_Tag values (186,4);
+insert into Member_Tag values (187,4);
+insert into Member_Tag values (189,4);
+insert into Member_Tag values (190,4);
+insert into Member_Tag values (191,4);
+insert into Member_Tag values (193,4);
+insert into Member_Tag values (194,4);
+insert into Member_Tag values (195,4);
+insert into Member_Tag values (196,4);
+insert into Member_Tag values (203,4);
+insert into Member_Tag values (204,4);
+insert into Member_Tag values (205,4);
+insert into Member_Tag values (206,4);
+insert into Member_Tag values (207,4);
+insert into Member_Tag values (208,4);
+insert into Member_Tag values (209,4);
+insert into Member_Tag values (210,4);
+insert into Member_Tag values (212,4);
+insert into Member_Tag values (216,4);
+insert into Member_Tag values (219,4);
+insert into Member_Tag values (220,4);
+insert into Member_Tag values (222,4);
+insert into Member_Tag values (223,4);
+insert into Member_Tag values (224,4);
+insert into Member_Tag values (225,4);
+insert into Member_Tag values (227,4);
+insert into Member_Tag values (228,4);
+insert into Member_Tag values (229,4);
+insert into Member_Tag values (230,4);
+insert into Member_Tag values (231,4);
+insert into Member_Tag values (232,4);
+insert into Member_Tag values (233,4);
+insert into Member_Tag values (234,4);
+insert into Member_Tag values (235,4);
+insert into Member_Tag values (236,4);
+insert into Member_Tag values (237,4);
+insert into Member_Tag values (238,4);
+insert into Member_Tag values (239,4);
+insert into Member_Tag values (240,4);
+insert into Member_Tag values (241,4);
+insert into Member_Tag values (242,4);
+
+
 /* V1.41 Applied
 
 -- For canceled runs, memeberID needs to be !null

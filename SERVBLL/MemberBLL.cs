@@ -87,7 +87,7 @@ namespace SERVBLL
 			List<SERVDataContract.DbLinq.Member> members = SERVDALFactory.Factory.MemberDAL().List(search, onlyActive);
 			foreach(SERVDataContract.DbLinq.Member m in members)
 			{
-				ret.Add(new Member() 
+				Member mem = new Member() 
 				{ 
 					MemberID = m.MemberID, 
 					FirstName = m.FirstName, 
@@ -96,7 +96,13 @@ namespace SERVBLL
 					MobileNumber = m.MobileNumber,
 					Town = m.Town,
 					PostCode = m.PostCode
-				});
+				};
+				mem.Tags = new List<Tag>();
+				for(int x = 0; x < m.MemberTag.Count; x++)
+				{
+					mem.Tags.Add(new Tag(m.MemberTag[x].Tag));
+				}
+				ret.Add(mem);
 			}
 			return ret;
 		}

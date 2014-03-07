@@ -78,7 +78,7 @@
 							<input type="checkbox" id="chk4x4" onchange="onTagChecked('chk4x4', '4x4')" /> 4x4 - You have access to a 4x4 for use in bad weather
 						</label>
 						<label>
-							<input type="checkbox" id="chkEmergencyList" onchange="onTagChecked('chkEmergencyList', 'EmergencyList')" /> Emergency Contact List - You are happy to be contacted (by phone or SMS) when SERV are short of riders / drivers
+							<input type="checkbox" id="chkEmergencyList" onchange="onChkEmergencyListChanged()" /> Emergency Contact List - You are happy to be contacted (by phone or SMS) when SERV are short of riders / drivers
 						</label>
 						<label>
 							<input type="checkbox" id="chkFundraiser" onchange="onTagChecked('chkFundraiser', 'Fundraiser')" /> Fundraiser - You are happy to be contacted (by phone or SMS) when SERV are arranging a fundraising event
@@ -129,11 +129,19 @@
 						<label>
 							<input type="checkbox" id="chkController" onchange="onTagChecked('chkController', 'Controller')"  /> Controller
 						</label>
+
+						<label>
+							<input type="checkbox" id="chkCommittee" onchange="onTagChecked('chkCommittee', 'Committee')"  /> Committee Member
+						</label>
+
+						<label>
+							<input type="checkbox" id="chkOnRota" onchange="onTagChecked('chkOnRota', 'OnRota')"  /> On Rota
+						</label>
 						
 					</div>
 					
 					<label>Notes:</label>
-					<textarea id="txtNotes" rows="2"></textarea>
+					<textarea id="txtNotes" rows="1"></textarea>
 					
 				</div>
 				</fieldset>
@@ -164,6 +172,8 @@
 			$("#txtAdQualDate").attr('disabled', true);
 			$("#txtGMPDate").attr('disabled', true);
 			$("#txtNotes").attr('disabled', true);
+			$("#chkOnRota").attr('disabled', true);
+			$("#chkCommittee").attr('disabled', true);
 		}
 		else
 		{
@@ -177,7 +187,27 @@
 		$(".date").datepicker({ dateFormat: 'dd M yy' });
 		DisplayMember(<%=this.MemberId%>);
 	});
-	
+
+	function onChkEmergencyListChanged()
+	{
+		if ($("#chkEmergencyList").prop('checked') == false)
+		{
+			if 
+			(
+				$("#chkOnRota").prop('checked') == false && 
+				$("#chkController").prop('checked') == false && 
+				$("#chkMilk").prop('checked') == false && 
+				$("#chkCommittee").prop('checked') == false && 
+				$("#chkWater").prop('checked') == false)
+			{
+				niceAlert('Sorry, as you do not commit to any other duties you need to remain on the emergency list.  If you think this is an error, please contact an Administrator on the forum.');
+				$("#chkEmergencyList").prop('checked',true);
+				return;
+			}
+		}
+		onTagChecked('chkEmergencyList', 'EmergencyList')
+	}
+
 	function SaveMember()
 	{
 		SaveBasicMember(<%=this.MemberId%>);
