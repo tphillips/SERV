@@ -592,7 +592,7 @@ namespace SERVBLL
 			rep.Heading = "AdQual Members";
 			rep.Description = "This report shows members who are adqual and the relevant data. Part of the reason for this report is to aid in data cleansing.";
 			rep.Anchor = "adQualMembers";
-			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', AdQualType as Type, AdQualPassDate as 'Pass Date', " +
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', AdQualType as Type, date(AdQualPassDate) as 'Pass Date', " +
 			            "concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link' " +
 			            "from Member  " +
 			            "where (AdQualPassDate is not null or (AdQualType is not null and AdQualType != '')) and LeaveDate is null;";
