@@ -28,10 +28,19 @@
 							<a tabindex="-1" href="RunStats.aspx"><i class="icon-print"></i> Reports and Stats</a>
 							<ul class="dropdown-menu">
 								<li><a href="RunStats.aspx#runLog">Recent Runs</a></li>
-								<li><a href="RunStats.aspx#todaysUsers">Todays Users</a></li>
+								<li><a href="RunStats.aspx#boxesByProdByMonth">Delivery &amp; Call Stats</a></li>
+								<li><a href="RunStats.aspx#lastMonth">Month's Stats</a></li>
+								<li class="divider"></li>
 								<li><a href="RunStats.aspx#top10">Top 10 Volunteers</a></li>
-								<li><a href="RunStats.aspx#top10Controllers">Top 10 Volunteers</a></li>
-								<li><a href="RunStats.aspx#boxesByProdByMonth">Stats</a></li>
+								<li><a href="RunStats.aspx#top10Controllers">Top 10 Controllers</a></li>
+								<li class="divider"></li>
+								<li><a href="RunStats.aspx#todaysUsers">Today's Users</a></li>
+								<li><a href="RunStats.aspx#activeNoLogin">Active Member No Login</a></li>
+								<li><a href="RunStats.aspx#lastRunByMember">Latest Run by Member</a></li>
+								<li><a href="RunStats.aspx#adQualMembers">AdQual Members</a></li>
+								<li><a href="RunStats.aspx#lastGdpDates">Last GDP Dates</a></li>
+								<li><a href="RunStats.aspx#riderAssessmentDates">Rider Assessment Dates</a></li>
+								<li class="divider"></li>
 								<li><a href="RecentRuns.aspx">Recent Runs (Controller View)</a></li>
 							</ul>
 						</li>

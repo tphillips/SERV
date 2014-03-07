@@ -65,7 +65,7 @@
 			<h3>Version 1.4.3</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>New report to show latest run by member</li>
+				<li>Lots of new reports</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>

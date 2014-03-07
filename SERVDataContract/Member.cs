@@ -203,13 +203,16 @@ namespace SERVDataContract
 			get
 			{
 				string ret = "";
-				foreach (Tag t in Tags)
+				if (Tags != null)
 				{
-					ret += t.TagName + " | ";
-				}
-				if (ret.Length > 2)
-				{
-					ret = ret.Substring(0,ret.Length -2);
+					foreach (Tag t in Tags)
+					{
+						ret += t.TagName + " | ";
+					}
+					if (ret.Length > 2)
+					{
+						ret = ret.Substring(0, ret.Length - 2);
+					}
 				}
 				return ret;
 			}
