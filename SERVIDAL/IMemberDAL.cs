@@ -22,5 +22,6 @@ namespace SERVIDAL
 		void SetUserLastLoginDate(SERVDataContract.DbLinq.User u);
 		List<string> ListMobileNumbersWithTags(string tagsCsv);
 		List<Member> ListMembersWithTags(string tagsCsv);
+		void SetMemberUserLevel(int memberId, int userLevelId);
 	}
 }

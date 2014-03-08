@@ -18,6 +18,7 @@ namespace SERVDataContract
 		public Member(SERVDataContract.DbLinq.Member metal)
 		{
 			PropertyMapper.MapProperties(metal, this);
+			this.UserLevelID = metal.User[0].UserLevelID;
 		}
 
 		[DataMember]
@@ -196,6 +197,9 @@ namespace SERVDataContract
 
 		[DataMember]
 		public List<Tag> Tags { get; set; }
+
+		[DataMember]
+		public int UserLevelID{ get; set; }
 
 		[DataMember]
 		public string TagsText

@@ -100,6 +100,16 @@ namespace SERVWeb
 			SERVBLLFactory.Factory.MemberBLL().RemoveMemberTag(memberId, tagName);
 		}
 
+		[WebMethod(EnableSession = true)]
+		public void SetMemberUserLevel(int memberId, int userLevelId)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Admin)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			SERVBLLFactory.Factory.MemberBLL().SetMemberUserLevel(memberId, userLevelId);
+		}
 
 		[WebMethod(EnableSession = true)]
 		public List<Member> SearchMembers(string search, bool onlyActive)

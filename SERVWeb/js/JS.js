@@ -130,7 +130,7 @@ function DisplayMember(memberId)
 			$("#txtNOKAddress").val(json.d.NextOfKinAddress);
 			$("#txtNOKPhone").val(json.d.NextOfKinPhone);
 			
-			
+			$("#cboUserLevel").val(json.d.UserLevelID);
 			$("#txtJoinDate").val(json.d.JoinDateString);
 			$("#txtLeaveDate").val(json.d.LeaveDateString);
 			$("#txtAssessmentDate").val(json.d.RiderAssesmentPassDateString);
@@ -159,8 +159,10 @@ function DisplayMember(memberId)
 			$("#entry").slideDown();
 			
 		},
-		function()
+		function(json)
 		{
+			niceAlert("Something went wrong trying to show this member to you.  You may not have sufficient privileges to view other member's details.  If you believe you should, please contact Admin.");
+			$("#loading").slideUp();
 		}
 	);
 }
@@ -450,6 +452,25 @@ function addMemberTag(memberId, tag)
 	callServerSide(
 		"Service/Service.asmx/TagMember", 
 		"{'memberId':" + memberId + ", 'tagName': '" + tag + "'}",
+		function(json)
+		{
+			$("#loading").slideUp();
+		},
+		function()
+		{
+			$("#loading").slideUp();
+			$("#entry").slideUp();
+			$("#error").slideDown();
+		}
+	);
+}
+
+function setMemberUserLevel(memberId, userLevel)
+{
+	$("#loading").slideDown();
+	callServerSide(
+		"Service/Service.asmx/SetMemberUserLevel", 
+		"{'memberId':" + memberId + ", 'userLevelId': " + userLevel + "}",
 		function(json)
 		{
 			$("#loading").slideUp();

@@ -65,6 +65,13 @@
 				</div>
 				
 				<div class="span3">
+
+					<label>Ad-Qual Type:</label>
+					<input type="text" id="txtAdQualType" />
+					
+					<label>Ad-Qual Date:</label>
+					<input type="text" id="txtAdQualDate"  class="date"/>
+					<br/><br/>
 					
 					<label>Tags / Capabilities (<strong>preferences</strong>):</label>
 					<div class="checkbox">
@@ -89,60 +96,63 @@
 				
 				<div class="span3">
 										
-					<label>Admin editable only:</label>
-					
-					<label>Join Date:</label>
-					<input type="text" id="txtJoinDate" class="date"/>
-					
-					<label>Leave Date:</label>
-					<input type="text" id="txtLeaveDate"  class="date"/>
-					
-					<label>Rider Assessment Date:</label>
-					<input type="text" id="txtAssessmentDate" class="date" />
-					
-					<label>Ad-Qual Type:</label>
-					<input type="text" id="txtAdQualType" />
-					
-					<label>Ad-Qual Date:</label>
-					<input type="text" id="txtAdQualDate"  class="date"/>
-					
-					<label>Last GMP Date:</label>
-					<input type="text" id="txtGMPDate"  class="date"/>
-					
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="chkBlood" onchange="onTagChecked('chkBlood', 'Blood')" /> Blood volunteer
-						</label>
-						
-						<label>
-							<input type="checkbox" id="chkAA" onchange="onTagChecked('chkAA', 'AA')" /> Air Ambulance Volunteer
-						</label>
-						
-						<label>
-							<input type="checkbox" id="chkMilk" onchange="onTagChecked('chkMilk', 'Milk')" /> Milk Volunteer
-						</label>
-						
-						<label>
-							<input type="checkbox" id="chkWater" onchange="onTagChecked('chkWater', 'Water')" /> Water Volunteer
-						</label>
-						
-						<label>
-							<input type="checkbox" id="chkController" onchange="onTagChecked('chkController', 'Controller')"  /> Controller
-						</label>
+					<a id="cmdShow" href="#" onclick="$('#adminOnly').slideDown(); $('#cmdShow').slideUp();" >+ Show Advanced Fields</a>
+					<div id="adminOnly" style="display:none">
 
-						<label>
-							<input type="checkbox" id="chkCommittee" onchange="onTagChecked('chkCommittee', 'Committee')"  /> Committee Member
-						</label>
+						<label>User Level:</label>
+						<select id="cboUserLevel" onchange="onCboUSerLevelChanged()">
+							<option value="1">Member</option>
+							<option value="2">Controller</option>
+							<option value="3">Committee</option>
+							<option value="4">Admin</option>
+						</select>
 
-						<label>
-							<input type="checkbox" id="chkOnRota" onchange="onTagChecked('chkOnRota', 'OnRota')"  /> On Rota
-						</label>
+						<label>Join Date:</label>
+						<input type="text" id="txtJoinDate" class="date"/>
 						
+						<label>Leave Date:</label>
+						<input type="text" id="txtLeaveDate"  class="date"/>
+						
+						<label>Rider Assessment Date:</label>
+						<input type="text" id="txtAssessmentDate" class="date" />
+						
+						<label>Last GMP Date:</label>
+						<input type="text" id="txtGMPDate"  class="date"/>
+						
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="chkBlood" onchange="onTagChecked('chkBlood', 'Blood')" /> Blood volunteer
+							</label>
+							
+							<label>
+								<input type="checkbox" id="chkAA" onchange="onTagChecked('chkAA', 'AA')" /> Air Ambulance Volunteer
+							</label>
+							
+							<label>
+								<input type="checkbox" id="chkMilk" onchange="onTagChecked('chkMilk', 'Milk')" /> Milk Volunteer
+							</label>
+							
+							<label>
+								<input type="checkbox" id="chkWater" onchange="onTagChecked('chkWater', 'Water')" /> Water Volunteer
+							</label>
+							
+							<label>
+								<input type="checkbox" id="chkController" onchange="onTagChecked('chkController', 'Controller')"  /> Controller
+							</label>
+
+							<label>
+								<input type="checkbox" id="chkCommittee" onchange="onTagChecked('chkCommittee', 'Committee')"  /> Committee Member
+							</label>
+
+							<label>
+								<input type="checkbox" id="chkOnRota" onchange="onTagChecked('chkOnRota', 'OnRota')"  /> On Rota
+							</label>
+							
+						</div>
+						
+						<label>Notes:</label>
+						<textarea id="txtNotes" rows="1"></textarea>
 					</div>
-					
-					<label>Notes:</label>
-					<textarea id="txtNotes" rows="1"></textarea>
-					
 				</div>
 				</fieldset>
 
@@ -160,6 +170,7 @@
 	{
 		if (<%=this.UserLevel%> < 4) // Admin
 		{
+			$("#cboUserLevel").attr('disabled', true);
 			$("#chkBlood").attr('disabled', true);
 			$("#chkAA").attr('disabled', true);
 			$("#chkWater").attr('disabled', true);
@@ -222,6 +233,14 @@
 		else
 		{
 			removeMemberTag(<%=this.MemberId%>, tag);
+		}
+	}
+
+	function onCboUSerLevelChanged()
+	{
+		if (<%=this.UserLevel%> == 4)
+		{
+			setMemberUserLevel(<%=this.MemberId%>, $("#cboUserLevel").val());
 		}
 	}
 		

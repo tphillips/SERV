@@ -20,5 +20,6 @@ namespace SERVIBLL
 		List<string> ListMobileNumbersWithTags(string tagsCsv);
 		List<Member> ListMembersWithTags(string tagsCsv);
 		void SendPasswordReset(string username);
+		void SetMemberUserLevel(int memberId, int userLevelId);
 	}
 }

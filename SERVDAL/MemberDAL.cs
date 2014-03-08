@@ -200,6 +200,12 @@ namespace SERVDAL
 			return db.ExecuteQuery<Member>(sql).ToList();
 		}
 
+		public void SetMemberUserLevel(int memberId, int userLevelId)
+		{
+			string sql = string.Format("Update User set UserlevelID = {0} where MemberID = {1}", userLevelId, memberId);
+			db.ExecuteCommand(sql);
+		}
+
 		public void Dispose()
 		{
 			db.Dispose();

@@ -187,6 +187,11 @@ namespace SERVBLL
 			return ret;
 		}
 
+		public void SetMemberUserLevel(int memberId, int userLevelId)
+		{
+			SERVDALFactory.Factory.MemberDAL().SetMemberUserLevel(memberId, userLevelId);
+		}
+
 	}
 
 }
