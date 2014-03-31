@@ -195,6 +195,55 @@ AND(Consignment like "%blood%"
 GROUP BY dayname(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end)
 ORDER BY dayofweek(case when Hour(CallTime) > @bloodrunafterhour then CallDate else AddDate(CallDate, -1) end);
 
+-- Old records, member award stats based on nights worked for 2013
+SET @bloodrunafterhour = 17;
+select Member, sum(Nights) as Nights
+from(
+	-- Controllers
+	select Controller as Member, 
+	count(distinct 
+			(case when Hour(CallTime) > @bloodrunafterhour then 
+				CallDate else 
+			AddDate(CallDate, -1) 
+		end)) as Nights
+	from RawRunLog
+	where CallDate > '2013-01-01'
+		and CallTime != '00:00'
+	and Consignment not like '%human%'
+	and Consignment not like '%milk%'
+	and Consignment not like '%supply%'
+	and Consignment not like '%return%'
+	Group by Member
+	UNION ALL
+	-- Riders
+	select Rider as Member, 
+	count(distinct 
+			(case when Hour(CallTime) > @bloodrunafterhour then 
+				CallDate else 
+			AddDate(CallDate, -1) 
+		end)) as Nights
+	from RawRunLog
+	where CallDate > '2013-01-01'
+	group by Member
+) l
+where Member != '' and Member != '-'
+group by Member
+having Nights >9
+order by Nights desc;
+
+-- New records, MUCH EASIER!!
+select concat(m.LastName, ' ', m.firstName) as Member
+	, count(distinct DutyDate) as Nights
+from RunLog l
+join Member m on 
+	m.MemberID = l.RiderMemberID 
+	or 
+	(m.MemberID = l.ControllerMemberID and CallDateTime is not null)
+group by Member
+having Nights > 9
+order by Nights desc
+
+
 /*
 Day vs Call Hour punchcard data
 Select the number of calls by day of week and hour

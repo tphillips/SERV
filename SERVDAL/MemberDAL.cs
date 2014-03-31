@@ -164,6 +164,7 @@ namespace SERVDAL
 			             "from Member m " +
 			             "join Member_Tag mt on mt.MemberID = m.MemberID " +
 			             "join Tag t on t.TagID = mt.TagID " +
+			             "and m.LeaveDate is null " +
 			             "where t.Tag " + inClause;
 			DataTable tbl = DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 			if (tbl != null && tbl.Rows.Count > 0)
@@ -196,7 +197,8 @@ namespace SERVDAL
 			             "join Member_Tag mt on mt.MemberID = m.MemberID " +
 			             "join Tag t on t.TagID = mt.TagID " +
 			             "where t.Tag " + inClause +
-			             " order by m.LastName";
+			             " and m.LeaveDate is null " +
+			             "order by m.LastName";
 			return db.ExecuteQuery<Member>(sql).ToList();
 		}
 

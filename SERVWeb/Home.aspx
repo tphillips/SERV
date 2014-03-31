@@ -67,6 +67,7 @@
 			<ul>
 				<li>Hiding admin only fields by default on membership screen for the sake of simplicity</li>
 				<li>Adding user level editing to membership screen</li>
+				<li>Only return active members in ListMembersWithTags()</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
