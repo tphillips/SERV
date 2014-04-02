@@ -107,6 +107,9 @@
 							<option value="4">Admin</option>
 						</select>
 
+						<button id="cmdImpersonate" type=button class="btn btn-small" onclick="ImpersonateMember(<%=this.MemberId%>)"><i class="icon-user"></i> Impersonate</button>
+						<br/><br/>
+
 						<label>Join Date:</label>
 						<input type="text" id="txtJoinDate" class="date"/>
 						
@@ -185,6 +188,7 @@
 			$("#txtNotes").attr('disabled', true);
 			$("#chkOnRota").attr('disabled', true);
 			$("#chkCommittee").attr('disabled', true);
+			$("#cmdImpersonate").attr('disabled', true);
 		}
 		else
 		{
@@ -194,6 +198,7 @@
 		{
 			$("#txtAssessmentDate").attr('disabled', false);
 			$("#txtGMPDate").attr('disabled', false);
+			$("#chkOnRota").attr('disabled', false);
 		}
 		$(".date").datepicker({ dateFormat: 'dd M yy' });
 		DisplayMember(<%=this.MemberId%>);

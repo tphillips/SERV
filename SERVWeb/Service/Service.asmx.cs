@@ -295,6 +295,18 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.MemberBLL().Login(username, passwordHash);
 		}
 
+		[WebMethod(EnableSession = true)]
+		public bool Impersonate(int memberId)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Admin)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			SERVGlobal.User = SERVBLLFactory.Factory.MemberBLL().GetUserForMember(memberId);
+			return true;
+		}
+
 		private User CurrentUser()
 		{
 			if (System.Web.HttpContext.Current.Session["User"] == null) { return null; }

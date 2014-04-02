@@ -62,15 +62,16 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.4.4</h3>
+			<h3>Version 1.4.5</h3>
 			<h4>Recent Changes</h4>
+			<ul>
+				<li>Impersonation</li>
+			</ul>
+			<h5>Previously</h5>
 			<ul>
 				<li>Hiding admin only fields by default on membership screen for the sake of simplicity</li>
 				<li>Adding user level editing to membership screen</li>
 				<li>Only return active members in ListMembersWithTags()</li>
-			</ul>
-			<h5>Previously</h5>
-			<ul>
 				<li>Lots of new reports</li>
 				<li>Adding Committee membership tag</li>
 				<li>Showing tags on membership list</li>

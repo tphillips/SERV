@@ -202,6 +202,9 @@ namespace SERVDataContract
 		public int UserLevelID{ get; set; }
 
 		[DataMember]
+		public string UserLevelName { get; set; }
+
+		[DataMember]
 		public string TagsText
 		{
 			get

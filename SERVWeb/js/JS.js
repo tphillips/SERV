@@ -102,6 +102,24 @@ function showCals()
 
 }
 
+function ImpersonateMember(memberId)
+{
+	$("#loading").slideDown();
+	callServerSide(
+		"Service/Service.asmx/Impersonate", 
+		"{'memberId':" + memberId + "}",
+		function(json)
+		{
+			window.location.href="Home.aspx";
+		},
+		function(json)
+		{
+			niceAlert("Something went wrong.  You may not have sufficient privileges to view other member's details.  If you believe you should, please contact Admin.");
+			$("#loading").slideUp();
+		}
+	);
+}
+
 function DisplayMember(memberId)
 {
 	callServerSide(
@@ -386,7 +404,7 @@ function SearchMembers(userLevel, search, onlyActive)
 		function(json)
 		{
 			var append = '<table class="table table-striped table-bordered table-condensed">' +
-			'<thead><tr><th></th><th>First Name</th><th>Last Name</th><th>Mobile</th><th>Town</th><th>Tags</th></tr></thead><tbody>';
+			'<thead><tr><th></th><th>First Name</th><th>Last Name</th><th>Mobile</th><th>Town</th><th>Tags</th><th>User Level</th></tr></thead><tbody>';
 			for(var x = 0; x < json.d.length; x++)
 			{
 				var name = json.d[x].LastName
@@ -397,9 +415,10 @@ function SearchMembers(userLevel, search, onlyActive)
 				var row="<tr><td>" + (x + 1) + "</td><td>" + json.d[x].FirstName + "</td>" +
 					"<td>" + name + "</td>" + 
 					//"<td>" + json.d[x].EmailAddress + "</td>" + 
-					"<td>" + json.d[x].MobileNumber + "</td>" + 
+					"<td nowrap>" + json.d[x].MobileNumber + "</td>" + 
 					"<td>" + json.d[x].Town + "</td>" + 
 					"<td nowrap><small>" + json.d[x].TagsText + "</small></td>" +
+					"<td>" + json.d[x].UserLevelName + "</td>" +
 					"</tr>"
 				append += row;
 			}

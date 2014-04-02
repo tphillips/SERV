@@ -95,7 +95,8 @@ namespace SERVBLL
 					EmailAddress = m.EmailAddress,
 					MobileNumber = m.MobileNumber,
 					Town = m.Town,
-					PostCode = m.PostCode
+					PostCode = m.PostCode,
+					UserLevelName = m.User[0].UserLevel.UserLevel1
 				};
 				mem.Tags = new List<Tag>();
 				for(int x = 0; x < m.MemberTag.Count; x++)
