@@ -450,6 +450,9 @@ order by month(rl.DutyDate), Runs desc;
 
 call LastMonthRunStats;
 
-
+select concat(FirstName, ' ', LastName) as 'Member', date(JoinDate) as 'Join Date', 
+			            concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link' 
+			            from Member  
+			            where AdQualPassDate is null and LeaveDate is null order by JoinDate
 
 
