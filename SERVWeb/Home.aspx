@@ -62,13 +62,16 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.4.5</h3>
+			<h3>Version 1.4.6.1</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Impersonation</li>
+				<li>Added join date to a few of the reports where it would be useful</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Adding a Non AdQual report </li>
+				<li>Fixed a bug where newly added members do not have the join date set</li>
+				<li>Impersonation</li>
 				<li>Hiding admin only fields by default on membership screen for the sake of simplicity</li>
 				<li>Adding user level editing to membership screen</li>
 				<li>Only return active members in ListMembersWithTags()</li>

@@ -60,6 +60,7 @@ namespace SERVBLL
 			PropertyMapper.MapProperties(member, m);
 			m.User.Add(new SERVDataContract.DbLinq.User(){ PasswordHash = "", UserLevelID =1});
 			m.MemberStatusID = 1;
+			m.JoinDate = DateTime.Now;
 			return SERVDALFactory.Factory.MemberDAL().Create(m);
 		}	
 	

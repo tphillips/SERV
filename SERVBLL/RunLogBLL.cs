@@ -562,7 +562,7 @@ namespace SERVBLL
 			rep.Heading = "Active Member - No Login";
 			rep.Description = "This report shows members who have done a run since Jan 14 but not yet logged into the new system.";
 			rep.Anchor = "activeNoLogin";
-			rep.Query = "select CONCAT(m.FirstName, ' ', m.LastName) as Rider, date(m.JoinDate) as Joined, m.EmailAddress as Email, date(max(rr.CallDateTime)) as LastRun, count(*) as Runs " +
+			rep.Query = "select CONCAT(m.FirstName, ' ', m.LastName) as Rider, date(m.JoinDate) as Joined, m.EmailAddress as Email, date(max(rr.CallDateTime)) as LastRun, date(JoinDate) as 'Join Date', count(*) as Runs " +
 			            "from RunLog rr  " +
 			            "LEFT join Member m on rr.RiderMemberID = m.MemberID  " +
 			            "where m.MemberID not in " +
@@ -577,7 +577,7 @@ namespace SERVBLL
 			rep.Heading = "Latest Run Date by Member";
 			rep.Description = "This report shows the last run date by member in 2014.";
 			rep.Anchor = "lastRunByMember";
-			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', m.MobileNumber as Phone,  coalesce(date(LastDuty), '<span style=\"color:red\">NOTHING IN 2014</span>') as 'Last Run', " +
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', m.MobileNumber as Phone,  coalesce(date(LastDuty), '<span style=\"color:red\">NOTHING IN 2014</span>') as 'Last Run', date(JoinDate) as 'Join Date', " +
 			            "concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link' " +
 						"from Member m " +
 			            "left join " +
@@ -592,17 +592,27 @@ namespace SERVBLL
 			rep.Heading = "AdQual Members";
 			rep.Description = "This report shows members who are adqual and the relevant data. Part of the reason for this report is to aid in data cleansing.";
 			rep.Anchor = "adQualMembers";
-			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', AdQualType as Type, date(AdQualPassDate) as 'Pass Date', " +
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', AdQualType as Type, date(AdQualPassDate) as 'Pass Date', date(JoinDate) as 'Join Date'," +
 			            "concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link' " +
 			            "from Member  " +
 			            "where (AdQualPassDate is not null or (AdQualType is not null and AdQualType != '')) and LeaveDate is null;";
 			reports.Add(rep);
 
 			rep = new Report();
+			rep.Heading = "Non AdQual Members";
+			rep.Description = "This report shows members who are NOT adqual and the relevant data. Part of the reason for this report is to aid in data cleansing.";
+			rep.Anchor = "nonAdQualMembers";
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', date(JoinDate) as 'Join Date', " +
+			            "concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link' " +
+			            "from Member  " +
+			            "where AdQualPassDate is null and LeaveDate is null order by JoinDate;";
+			reports.Add(rep);
+
+			rep = new Report();
 			rep.Heading = "Training Dates";
 			rep.Description = "This report shows the last GMP / GDP dates by member. Part of the reason for this report is to aid in data cleansing.";
 			rep.Anchor = "lastGdpDates";
-			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', coalesce(date(LastGDPGMPDate), '<span style=\"color:red\">NO GDP DATE SET</span>') as 'Last GDP/GMP Date', " +
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', coalesce(date(LastGDPGMPDate), '<span style=\"color:red\">NO GDP DATE SET</span>') as 'Last GDP/GMP Date', date(JoinDate) as 'Join Date', " +
 			            "concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link'" +
 			            "from Member where  LeaveDate is null " +
 			            "order by LastGDPGMPDate";
@@ -612,7 +622,7 @@ namespace SERVBLL
 			rep.Heading = "Rider Assessment Dates";
 			rep.Description = "This report shows the assessment date by member. Part of the reason for this report is to aid in data cleansing.";
 			rep.Anchor = "riderAssessmentDates";
-			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', MobileNumber as Phone, coalesce(date(RiderAssesmentPassDate), '<span style=\"color:red\">NOT ASSESSED</span>') as 'Assessment Date', " +
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', MobileNumber as Phone, coalesce(date(RiderAssesmentPassDate), '<span style=\"color:red\">NOT ASSESSED</span>') as 'Assessment Date', date(JoinDate) as 'Join Date', " +
 			            "concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link'" +
 			            "from Member where  LeaveDate is null " +
 			            "order by RiderAssesmentPassDate";
