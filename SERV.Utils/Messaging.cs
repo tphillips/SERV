@@ -1,4 +1,4 @@
-#define DYNMARK___
+#define DYNMARK
 	
 
 using System;
