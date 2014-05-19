@@ -41,6 +41,8 @@
     <Compile Include="ILocationBLL.cs" />
     <Compile Include="IListBLL.cs" />
     <Compile Include="IBuddhaBLL.cs" />
+    <Compile Include="IControllerBLL.cs" />
+    <Compile Include="IShiftBLL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

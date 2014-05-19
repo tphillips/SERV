@@ -8,6 +8,7 @@ namespace SERVIBLL
 {
 	public interface IRunLogBLL
 	{
+		[Obsolete]
 		bool ImportRawRunLog();
 		RunLog Get(int runLogID);
 		bool CreateRunLog(DateTime callDateTime, int callFromLocationId, DateTime collectDateTime, int collectionLocationId, 

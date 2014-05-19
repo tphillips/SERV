@@ -34,6 +34,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -43,6 +44,8 @@
     <Compile Include="ListBLL.cs" />
     <Compile Include="LocationBLL.cs" />
     <Compile Include="BuddhaBLL.cs" />
+    <Compile Include="ControllerBLL.cs" />
+    <Compile Include="ShiftBLL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

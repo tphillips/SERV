@@ -14,6 +14,7 @@ namespace SERVWeb
     {
 		static Logger log = new Logger();
 
+		[Obsolete]
 		[WebMethod]
 		public bool ImportRawRunLog()
 		{
@@ -25,6 +26,7 @@ namespace SERVWeb
 			return true;
 		}
 
+		[Obsolete]
 		private void _ImportRawRunLog()
 		{
 			log.LogStart();

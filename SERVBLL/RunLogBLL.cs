@@ -62,6 +62,7 @@ namespace SERVBLL
 
 		}
 
+		[Obsolete]
 		static string CleanTextBlocks(string csv)
 		{
 			bool inText = false;
@@ -100,6 +101,7 @@ namespace SERVBLL
 			return csv;
 		}
 
+		[Obsolete]
 		public bool ImportRawRunLog()
 		{
 			log.LogStart();

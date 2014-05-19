@@ -25,18 +25,23 @@ namespace SERV.Utils
 		public static string SendTextMessage(string to, string message)
 		{
 			message = message.Replace("\r", " ").Replace("\n", " ").Replace("<", ".").Replace(">", ".").Replace("\t", " ");
+			string provider = System.Configuration.ConfigurationManager.AppSettings["SMSProvider"];
 			string smsUser = System.Configuration.ConfigurationManager.AppSettings["SMSUser"];
 			string smsPassword = System.Configuration.ConfigurationManager.AppSettings["SMSPassword"];
 			string smsFrom = System.Configuration.ConfigurationManager.AppSettings["SMSFrom"];
-			#if DYNMARK
-			string res = new System.Net.WebClient().DownloadString(
-				string.Format("http://services.dynmark.com/HttpServices/SendMessage.ashx?user={0}&password={1}&to={2}&from={3}&text={4}", 
-				smsUser, smsPassword, to, smsFrom, message));
-			#else
-			string res = new System.Net.WebClient().DownloadString(
-				string.Format("http://gw.aql.com/sms/sms_gw.php?username={0}&password={1}&destination={2}&originator={3}&message={4}", 
+			string res = "";
+			if (provider == "Dynmark")
+			{
+				res = new System.Net.WebClient().DownloadString(
+					string.Format("http://services.dynmark.com/HttpServices/SendMessage.ashx?user={0}&password={1}&to={2}&from={3}&text={4}", 
 					smsUser, smsPassword, to, smsFrom, message));
-			#endif
+			}
+			else
+			{
+				res = new System.Net.WebClient().DownloadString(
+					string.Format("http://gw.aql.com/sms/sms_gw.php?username={0}&password={1}&destination={2}&originator={3}&message={4}", 
+					smsUser, smsPassword, to, smsFrom, message));
+			}
 			log.Info("SMS: " + res);
 			return res;
 		}

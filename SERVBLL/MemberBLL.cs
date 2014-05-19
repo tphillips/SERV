@@ -193,6 +193,7 @@ namespace SERVBLL
 		{
 			SERVDALFactory.Factory.MemberDAL().SetMemberUserLevel(memberId, userLevelId);
 		}
+	
 
 	}
 
