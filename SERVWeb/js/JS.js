@@ -302,6 +302,21 @@ function listMembersWithTag(tag, callBack)
 	);
 }
 
+function GetSMSCreditCount(targetElementName)
+{
+	callServerSide(
+		"Service/Service.asmx/GetSMSCreditCount", 
+		"{}",
+		function(json)
+		{
+			$("#" + targetElementName).text(json.d);
+		},
+		function()
+		{
+		}
+	);
+}
+
 function listControllers(callBack)
 {
 	callServerSide(

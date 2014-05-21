@@ -160,6 +160,13 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
+		public int GetSMSCreditCount()
+		{
+			Authenticate();
+			return SERV.Utils.Messaging.GetAQLCreditCount();
+		}
+
+		[WebMethod(EnableSession = true)]
 		public bool KeepAlive()
 		{
 			Authenticate();

@@ -6,6 +6,7 @@
 
 <div id="entry">
 <h3>Bulk SMS</h3>
+<p>Credits remaining: <strong><span id="lblCredits">...</span></strong></p>
 <label>Send To:</label>
 <div class="checkbox">
 	<label>
@@ -42,7 +43,9 @@
 <script>
 	$("#loading").slideUp();
 	var smsCount = 0;
-	
+
+	GetSMSCreditCount("lblCredits");
+
 	function genTags()
 	{
 		var tags = "";

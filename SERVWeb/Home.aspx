@@ -62,13 +62,14 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.4.8</h3>
+			<h3>Version 1.4.8.1</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Fixing SMS form character filtering and encoding - Don't use ' or return (You will not be allowed to type them).  Feel free to use other ascii characters.  Unicode is not allowed</li>
+				<li>Added remaining credit count to SMS screen</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Fixing SMS form character filtering and encoding - Don't use ' or return (You will not be allowed to type them).  Feel free to use other ascii characters.  Unicode is not allowed</li>
 				<li>Adding AQL sms messaging provider</li>
 				<li>Removing certain chars from sms messages</li> 
 				<li>Added join date to a few of the reports where it would be useful</li>

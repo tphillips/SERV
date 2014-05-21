@@ -47,6 +47,20 @@ namespace SERV.Utils
 			return res;
 		}
 
+		public static int GetAQLCreditCount()
+		{
+			string smsUser = System.Configuration.ConfigurationManager.AppSettings["SMSUser"];
+			string smsPassword = System.Configuration.ConfigurationManager.AppSettings["SMSPassword"];
+			string res = new System.Net.WebClient().DownloadString(
+				string.Format("http://gw1.aql.com/sms/postmsg.php?username={0}&password={1}&cmd=credit", smsUser, smsPassword));
+			if (res.Contains("="))
+			{
+				int ret = int.Parse(res.Split('=')[1].Trim());
+				return ret;
+			}
+			return -1;
+		}
+
 	}
 }
 
