@@ -24,7 +24,8 @@ namespace SERV.Utils
 
 		public static string SendTextMessage(string to, string message)
 		{
-			message = message.Replace("\r", " ").Replace("\n", " ").Replace("<", ".").Replace(">", ".").Replace("\t", " ");
+			message = message.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
+			message = System.Web.HttpUtility.UrlEncode(message);
 			string provider = System.Configuration.ConfigurationManager.AppSettings["SMSProvider"];
 			string smsUser = System.Configuration.ConfigurationManager.AppSettings["SMSUser"];
 			string smsPassword = System.Configuration.ConfigurationManager.AppSettings["SMSPassword"];

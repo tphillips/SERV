@@ -34,7 +34,7 @@
 <input type="hidden" id="txtNumbers" disabled width="200" />
 <br/>
 <label>Message to <strong><span id="lblCount">0</span></strong> people:</label>
-<textarea type="text" id="txtSMS" textmode="multiline" cols="40" rows=3 maxlength="150" ></textarea>
+<textarea type="text" id="txtSMS" textmode="multiline" cols="40" rows=3 maxlength="150" onkeypress="filterKeys()" ></textarea>
 
 <br/><br/>
 <input type="button" id="cmdSend" value="Send" class="btn btn-primary btn-lg" onclick="sendSMSMessage($('#txtNumbers').val(), $('#txtSMS').val());"></input>
@@ -61,6 +61,15 @@
 		{
 			$("#loading").slideDown();
 			var numbers = getNumbersForTags(tags, "txtNumbers");
+		}
+	}
+
+	function filterKeys()
+	{
+		if (event.charCode==13 || event.charCode == 39)
+		{
+			event.preventDefault();
+			return false;
 		}
 	}
 	
