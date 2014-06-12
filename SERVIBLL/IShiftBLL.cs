@@ -5,11 +5,9 @@ using SERVDataContract;
 
 namespace SERVIBLL
 {
-	public class IShiftBLL
+	public interface IShiftBLL
 	{
-		public IShiftBLL()
-		{
-		}
+		bool TakeControl(int memberID, string overrideNumber);
 	}
 }
 

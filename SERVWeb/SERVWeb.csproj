@@ -126,6 +126,7 @@
     <Content Include="js\knockout-min.js" />
     <Content Include="js\jquery-1.10.1.min.js" />
     <Content Include="RecentRuns.aspx" />
+    <Content Include="TakeControl.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -233,6 +234,12 @@
     </Compile>
     <Compile Include="RecentRuns.aspx.designer.cs">
       <DependentUpon>RecentRuns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TakeControl.aspx.cs">
+      <DependentUpon>TakeControl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TakeControl.aspx.designer.cs">
+      <DependentUpon>TakeControl.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

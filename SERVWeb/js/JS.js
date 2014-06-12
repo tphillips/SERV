@@ -120,6 +120,34 @@ function ImpersonateMember(memberId)
 	);
 }
 
+function takeControl(overrideNum)
+{
+	$("#loading").slideDown();
+	$("#entry").slideUp();
+	callServerSide(
+		"Service/Service.asmx/TakeControl", 
+		"{'overrideNumber':'" + $("#txtNumber").val() + "'}",
+		function(json)
+		{
+			if (json.d == true)
+			{
+				$("#success").slideDown();
+				$("#loading").slideUp();
+			}
+			else
+			{
+				niceAlert("Something went wrong!");
+				$("#loading").slideUp();
+			}
+		},
+		function(json)
+		{
+			niceAlert("Something went wrong!");
+			$("#loading").slideUp();
+		}
+	);
+}
+
 function DisplayMember(memberId)
 {
 	callServerSide(

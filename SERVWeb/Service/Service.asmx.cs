@@ -316,6 +316,17 @@ namespace SERVWeb
 			return true;
 		}
 
+		[WebMethod(EnableSession = true)]
+		public bool TakeControl(string overrideNumber)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.ShiftBLL().TakeControl(CurrentUser().MemberID, overrideNumber);
+		}
+
 		private User CurrentUser()
 		{
 			if (System.Web.HttpContext.Current.Session["User"] == null) { return null; }

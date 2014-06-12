@@ -55,6 +55,7 @@
 							<li class="divider"></li>
 							<li><a href="ControllerLog.aspx"><i class="icon-edit"></i> Controller Logging</a></li>
 							<li><a href="ControllerLog.aspx" target="_blank"><i class="icon-chevron-right"></i> Controller Logging (New Tab)</a></li>
+							<li><a href="TakeControl.aspx"><i class="icon-random"></i> Take Control of SERV NOW</a></li>
 							<li class="divider"></li>
 							<li><a href="SMS.aspx"><i class="icon-envelope"></i> Bulk SMS</a></li>
 						</asp:Literal>

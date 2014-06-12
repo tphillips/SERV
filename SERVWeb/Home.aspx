@@ -13,7 +13,7 @@
 
 	<div class="row">
 		<div class="span12">
-		<h3>Blood Calendar</h3>
+		<h3><a href="https://www.google.com/calendar/embed?src=serv.surrey%40gmail.com&ctz=Europe/London" target="_blank">Blood Calendar</a></h3>
 		</div>
 	</div>
 	<div class="row">
@@ -37,7 +37,7 @@
 
 	<div class="row">
 		<div class="span12">
-		<h3>AA Calendar</h3>
+		<h3><a href="https://www.google.com/calendar/embed?src=k31pom7k4lhv3eq619iffm50ss%40group.calendar.google.com&ctz=Europe/London" target="_blank">AA Calendar</a></h3>
 		</div>
 	</div>
 	<div class="row">
@@ -62,13 +62,15 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.4.8.1</h3>
+			<h3>Version 1.4.8.2</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Added remaining credit count to SMS screen</li>
+				<li>Added calendar links</li>
+				<li>Added controller signon tool</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Added remaining credit count to SMS screen</li>
 				<li>Fixing SMS form character filtering and encoding - Don't use ' or return (You will not be allowed to type them).  Feel free to use other ascii characters.  Unicode is not allowed</li>
 				<li>Adding AQL sms messaging provider</li>
 				<li>Removing certain chars from sms messages</li> 

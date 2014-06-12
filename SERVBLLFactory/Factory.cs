@@ -32,5 +32,10 @@ namespace SERVBLLFactory
 			return new SERVBLL.LocationBLL();
 		}
 
+		public static IShiftBLL ShiftBLL()
+		{
+			return new SERVBLL.ShiftBLL();
+		}
+
 	}
 }

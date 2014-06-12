@@ -39,6 +39,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Map <b class="caret"></b></a>
 						<ul class="dropdown-menu">
+							<li id="lnkShowMember"><a href="#" onclick="showMember();"><i class="icon-map-marker"></i> Show Member On Map</a></li>
 							<li id="lnkShowMembers"><a href="#" onclick="showMembers();"><i class="icon-map-marker"></i> Show Members On Map</a></li>
 							<li><a href="#" onclick="showHideWeather();"><i class="icon-cog"></i> Show / Hide Weather</a></li>
 							<li><a href="#" onclick="showHideTraffic();"><i class="icon-warning-sign"></i> Show / Hide Traffic</a></li>
@@ -79,6 +80,10 @@
 		<div id="memberList" style="display:none" title="Members">
 			<iframe style="width:100%; height;600px" height="600px" frameborder="0" src="Members.aspx?NoTopMenu=1">
 			</iframe>
+		</div>
+
+		<div id="memberSearch" style="display:none" title="Choose a Member">
+			<p></p>
 		</div>
 	
     </body>

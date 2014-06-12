@@ -23,6 +23,11 @@ namespace SERVBLL
 		public void SetOnDuty(int memberID, DateTime shiftStartDate, VehicleType vehicle, int maxBoxes, string currentLocation, int useUntilHour, string mobileNumber, int dutyType)
 		{
 		}
+			
+		public bool TakeControl(int memberID, string overrideNumber)
+		{
+			return new ControllerBLL().DivertNumber(memberID, overrideNumber);
+		}
 
 	}
 }
