@@ -1,5 +1,11 @@
 var asyncRequests = true;
 var FullName = "";
+var locations = new Array();
+var locationNames = new Array();
+var members = new Array();
+var memberNames = new Array();
+var controllers = new Array();
+var controllerNames = new Array();
 
 function getCalInfo(cal, onResult)
 {
@@ -328,6 +334,78 @@ function listMembersWithTag(tag, callBack)
 		{
 		}
 	);
+}
+
+function getMemberId(memberName)
+{
+	for(var x = 0; x < members.length; x++)
+	{
+		if ((members[x].LastName + ' ' + members[x].FirstName) == memberName)
+		{
+			return members[x].MemberID;
+		}
+	}
+	return 0;
+}
+
+function getControllerId(controllerName)
+{
+	for(var x = 0; x < controllers.length; x++)
+	{
+		if ((controllers[x].LastName + ' ' + controllers[x].FirstName) == controllerName)
+		{
+			return controllers[x].MemberID;
+		}
+	}
+	return 0;
+}
+
+function getControllerName(controllerId)
+{
+	for(var x = 0; x < controllers.length; x++)
+	{
+		if (controllers[x].MemberID == controllerId)
+		{
+			return controllers[x].LastName + ' ' + controllers[x].FirstName;
+		}
+	}
+	return 0;
+}
+
+function getMemberName(memberId)
+{
+	for(var x = 0; x < members.length; x++)
+	{
+		if (members[x].MemberID == memberId)
+		{
+			return members[x].LastName + ' ' + members[x].FirstName;
+		}
+	}
+	return "";
+}
+
+function getLocationId(locationName)
+{
+	for(var x = 0; x < locations.length; x++)
+	{
+		if (locations[x].LocationName == locationName)
+		{
+			return locations[x].LocationID;
+		}
+	}
+	return 0;
+}
+
+function getLocationName(locationId)
+{
+	for(var x = 0; x < locations.length; x++)
+	{
+		if (locations[x].LocationID == locationId)
+		{
+			return locations[x].LocationName;
+		}
+	}
+	return 0;
 }
 
 function GetSMSCreditCount(targetElementName)

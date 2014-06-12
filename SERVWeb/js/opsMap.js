@@ -36,6 +36,8 @@ function initialize()
 	initDialogues();
 	window.setTimeout("keepAlive()", 20000);
 	showLocations();
+	listMembersWithTag("Rider,Driver", null);
+	$( ".riders" ).autocomplete({ source: memberNames });
 }
 
 function initDialogues()
@@ -64,10 +66,39 @@ function initDialogues()
 		hide: { effect: "clip", duration: 200 },
 		autoOpen: false
 	});
+	$("#memberSearch").dialog({
+		width:400,
+		show: { effect: "clip", duration: 200 },
+		hide: { effect: "clip", duration: 200 },
+		autoOpen: false
+	});
+}
+
+function showMember(member)
+{
+	$("#memberSearch").dialog("close");
+	memberId = getMemberId(member);
+	callServerSide(
+		"Service/Service.asmx/GetMember", 
+		"{'memberId':'" + memberId + "'}",
+		function(json)
+		{
+			if (json.d.PostCode != "" )
+			{
+				var pcode = json.d.PostCode.replace(/ /g,'');
+				geoCodingName = json.d.FirstName + ' ' + json.d.LastName;
+				geocode(pcode);
+			}
+		},
+		function()
+		{
+		}
+	);
 }
 
 function showMembers()
 {
+	geoCodingName="";
 	$("#lnkShowMembers").hide();
 	callServerSide(
 		"Service/Service.asmx/SearchMembers", 
@@ -124,6 +155,11 @@ function showLoadRouteFile()
 function showControllerLog()
 {
 	$("#controllerLog").dialog("open");
+}
+
+function showMemberSearchDialog()
+{
+	$("#memberSearch").dialog("open");
 }
 
 function loadRouteFile()
@@ -189,7 +225,7 @@ function geocodeResult(results, status)
 {
 	if (status == 'OK' && results.length > 0) 
 	{
-		addDraggableMarker(results[0].geometry.location, "Member", bikeIcon);
+		addDraggableMarker(results[0].geometry.location, geoCodingName == "" ? "Member" : geoCodingName, bikeIcon);
 	}
 }
 

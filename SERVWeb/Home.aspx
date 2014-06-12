@@ -62,14 +62,15 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.4.8.2</h3>
+			<h3>Version 1.4.8.3</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Added calendar links</li>
-				<li>Added controller signon tool</li>
+				<li>Added Show Member on Map to ops map, to allow controllers to show the members that they have on shift on the map</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Added calendar links</li>
+				<li>Added controller signon tool</li>
 				<li>Added remaining credit count to SMS screen</li>
 				<li>Fixing SMS form character filtering and encoding - Don't use ' or return (You will not be allowed to type them).  Feel free to use other ascii characters.  Unicode is not allowed</li>
 				<li>Adding AQL sms messaging provider</li>

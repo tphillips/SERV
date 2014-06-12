@@ -39,7 +39,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Map <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li id="lnkShowMember"><a href="#" onclick="showMember();"><i class="icon-map-marker"></i> Show Member On Map</a></li>
+							<li id="lnkShowMember"><a href="#" onclick="showMemberSearchDialog();"><i class="icon-map-marker"></i> Show Member On Map</a></li>
 							<li id="lnkShowMembers"><a href="#" onclick="showMembers();"><i class="icon-map-marker"></i> Show Members On Map</a></li>
 							<li><a href="#" onclick="showHideWeather();"><i class="icon-cog"></i> Show / Hide Weather</a></li>
 							<li><a href="#" onclick="showHideTraffic();"><i class="icon-warning-sign"></i> Show / Hide Traffic</a></li>
@@ -83,10 +83,24 @@
 		</div>
 
 		<div id="memberSearch" style="display:none" title="Choose a Member">
-			<p></p>
+			<br/>
+			<div class="input-prepend input-append ">
+				<a style="width:10px" type=button class="btn btn-lg" disabled><i class="icon-search"></i></a>
+				<input style="width:250px" type="text" class="riders" id="txtFindMember" />
+				<input style="width:70px" type="button" value="Show" class="btn btn-primary btn-lg" onclick="showMember($('#txtFindMember').val());"></input>
+			</div>
 		</div>
 	
     </body>
+
+    <script>
+
+    	if (<%=UserLevel%> < 2)
+    	{
+    		$("#lnkShowMember").hide();
+    	}
+
+    </script>
     
 </html>
 
