@@ -89,7 +89,7 @@ function calcRoute()
 {
 	planRoute = true;
 	selectDest = false;
-	niceAlert("Click on the origin marker.");
+	niceAlert("Click OK, then on the origin marker.");
 }
 
 function doPlanRoute()
@@ -364,7 +364,7 @@ function selectMarker(marker)
 		{
 			startLoc = marker.position;
 			selectDest = true;
-			niceAlert("Click on the detination marker.");
+			niceAlert("Click OK, then on the destination marker.");
 		}
 	}
 } 
