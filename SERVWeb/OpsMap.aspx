@@ -22,7 +22,7 @@
 		</style>
     </head>
     
-    <body style="">
+    <body style="overflow:hidden">
         
         <script src="/js/bootstrap.min.js"></script>
     	<script type="text/javascript" 
@@ -43,6 +43,8 @@
 							<li id="lnkShowMembers"><a href="#" onclick="showMembers();"><i class="icon-map-marker"></i> Show Members On Map</a></li>
 							<li><a href="#" onclick="showHideWeather();"><i class="icon-cog"></i> Show / Hide Weather</a></li>
 							<li><a href="#" onclick="showHideTraffic();"><i class="icon-warning-sign"></i> Show / Hide Traffic</a></li>
+							<li id="lnkRoute"><a href="#" onclick="calcRoute();"><i class="icon-road"></i> Calculate a Route</a></li>
+							<li id="lnkHideRoute"><a href="#" onclick="hideRoute();"><i class="icon-off"></i> Hide Route</a></li>
 							<li id="lnkShowHideNotes"><a href="#" onclick="showHideNotes();"><i class="icon-pencil"></i> Show / Hide Controller Notes Box</a></li>
 							<li class="divider"></li>
 							<li><a href="#" onclick="$('#memberList').dialog('open');"><i class="icon-list"></i> Show Member List</a></li>
@@ -92,7 +94,9 @@
 			</div>
 		</div>
 
-			
+		<div id="directionsDiv" style="opacity:0.9; position:absolute; top:45px; right:3px; width:400px; height: 500px; display:none; padding:3px; border: 1px solid gainsboro; background-color:white; overflow:auto">
+
+		</div>
 
 		<textarea id="txtNotes" style="opacity:0.9; position:absolute; bottom:36px; right:3px; width:350px; height: 600px; 
 			font-family: tahoma, arial, clean, font-size: small; display:none">
@@ -100,7 +104,9 @@ Controller Log:
 
 ??:?? - SERV NOW Number diverted and tested.</textarea>
 
-
+		<div id="alert" style="display:none" title="SERV">
+			<p><span id="alertMessage">Default message</span></p>
+		</div>
 	
     </body>
 

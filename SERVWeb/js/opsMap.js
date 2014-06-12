@@ -13,6 +13,12 @@ var weatherLayer;
 var trafficVisible = false;
 var notesVisible = false;
 var trafficLayer;
+var directionsDisplay;
+var directionsService;
+var startLoc;
+var endLoc;
+var planRoute = false;
+var selectDest = false;
 
 $(function() 
 {
@@ -34,6 +40,8 @@ function initialize()
 	weatherLayer = new google.maps.weather.WeatherLayer({
 		temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS
 	});
+	directionsService = new google.maps.DirectionsService();
+	directionsDisplay = new google.maps.DirectionsRenderer();
 	initDialogues();
 	window.setTimeout("keepAlive()", 20000);
 	showLocations();
@@ -75,6 +83,36 @@ function initDialogues()
 		hide: { effect: "clip", duration: 200 },
 		autoOpen: false
 	});
+}
+
+function calcRoute() 
+{
+	planRoute = true;
+	selectDest = false;
+	niceAlert("Click on the origin marker.");
+}
+
+function doPlanRoute()
+{
+	var request = {
+		origin:startLoc,
+		destination:endLoc,
+		travelMode: google.maps.TravelMode.DRIVING
+	};
+	directionsService.route(request, function(result, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			directionsDisplay.setMap(map);
+		  directionsDisplay.setDirections(result);
+		  directionsDisplay.setPanel(document.getElementById('directionsDiv'));
+		  $("#directionsDiv").slideDown();
+		}
+	});
+}
+
+function hideRoute()
+{
+	$("#directionsDiv").slideUp();
+	directionsDisplay.setMap(null);
 }
 
 function showMember(member)
@@ -291,7 +329,10 @@ function addDraggableMarker(latLon, name, icon)
 		map: map,
 		icon: icon
 	});
-	//pois[pois.length] = marker;
+	google.maps.event.addListener(marker, 'click', function() 
+	{
+		selectMarker(marker);
+	});
 }
 
 function addMarker(latLon, name, icon)
@@ -303,8 +344,30 @@ function addMarker(latLon, name, icon)
 		map: map,
 		icon: icon
 	});
-	//pois[pois.length] = marker;
+	google.maps.event.addListener(marker, 'click', function() 
+	{
+		selectMarker(marker);
+	});
 }
+
+function selectMarker(marker)
+{
+	if (planRoute)
+	{
+		if(selectDest)
+		{
+			endLoc = marker.position;
+			planRoute = false;
+			doPlanRoute();
+		}
+		else
+		{
+			startLoc = marker.position;
+			selectDest = true;
+			niceAlert("Click on the detination marker.");
+		}
+	}
+} 
 
 function niceAlert(msg)
 {
