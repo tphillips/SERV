@@ -62,13 +62,14 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.4.8.3</h3>
+			<h3>Version 1.4.8.4</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Added Show Member on Map to ops map, to allow controllers to show the members that they have on shift on the map</li>
+				<li>Added a notes field on the ops map, use by clicking Map > Show / Hide Controller Notes Box</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Added Show Member on Map to ops map, to allow controllers to show the members that they have on shift on the map</li>
 				<li>Added calendar links</li>
 				<li>Added controller signon tool</li>
 				<li>Added remaining credit count to SMS screen</li>

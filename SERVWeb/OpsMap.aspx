@@ -43,6 +43,7 @@
 							<li id="lnkShowMembers"><a href="#" onclick="showMembers();"><i class="icon-map-marker"></i> Show Members On Map</a></li>
 							<li><a href="#" onclick="showHideWeather();"><i class="icon-cog"></i> Show / Hide Weather</a></li>
 							<li><a href="#" onclick="showHideTraffic();"><i class="icon-warning-sign"></i> Show / Hide Traffic</a></li>
+							<li id="lnkShowHideNotes"><a href="#" onclick="showHideNotes();"><i class="icon-pencil"></i> Show / Hide Controller Notes Box</a></li>
 							<li class="divider"></li>
 							<li><a href="#" onclick="$('#memberList').dialog('open');"><i class="icon-list"></i> Show Member List</a></li>
 							<li><a href="#" onclick="$('#locationsList').dialog('open');"><i class="icon-list"></i> Show Locations List</a></li>
@@ -90,6 +91,16 @@
 				<input style="width:70px" type="button" value="Show" class="btn btn-primary btn-lg" onclick="showMember($('#txtFindMember').val());"></input>
 			</div>
 		</div>
+
+			
+
+		<textarea id="txtNotes" style="opacity:0.9; position:absolute; bottom:36px; right:3px; width:350px; height: 600px; 
+			font-family: tahoma, arial, clean, font-size: small; display:none">
+Controller Log:
+
+??:?? - SERV NOW Number diverted and tested.</textarea>
+
+
 	
     </body>
 
@@ -98,6 +109,7 @@
     	if (<%=UserLevel%> < 2)
     	{
     		$("#lnkShowMember").hide();
+    		$("#lnkShowHideNotes").hide();
     	}
 
     </script>

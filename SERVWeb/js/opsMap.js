@@ -11,6 +11,7 @@ var pois = new Array();
 var weatherVisible = false;
 var weatherLayer;
 var trafficVisible = false;
+var notesVisible = false;
 var trafficLayer;
 
 $(function() 
@@ -38,6 +39,8 @@ function initialize()
 	showLocations();
 	listMembersWithTag("Rider,Driver", null);
 	$( ".riders" ).autocomplete({ source: memberNames });
+	keepAlive();
+	window.onbeforeunload = function(){ return 'You will lose all rider positions and notes' };
 }
 
 function initDialogues()
@@ -76,6 +79,7 @@ function initDialogues()
 
 function showMember(member)
 {
+	$("#txtFindMember").val('');
 	$("#memberSearch").dialog("close");
 	memberId = getMemberId(member);
 	callServerSide(
@@ -132,6 +136,19 @@ function showHideWeather()
 		weatherLayer.setMap(map);
 	}
 	weatherVisible = !weatherVisible;
+}
+
+function showHideNotes()
+{
+	if (notesVisible)
+	{
+		$("#txtNotes").slideUp();
+	}
+	else
+	{
+		$("#txtNotes").slideDown();
+	}
+	notesVisible = !notesVisible;
 }
 
 function showHideTraffic()
