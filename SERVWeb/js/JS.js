@@ -686,6 +686,96 @@ function JsonifyBasicMemberFromForm(memberId)
 		'"Notes":"' + $("#txtNotes").val() + '"}}';
 }
 
+function register()
+{
+	if(validateRegistrationForm())
+	{
+		$("#loading").slideDown();
+		$("#entry").slideUp();
+		var json = JsonifyBasicMemberFromForm(-1);
+		callServerSide(
+			"Service/Service.asmx/Register", 
+			json,
+			function(json)
+			{
+				var memberId = json.d;
+				if (memberId > 0)
+				{
+					if ($("#chkRider").prop('checked') == true)
+					{
+						callServerSide("Service/Service.asmx/TagMember", "{'memberId':" + memberId + ", 'tagName': 'Rider'}", function(json){}, function(){} );
+					}
+					if ($("#chkDriver").prop('checked') == true)
+					{
+						callServerSide("Service/Service.asmx/TagMember", "{'memberId':" + memberId + ", 'tagName': 'Driver'}", function(json){}, function(){} );
+					}
+					if ($("#chk4x4").prop('checked') == true)
+					{
+						callServerSide("Service/Service.asmx/TagMember", "{'memberId':" + memberId + ", 'tagName': '4x4'}", function(json){}, function(){} );
+					}
+					if ($("#chkEmergencyList").prop('checked') == true)
+					{
+						callServerSide("Service/Service.asmx/TagMember", "{'memberId':" + memberId + ", 'tagName': 'EmergencyList'}", function(json){}, function(){} );
+					}
+					if ($("#chkFundraiser").prop('checked') == true)
+					{
+						callServerSide("Service/Service.asmx/TagMember", "{'memberId':" + memberId + ", 'tagName': 'Fundraiser'}", function(json){}, function(){} );
+					}
+					$("#loading").slideUp();
+					$("#success").slideDown();
+					niceAlert("Thank you " + $("#txtFirstName").val() + ". Someone will be in touch with you very soon to arrange the next steps.  The system will send you your password by email now.");
+				}
+				else
+				{
+					$("#loading").slideUp();
+					$("#error").slideDown();
+					$("#entry").slideDown();
+					if (memberId == -1)
+					{
+						niceAlert("We already have a member with that email address!");
+					}
+				}
+			},
+			function()
+			{
+				$("#loading").slideUp();
+				$("#error").slideDown();
+				$("#entry").slideDown();
+			}
+		);
+	}
+}
+
+function validateRegistrationForm()
+{
+	$("#error").slideUp();
+	if ($("#chkAgree").prop('checked') != true)
+	{
+		niceAlert("Please confirm that your vehicle is safe & road legal and that you have read and understood the membership code of practice");
+		return false;
+	}
+	if (
+		$("#txtFirstName").val() == "" || $("#txtLastname").val() == "" ||
+		$("#txtEmail").val() == "" || $("#txtMobile").val() == "" || $("#txtAddress1").val() == "" ||
+		$("#txtPostCode").val() == "" || $("#txtTown").val() == "" || $("#txtBirthYear").val() == ""
+	)
+	{
+		niceAlert("Please fill in all the fields");
+		return false;
+	}
+	if ($("#txtMobile").val().substring(0,2) != "07")
+	{
+		niceAlert("Please enter a valid mobile number");
+		return false;
+	}
+	if ($("#txtEmail").val().indexOf("@") == -1 || $("#txtEmail").val().indexOf(".") == -1)
+	{
+		niceAlert("Please enter a valid email address");
+		return false;
+	}
+	return true;
+}
+
 function keepAlive()
 {
 	callServerSide(

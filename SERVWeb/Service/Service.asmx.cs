@@ -66,6 +66,12 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.MemberBLL().Save(member, CurrentUser()) == member.MemberID;
 		}
 
+		[WebMethod]
+		public int Register(Member member)
+		{
+			return SERVBLLFactory.Factory.MemberBLL().Register(member);
+		}
+
 		public int CreateBlankMember(User user)
 		{
 			if (user == null || user.UserLevelID < (int)UserLevel.Admin)

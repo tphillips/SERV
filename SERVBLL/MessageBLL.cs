@@ -110,8 +110,15 @@ namespace SERVBLL
 		private void _DoSendMail(object mail)
 		{
 			MailMessage m = (MailMessage)mail;
+			try
+			{
 			c.Send(m);
 			log.Debug(string.Format("Sent a mail to {0}", m.To));
+			}
+			catch (Exception e)
+			{
+				log.Error(e.Message, e);
+			}
 		}
 
 		public bool SendMembershipEmail(string emailAddress, int senderUserID, bool onlyNeverLoggedIn)
@@ -152,6 +159,30 @@ namespace SERVBLL
 					"Thanks,\r\n\r\n" + 
 					"SERV SSL System {2}", 
 					m.FirstName, newPass, MessageBLL.FOOTER), userID);
+		}
+
+		public void SendNewMemberEmail(Member member, int userId)
+		{
+		
+			foreach (Member m in new MemberBLL().ListAdministrators())
+			{
+				SendEmail(m.EmailAddress, "New System Member Registration", 
+					string.Format("Hi {0},\r\n\r\n" +
+						"{1} has just signed up as a new volunteer!\r\n\r\n" +
+					"Thanks,\r\n\r\n" +
+						"SERV SSL System {2}", 
+						m.FirstName, member.FirstName + " " + member.LastName, MessageBLL.FOOTER), userId);
+			}
+
+			SendEmail(member.EmailAddress, "Welcome to SERV", 
+				string.Format("Hi {0},\r\n\r\n" + 
+					"Welcome to SERV. You will be sent a new password in a separate email.\r\n\r\n" +
+					"Volunteering for SERV as a Rider, Driver, Controller or Fundraiser is a very rewarding endeavour and supports a service that makes a real difference.\r\n\r\n" +
+					"If you have not yet attended an induction session, a member of our training team will be in touch shortly.  If you have, then our calendar manager will contact you regarding your availability.\r\n\r\n" +
+					"Thanks for your interest and support,\r\n\r\n" + 
+					"SERV SSL System {1}", 
+					member.FirstName, MessageBLL.FOOTER), userId);
+
 		}
 
 	}

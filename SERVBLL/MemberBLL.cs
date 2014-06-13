@@ -82,6 +82,25 @@ namespace SERVBLL
 			}
 		}
 
+		public int Register(Member member)
+		{
+			Member m = GetByEmail(member.EmailAddress);
+			if (m != null) { return -1; }
+			member.MemberID = 0;
+			int ret = Create(member);
+			User u = GetUserForMember(ret);
+			try
+			{
+				new MessageBLL().SendNewMemberEmail(member, u.UserID);
+				SendPasswordReset(member.EmailAddress);
+			}
+			catch(Exception e)
+			{
+				log.Error(e.Message, e);
+			}
+			return ret;
+		}
+
 		public List<Member> List(string search, bool onlyActive = true)
 		{
 			List<Member> ret = new List<Member>();
@@ -185,6 +204,17 @@ namespace SERVBLL
 			foreach (SERVDataContract.DbLinq.Member m in ms)
 			{
 				ret.Add(new Member() { MemberID = m.MemberID, FirstName = m.FirstName, LastName = m.LastName });
+			}
+			return ret;
+		}
+
+		public List<Member> ListAdministrators()
+		{
+			List<Member> ret = new List<Member>();
+			List<SERVDataContract.DbLinq.Member> ms = SERVDALFactory.Factory.MemberDAL().ListAdministrators();
+			foreach (SERVDataContract.DbLinq.Member m in ms)
+			{
+				ret.Add(new Member() { MemberID = m.MemberID, FirstName = m.FirstName, LastName = m.LastName, EmailAddress = m.EmailAddress});
 			}
 			return ret;
 		}

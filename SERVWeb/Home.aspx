@@ -5,10 +5,18 @@
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 	
 	<div class="hero-unit">
-		<h2>Hey <%=this.Username%>,</h2>	
-		<p>Now that you have logged in, please make sure you <a href="ChangePassword.aspx">change your password</a>.  
-		You can then <a href="ViewMember.aspx?self=yes">view and edit your profile</a> to make sure it is all correct, or take a look at the <a href="Members.aspx">Members List</a>, <a href="OpsMap.aspx">Operations Map</a> or <a href="RunStats.aspx">Stat Reports</a>.</p>	
-		<p>Don't use Internet Explorer to view this site. It's a terrible browser and you will be FAR better off using Chrome or Firefox.</p>
+		<div class="row">
+			<div class="span2">
+				<img src="img/logo.png"/>
+				<br/><br/>
+			</div>
+			<div class="span8">
+				<h2>Hey <%=this.Username%>,</h2>	
+				<p>Now that you have logged in, please make sure you <a href="ChangePassword.aspx">change your password</a>.  
+				You can then <a href="ViewMember.aspx?self=yes">view and edit your profile</a> to make sure it is all correct, or take a look at the <a href="Members.aspx">Members List</a>, <a href="OpsMap.aspx">Operations Map</a> or <a href="RunStats.aspx">Stat Reports</a>.</p>	
+				<p>Don't use Internet Explorer to view this site. It's a terrible browser and you will be FAR better off using Chrome or Firefox.</p>
+			</div>
+		</div>
 	</div>
 
 	<div class="row">
@@ -62,13 +70,15 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.5</h3>
+			<h3>Version 1.5.1</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>A major new feature: Route planning on the ops map</li>
+				<li>New user registration form</li>
+				<li>Bug fix on ShowMember on OpsMap</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>A major new feature: Route planning on the ops map</li>
 				<li>Disabled future dates on the controller logging date selectors</li>
 				<li>Added a notes field on the ops map, use by clicking Map > Show / Hide Controller Notes Box</li>
 				<li>Added Show Member on Map to ops map, to allow controllers to show the members that they have on shift on the map</li>

@@ -202,6 +202,13 @@ namespace SERVDAL
 			return db.ExecuteQuery<Member>(sql).ToList();
 		}
 
+		public List<Member> ListAdministrators()
+		{
+			string sql = "select distinct m.MemberID, m.FirstName, m.LastName, m.EmailAddress from Member m " + 
+				"join User u on u.MemberID = m.MemberID where u.UserLevelID = " + (int)SERVDataContract.UserLevel.Admin + " order by m.LastName";
+			return db.ExecuteQuery<Member>(sql).ToList();
+		}
+
 		public void SetMemberUserLevel(int memberId, int userLevelId)
 		{
 			string sql = string.Format("Update User set UserlevelID = {0} where MemberID = {1}", userLevelId, memberId);

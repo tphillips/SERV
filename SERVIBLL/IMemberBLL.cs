@@ -11,6 +11,7 @@ namespace SERVIBLL
 		Member GetByEmail(string email);
         int Create(Member member);
 		int Save(Member member, User user);
+		int Register(Member member);
 		List<Member> List(string search, bool onlyActive = true);
 		User Login(string username, string passwordHash);
 		User GetUserForMember(int memberId);

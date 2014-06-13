@@ -57,6 +57,7 @@
   <ItemGroup>
     <Folder Include="Service\" />
     <Folder Include="img\" />
+    <Folder Include="Register\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SERVBLLFactory\SERVBLLFactory.csproj">
@@ -127,6 +128,8 @@
     <Content Include="js\jquery-1.10.1.min.js" />
     <Content Include="RecentRuns.aspx" />
     <Content Include="TakeControl.aspx" />
+    <Content Include="Register.aspx" />
+    <Content Include="Register\index.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -240,6 +243,12 @@
     </Compile>
     <Compile Include="TakeControl.aspx.designer.cs">
       <DependentUpon>TakeControl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

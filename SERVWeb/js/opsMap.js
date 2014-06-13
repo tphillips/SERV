@@ -125,7 +125,7 @@ function showMember(member)
 		"{'memberId':'" + memberId + "'}",
 		function(json)
 		{
-			if (json.d.PostCode != "" )
+			if (json.d.PostCode != null && json.d.PostCode != "" )
 			{
 				var pcode = json.d.PostCode.replace(/ /g,'');
 				geoCodingName = json.d.FirstName + ' ' + json.d.LastName;
@@ -149,7 +149,7 @@ function showMembers()
 		{
 			for(var x = 0; x < json.d.length; x++)
 			{
-				if (json.d[x].PostCode != "" )
+				if (json.d[x].PostCode != null && json.d[x].PostCode != "" )
 				{
 					var pcode = json.d[x].PostCode.replace(/ /g,'');
 					window.setTimeout("geocode('" + pcode + "')", x * 400);
