@@ -282,6 +282,13 @@ function geocodeResult(results, status)
 	{
 		addDraggableMarker(results[0].geometry.location, geoCodingName == "" ? "Member" : geoCodingName, bikeIcon);
 	}
+	else
+	{
+		if (geoCodingName != null && geoCodingName != "")
+		{
+			niceAlert("Geocoding failed - " + status);
+		}
+	}
 }
 
 function showLocations()

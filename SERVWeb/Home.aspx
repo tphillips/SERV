@@ -70,14 +70,15 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.5.1</h3>
+			<h3>Version 1.5.2</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>New user registration form</li>
-				<li>Bug fix on ShowMember on OpsMap</li>
+				<li>Minor fixes</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>New user registration form</li>
+				<li>Bug fix on ShowMember on OpsMap</li>
 				<li>A major new feature: Route planning on the ops map</li>
 				<li>Disabled future dates on the controller logging date selectors</li>
 				<li>Added a notes field on the ops map, use by clicking Map > Show / Hide Controller Notes Box</li>

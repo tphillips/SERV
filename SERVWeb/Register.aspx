@@ -88,6 +88,9 @@
 					<input type="checkbox" id="chkFundraiser" /> Fundraiser - You are happy to be contacted (by phone or SMS) when SERV are arranging a fundraising event
 				</label>
 			</div>
+			<br/>
+			<label>Anything else to tell/ask us?:</label>
+			<textarea id="txtNotes" rows=3"></textarea>
 		</div>
 		</fieldset>
 	</div>

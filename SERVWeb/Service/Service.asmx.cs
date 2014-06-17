@@ -52,7 +52,7 @@ namespace SERVWeb
 		public Member GetMember(int memberId)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevelID < (int)UserLevel.Committee && memberId != CurrentUser().MemberID)
+			if (CurrentUser().UserLevelID < (int)UserLevel.Controller && memberId != CurrentUser().MemberID)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}

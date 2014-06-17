@@ -54,7 +54,10 @@ var aaVehicleId = 0;
 
 $(function() 
 {
-	$(".date").datepicker({ dateFormat: 'dd M yy', maxDate: new Date });
+	var today = new Date();
+	var tomorrow = new Date();
+	tomorrow.setDate(today.getDate()+1);
+	$(".date").datepicker({ dateFormat: 'dd M yy', maxDate: tomorrow });
 	$( ".locations" ).autocomplete({ source: locationNames });
 	$( ".controllers" ).autocomplete({ source: controllerNames });
 	$( ".riders" ).autocomplete({ source: memberNames });
