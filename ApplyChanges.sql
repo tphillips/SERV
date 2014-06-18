@@ -1,3 +1,78 @@
+-- -----------------------------------------------------
+-- Table `SERV`.`Calendar`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SERV`.`Calendar` ;
+
+CREATE TABLE IF NOT EXISTS `SERV`.`Calendar` (
+  `CalendarID` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(100) NOT NULL,
+  `SimpleCalendar` TINYINT(1) NOT NULL DEFAULT 1,
+  `SimpleDaysIncrement` INT NOT NULL DEFAULT 14,
+  `LastGenerated` DATETIME NULL,
+  `GeneratedUpTo` DATE NULL,
+  `VolunteerRemainsFree` TINYINT(1) NULL DEFAULT 1,
+  PRIMARY KEY (`CalendarID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SERV`.`CalendarEntry`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SERV`.`CalendarEntry` ;
+
+CREATE TABLE IF NOT EXISTS `SERV`.`CalendarEntry` (
+  `CalendarEntryID` INT NOT NULL,
+  `CalendarID` INT NOT NULL,
+  `EntryDate` DATE NOT NULL,
+  `MemberID` INT NOT NULL,
+  `CoverNeeded` TINYINT(1) NOT NULL DEFAULT 0,
+  `CoverCalendarEntryID` INT NULL,
+  PRIMARY KEY (`CalendarEntryID`),
+  INDEX `fk_CalendarEntry_Calendar1_idx` (`CalendarID` ASC),
+  INDEX `fk_CalendarEntry_Member1_idx` (`MemberID` ASC),
+  CONSTRAINT `fk_CalendarEntry_Calendar1`
+    FOREIGN KEY (`CalendarID`)
+    REFERENCES `SERV`.`Calendar` (`CalendarID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_CalendarEntry_Member1`
+    FOREIGN KEY (`MemberID`)
+    REFERENCES `SERV`.`Member` (`MemberID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SERV`.`CalendarRequirements`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SERV`.`CalendarRequirements` ;
+
+CREATE TABLE IF NOT EXISTS `SERV`.`CalendarRequirements` (
+  `CalendarRequirementsID` INT NOT NULL AUTO_INCREMENT,
+  `CalendarID` INT NOT NULL,
+  `DayOfWeek` INT NOT NULL,
+  `NumberNeeded` INT NOT NULL,
+  PRIMARY KEY (`CalendarRequirementsID`),
+  INDEX `fk_CalendarRequirements_Calendar1_idx` (`CalendarID` ASC),
+  CONSTRAINT `fk_CalendarRequirements_Calendar1`
+    FOREIGN KEY (`CalendarID`)
+    REFERENCES `SERV`.`Calendar` (`CalendarID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+USE `SERV`;
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'Blood', 1, 14, NULL, NULL, 0);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Night', 0, 0, NULL, NULL, 0);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'Blood Controllers', 1, 14, NULL, NULL, 0);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Controllers', 0, 0, NULL, NULL, 1);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Night Standby', 0, 0, NULL, NULL, 1);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Daytime', 0, 0, NULL, NULL, 1);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Daytime Standby', 0, 0, NULL, NULL, 1);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'Hooleygan', 0, 0, NULL, NULL, 0);
+
+
 
 /* 
 insert into Tag(Tag) values('OnRota'); 
