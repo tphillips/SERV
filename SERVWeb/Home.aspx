@@ -70,13 +70,14 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.5.2</h3>
+			<h3>Version 1.5.3</h3>
 			<h4>Recent Changes</h4>
 			<ul>
-				<li>Minor fixes</li>
+				<li>Background release including calendar work - hidden from sight</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Minor fixes</li>
 				<li>New user registration form</li>
 				<li>Bug fix on ShowMember on OpsMap</li>
 				<li>A major new feature: Route planning on the ops map</li>

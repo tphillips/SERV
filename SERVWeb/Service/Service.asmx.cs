@@ -152,6 +152,20 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
+		public List<Calendar> ListCalendars()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().ListCalendars();
+		}
+
+		[WebMethod(EnableSession = true)]
+		public Calendar GetCalendar(int calendarId)
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().Get(calendarId);
+		}
+
+		[WebMethod(EnableSession = true)]
 		public Location GetLocation(int locationId)
 		{
 			Authenticate();
@@ -177,6 +191,18 @@ namespace SERVWeb
 		{
 			Authenticate();
 			return true;
+		}
+			
+		[WebMethod]
+		public List<string> GetCurrentWeekADateStrings(string format)
+		{
+			return SERVBLLFactory.Factory.CalendarBLL().GetCurrentWeekADateStrings(format);
+		}
+
+		[WebMethod]
+		public List<string> GetCurrentWeekBDateStrings(string format)
+		{
+			return SERVBLLFactory.Factory.CalendarBLL().GetCurrentWeekBDateStrings(format);
 		}
 
 		public int CreateBlankLocation(User user)
@@ -331,6 +357,55 @@ namespace SERVWeb
 				throw new System.Security.Authentication.AuthenticationException();
 			}
 			return SERVBLLFactory.Factory.ShiftBLL().TakeControl(CurrentUser().MemberID, overrideNumber);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool RosterVolunteer(int calendarId, int memberId, string rosteringWeek, int rosteringDay)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.CalendarBLL().RosterVolunteer(calendarId, memberId, rosteringWeek, rosteringDay);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool RemoveRotaSlot(int calendarId, int memberId, string rosteringWeek, int rosteringDay)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.CalendarBLL().RemoveRotaSlot(calendarId, memberId, rosteringWeek, rosteringDay);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<RosteredVolunteer> ListRosteredVolunteers(int calendarId)
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().ListRosteredVolunteers(calendarId);
+		}
+
+		[WebMethod]
+		public void GenerateCalendar()
+		{
+			SERVBLLFactory.Factory.CalendarBLL().GenerateCalendar();
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<List<CalendarEntry>> ListWeeksCaledarEntries()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().ListWeeksCaledarEntries();
+		}
+
+		[WebMethod(EnableSession = true, CacheDuration=60)]
+		public List<List<CalendarEntry>> ListSpansCaledarEntries(int days)
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().ListSpansCaledarEntries(days);
 		}
 
 		private User CurrentUser()

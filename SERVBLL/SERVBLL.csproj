@@ -46,6 +46,7 @@
     <Compile Include="BuddhaBLL.cs" />
     <Compile Include="ControllerBLL.cs" />
     <Compile Include="ShiftBLL.cs" />
+    <Compile Include="CalendarBLL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

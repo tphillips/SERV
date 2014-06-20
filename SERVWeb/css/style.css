@@ -19,6 +19,56 @@ h1, h2, h3, h4
   float-left;
 }
 
+.calendarHeader
+{
+	text-align:center; 
+	vertical-align:top;
+}
+
+.calendarSlot
+{
+	border:1px solid gainsboro;
+	background-color: #fcf8e2;
+	padding:0px;
+	padding-left:4px;
+	padding-right:4px;
+	overflow:hidden;
+	width:100px;
+	margin-bottom:2px;
+	white-space:nowrap;
+	c--olor: steelblue;
+}
+
+.calendarSlot0
+{
+	background-color:#ffffff;
+}
+
+.calendarSlot1
+{
+	background-color:#ffe8e8;
+}
+
+.calendarSlot2
+{
+	background-color:#d2e5ff;
+}
+
+.calendarSlot3
+{
+	background-color:#eff9d8
+}
+
+.calendarSlot4
+{
+	background-color:#dff0d8;
+}
+
+.rosterNew
+{
+	background-color: #dff0d8;
+}
+
 .calDay h4 { margin-top: 0px; margin-bottom:3px; border: 1px solid gainsboro; padding 2px; padding-left:3px; background-color: whitesmoke; font-size:small; font-weight: bold; }
 .calDay ul { margin-bottom: 0px; }
 .calDay ul,li { list-style-type: none; margin-left:0px; margin-top:1px; padding:0px; }

@@ -37,5 +37,9 @@ namespace SERVBLLFactory
 			return new SERVBLL.ShiftBLL();
 		}
 
+		public static ICalendarBLL CalendarBLL()
+		{
+			return new SERVBLL.CalendarBLL();
+		}
 	}
 }

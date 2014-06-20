@@ -97,6 +97,14 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		public Table<MemberCalendar> MemberCalendar
+		{
+			get
+			{
+				return this.GetTable <MemberCalendar>();
+			}
+		}
+		
 		public Table<MemberStatus> MemberStatus
 		{
 			get
@@ -391,21 +399,29 @@ namespace SERVDataContract.DbLinq
 		
 		private int _calendarID;
 		
+		private int _defaultRequirement;
+		
 		private System.Nullable<System.DateTime> _generatedUpTo;
 		
 		private System.Nullable<System.DateTime> _lastGenerated;
 		
 		private string _name;
 		
+		private int _requiredTagID;
+		
+		private System.Nullable<int> _sequentialDayCount;
+		
 		private sbyte _simpleCalendar;
 		
-		private int _simpleDaysIncrement;
+		private System.Nullable<int> _simpleDaysIncrement;
 		
-		private System.Nullable<sbyte> _volunteerRemainsFree;
+		private sbyte _volunteerRemainsFree;
 		
 		private EntitySet<CalendarEntry> _calendarEntry;
 		
 		private EntitySet<CalendarRequirements> _calendarRequirements;
+		
+		private EntitySet<MemberCalendar> _memberCalendar;
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
@@ -413,6 +429,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnCalendarIDChanged();
 		
 		partial void OnCalendarIDChanging(int value);
+		
+		partial void OnDefaultRequirementChanged();
+		
+		partial void OnDefaultRequirementChanging(int value);
 		
 		partial void OnGeneratedUpToChanged();
 		
@@ -426,17 +446,25 @@ namespace SERVDataContract.DbLinq
 		
 		partial void OnNameChanging(string value);
 		
+		partial void OnRequiredTagIDChanged();
+		
+		partial void OnRequiredTagIDChanging(int value);
+		
+		partial void OnSequentialDayCountChanged();
+		
+		partial void OnSequentialDayCountChanging(System.Nullable<int> value);
+		
 		partial void OnSimpleCalendarChanged();
 		
 		partial void OnSimpleCalendarChanging(sbyte value);
 		
 		partial void OnSimpleDaysIncrementChanged();
 		
-		partial void OnSimpleDaysIncrementChanging(int value);
+		partial void OnSimpleDaysIncrementChanging(System.Nullable<int> value);
 		
 		partial void OnVolunteerRemainsFreeChanged();
 		
-		partial void OnVolunteerRemainsFreeChanging(System.Nullable<sbyte> value);
+		partial void OnVolunteerRemainsFreeChanging(sbyte value);
 		#endregion
 		
 		
@@ -444,6 +472,7 @@ namespace SERVDataContract.DbLinq
 		{
 			_calendarEntry = new EntitySet<CalendarEntry>(new Action<CalendarEntry>(this.CalendarEntry_Attach), new Action<CalendarEntry>(this.CalendarEntry_Detach));
 			_calendarRequirements = new EntitySet<CalendarRequirements>(new Action<CalendarRequirements>(this.CalendarRequirements_Attach), new Action<CalendarRequirements>(this.CalendarRequirements_Detach));
+			_memberCalendar = new EntitySet<MemberCalendar>(new Action<MemberCalendar>(this.MemberCalendar_Attach), new Action<MemberCalendar>(this.MemberCalendar_Detach));
 			this.OnCreated();
 		}
 		
@@ -464,6 +493,27 @@ namespace SERVDataContract.DbLinq
 					this._calendarID = value;
 					this.SendPropertyChanged("CalendarID");
 					this.OnCalendarIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_defaultRequirement", Name="DefaultRequirement", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int DefaultRequirement
+		{
+			get
+			{
+				return this._defaultRequirement;
+			}
+			set
+			{
+				if ((_defaultRequirement != value))
+				{
+					this.OnDefaultRequirementChanging(value);
+					this.SendPropertyChanging();
+					this._defaultRequirement = value;
+					this.SendPropertyChanged("DefaultRequirement");
+					this.OnDefaultRequirementChanged();
 				}
 			}
 		}
@@ -531,6 +581,48 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		[Column(Storage="_requiredTagID", Name="RequiredTagID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int RequiredTagID
+		{
+			get
+			{
+				return this._requiredTagID;
+			}
+			set
+			{
+				if ((_requiredTagID != value))
+				{
+					this.OnRequiredTagIDChanging(value);
+					this.SendPropertyChanging();
+					this._requiredTagID = value;
+					this.SendPropertyChanged("RequiredTagID");
+					this.OnRequiredTagIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_sequentialDayCount", Name="SequentialDayCount", DbType="int", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<int> SequentialDayCount
+		{
+			get
+			{
+				return this._sequentialDayCount;
+			}
+			set
+			{
+				if ((_sequentialDayCount != value))
+				{
+					this.OnSequentialDayCountChanging(value);
+					this.SendPropertyChanging();
+					this._sequentialDayCount = value;
+					this.SendPropertyChanged("SequentialDayCount");
+					this.OnSequentialDayCountChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_simpleCalendar", Name="SimpleCalendar", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public sbyte SimpleCalendar
@@ -552,9 +644,9 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_simpleDaysIncrement", Name="SimpleDaysIncrement", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_simpleDaysIncrement", Name="SimpleDaysIncrement", DbType="int", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
-		public int SimpleDaysIncrement
+		public System.Nullable<int> SimpleDaysIncrement
 		{
 			get
 			{
@@ -573,9 +665,9 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
-		[Column(Storage="_volunteerRemainsFree", Name="VolunteerRemainsFree", DbType="tinyint(1)", AutoSync=AutoSync.Never)]
+		[Column(Storage="_volunteerRemainsFree", Name="VolunteerRemainsFree", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
-		public System.Nullable<sbyte> VolunteerRemainsFree
+		public sbyte VolunteerRemainsFree
 		{
 			get
 			{
@@ -620,6 +712,20 @@ namespace SERVDataContract.DbLinq
 			set
 			{
 				this._calendarRequirements = value;
+			}
+		}
+		
+		[Association(Storage="_memberCalendar", OtherKey="CalendarID", ThisKey="CalendarID", Name="fk_Member_Calendar_Calendar1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<MemberCalendar> MemberCalendar
+		{
+			get
+			{
+				return this._memberCalendar;
+			}
+			set
+			{
+				this._memberCalendar = value;
 			}
 		}
 		#endregion
@@ -670,6 +776,18 @@ namespace SERVDataContract.DbLinq
 			this.SendPropertyChanging();
 			entity.Calendar = null;
 		}
+		
+		private void MemberCalendar_Attach(MemberCalendar entity)
+		{
+			this.SendPropertyChanging();
+			entity.Calendar = this;
+		}
+		
+		private void MemberCalendar_Detach(MemberCalendar entity)
+		{
+			this.SendPropertyChanging();
+			entity.Calendar = null;
+		}
 		#endregion
 	}
 	
@@ -679,6 +797,8 @@ namespace SERVDataContract.DbLinq
 		
 		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
 		
+		private sbyte _adHoc;
+		
 		private int _calendarEntryID;
 		
 		private int _calendarID;
@@ -687,7 +807,11 @@ namespace SERVDataContract.DbLinq
 		
 		private sbyte _coverNeeded;
 		
+		private System.DateTime _createDateTime;
+		
 		private System.DateTime _entryDate;
+		
+		private sbyte _manuallyAdded;
 		
 		private int _memberID;
 		
@@ -697,6 +821,10 @@ namespace SERVDataContract.DbLinq
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
+		
+		partial void OnAdHocChanged();
+		
+		partial void OnAdHocChanging(sbyte value);
 		
 		partial void OnCalendarEntryIDChanged();
 		
@@ -714,9 +842,17 @@ namespace SERVDataContract.DbLinq
 		
 		partial void OnCoverNeededChanging(sbyte value);
 		
+		partial void OnCreateDateTimeChanged();
+		
+		partial void OnCreateDateTimeChanging(System.DateTime value);
+		
 		partial void OnEntryDateChanged();
 		
 		partial void OnEntryDateChanging(System.DateTime value);
+		
+		partial void OnManuallyAddedChanged();
+		
+		partial void OnManuallyAddedChanging(sbyte value);
 		
 		partial void OnMemberIDChanged();
 		
@@ -729,7 +865,28 @@ namespace SERVDataContract.DbLinq
 			this.OnCreated();
 		}
 		
-		[Column(Storage="_calendarEntryID", Name="CalendarEntryID", DbType="int", IsPrimaryKey=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[Column(Storage="_adHoc", Name="AdHoc", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public sbyte AdHoc
+		{
+			get
+			{
+				return this._adHoc;
+			}
+			set
+			{
+				if ((_adHoc != value))
+				{
+					this.OnAdHocChanging(value);
+					this.SendPropertyChanging();
+					this._adHoc = value;
+					this.SendPropertyChanged("AdHoc");
+					this.OnAdHocChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_calendarEntryID", Name="CalendarEntryID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public int CalendarEntryID
 		{
@@ -817,6 +974,27 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		[Column(Storage="_createDateTime", Name="CreateDateTime", DbType="timestamp", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public System.DateTime CreateDateTime
+		{
+			get
+			{
+				return this._createDateTime;
+			}
+			set
+			{
+				if ((_createDateTime != value))
+				{
+					this.OnCreateDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._createDateTime = value;
+					this.SendPropertyChanged("CreateDateTime");
+					this.OnCreateDateTimeChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_entryDate", Name="EntryDate", DbType="date", AutoSync=AutoSync.Never, CanBeNull=false)]
 		[DebuggerNonUserCode()]
 		public System.DateTime EntryDate
@@ -834,6 +1012,27 @@ namespace SERVDataContract.DbLinq
 					this._entryDate = value;
 					this.SendPropertyChanged("EntryDate");
 					this.OnEntryDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_manuallyAdded", Name="ManuallyAdded", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public sbyte ManuallyAdded
+		{
+			get
+			{
+				return this._manuallyAdded;
+			}
+			set
+			{
+				if ((_manuallyAdded != value))
+				{
+					this.OnManuallyAddedChanging(value);
+					this.SendPropertyChanging();
+					this._manuallyAdded = value;
+					this.SendPropertyChanged("ManuallyAdded");
+					this.OnManuallyAddedChanged();
 				}
 			}
 		}
@@ -1667,6 +1866,8 @@ namespace SERVDataContract.DbLinq
 		
 		private EntitySet<CalendarEntry> _calendarEntry;
 		
+		private EntitySet<MemberCalendar> _memberCalendar;
+		
 		private EntitySet<MemberTag> _memberTag;
 		
 		private EntitySet<RunLog> _runLog;
@@ -1797,6 +1998,7 @@ namespace SERVDataContract.DbLinq
 		public Member()
 		{
 			_calendarEntry = new EntitySet<CalendarEntry>(new Action<CalendarEntry>(this.CalendarEntry_Attach), new Action<CalendarEntry>(this.CalendarEntry_Detach));
+			_memberCalendar = new EntitySet<MemberCalendar>(new Action<MemberCalendar>(this.MemberCalendar_Attach), new Action<MemberCalendar>(this.MemberCalendar_Detach));
 			_memberTag = new EntitySet<MemberTag>(new Action<MemberTag>(this.MemberTag_Attach), new Action<MemberTag>(this.MemberTag_Detach));
 			_runLog = new EntitySet<RunLog>(new Action<RunLog>(this.RunLog_Attach), new Action<RunLog>(this.RunLog_Detach));
 			_user = new EntitySet<User>(new Action<User>(this.User_Attach), new Action<User>(this.User_Detach));
@@ -2427,6 +2629,20 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		[Association(Storage="_memberCalendar", OtherKey="MemberID", ThisKey="MemberID", Name="fk_Member_Calendar_Member1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<MemberCalendar> MemberCalendar
+		{
+			get
+			{
+				return this._memberCalendar;
+			}
+			set
+			{
+				this._memberCalendar = value;
+			}
+		}
+		
 		[Association(Storage="_memberTag", OtherKey="MemberID", ThisKey="MemberID", Name="fk_Member_Capability_Member1")]
 		[DebuggerNonUserCode()]
 		public EntitySet<MemberTag> MemberTag
@@ -2505,6 +2721,18 @@ namespace SERVDataContract.DbLinq
 			entity.Member = null;
 		}
 		
+		private void MemberCalendar_Attach(MemberCalendar entity)
+		{
+			this.SendPropertyChanging();
+			entity.Member = this;
+		}
+		
+		private void MemberCalendar_Detach(MemberCalendar entity)
+		{
+			this.SendPropertyChanging();
+			entity.Member = null;
+		}
+		
 		private void MemberTag_Attach(MemberTag entity)
 		{
 			this.SendPropertyChanging();
@@ -2541,6 +2769,285 @@ namespace SERVDataContract.DbLinq
 			entity.Member = null;
 		}
 		#endregion
+	}
+	
+	[Table(Name="SERV.Member_Calendar")]
+	public partial class MemberCalendar : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private int _calendarID;
+		
+		private int _memberCalendarID;
+		
+		private int _memberID;
+		
+		private System.Nullable<int> _recurrenceInterval;
+		
+		private System.Nullable<int> _setDayNo;
+		
+		private string _week;
+		
+		private EntityRef<Calendar> _calendar = new EntityRef<Calendar>();
+		
+		private EntityRef<Member> _member = new EntityRef<Member>();
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnCalendarIDChanged();
+		
+		partial void OnCalendarIDChanging(int value);
+		
+		partial void OnMemberCalendarIDChanged();
+		
+		partial void OnMemberCalendarIDChanging(int value);
+		
+		partial void OnMemberIDChanged();
+		
+		partial void OnMemberIDChanging(int value);
+		
+		partial void OnRecurrenceIntervalChanged();
+		
+		partial void OnRecurrenceIntervalChanging(System.Nullable<int> value);
+		
+		partial void OnSetDayNoChanged();
+		
+		partial void OnSetDayNoChanging(System.Nullable<int> value);
+		
+		partial void OnWeekChanged();
+		
+		partial void OnWeekChanging(string value);
+		#endregion
+		
+		
+		public MemberCalendar()
+		{
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_calendarID", Name="CalendarID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int CalendarID
+		{
+			get
+			{
+				return this._calendarID;
+			}
+			set
+			{
+				if ((_calendarID != value))
+				{
+					if (_calendar.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCalendarIDChanging(value);
+					this.SendPropertyChanging();
+					this._calendarID = value;
+					this.SendPropertyChanged("CalendarID");
+					this.OnCalendarIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_memberCalendarID", Name="Member_CalendarID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int MemberCalendarID
+		{
+			get
+			{
+				return this._memberCalendarID;
+			}
+			set
+			{
+				if ((_memberCalendarID != value))
+				{
+					this.OnMemberCalendarIDChanging(value);
+					this.SendPropertyChanging();
+					this._memberCalendarID = value;
+					this.SendPropertyChanged("MemberCalendarID");
+					this.OnMemberCalendarIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_memberID", Name="MemberID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int MemberID
+		{
+			get
+			{
+				return this._memberID;
+			}
+			set
+			{
+				if ((_memberID != value))
+				{
+					if (_member.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMemberIDChanging(value);
+					this.SendPropertyChanging();
+					this._memberID = value;
+					this.SendPropertyChanged("MemberID");
+					this.OnMemberIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_recurrenceInterval", Name="RecurrenceInterval", DbType="int", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<int> RecurrenceInterval
+		{
+			get
+			{
+				return this._recurrenceInterval;
+			}
+			set
+			{
+				if ((_recurrenceInterval != value))
+				{
+					this.OnRecurrenceIntervalChanging(value);
+					this.SendPropertyChanging();
+					this._recurrenceInterval = value;
+					this.SendPropertyChanged("RecurrenceInterval");
+					this.OnRecurrenceIntervalChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_setDayNo", Name="SetDayNo", DbType="int", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<int> SetDayNo
+		{
+			get
+			{
+				return this._setDayNo;
+			}
+			set
+			{
+				if ((_setDayNo != value))
+				{
+					this.OnSetDayNoChanging(value);
+					this.SendPropertyChanging();
+					this._setDayNo = value;
+					this.SendPropertyChanged("SetDayNo");
+					this.OnSetDayNoChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_week", Name="Week", DbType="char(1)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Week
+		{
+			get
+			{
+				return this._week;
+			}
+			set
+			{
+				if (((_week == value) == false))
+				{
+					this.OnWeekChanging(value);
+					this.SendPropertyChanging();
+					this._week = value;
+					this.SendPropertyChanged("Week");
+					this.OnWeekChanged();
+				}
+			}
+		}
+		
+		#region Parents
+		[Association(Storage="_calendar", OtherKey="CalendarID", ThisKey="CalendarID", Name="fk_Member_Calendar_Calendar1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public Calendar Calendar
+		{
+			get
+			{
+				return this._calendar.Entity;
+			}
+			set
+			{
+				if (((this._calendar.Entity == value) == false))
+				{
+					if ((this._calendar.Entity != null))
+					{
+						Calendar previousCalendar = this._calendar.Entity;
+						this._calendar.Entity = null;
+						previousCalendar.MemberCalendar.Remove(this);
+					}
+					this._calendar.Entity = value;
+					if ((value != null))
+					{
+						value.MemberCalendar.Add(this);
+						_calendarID = value.CalendarID;
+					}
+					else
+					{
+						_calendarID = default(int);
+					}
+				}
+			}
+		}
+		
+		[Association(Storage="_member", OtherKey="MemberID", ThisKey="MemberID", Name="fk_Member_Calendar_Member1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public Member Member
+		{
+			get
+			{
+				return this._member.Entity;
+			}
+			set
+			{
+				if (((this._member.Entity == value) == false))
+				{
+					if ((this._member.Entity != null))
+					{
+						Member previousMember = this._member.Entity;
+						this._member.Entity = null;
+						previousMember.MemberCalendar.Remove(this);
+					}
+					this._member.Entity = value;
+					if ((value != null))
+					{
+						value.MemberCalendar.Add(this);
+						_memberID = value.MemberID;
+					}
+					else
+					{
+						_memberID = default(int);
+					}
+				}
+			}
+		}
+		#endregion
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
+			if ((h != null))
+			{
+				h(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(string propertyName)
+		{
+			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
+			if ((h != null))
+			{
+				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
 	}
 	
 	[Table(Name="SERV.MemberStatus")]

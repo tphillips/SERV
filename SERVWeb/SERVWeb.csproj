@@ -130,6 +130,10 @@
     <Content Include="TakeControl.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Register\index.html" />
+    <Content Include="Calendars.aspx" />
+    <Content Include="js\Calendar.js" />
+    <Content Include="ViewRota.aspx" />
+    <Content Include="ViewCalendar.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -249,6 +253,24 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Calendars.aspx.cs">
+      <DependentUpon>Calendars.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Calendars.aspx.designer.cs">
+      <DependentUpon>Calendars.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewRota.aspx.cs">
+      <DependentUpon>ViewRota.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewRota.aspx.designer.cs">
+      <DependentUpon>ViewRota.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewCalendar.aspx.cs">
+      <DependentUpon>ViewCalendar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewCalendar.aspx.designer.cs">
+      <DependentUpon>ViewCalendar.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

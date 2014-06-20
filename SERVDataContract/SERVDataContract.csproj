@@ -47,6 +47,9 @@
     <Compile Include="VehicleType.cs" />
     <Compile Include="RunLog.cs" />
     <Compile Include="Report.cs" />
+    <Compile Include="Calendar.cs" />
+    <Compile Include="RosteredVolunteer.cs" />
+    <Compile Include="CalendarEntry.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

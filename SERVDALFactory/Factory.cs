@@ -33,5 +33,9 @@ namespace SERVDALFactory
 			return new LocationDAL();
 		}
 
+		public static ICalendarDAL CalendarDAL()
+		{
+			return new CalendarDAL();
+		}
 	}
 }

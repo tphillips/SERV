@@ -43,6 +43,7 @@
     <Compile Include="IBuddhaBLL.cs" />
     <Compile Include="IControllerBLL.cs" />
     <Compile Include="IShiftBLL.cs" />
+    <Compile Include="ICalendarBLL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

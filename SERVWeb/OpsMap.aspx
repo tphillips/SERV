@@ -85,7 +85,7 @@
 			</iframe>
 		</div>
 
-		<div id="memberSearch" style="display:none" title="Choose a Member">
+		<div id="memberSearch" style="display:none; background-color:#fcfcfc" title="Choose a Member">
 			<br/>
 			<div class="input-prepend input-append ">
 				<a style="width:10px" type=button class="btn btn-lg" disabled><i class="icon-search"></i></a>
