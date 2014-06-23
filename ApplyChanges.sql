@@ -1,3 +1,5 @@
+/*   1.5.3
+
 -- -----------------------------------------------------
 -- Table `SERV`.`Calendar`
 -- -----------------------------------------------------
@@ -7,10 +9,15 @@ CREATE TABLE IF NOT EXISTS `SERV`.`Calendar` (
   `CalendarID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(100) NOT NULL,
   `SimpleCalendar` TINYINT(1) NOT NULL DEFAULT 1,
-  `SimpleDaysIncrement` INT NOT NULL DEFAULT 14,
+  `SimpleDaysIncrement` INT NULL DEFAULT 14 COMMENT 'For simple calendars this is the number of days before the member gets rotad again.' /* comment truncated */ /*
+14 means you get a shift every other week.*/,
+  `SequentialDayCount` INT NULL COMMENT 'If a simple calendar and Simple days increment is null, then the auto scheduler will assign the member x days in a row on the calendar.  Allows for controllers doing 7 days in a row as AA controller.',
+  `VolunteerRemainsFree` TINYINT(1) NOT NULL DEFAULT 1 COMMENT 'If set to 1 it means the member can be scheduled for another calendar where its set to one as well.' /* comment truncated */ /*
+1+1 == OK.  1+0 || 0+1 == not ok*/,
+  `RequiredTagID` INT NOT NULL COMMENT 'In order to be scheduled on this calendar, or volunteer for a shift, the ember must have this tag.',
+  `DefaultRequirement` INT NOT NULL DEFAULT 4 COMMENT 'If not overridden in CalendarRequirements the system will try to achieve this number of volunteers per night',
   `LastGenerated` DATETIME NULL,
   `GeneratedUpTo` DATE NULL,
-  `VolunteerRemainsFree` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`CalendarID`))
 ENGINE = InnoDB;
 
@@ -21,12 +28,15 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `SERV`.`CalendarEntry` ;
 
 CREATE TABLE IF NOT EXISTS `SERV`.`CalendarEntry` (
-  `CalendarEntryID` INT NOT NULL,
+  `CalendarEntryID` INT NOT NULL AUTO_INCREMENT,
+  `CreateDateTime` TIMESTAMP NOT NULL,
   `CalendarID` INT NOT NULL,
   `EntryDate` DATE NOT NULL,
   `MemberID` INT NOT NULL,
   `CoverNeeded` TINYINT(1) NOT NULL DEFAULT 0,
   `CoverCalendarEntryID` INT NULL,
+  `AdHoc` TINYINT(1) NOT NULL DEFAULT 0,
+  `ManuallyAdded` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`CalendarEntryID`),
   INDEX `fk_CalendarEntry_Calendar1_idx` (`CalendarID` ASC),
   INDEX `fk_CalendarEntry_Member1_idx` (`MemberID` ASC),
@@ -62,16 +72,44 @@ CREATE TABLE IF NOT EXISTS `SERV`.`CalendarRequirements` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-USE `SERV`;
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'Blood', 1, 14, NULL, NULL, 0);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Night', 0, 0, NULL, NULL, 0);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'Blood Controllers', 1, 14, NULL, NULL, 0);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Controllers', 0, 0, NULL, NULL, 1);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Night Standby', 0, 0, NULL, NULL, 1);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Daytime', 0, 0, NULL, NULL, 1);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'AA Daytime Standby', 0, 0, NULL, NULL, 1);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `LastGenerated`, `GeneratedUpTo`, `VolunteerRemainsFree`) VALUES (NULL, 'Hooleygan', 0, 0, NULL, NULL, 0);
 
+-- -----------------------------------------------------
+-- Table `SERV`.`Member_Calendar`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SERV`.`Member_Calendar` ;
+
+CREATE TABLE IF NOT EXISTS `SERV`.`Member_Calendar` (
+  `Member_CalendarID` INT NOT NULL AUTO_INCREMENT,
+  `MemberID` INT NOT NULL,
+  `CalendarID` INT NOT NULL,
+  `SetDayNo` INT NULL COMMENT 'The day of the week number the volunteer is rotad for ' /* comment truncated */ /*
+Monday == 0*/,
+  `Week` CHAR(1) NULL COMMENT 'Week 0 or week 1.  Allows every week of the year to be either week 1 or week 0' /* comment truncated */ /*
+30th December 2013 = Start of week 0*/,
+  `RecurrenceInterval` INT NULL,
+  INDEX `fk_Member_Calendar_Member1_idx` (`MemberID` ASC),
+  INDEX `fk_Member_Calendar_Calendar1_idx` (`CalendarID` ASC),
+  PRIMARY KEY (`Member_CalendarID`),
+  UNIQUE INDEX `UniqueMemberCalDayWeek` (`MemberID` ASC, `CalendarID` ASC, `SetDayNo` ASC, `Week` ASC),
+  CONSTRAINT `fk_Member_Calendar_Member1`
+    FOREIGN KEY (`MemberID`)
+    REFERENCES `SERV`.`Member` (`MemberID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Member_Calendar_Calendar1`
+    FOREIGN KEY (`CalendarID`)
+    REFERENCES `SERV`.`Calendar` (`CalendarID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Blood', 1, 14, NULL, 0, 7, 4, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'AA Night', 1, 14, NULL, 1, 8, 1, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Day Controller', 1, 14, NULL, 1, 3, 1, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Night Controller', 1, 14, NULL, 0, 3, 1, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'AA Night Standby', 1, 14, NULL, 1, 8, 1, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'AA Daytime', 1, 14, NULL, 1, 8, 2, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Hooleygan', 1, 14, NULL, 0, 7, 1, NULL, NULL);
 
 
 /* 

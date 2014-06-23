@@ -29,6 +29,10 @@ namespace SERVWeb
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication();
+			if (CalendarId == 0)
+			{
+				Response.Redirect("Calendars.aspx");
+			}
 		}
 
 	}

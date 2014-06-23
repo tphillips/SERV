@@ -40,6 +40,14 @@ namespace SERVDataContract
 		[DataMember]
 		public DateTime EntryDate { get; set; }
 
+		public bool IsToday
+		{
+			get
+			{
+				return this.EntryDate == new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+			}
+		}
+
 		[DataMember]
 		public string EntryDateShortString 
 		{

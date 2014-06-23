@@ -27,7 +27,7 @@ namespace SERVDAL
 			return cal;
 		}
 
-		public int CreateCalendarEntry(int calendarID, int memberID, DateTime date)
+		public int CreateCalendarEntry(int calendarID, int memberID, DateTime date, bool adHoc)
 		{
 			CalendarEntry e = new CalendarEntry()
 			{
@@ -37,7 +37,8 @@ namespace SERVDAL
 				MemberID = memberID,
 				CoverNeeded = 0,
 				CoverCalendarEntryID = null,
-				AdHoc = 0
+				AdHoc = adHoc ? (sbyte)1: (sbyte)0,
+				ManuallyAdded = adHoc ? (sbyte)1: (sbyte)0,
 			};
 			db.CalendarEntry.InsertOnSubmit(e);
 			db.SubmitChanges();
@@ -46,12 +47,12 @@ namespace SERVDAL
 
 		public List<CalendarEntry> ListCalendarEntries(DateTime date)
 		{
-			return (from e in db.CalendarEntry where e.EntryDate == date orderby e.CalendarID select e).ToList();
+			return (from e in db.CalendarEntry where e.EntryDate == date orderby e.CalendarID, e.AdHoc select e).ToList();
 		}
 
 		public List<CalendarEntry> ListCalendarEntries(DateTime startDate, DateTime endDate)
 		{
-			return (from e in db.CalendarEntry where e.EntryDate >= startDate && e.EntryDate <= endDate orderby e.CalendarID, e.EntryDate select e).ToList();
+			return (from e in db.CalendarEntry where e.EntryDate >= startDate && e.EntryDate <= endDate orderby e.CalendarID, e.EntryDate, e.AdHoc select e).ToList();
 		}
 
 		public void RemoveCalendarEntry(int calendarEntryID)
@@ -64,6 +65,39 @@ namespace SERVDAL
 		public CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId, int adHoc)
 		{
 			return (from e in db.CalendarEntry where e.EntryDate == date && e.CalendarID == calendarId && e.MemberID == memberId && e.AdHoc == adHoc select e).FirstOrDefault();
+		}
+
+		public CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId)
+		{
+			return (from e in db.CalendarEntry where e.EntryDate == date && e.CalendarID == calendarId && e.MemberID == memberId select e).FirstOrDefault();
+		}
+
+		public bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate)
+		{
+			CalendarEntry e = (from ce in db.CalendarEntry
+			                   where ce.CalendarID == calendarId && ce.MemberID == memberId && ce.EntryDate == shiftDate
+			                   select ce).FirstOrDefault();
+			if (e == null)
+			{
+				return false;
+			}
+			e.CoverNeeded = 1;
+			db.SubmitChanges();
+			return true;
+		}
+
+		public bool MarkShiftSwapNoLongerNeeded(int calendarEntryID)
+		{
+			CalendarEntry e = (from ce in db.CalendarEntry
+				where ce.CalendarEntryID == calendarEntryID
+				select ce).FirstOrDefault();
+			if (e == null)
+			{
+				return false;
+			}
+			e.CoverNeeded = 0;
+			db.SubmitChanges();
+			return true;
 		}
 			
 		public int Create(Calendar c)
@@ -91,6 +125,13 @@ namespace SERVDAL
 		public List<Calendar> ListCalendars()
 		{
 			return (from c in db.Calendar select c).ToList();
+		}
+
+		public List<MemberCalendar> ListRosteredVolunteers()
+		{
+			return (from mc in db.MemberCalendar
+				orderby mc.CalendarID, mc.Week, mc.SetDayNo
+				select mc).ToList();
 		}
 
 		public List<MemberCalendar> ListRosteredVolunteers(int calendarId)

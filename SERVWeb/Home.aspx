@@ -3,7 +3,9 @@
 
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">System</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
-	
+
+	<script language="JavaScript" src="js/Calendar.js"></script>	
+
 	<div class="hero-unit">
 		<div class="row">
 			<div class="span2">
@@ -17,6 +19,53 @@
 				<p>Don't use Internet Explorer to view this site. It's a terrible browser and you will be FAR better off using Chrome or Firefox.</p>
 			</div>
 		</div>
+	</div>
+
+	<div class="row">
+		<small>
+			<div class="span12" id="calendar" style="display:none">
+				<h3>The Calendar</h3>
+				<table class="table table-striped table-bordered table-condensed">
+					<tr>
+						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay1"></span></td>
+						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay2"></span></td>
+						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay3"></span></td>
+						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay4"></span></td>
+						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay5"></span></td>
+						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay6"></span></td>
+						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay7"></span></td>
+					</tr>
+					<tr style="height:130px;">
+						<td><div id="scheduledDay1"></div></td>
+						<td><div id="scheduledDay2"></div></td>
+						<td><div id="scheduledDay3"></div></td>
+						<td><div id="scheduledDay4"></div></td>
+						<td><div id="scheduledDay5"></div></td>
+						<td><div id="scheduledDay6"></div></td>
+						<td><div id="scheduledDay7"></div></td>
+					</tr>
+
+					<tr>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay8"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay9"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay10"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay11"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay12"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay13"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay14"></span></td>
+					</tr>
+					<tr style="height:130px;">
+						<td><div id="scheduledDay8"></div></td>
+						<td><div id="scheduledDay9"></div></td>
+						<td><div id="scheduledDay10"></div></td>
+						<td><div id="scheduledDay11"></div></td>
+						<td><div id="scheduledDay12"></div></td>
+						<td><div id="scheduledDay13"></div></td>
+						<td><div id="scheduledDay14"></div></td>
+					</tr>
+				</table>
+			</div>
+		</small>
 	</div>
 
 	<div class="row">
@@ -70,13 +119,15 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.5.3</h3>
+			<h3>Version 1.6</h3>
 			<h4>Recent Changes</h4>
-			<ul>
-				<li>Background release including calendar work - hidden from sight</li>
+			<ul>	
+				<li>Promoting the calendar work so far.  The new calendar system is in TESTING ONLY and you should continue to use the google calendar</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>More calendar work</li>
+				<li>Background release including calendar work - hidden from sight</li>
 				<li>Minor fixes</li>
 				<li>New user registration form</li>
 				<li>Bug fix on ShowMember on OpsMap</li>
@@ -101,14 +152,14 @@
 				<li>Adding Committee membership tag</li>
 				<li>Showing tags on membership list</li>
 				<li>Adding OnRota tag</li>
-				<li>Subscribing ALL members to the emergency list.  To unsubscribe, opt out by unticking the "Emergency Contact List" in you profile in the membership system. This involves logging into the membership system ;)</li>
+				<li>Subscribing ALL members to the emergency list.  To unsubscribe, opt out by unticking the "Emergency Contact List" in you profile in the membership system. This involves logging into the membership system</li>
 				<li>More business logic controlling unsubscribing from the emergency list</li>
 				<li>Added ability for controllers to log runs that were turned down.  All reports adjusted to not show runs that were not competed</li>
 				<li>Fixed a location editing permissions issue - Thanks Duncan</li>
 				<li>Added the ability to view / edit blood runs from a new report, visible under "View" > "Reports and Stats" > "Recent Runs (Controller View)".  
 				Anybody can view a run's details, controllers can edit the runs that they created and administrators can edit all runs.  Currently AA runs can only be viewed.  
 				Editing a run will assign the run a new ID.</li>
-				<li>Darren's very own shiny report on the stats page ;)</li>
+				<li>Darren's very own shiny report on the stats page</li>
 				<li>Brand new reports!!</li>
 				<li>Password resetting</li>
 				<li>Adding more calendar days highlighting current users name where shown</li>
@@ -121,14 +172,14 @@
 				<li>Tweaks to ops map</li>
 				<li>Controllers can now use .'s in times</li>
 				<li>Controllers can now leave home safe date and time blank</li>
-				<li>Urgency on controller logging is now 3 buttons (Just for Geoff ;))</li>
+				<li>Urgency on controller logging is now 3 buttons (Just for Geoff)</li>
 				<li>Warning when modifying a location</li>
 				<li>Permission issues fixed around location addition and editing - committee level required</li>
 				<li>Added a new menu item in the toolbar to open the controller logging sheet in a new tab</li>
 				<li>Added a release coming warning</li>
 				<li>2014 Run log report</li>
 				<li>Version increment for Controller logging go live</li>
-				<li>Async requests off for $.ajax();</li>
+				<li>Async requests off for $.ajax()</li>
 				<li>Raw run log import - make less process intensive (circa 50%) with more logging</li>
 				<li>Html tweaks to controller log</li>
 				<li>Controller log auto scrolling on selecting Blood Run (for OpsMap compatibility)</li>
@@ -193,13 +244,15 @@
 		</div>
 
 	</div>
-	
+
 	<script>
 		$("#loading").hide();
 		FullName = "<%=this.FullName%>";
 		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); window.setTimeout('$("#success").slideUp()',4000); }
 		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
 		showCals();
+		//initCalendar(true, 14);
+		//loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
 	</script>
 	
 </asp:Content>

@@ -1,10 +1,12 @@
-﻿<%@ Page Language="C#" Inherits="SERVWeb.ViewCalendar" MasterPageFile="~/Master.master" %>
+﻿<%@ Page Language="C#" Inherits="SERVWeb.Calendar" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">The Calendar</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
 <script language="JavaScript" src="js/Calendar.js"></script>
 <br/>
+
+
 <div id="entry" style="display:none">
 	<small>
 		<div class="row" id="calendar">
@@ -91,22 +93,77 @@
 			
 		</div>
 	</small>
+	<p>Key:</p>
+	<div class="row">
+		<div class="span3">
+			<p>
+				<div class="calendarSlot calendarSlot1" style="">Blood</div>
+				<div class="calendarSlot calendarSlot2" style="">AA Night</div>
+				<div class="calendarSlot calendarSlot3" style="">Day Controller</div>
+				<div class="calendarSlot calendarSlot4" style="">Night Controller</div>
+				<div class="calendarSlot calendarSlot5" style="">AA Night 2</div>
+				<div class="calendarSlot calendarSlot6" style="">AA Daytime</div>
+				<div class="calendarSlot calendarSlot7" style="">Hooleygan</div>
+			</p>
+		</div>
+		<div class="span9">
+			<p>
+				<i class="icon-star icon-green"></i> = Ad-Hoc / Member volunteered.<br/>
+				<i class="icon-exclamation-sign icon-red"></i> = Swap needed, member cannot do shift. <br/>
+				<i class="icon icon-calendar"></i> = Scheduled slot.<br/>
+			</p>
+		</div>
+	</div>
+
+	<br/>
 </div>
 
-<div id="calSlotClickedDialog" style="display:none; background-color:#fcfcfc" title="Your Shift">
-
+<div id="calSlotDialog" style="display:none; background-color:#fcfcfc" title="Your Shift">
+	<p>We realise you have a life outside of SERV.</p>
+	<p>If you cannot carry out your <strong><span id="swapDialogCalendarName">CAL TYPE</span></strong> shift on <strong><span id="swapDialogShiftDate">SHIFT DATE</span></strong>, please click "Swap Needed"</p>
+	<br/>
+	<input type="button" value="Swap Needed" class="btn btn-primary btn-lg" onclick="swapNeededClicked();"></input> <input type="button" value="Cancel" class="btn btn-lg" onclick="$('#calSlotDialog').dialog('close');"></input>
+	<br/><br/>
 </div>
 
-<div id="volunteerClickedDialog" style="display:none; background-color:#fcfcfc" title="Volunteer">
+<div id="volunteerDialog" style="display:none; background-color:#fcfcfc" title="Volunteer">
+	<p>Are you free on the <strong><span id="volunteerDialogShiftDate">SHIFT DATE</span></strong>? We would really appreciate your time!</p>
+	<label>Please select the type of shift you want:</label>
+	<li class="dropdown">
+		<a href="#" type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" id="cboVolunteerCalendar"><span id="lblVolunteerCalendar" class="lblVolunteerCalendar">Shift Type</span> <b class="caret"></b></a>
+		<ul class="dropdown-menu" id="lstVolunteerCalendar">
+		</ul>
+	</li>
+	<br/><br/><br/><br/><br/><br/><br/><br/>
+	<input type="button" value="OK, Add Me!" class="btn btn-primary btn-lg" onclick="volunteerClicked();"></input> <input type="button" value="No" class="btn btn-lg" onclick="$('#volunteerDialog').dialog('close');"></input>
+	<br/><br/>
+</div>
 
+<div id="addVolunteerDialog" style="display:none; background-color:#fcfcfc" title="Add a Volunteer">
+	<p>You are adding a volunteer to the calendar on <strong><span id="addVolunteerDialogShiftDate">SHIFT DATE</span></strong>.</p>
+	<label>Member:</label>
+		<div class="input-append">
+			<input style="width:250px" type="text" class="riders" id="txtFindMember" />
+			<a style="width:10px" type=button class="btn btn-lg" disabled><i class="icon-search"></i></a>
+		</div>
+		<br/>
+	<label>Please select the type of shift:</label>
+	<li class="dropdown">
+		<a href="#" type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" id="cboAddVolunteerCalendar"><span id="lblAddVolunteerCalendar" class="lblVolunteerCalendar">Shift Type</span> <b class="caret"></b></a>
+		<ul class="dropdown-menu" id="lstAddVolunteerCalendar">
+		</ul>
+	</li>
+	<br/><br/><br/><br/><br/><br/><br/><br/>
+	<input type="button" value="Add" class="btn btn-primary btn-lg" onclick="addVolunteerClicked();"></input> <input type="button" value="Cancel" class="btn btn-lg" onclick="$('#addVolunteerDialog').dialog('close');"></input>
+	<br/><br/>
 </div>
 
 <script>
 
 	$(function() 
 	{
-		initWeeksCalendar();
-		loadWeeksCalendar(<%=this.MemberId%>);
+		initCalendar(false, 28);
+		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
 	});
 
 </script>

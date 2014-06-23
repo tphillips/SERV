@@ -6,7 +6,7 @@ namespace SERVWeb
 	using System.Web.UI;
 
 	
-	public partial class ViewCalendar : System.Web.UI.Page
+	public partial class Calendar : System.Web.UI.Page
 	{
 
 		protected int MemberId
@@ -14,6 +14,14 @@ namespace SERVWeb
 			get
 			{
 				return SERVGlobal.User.MemberID;
+			}
+		}
+
+		protected int UserLevel
+		{
+			get 
+			{
+				return SERVGlobal.User.UserLevelID;
 			}
 		}
 

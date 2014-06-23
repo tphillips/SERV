@@ -64,9 +64,31 @@ h1, h2, h3, h4
 	background-color:#dff0d8;
 }
 
+.calendarSlot5
+{
+	background-color:#dfeff9;
+}
+
+.calendarSlot6
+{
+	background-color:#f9f8ed;
+}
+
+.calendarSlot7
+{
+	background-color:#dbcfde;
+}
+
 .rosterNew
 {
 	background-color: #dff0d8;
+}
+
+.today
+{
+	font-weight:bold;
+	font-style:italic;
+	color:red;
 }
 
 .calDay h4 { margin-top: 0px; margin-bottom:3px; border: 1px solid gainsboro; padding 2px; padding-left:3px; background-color: whitesmoke; font-size:small; font-weight: bold; }

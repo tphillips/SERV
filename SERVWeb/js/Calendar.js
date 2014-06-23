@@ -1,5 +1,6 @@
 ﻿
 var userLevel = -1;
+var MANAGE_CALENDAR_USER_LEVEL = 3;
 
 var rosteringMemberId = -1;
 var rosteringDay = -1;
@@ -11,65 +12,255 @@ var removingMemberId = -1;
 var removingWeek = '';
 var removingDay = -1;
 
-function initWeeksCalendar()
+var calMemberId = -1;
+var calUserLevel = -1;
+var swapRequestMemberId = -1;
+var swapRequestCalendarId = -1;
+var swapRequestShiftDate = -1;
+
+var volunteerMemberId;
+var volunteerCalendarId = -1;
+var volunteerShiftDate = -1;
+var volunteerCalendarName = "";
+
+var showCalendarDays = 28;
+var simpleCalendar = false;
+
+function initCalendar(simple, days)
 {
-	$("#calSlotClickedDialog").dialog({
+	showCalendarDays = days;
+	simpleCalendar = simple;
+	$("#calSlotDialog").dialog({
 		width:340,
 		show: { effect: "clip", duration: 200 },
 		hide: { effect: "clip", duration: 200 },
 		autoOpen: false
 	});
-	$("#volunteerClickedDialog").dialog({
+	$("#volunteerDialog").dialog({
 		width:340,
 		show: { effect: "clip", duration: 200 },
 		hide: { effect: "clip", duration: 200 },
 		autoOpen: false
 	});
+	$("#addVolunteerDialog").dialog({
+		width:340,
+		show: { effect: "clip", duration: 200 },
+		hide: { effect: "clip", duration: 200 },
+		autoOpen: false
+	});
+	if (!simpleCalendar)
+	{
+		listMembersWithTag("Rider,Driver,Blood,AA,Controller", null);
+		$(".riders").autocomplete({ source: memberNames });
+		listCalendarsForDroppdown("lstVolunteerCalendar");
+		listCalendarsForDroppdown("lstAddVolunteerCalendar");
+	}
 }
 
-function calSlotClicked()
-{
-	$("#calSlotClickedDialog").dialog('open');
-}
-
-function volunteerSlotClicked()
-{
-	$("#volunteerClickedDialog").dialog('open');
-}
-
-function loadWeeksCalendar(memberId)
+function listCalendarsForDroppdown(dropDownId)
 {
 	callServerSide(
-		"Service/Service.asmx/ListSpansCaledarEntries",
-		"{'days':28}",
+		"Service/Service.asmx/ListCalendars", 
+		"{}",
 		function(json)
 		{
-			for(var day = 0; day < 28; day++)
+			for(var x = 0; x < json.d.length; x++)
+			{
+				$("#" + dropDownId).append('<li><a href="#" onclick="volunteerCalendarId = ' + json.d[x].CalendarID + '; volunteerCalendarName=\'' + json.d[x].Name + '\'; setVolunteerCalendarDisplay();">' + json.d[x].Name + '</a></li>');
+			}
+		},
+		function()
+		{
+		}
+	);
+}
+
+function setVolunteerCalendarDisplay()
+{
+	$(".lblVolunteerCalendar").text(volunteerCalendarName);
+}
+
+function calSlotClicked(slotMemberId, calendarId, calendarName, shiftDate, niceShiftDate, swapMarked)
+{
+	swapRequestMemberId = slotMemberId;
+	swapRequestCalendarId = calendarId;
+	swapRequestShiftDate = shiftDate;
+	$("#swapDialogCalendarName").text(calendarName);
+	$("#swapDialogShiftDate").text(niceShiftDate);
+	$("#calSlotDialog").dialog('open');
+}
+
+function swapNeededClicked()
+{
+	callServerSide(
+		"Service/Service.asmx/MarkShiftSwapNeeded",
+		"{'calendarId' : '" + swapRequestCalendarId + "', 'memberId' : '" + swapRequestMemberId + "', 'shiftDate' : '" + swapRequestShiftDate + "'}",
+		function(json)
+		{
+			$("#calSlotDialog").dialog('close');
+			niceAlert('Thank you. You have been removed from that shift');
+			loadCalendar(calMemberId, calUserLevel);
+		},
+		function()
+		{
+			niceAlert('Sorry, An error occured. Please try again or contact the tech team');
+		}
+	);
+}
+
+function volunteerSlotClicked(calendarId, calendarName, shiftDate, niceShiftDate)
+{
+	volunteerCalendarId = -1;
+	$("#lblVolunteerCalendar").text("Shift Type");
+	volunteerMemberId = calMemberId;
+	volunteerShiftDate = shiftDate;
+	$("#volunteerDialogShiftDate").text(niceShiftDate);
+	$("#volunteerDialog").dialog('open');
+}
+
+function addVolunteerSlotClicked(calendarId, calendarName, shiftDate, niceShiftDate)
+{
+	volunteerCalendarId = -1;
+	$("#lblAddVolunteerCalendar").text("Shift Type");
+	volunteerMemberId = -1;
+	volunteerShiftDate = shiftDate;
+	$("#addVolunteerDialogShiftDate").text(niceShiftDate);
+	$("#addVolunteerDialog").dialog('open');
+}
+
+function volunteerClicked()
+{
+	if (volunteerCalendarId == -1)
+	{
+		niceAlert("Please choose a shift type");
+		return;
+	}
+	callServerSide(
+		"Service/Service.asmx/AddVolunteerToCalendar",
+		"{'calendarId' : '" + volunteerCalendarId + "', 'memberId' : '" + volunteerMemberId + "', 'shiftDate' : '" + volunteerShiftDate + "'}",
+		function(json)
+		{
+			$("#volunteerDialog").dialog('close');
+			niceAlert('Thank you! You have been added to that shift');
+			loadCalendar(calMemberId, calUserLevel);
+		},
+		function()
+		{
+			niceAlert('Sorry, An error occured. Please try again or contact the tech team');
+		}
+	);
+}
+
+function addVolunteerClicked()
+{
+	volunteerMemberId = getMemberId($("#txtFindMember").val());
+	if (volunteerMemberId == 0)
+	{
+		niceAlert("Please choose a volunteer");
+		return;
+	}
+	if (volunteerCalendarId == -1)
+	{
+		niceAlert("Please choose a shift type");
+		return;
+	}
+	callServerSide(
+		"Service/Service.asmx/AddVolunteerToCalendar",
+		"{'calendarId' : '" + volunteerCalendarId + "', 'memberId' : '" + volunteerMemberId + "', 'shiftDate' : '" + volunteerShiftDate + "'}",
+		function(json)
+		{
+			$("#txtFindMember").val("");
+			$("#addVolunteerDialog").dialog('close');
+			niceAlert('The member has been added to that shift');
+			loadCalendar(calMemberId, calUserLevel);
+		},
+		function()
+		{
+			niceAlert('Sorry, An error occured. Please try again or contact the tech team');
+		}
+	);
+}
+
+function loadCalendar(memberId, userLevel)
+{
+	calMemberId = memberId;
+	calUserLevel = userLevel;
+	$("#entry").slideUp();
+	$("#loading").slideDown();
+	for (var x = 0; x < showCalendarDays; x++)
+	{
+		$("#scheduledDay" + (x + 1)).empty();
+	}
+	callServerSide(
+		"Service/Service.asmx/ListSpansCaledarEntries",
+		"{'days':" + showCalendarDays + "}",
+		function(json)
+		{
+			for(var day = 0; day < showCalendarDays; day++)
 			{
 				if (json.d[day].length > 0)
 				{
+					var today = false;
 					$("#titleDay" + (day + 1)).text(json.d[day][0].EntryDateShortStringWithDay);
+					if (json.d[day][0].IsToday)
+					{
+						today=true;
+						$("#titleDay" + (day + 1)).addClass('today');
+					}
 					for (var sched = 0; sched < json.d[day].length; sched++)
 					{
-						var toAppend = '<div class="calendarSlot calendarSlot' + json.d[day][sched].CalendarID + '" style="width:150px">' +
-									'<a href="#" onclick="calSlotClicked()"><i>' + json.d[day][sched].MemberName + '</i></a>' + 
+						var slotMemberId = json.d[day][sched].MemberID;
+						var calendarId = json.d[day][sched].CalendarID;
+						var calendarName = json.d[day][sched].CalendarName;
+						var memberName = json.d[day][sched].MemberName;
+						var shiftDate = json.d[day][sched].EntryDateClrString;
+						var niceShiftDate = json.d[day][sched].EntryDateShortStringWithDay;
+						var swapMarked = json.d[day][sched].CoverNeeded;
+						var adHoc = json.d[day][sched].AdHoc;
+						var strikeout = "";
+						var strong = "";
+						var italic = "";
+						if (slotMemberId == memberId) { strong = "<strong>"; italic="<i>" }
+						var icon = "<i class='icon icon-calendar'></i> ";
+						if (calendarName == null) { calendarName = ""; }
+						if (adHoc) { icon = "<i class='icon icon-heart icon-star icon-green'></i> ";}
+						if (swapMarked) { strikeout="text-decoration: line-through"; icon = "<i class='icon icon-exclamation-sign icon-red'></i> ";}
+						if (calendarName == "") { icon = ""; }
+						var toAppend = '<div title="' + calendarName + '" class="calendarSlot calendarSlot' + calendarId + '" style="width:150px">' + icon +
+									strong + italic + '<a style="' + strikeout + '" href="#" onclick="' +
+									'calSlotClicked(' + slotMemberId + ', ' + calendarId + ', \'' + calendarName + '\', \'' + shiftDate + '\', \'' + niceShiftDate + '\', ' + swapMarked + ');' + 
+									'">' + memberName + '</a></i></strong>' + 
 								'</div>';
-						if (json.d[day][sched].MemberID != memberId)
+						if ((slotMemberId != memberId && userLevel < MANAGE_CALENDAR_USER_LEVEL) || simpleCalendar)
 						{
-							var toAppend = '<div class="calendarSlot calendarSlot' + json.d[day][sched].CalendarID + '" style="width:150px">' +
-									 json.d[day][sched].MemberName  + 
-								'</div>';
+							var toAppend = '<div title="' + calendarName + '" class="calendarSlot calendarSlot' + calendarId + '" style="width:150px; ' + strikeout + '">' + icon + strong + italic + memberName  + '</i></strong></div>';
 						}
 						$("#scheduledDay" + (day + 1)).append(toAppend);
-						toAppend = '<div class="calendarSlot" style="width:150px">' +
-									'<a href="#" onclick="volunteerSlotClicked()"><i class="icon-plus-sign icon-green"></i> Volunteer!</a>' + 
-								'</div>';
+					}
+					if (!simpleCalendar)
+					{
+						if (userLevel < MANAGE_CALENDAR_USER_LEVEL)
+						{
+							toAppend = '<div class="calendarSlot" style="width:150px">' +
+											'<a href="#" onclick="' +
+											'volunteerSlotClicked(' + calendarId + ', \'' + calendarName + '\', \'' + shiftDate + '\', \'' + niceShiftDate + '\');' + 
+											'"><i class="icon-plus-sign icon-green"></i> Volunteer!</a>' + 
+										'</div>';
+						}
+						else
+						{
+							toAppend = '<div class="calendarSlot" style="width:150px">' +
+											'<a href="#" onclick="addVolunteerSlotClicked(' + calendarId + ', \'' + calendarName + '\', \'' + shiftDate + '\', \'' + niceShiftDate + '\');"><i class="icon-plus-sign icon-green"></i> Add Volunteer</a>' + 
+										'</div>';
+						}
 						$("#scheduledDay" + (day + 1)).append(toAppend);
 					}
 				}
 			}
 			$("#loading").slideUp();
 			$("#entry").slideDown();
+			$("#calendar").slideDown();
+			$("#calendar").slideDown();
 		},
 		function()
 		{
@@ -81,9 +272,13 @@ function loadWeeksCalendar(memberId)
 function initViewCalendar(userlevel, calendarId) 
 {
 	userLevel = userlevel;
-	if (userLevel < 3)
+	if (userLevel < MANAGE_CALENDAR_USER_LEVEL)
 	{
 		$(".rosterNew").hide();
+		$("#cmdGenerate").hide();
+	}
+	if (userLevel < 4)
+	{
 		$("#cmdGenerate").hide();
 	}
 	$("#memberSearch").dialog({

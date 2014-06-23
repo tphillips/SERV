@@ -133,7 +133,7 @@
     <Content Include="Calendars.aspx" />
     <Content Include="js\Calendar.js" />
     <Content Include="ViewRota.aspx" />
-    <Content Include="ViewCalendar.aspx" />
+    <Content Include="Calendar.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -266,11 +266,11 @@
     <Compile Include="ViewRota.aspx.designer.cs">
       <DependentUpon>ViewRota.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ViewCalendar.aspx.cs">
-      <DependentUpon>ViewCalendar.aspx</DependentUpon>
+    <Compile Include="Calendar.aspx.cs">
+      <DependentUpon>Calendar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ViewCalendar.aspx.designer.cs">
-      <DependentUpon>ViewCalendar.aspx</DependentUpon>
+    <Compile Include="Calendar.aspx.designer.cs">
+      <DependentUpon>Calendar.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

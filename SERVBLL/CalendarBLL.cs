@@ -81,10 +81,32 @@ namespace SERVBLL
 			return ret;
 		}
 
+		public List<RosteredVolunteer> ListRosteredVolunteers()
+		{
+			List<RosteredVolunteer> ret = new List<RosteredVolunteer>();
+			List<SERVDataContract.DbLinq.MemberCalendar> lret = SERVDALFactory.Factory.CalendarDAL().ListRosteredVolunteers();
+			foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
+			{
+				ret.Add(new RosteredVolunteer(mc));
+			}
+			return ret;
+		}
+
 		public CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId, bool adhoc)
 		{
 			DateTime cleanDate = new DateTime(date.Year, date.Month, date.Day);
 			SERVDataContract.DbLinq.CalendarEntry entry = SERVDALFactory.Factory.CalendarDAL().GetCalendarEntry(cleanDate, calendarId, memberId, adhoc ? 1 : 0);
+			if (entry == null)
+			{
+				return null;
+			}
+			return new CalendarEntry(entry);
+		}
+
+		public CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId)
+		{
+			DateTime cleanDate = new DateTime(date.Year, date.Month, date.Day);
+			SERVDataContract.DbLinq.CalendarEntry entry = SERVDALFactory.Factory.CalendarDAL().GetCalendarEntry(cleanDate, calendarId, memberId);
 			if (entry == null)
 			{
 				return null;
@@ -151,10 +173,11 @@ namespace SERVBLL
 			{	
 				List<CalendarEntry> toAdd = (from ce in all
 				                             where ce.EntryDate == curDay.AddDays(x)
+											 orderby ce.CoverNeeded descending
 				                             select ce).ToList();
 				if (toAdd.Count == 0)
 				{
-					toAdd.Add(new CalendarEntry() { EntryDate = curDay.AddDays(x), MemberName = "Nada, zero, not a sausage." } );
+					toAdd.Add(new CalendarEntry() { EntryDate = curDay.AddDays(x), MemberName = "Nada, zero, not a sausage." });
 				}
 				ret.Add(toAdd);
 			}
@@ -163,8 +186,34 @@ namespace SERVBLL
 
 		public int CreateCalendarEntry(int calendarID, int memberID, DateTime date)
 		{
+			return CreateCalendarEntry(calendarID, memberID, date, false);
+		}
+
+		public int CreateCalendarEntry(int calendarID, int memberID, DateTime date, bool adHoc)
+		{
 			DateTime cleanDate = new DateTime(date.Year, date.Month, date.Day);
-			return SERVDALFactory.Factory.CalendarDAL().CreateCalendarEntry(calendarID, memberID, cleanDate);
+			CalendarEntry e = GetCalendarEntry(cleanDate, calendarID, memberID);
+			if (e != null)
+			{
+				MarkShiftSwapNoLongerNeeded(e.CalendarEntryID);
+				return e.CalendarEntryID;
+			}
+			return SERVDALFactory.Factory.CalendarDAL().CreateCalendarEntry(calendarID, memberID, cleanDate, adHoc);
+		}
+
+		void MarkShiftSwapNoLongerNeeded(int calendarEntryID)
+		{
+			SERVDALFactory.Factory.CalendarDAL().MarkShiftSwapNoLongerNeeded(calendarEntryID);
+		}
+
+		public bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate)
+		{
+			return SERVDALFactory.Factory.CalendarDAL().MarkShiftSwapNeeded(calendarId, memberId, shiftDate);
+		}
+
+		public bool AddVolunteerToCalendar(int calendarId, int memberId, DateTime shiftDate)
+		{
+			return CreateCalendarEntry(calendarId, memberId, shiftDate, true) > 0;
 		}
 
 		public void RemoveCalendarEntry(int calendarEntryID)
@@ -189,14 +238,18 @@ namespace SERVBLL
 		{
 			DateTime start = log.LogStart();
 			DateTime curDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+			List<RosteredVolunteer> allScheduledSlots = ListRosteredVolunteers(); // cache scheduled slots
 			// Work on each day individually from today for GENERATE_CALENDAR_DAYS days
 			for (int x = 0; x < GENERATE_CALENDAR_DAYS; x++)
 			{
+				log.Debug("Processing calendar day " + x);
 				string week = IsWeekA(curDay) ? "A" : "B";
 				int day = (int)curDay.DayOfWeek;
 				if (day == 0){ day = 7; }
 				// find rostered slots and make sure they exist
-				List<RosteredVolunteer> scheduledSlots = ListRosteredVolunteers(week, day);
+				List<RosteredVolunteer> scheduledSlots = (from rv in allScheduledSlots
+				                                          where rv.Week == week.ToCharArray()[0] && rv.DayNo == day
+				                                          select rv).ToList();
 				foreach (RosteredVolunteer rv in scheduledSlots)
 				{
 					// See if it exists, if not create it
@@ -205,7 +258,7 @@ namespace SERVBLL
 					{
 						CreateCalendarEntry(rv.CalendarID, rv.MemberID, curDay);
 					}
-					Thread.Sleep(30);
+					Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
 				}
 				// Check calendar to make sure there are not schedules that should not be there (after removing a rostered slot for example, make sure its not an ad-hoc)
 				List<CalendarEntry> entries = ListCalendarEntries(curDay);
@@ -222,11 +275,11 @@ namespace SERVBLL
 							RemoveCalendarEntry(e.CalendarEntryID);
 						}
 					}
-					Thread.Sleep(30);
+					Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
 				}
 				// move on
 				curDay = curDay.AddDays(1);
-				Thread.Sleep(30);
+				Thread.Sleep(300); if (x > 14){ Thread.Sleep(600); }
 			}
 			SetCalendarLastGenerateDate(DateTime.Now, curDay);
 			log.LogEnd();

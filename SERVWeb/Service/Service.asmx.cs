@@ -152,14 +152,14 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
-		public List<Calendar> ListCalendars()
+		public List<SERVDataContract.Calendar> ListCalendars()
 		{
 			Authenticate();
 			return SERVBLLFactory.Factory.CalendarBLL().ListCalendars();
 		}
 
 		[WebMethod(EnableSession = true)]
-		public Calendar GetCalendar(int calendarId)
+		public SERVDataContract.Calendar GetCalendar(int calendarId)
 		{
 			Authenticate();
 			return SERVBLLFactory.Factory.CalendarBLL().Get(calendarId);
@@ -363,7 +363,7 @@ namespace SERVWeb
 		public bool RosterVolunteer(int calendarId, int memberId, string rosteringWeek, int rosteringDay)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
+			if (CurrentUser().UserLevelID < (int)UserLevel.Committee)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
@@ -374,7 +374,7 @@ namespace SERVWeb
 		public bool RemoveRotaSlot(int calendarId, int memberId, string rosteringWeek, int rosteringDay)
 		{
 			Authenticate();
-			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
+			if (CurrentUser().UserLevelID < (int)UserLevel.Committee)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
@@ -406,6 +406,28 @@ namespace SERVWeb
 		{
 			Authenticate();
 			return SERVBLLFactory.Factory.CalendarBLL().ListSpansCaledarEntries(days);
+		}
+
+		[WebMethod(EnableSession = true, CacheDuration=60)]
+		public bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate)
+		{
+			Authenticate();
+			if (CurrentUser().MemberID != memberId && CurrentUser().UserLevelID < (int)UserLevel.Committee)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.CalendarBLL().MarkShiftSwapNeeded(calendarId, memberId, shiftDate);
+		}
+
+		[WebMethod(EnableSession = true, CacheDuration=60)]
+		public bool AddVolunteerToCalendar(int calendarId, int memberId, DateTime shiftDate)
+		{
+			Authenticate();
+			if (CurrentUser().MemberID != memberId && CurrentUser().UserLevelID < (int)UserLevel.Committee)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.CalendarBLL().AddVolunteerToCalendar(calendarId, memberId, shiftDate);
 		}
 
 		private User CurrentUser()

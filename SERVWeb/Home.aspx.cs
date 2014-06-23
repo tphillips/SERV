@@ -8,6 +8,22 @@ namespace SERVWeb
 	public partial class Home : System.Web.UI.Page
 	{
 
+		protected int MemberId
+		{
+			get
+			{
+				return SERVGlobal.User.MemberID;
+			}
+		}
+
+		protected int UserLevel
+		{
+			get 
+			{
+				return SERVGlobal.User.UserLevelID;
+			}
+		}
+
 		protected string Username
 		{
 			get
