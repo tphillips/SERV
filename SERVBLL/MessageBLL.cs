@@ -19,10 +19,118 @@ namespace SERVBLL
 
 		private const string FROM = "noreply@system.servssl.org.uk";
 		private const string SERVER = "localhost";
-		public static string FOOTER = "\r\n\r\n\r\nThis message was sent from an unattended mailbox by the SERV SSL Membership System.  Do not reply to this mail.  If you need to make contact, please use the Forum to PM Tristan Phillips.\r\n";
+		public static string FOOTER = "\r\n\r\n\r\nThis message was sent from an unattended mailbox by the SERV SSL System.  Do not reply to this mail.  If you need to make contact, please use the Forum to PM Tristan Phillips.\r\n";
 
 		public MessageBLL()
 		{
+		}
+
+		struct CalendarEmailArgs
+		{
+			public int MemberId;
+			public int CalendarEntryId;
+			public int CalendarId;
+			public DateTime ShiftDate;
+		}
+
+		public void SendCalendarVolunteerNotificationEmail(int memberID, int calendarEntryID)
+		{
+			ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendCalendarVolunteerNotificationEmail);
+			CalendarEmailArgs args = new CalendarEmailArgs();
+			args.MemberId = memberID;
+			args.CalendarEntryId = calendarEntryID;
+			Thread t = new Thread(pts);
+			t.IsBackground = true;
+			t.Start(args);
+		}
+
+		private void _SendCalendarVolunteerNotificationEmail(object args)
+		{
+			CalendarEmailArgs cargs = (CalendarEmailArgs)args;
+			Member m = new MemberBLL().Get(cargs.MemberId);
+			CalendarEntry c = new CalendarBLL().GetCalendarEntry(cargs.CalendarEntryId);
+			if (m == null || c == null)
+			{
+				throw new InvalidOperationException();
+			}
+			SendEmail(m.EmailAddress, "You have been given a shift on " + c.EntryDateShortStringWithDay, 
+				"Hi " + m.FirstName + ",\n\n" +
+				"This is an email to let you know that you have been put down for a shift on the " + c.CalendarName + " calendar on " + c.EntryDateShortStringWithDay + ".  This is not a recurring shift.  Why not add this to your personal calendar now?\n\n" +
+				"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
+				"Thanks,\n\n" +
+				"SERV SSL System" + FOOTER, cargs.MemberId);
+		}
+
+		public void SendCalendarVolunteeringThanksEmail(int memberID, int calendarEntryID)
+		{
+			ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendCalendarVolunteeringThanksEmail);
+			CalendarEmailArgs args = new CalendarEmailArgs();
+			args.MemberId = memberID;
+			args.CalendarEntryId = calendarEntryID;
+			Thread t = new Thread(pts);
+			t.IsBackground = true;
+			t.Start(args);
+		}
+
+		private void _SendCalendarVolunteeringThanksEmail(object args)
+		{
+			CalendarEmailArgs cargs = (CalendarEmailArgs)args;
+			Member m = new MemberBLL().Get(cargs.MemberId);
+			CalendarEntry c = new CalendarBLL().GetCalendarEntry(cargs.CalendarEntryId);
+			if (m == null || c == null)
+			{
+				throw new InvalidOperationException();
+			}
+			SendEmail(m.EmailAddress, "You volunteered for a shift on " + c.EntryDateShortStringWithDay + ", Thanks!", 
+				"Hi " + m.FirstName + ",\n\n" +
+				"You are a star!  Thank you very much for putting your name down on the " + c.CalendarName + " calendar on " + c.EntryDateShortStringWithDay + ".  Why not add this to your personal calendar now?\n\n" +
+				"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
+				"Thanks,\n\n" +
+				"SERV SSL System" + FOOTER, cargs.MemberId);
+		}
+
+		public void SendShiftSwapNeededEmail(int memberID, int calendarID, DateTime date)
+		{
+			bool SendSwapEmails = false;
+			object setting = System.Configuration.ConfigurationManager.AppSettings["SendSwapNeededEmails"];
+			if (setting != null)
+			{
+				SendSwapEmails = bool.Parse(setting.ToString());
+			}
+			if (SendSwapEmails)
+			{
+				ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendShiftSwapNeededEmail);
+				CalendarEmailArgs args = new CalendarEmailArgs();
+				args.MemberId = memberID;
+				args.CalendarId = calendarID;
+				args.ShiftDate = date;
+				Thread t = new Thread(pts);
+				t.IsBackground = true;
+				t.Start(args);
+			}
+		}
+
+		private void _SendShiftSwapNeededEmail(object args)
+		{
+			CalendarEmailArgs cargs = (CalendarEmailArgs)args;
+			Member m = new MemberBLL().Get(cargs.MemberId);
+			Calendar c = new CalendarBLL().Get(cargs.CalendarId);
+			if (m == null || c == null)
+			{
+				throw new InvalidOperationException();
+			}
+			List<Member> members = new MemberBLL().List("", true);
+			foreach (Member tom in members)
+			{
+				SendEmail(m.EmailAddress, m.FirstName + " " + m.LastName + " needs your help!", 
+					"Hi " + tom.FirstName + ",\n\n" +
+					"Sadly, " + m.FirstName + " cannot perform his/her " + c.Name + " duty on " + cargs.ShiftDate.ToString("ddd dd MMM") + ".\n\n" +
+					"We really could use your help!  Are you free?  If you have a few hours spare please put your name down.\n\n" +
+					"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
+					"Thanks very much in advance!\n\n" +
+					"SERV SSL System" + FOOTER, cargs.MemberId);
+			}
+
 		}
 
 		public bool SendSMSMessage(string numbers, string message, int senderUserID)
@@ -73,8 +181,33 @@ namespace SERVBLL
 			return SendEmail(m.EmailAddress, "SERV SSL Member Update", body, senderUserID);
 		}
 
+		public bool SendAllActiveMembersMembershipEmailInBackground(int senderUserID, bool onlyNeverLoggedIn)
+		{
+			ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendAllActiveMembersMembershipEmail);
+			SendMembershipEmailArgs args = new SendMembershipEmailArgs();
+			args.CurrentUserID = senderUserID;
+			args.OnlyNeverLoggedIn = onlyNeverLoggedIn;
+			Thread t = new Thread(pts);
+			t.IsBackground = true;
+			t.Start(args);
+			return true;
+		}
+
+		struct SendMembershipEmailArgs
+		{
+			public int CurrentUserID;
+			public bool OnlyNeverLoggedIn;
+		}
+
+		private void _SendAllActiveMembersMembershipEmail(object args)
+		{
+			SendMembershipEmailArgs a = (SendMembershipEmailArgs)args;
+			SendAllActiveMembersMembershipEmail(a.CurrentUserID, a.OnlyNeverLoggedIn);
+		}
+
 		public bool SendAllActiveMembersMembershipEmail(int senderUserID, bool onlyNeverLoggedIn)
 		{
+			DateTime s = log.LogStart();
 			List<Member> members = new MemberBLL().List("", true);
 			foreach (Member m in members)
 			{
@@ -89,13 +222,19 @@ namespace SERVBLL
 					log.Debug(string.Format("Membership update to {0} failed because {1}", m.EmailAddress, e.Message));
 				}
 			}
+			log.LogEnd();
+			log.LogPerformace(s);
 			return true;
 		}
 
 		public bool SendEmail(string address, string subject, string body, int senderUserID)
 		{
 			log.LogStart();
-			log.Debug(string.Format("{0} >> {1} :: {2} seder: {3}", address, subject, body, senderUserID));
+			log.Debug(string.Format("{0} >> {1} :: {2} sender: {3}", address, subject, body, senderUserID));
+			if (address == "@")
+			{
+				return true;
+			}
 			MailMessage m = new MailMessage(FROM, address);
 			m.Body = body;
 			m.Subject = subject;
@@ -112,8 +251,8 @@ namespace SERVBLL
 			MailMessage m = (MailMessage)mail;
 			try
 			{
-			c.Send(m);
-			log.Debug(string.Format("Sent a mail to {0}", m.To));
+				c.Send(m);
+				log.Debug(string.Format("Sent a mail to {0}", m.To));
 			}
 			catch (Exception e)
 			{

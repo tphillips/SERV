@@ -119,13 +119,14 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.6</h3>
+			<h3>Version 1.6.1</h3>
 			<h4>Recent Changes</h4>
 			<ul>	
-				<li>Promoting the calendar work so far.  The new calendar system is in TESTING ONLY and you should continue to use the google calendar</li>
+				Calendar email notifications for volunteering, being volunteered and shift swaps
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Promoting the calendar work so far.  The new calendar system is in TESTING ONLY and you should continue to use the google calendar</li>
 				<li>More calendar work</li>
 				<li>Background release including calendar work - hidden from sight</li>
 				<li>Minor fixes</li>

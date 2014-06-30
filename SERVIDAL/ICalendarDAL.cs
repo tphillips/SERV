@@ -16,6 +16,7 @@ namespace SERVIDAL
 		void SetCalendarLastGenerateDate(DateTime upTo);
 		SERVDataContract.DbLinq.CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId, int adHoc);
 		SERVDataContract.DbLinq.CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId);
+		SERVDataContract.DbLinq.CalendarEntry GetCalendarEntry(int calendarEntryId);
 		SERVDataContract.DbLinq.Calendar Get(int calendarId);
 		void RosterVolunteer(int calendarId, int memberId, string rosteringWeek, int rosteringDay);
 		void RemoveRotaSlot(int calendarId, int memberId, string rosteringWeek, int rosteringDay);

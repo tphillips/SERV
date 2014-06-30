@@ -72,6 +72,11 @@ namespace SERVDAL
 			return (from e in db.CalendarEntry where e.EntryDate == date && e.CalendarID == calendarId && e.MemberID == memberId select e).FirstOrDefault();
 		}
 
+		public CalendarEntry GetCalendarEntry(int calendarEntryId)
+		{
+			return (from e in db.CalendarEntry where e.CalendarEntryID == calendarEntryId select e).FirstOrDefault();
+		}
+
 		public bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate)
 		{
 			CalendarEntry e = (from ce in db.CalendarEntry

@@ -306,29 +306,8 @@ namespace SERVWeb
 				throw new System.Security.Authentication.AuthenticationException();
 			}
 			if (sure != "YES"){ throw new InvalidExpressionException("You don't seem to be sure about that"); }
-			ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendAllActiveMembersMembershipEmail);
-			SendMembershipEmailArgs args = new SendMembershipEmailArgs();
-			args.CurrentUserID = CurrentUser().UserID;
-			args.OnlyNeverLoggedIn = onlyNeverLoggedIn;
-			Thread t = new Thread(pts);
-			t.IsBackground = true;
-			t.Start(args);
+			SERVBLLFactory.Factory.MessageBLL().SendAllActiveMembersMembershipEmailInBackground(CurrentUser().MemberID, onlyNeverLoggedIn);
 			return true;
-		}
-
-		struct SendMembershipEmailArgs
-		{
-			public int CurrentUserID;
-			public bool OnlyNeverLoggedIn;
-		}
-
-		private void _SendAllActiveMembersMembershipEmail(object args)
-		{
-			DateTime s = log.LogStart();
-			SendMembershipEmailArgs a = (SendMembershipEmailArgs)args;
-			SERVBLLFactory.Factory.MessageBLL().SendAllActiveMembersMembershipEmail(a.CurrentUserID, a.OnlyNeverLoggedIn);
-			log.LogEnd();
-			log.LogPerformace(s);
 		}
 
 		public User Login(string username, string passwordHash)
@@ -427,7 +406,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.CalendarBLL().AddVolunteerToCalendar(calendarId, memberId, shiftDate);
+			return SERVBLLFactory.Factory.CalendarBLL().AddVolunteerToCalendar(calendarId, memberId, shiftDate, memberId == CurrentUser().MemberID);
 		}
 
 		private User CurrentUser()

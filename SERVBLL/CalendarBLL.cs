@@ -103,6 +103,16 @@ namespace SERVBLL
 			return new CalendarEntry(entry);
 		}
 
+		public CalendarEntry GetCalendarEntry(int calendarEntryId)
+		{
+			SERVDataContract.DbLinq.CalendarEntry entry = SERVDALFactory.Factory.CalendarDAL().GetCalendarEntry(calendarEntryId);
+			if (entry == null)
+			{
+				return null;
+			}
+			return new CalendarEntry(entry);
+		}
+
 		public CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId)
 		{
 			DateTime cleanDate = new DateTime(date.Year, date.Month, date.Day);
@@ -198,7 +208,9 @@ namespace SERVBLL
 				MarkShiftSwapNoLongerNeeded(e.CalendarEntryID);
 				return e.CalendarEntryID;
 			}
-			return SERVDALFactory.Factory.CalendarDAL().CreateCalendarEntry(calendarID, memberID, cleanDate, adHoc);
+			int ret = SERVDALFactory.Factory.CalendarDAL().CreateCalendarEntry(calendarID, memberID, cleanDate, adHoc);
+
+			return ret;
 		}
 
 		void MarkShiftSwapNoLongerNeeded(int calendarEntryID)
@@ -208,12 +220,29 @@ namespace SERVBLL
 
 		public bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate)
 		{
-			return SERVDALFactory.Factory.CalendarDAL().MarkShiftSwapNeeded(calendarId, memberId, shiftDate);
+			bool ret = SERVDALFactory.Factory.CalendarDAL().MarkShiftSwapNeeded(calendarId, memberId, shiftDate);
+			if (ret)
+			{
+				new MessageBLL().SendShiftSwapNeededEmail(memberId, calendarId, shiftDate);
+			}
+			return true;
 		}
 
-		public bool AddVolunteerToCalendar(int calendarId, int memberId, DateTime shiftDate)
+		public bool AddVolunteerToCalendar(int calendarId, int memberId, DateTime shiftDate, bool memberIsMember)
 		{
-			return CreateCalendarEntry(calendarId, memberId, shiftDate, true) > 0;
+			int ret = CreateCalendarEntry(calendarId, memberId, shiftDate, true);
+			if (ret > 0)
+			{
+				if (memberIsMember)
+				{
+					new MessageBLL().SendCalendarVolunteeringThanksEmail(memberId, ret);
+				}
+				else
+				{
+					new MessageBLL().SendCalendarVolunteerNotificationEmail(memberId, ret);
+				}
+			}
+			return ret > 0;
 		}
 
 		public void RemoveCalendarEntry(int calendarEntryID)
@@ -282,6 +311,7 @@ namespace SERVBLL
 				Thread.Sleep(300); if (x > 14){ Thread.Sleep(600); }
 			}
 			SetCalendarLastGenerateDate(DateTime.Now, curDay);
+			GC.Collect();
 			log.LogEnd();
 			log.LogPerformace(start);
 		}

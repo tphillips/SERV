@@ -112,7 +112,7 @@ INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDa
 INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Hooleygan', 1, 14, NULL, 0, 7, 1, NULL, NULL);
 
 
-/* 
+
 insert into Tag(Tag) values('OnRota'); 
 insert into Tag(Tag) values('Committee'); 
 
