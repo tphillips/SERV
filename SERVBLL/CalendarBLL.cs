@@ -209,7 +209,6 @@ namespace SERVBLL
 				return e.CalendarEntryID;
 			}
 			int ret = SERVDALFactory.Factory.CalendarDAL().CreateCalendarEntry(calendarID, memberID, cleanDate, adHoc);
-
 			return ret;
 		}
 
@@ -258,9 +257,9 @@ namespace SERVBLL
 		}
 
 		/// <summary>
-		/// Simple generates ALL calendars from the MemberCalendar table. Checks existing entries and removes if needed
+		/// Generates ALL calendars from the MemberCalendar table. Checks existing entries and removes if needed
 		/// Ad-Hoc entries will not be removed
-		/// The generation code can be run at any time, and processes from today onwaysd for GENERATE_CALENDAR_DAYS days.
+		/// The generation code can be run at any time, and processes from today onwards for GENERATE_CALENDAR_DAYS days.
 		/// </summary>
 		/// <returns><c>true</c>, if calendar was generated, <c>false</c> otherwise.</returns>
 		public void _GenerateCalendar()
@@ -268,6 +267,7 @@ namespace SERVBLL
 			DateTime start = log.LogStart();
 			DateTime curDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 			List<RosteredVolunteer> allScheduledSlots = ListRosteredVolunteers(); // cache scheduled slots
+			List<CalendarEntry> allUpcomingCalendarEntries = ListCalendarEntries(curDay, GENERATE_CALENDAR_DAYS + 1); // cache calendar entries
 			// Work on each day individually from today for GENERATE_CALENDAR_DAYS days
 			for (int x = 0; x < GENERATE_CALENDAR_DAYS; x++)
 			{
@@ -282,7 +282,9 @@ namespace SERVBLL
 				foreach (RosteredVolunteer rv in scheduledSlots)
 				{
 					// See if it exists, if not create it
-					CalendarEntry e = GetCalendarEntry(curDay, rv.CalendarID, rv.MemberID, false);
+					CalendarEntry e = (from ce in allUpcomingCalendarEntries
+					                   where ce.EntryDate == curDay && ce.CalendarID == rv.CalendarID && ce.MemberID == rv.MemberID && ce.AdHoc == false
+					                   select ce).FirstOrDefault();
 					if (e == null)
 					{
 						CreateCalendarEntry(rv.CalendarID, rv.MemberID, curDay);
@@ -290,8 +292,7 @@ namespace SERVBLL
 					Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
 				}
 				// Check calendar to make sure there are not schedules that should not be there (after removing a rostered slot for example, make sure its not an ad-hoc)
-				List<CalendarEntry> entries = ListCalendarEntries(curDay);
-				foreach (CalendarEntry e in entries)
+				foreach (CalendarEntry e in (from ce in allUpcomingCalendarEntries where ce.EntryDate == curDay select ce).ToList())
 				{
 					if (!e.AdHoc && !e.ManuallyAdded) // Ignore adhocs
 					{
@@ -308,7 +309,7 @@ namespace SERVBLL
 				}
 				// move on
 				curDay = curDay.AddDays(1);
-				Thread.Sleep(300); if (x > 14){ Thread.Sleep(600); }
+				Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
 			}
 			SetCalendarLastGenerateDate(DateTime.Now, curDay);
 			GC.Collect();

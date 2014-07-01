@@ -29,6 +29,7 @@ namespace SERVDAL
 
 		public int CreateCalendarEntry(int calendarID, int memberID, DateTime date, bool adHoc)
 		{
+			log.LogStart();
 			CalendarEntry e = new CalendarEntry()
 			{
 				CreateDateTime = DateTime.Now,
@@ -79,6 +80,7 @@ namespace SERVDAL
 
 		public bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate)
 		{
+			log.LogStart();
 			CalendarEntry e = (from ce in db.CalendarEntry
 			                   where ce.CalendarID == calendarId && ce.MemberID == memberId && ce.EntryDate == shiftDate
 			                   select ce).FirstOrDefault();
@@ -93,6 +95,7 @@ namespace SERVDAL
 
 		public bool MarkShiftSwapNoLongerNeeded(int calendarEntryID)
 		{
+			log.LogStart();
 			CalendarEntry e = (from ce in db.CalendarEntry
 				where ce.CalendarEntryID == calendarEntryID
 				select ce).FirstOrDefault();
