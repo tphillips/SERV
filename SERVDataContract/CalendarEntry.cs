@@ -25,6 +25,7 @@ namespace SERVDataContract
 			this.MemberID = metal.MemberID;
 			this.CalendarID = metal.CalendarID;
 			this.CalendarName = metal.Calendar.Name;
+			this.CalendarSortOrder = metal.Calendar.SortOrder != null? (int)metal.Calendar.SortOrder : 9999;
 			this.MemberName = string.Format("{0} {1}", metal.Member.FirstName, metal.Member.LastName);
 		}
 
@@ -33,6 +34,9 @@ namespace SERVDataContract
 
 		[DataMember]
 		public string CalendarName { get; set; }
+
+		[DataMember]
+		public int CalendarSortOrder {get;set;}
 
 		[DataMember]
 		public int CalendarEntryID { get; set; }

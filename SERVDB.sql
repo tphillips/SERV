@@ -369,6 +369,7 @@ CREATE TABLE IF NOT EXISTS `SERV`.`Calendar` (
 1+1 == OK.  1+0 || 0+1 == not ok*/,
   `RequiredTagID` INT NOT NULL COMMENT 'In order to be scheduled on this calendar, or volunteer for a shift, the ember must have this tag.',
   `DefaultRequirement` INT NOT NULL DEFAULT 4 COMMENT 'If not overridden in CalendarRequirements the system will try to achieve this number of volunteers per night',
+  `SortOrder` INT NULL DEFAULT 0,
   `LastGenerated` DATETIME NULL,
   `GeneratedUpTo` DATE NULL,
   PRIMARY KEY (`CalendarID`))
@@ -672,13 +673,13 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SERV`;
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Blood', 1, 14, NULL, 0, 7, 4, NULL, NULL);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'AA Night', 1, 14, NULL, 1, 8, 1, NULL, NULL);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Day Controller', 1, 14, NULL, 1, 3, 1, NULL, NULL);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Night Controller', 1, 14, NULL, 0, 3, 1, NULL, NULL);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'AA Night Standby', 1, 14, NULL, 1, 8, 1, NULL, NULL);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'AA Daytime', 1, 14, NULL, 1, 8, 2, NULL, NULL);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Hooleygan', 1, 14, NULL, 0, 7, 1, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Blood', 1, 14, NULL, 0, 7, 4, NULL, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'AA Night', 1, 14, NULL, 1, 8, 1, NULL, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Day Controller', 1, 14, NULL, 1, 3, 1, NULL, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Night Controller', 1, 14, NULL, 0, 3, 1, NULL, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'AA Night Standby', 1, 14, NULL, 1, 8, 1, NULL, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'AA Daytime', 1, 14, NULL, 1, 8, 2, NULL, NULL, NULL);
+INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`) VALUES (NULL, 'Hooleygan', 1, 14, NULL, 0, 7, 1, NULL, NULL, NULL);
 
 COMMIT;
 

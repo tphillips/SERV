@@ -20,7 +20,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">View <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="ViewMember.aspx?self=yes"><i class="icon-user"></i> Your Profile</a></li>
-						<li><a href="Calendar.aspx?self=yes"><i class="icon-calendar"></i> The Calendar (Not yet in use, in testing!)</a></li>
+						<li><a href="Calendar.aspx"><i class="icon-calendar"></i> The Calendar</a></li>
 						<li class="divider"></li>
 						<li><a href="Members.aspx"><i class="icon-list"></i> Member List</a></li>
 						<li><a href="Locations.aspx"><i class="icon-map-marker"></i> Locations List</a></li>

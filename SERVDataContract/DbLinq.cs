@@ -415,6 +415,8 @@ namespace SERVDataContract.DbLinq
 		
 		private System.Nullable<int> _simpleDaysIncrement;
 		
+		private System.Nullable<int> _sortOrder;
+		
 		private sbyte _volunteerRemainsFree;
 		
 		private EntitySet<CalendarEntry> _calendarEntry;
@@ -461,6 +463,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnSimpleDaysIncrementChanged();
 		
 		partial void OnSimpleDaysIncrementChanging(System.Nullable<int> value);
+		
+		partial void OnSortOrderChanged();
+		
+		partial void OnSortOrderChanging(System.Nullable<int> value);
 		
 		partial void OnVolunteerRemainsFreeChanged();
 		
@@ -661,6 +667,27 @@ namespace SERVDataContract.DbLinq
 					this._simpleDaysIncrement = value;
 					this.SendPropertyChanged("SimpleDaysIncrement");
 					this.OnSimpleDaysIncrementChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_sortOrder", Name="SortOrder", DbType="int", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<int> SortOrder
+		{
+			get
+			{
+				return this._sortOrder;
+			}
+			set
+			{
+				if ((_sortOrder != value))
+				{
+					this.OnSortOrderChanging(value);
+					this.SendPropertyChanging();
+					this._sortOrder = value;
+					this.SendPropertyChanged("SortOrder");
+					this.OnSortOrderChanged();
 				}
 			}
 		}

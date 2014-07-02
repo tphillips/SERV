@@ -183,7 +183,7 @@ namespace SERVBLL
 			{	
 				List<CalendarEntry> toAdd = (from ce in all
 				                             where ce.EntryDate == curDay.AddDays(x)
-											 orderby ce.CoverNeeded descending
+											orderby ce.CalendarSortOrder, ce.CoverNeeded descending
 				                             select ce).ToList();
 				if (toAdd.Count == 0)
 				{

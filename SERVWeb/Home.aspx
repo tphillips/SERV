@@ -24,7 +24,7 @@
 	<div class="row">
 		<small>
 			<div class="span12" id="calendar" style="display:none">
-				<h3>The Calendar</h3>
+				<h3>The Calendar &nbsp;&nbsp;&nbsp;<a href="Calendar.aspx"><small>Click here to see more, request swaps or volunteer</small></a></h3>
 				<table class="table table-striped table-bordered table-condensed">
 					<tr>
 						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay1"></span></td>
@@ -68,64 +68,18 @@
 		</small>
 	</div>
 
-	<div class="row">
-		<div class="span12">
-		<h3><a href="https://www.google.com/calendar/embed?src=serv.surrey%40gmail.com&ctz=Europe/London" target="_blank">Blood Calendar</a></h3>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span3">
-			<div id="pnlBloodCal" class="calDay calToday">...
-			</div>
-		</div>
-		<div class="span3">
-			<div id="pnlBloodCal1" class="calDay">...
-			</div>
-		</div>
-		<div class="span3">
-			<div id="pnlBloodCal2" class="calDay">...
-			</div>
-		</div>
-		<div class="span3">
-			<div id="pnlBloodCal3" class="calDay">...
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="span12">
-		<h3><a href="https://www.google.com/calendar/embed?src=k31pom7k4lhv3eq619iffm50ss%40group.calendar.google.com&ctz=Europe/London" target="_blank">AA Calendar</a></h3>
-		</div>
-	</div>
-	<div class="row">
-		<div class="span3">
-			<div id="pnlAACal" class="calDay calToday">...
-			</div>
-		</div>
-		<div class="span3">
-			<div id="pnlAACal1" class="calDay">...
-			</div>
-		</div>
-		<div class="span3">
-			<div id="pnlAACal2" class="calDay">...
-			</div>
-		</div>
-		<div class="span3">
-			<div id="pnlAACal3" class="calDay">...
-			</div>
-		</div>
-	</div>
 	<br/>
 	<div class="row">
 		
 		<div class="span12">
-			<h3>Version 1.6.2</h3>
+			<h3>Version 1.6.3</h3>
 			<h4>Recent Changes</h4>
 			<ul>	
-				<li>Much, much more efficient calendar generation code</li>
+				<li>Calendar Sorting</li>
 			</ul>
 			<h5>Previously</h5>
 			<ul>
+				<li>Much, much more efficient calendar generation code</li>
 				<li>Calendar email notifications for volunteering, being volunteered and shift swaps</li>
 				<li>Promoting the calendar work so far.  The new calendar system is in TESTING ONLY and you should continue to use the google calendar</li>
 				<li>More calendar work</li>
@@ -249,12 +203,12 @@
 
 	<script>
 		$("#loading").hide();
+		$("#loading").empty();
 		FullName = "<%=this.FullName%>";
 		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); window.setTimeout('$("#success").slideUp()',4000); }
 		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
-		showCals();
-		//initCalendar(true, 14);
-		//loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
+		initCalendar(true, 14);
+		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
 	</script>
 	
 </asp:Content>
