@@ -134,6 +134,7 @@
     <Content Include="js\Calendar.js" />
     <Content Include="ViewRota.aspx" />
     <Content Include="Calendar.aspx" />
+    <Content Include="js\JS.1.6.4.1.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">

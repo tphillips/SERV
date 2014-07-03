@@ -6,106 +6,63 @@ var members = new Array();
 var memberNames = new Array();
 var controllers = new Array();
 var controllerNames = new Array();
+var greetings = new Array("Hi", "Greetings", "Well Hello", "Sup", "Wagwan", "Haai", "Hola", "Hej", "Konnichiwa", "Zdravstvujte", "Yo", "Howdy", "Hiya", "Good day to you", "Oh, Hi");
 
-function getCalInfo(cal, onResult)
+function setGreeting()
 {
-	$.ajax(
-	{
-		url : cal,
-		dataType: "text",
-		success : function (data) {
-			var res = "";
-			data = data.replace(/       /g, "\n");
-			var parts = data.split("\n");
-			var first = true;
-			for (i = 0; i < parts.length; i ++) 
-			{
-				var part = $.trim(parts[i]); 
-				if (part != "")
-				{
-					part = part.replace(/       /g, "<br/>");
-					part = part.replace(/!/g, "<span style='color:red'>");
-					part = part.replace(/\*/g, "<span style='color:blue'>");
-					part = part.replace(/\Controller 1/g, "<span style='color:blue'>Controller 1");
-					part = part.replace(/\Night 1/g, "<span style='color:Purple'>Night 1");
-					part = part.replace(/\Night 2/g, "<span style='color:Orange'>Night 2");
-					part = part.replace(/\Day 1/g, "<span style='color:Green'>Day 1");
-					part = part.replace(FullName, "<span style='font-size:medium; font-weight:bold; text-style:flash'>" + FullName);
-					if (first)
-					{
-						first = false;
-						res = "<h4><i class=\"icon-calendar\"> </i> " + part + "</h4><ul>";
-					}
-					else
-					{
-				    	res = res + "<li>" + part +  "</li>";
-				    }
-			    }
-			}
-			res = res + "</ul>";
-		    onResult(res);
-		}
-	});
+	$("#lblGreeting").text(greetings[Math.floor(Math.random()*greetings.length)]);
 }
 
-function showCals()
+function getNextShift()
 {
-	getCalInfo("bloodCalendarInclude0.htm", 
-		function(res)
+	callServerSide(
+		"Service/Service.asmx/GetNextShift", 
+		"{}",
+		function(json)
 		{
-			$('#pnlBloodCal').html(res);
+			if (json.d != null)
+			{
+				$("#lblNextShiftDate").text("on " + json.d.EntryDateShortStringWithDay);
+				if (json.d.IsToday)
+				{
+					$("#lblNextShiftDate").text("today");
+				}
+				$("#lblNextShiftType").text(json.d.CalendarName);
+				$("#lblNextShift").slideDown();
+			}
+			else
+			{
+				$("#lblNoShift").slideDown();
+			}
+		},
+		function(json)
+		{
+			
 		}
 	);
+}
 
-	getCalInfo("bloodCalendarInclude1.htm", 
-		function(res)
+function listRecentRuns()
+{
+	callServerSide(
+		"Service/Service.asmx/ListRecentRuns", 
+		"{}",
+		function(json)
 		{
-			$('#pnlBloodCal1').html(res);
+			var toAppend = "<table class='table table-striped table-bordered table-condensed'><tr><th>Recently</th></tr>";
+			for(var x = 0; x < json.d.length; x++)
+			{
+				toAppend += "<tr><td>" + json.d[x].MemberName + " went to " + json.d[x].DeliverToDestinationName + "</td></tr>";
+			}
+			toAppend += "</table>";
+			$("#recentActivity").append(toAppend);
+			$("#recentActivity").slideDown();
+		},
+		function(json)
+		{
+			
 		}
 	);
-
-	getCalInfo("bloodCalendarInclude2.htm", 
-		function(res)
-		{
-			$('#pnlBloodCal2').html(res);
-		}
-	);
-
-	getCalInfo("bloodCalendarInclude3.htm", 
-		function(res)
-		{
-			$('#pnlBloodCal3').html(res);
-		}
-	);
-
-	getCalInfo("aaCalendarInclude0.htm", 
-		function(res)
-		{
-			$('#pnlAACal').html(res);
-		}
-	);
-
-	getCalInfo("aaCalendarInclude1.htm", 
-		function(res)
-		{
-			$('#pnlAACal1').html(res);
-		}
-	);
-
-	getCalInfo("aaCalendarInclude2.htm", 
-		function(res)
-		{
-			$('#pnlAACal2').html(res);
-		}
-	);
-
-	getCalInfo("aaCalendarInclude3.htm", 
-		function(res)
-		{
-			$('#pnlAACal3').html(res);
-		}
-	);
-
 }
 
 function ImpersonateMember(memberId)

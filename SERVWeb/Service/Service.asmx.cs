@@ -42,6 +42,20 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
+		public CalendarEntry GetNextShift()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().GetMemberNextShift(CurrentUser().MemberID);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<RunLog> ListRecentRuns()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.RunLogBLL().ListRecent(10);
+		}
+
+		[WebMethod(EnableSession = true)]
 		public List<Member> ListMembers()
 		{
 			Authenticate();
@@ -380,14 +394,14 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.CalendarBLL().ListWeeksCaledarEntries();
 		}
 
-		[WebMethod(EnableSession = true, CacheDuration=60)]
+		[WebMethod(EnableSession = true)]
 		public List<List<CalendarEntry>> ListSpansCaledarEntries(int days)
 		{
 			Authenticate();
 			return SERVBLLFactory.Factory.CalendarBLL().ListSpansCaledarEntries(days);
 		}
 
-		[WebMethod(EnableSession = true, CacheDuration=60)]
+		[WebMethod(EnableSession = true)]
 		public bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate)
 		{
 			Authenticate();
@@ -398,7 +412,7 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.CalendarBLL().MarkShiftSwapNeeded(calendarId, memberId, shiftDate);
 		}
 
-		[WebMethod(EnableSession = true, CacheDuration=60)]
+		[WebMethod(EnableSession = true)]
 		public bool AddVolunteerToCalendar(int calendarId, int memberId, DateTime shiftDate)
 		{
 			Authenticate();

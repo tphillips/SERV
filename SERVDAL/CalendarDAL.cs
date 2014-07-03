@@ -157,6 +157,15 @@ namespace SERVDAL
 				select mc).ToList();
 		}
 
+		public CalendarEntry GetMemberNextShift(int memberID)
+		{
+			DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+			return (from ce in db.CalendarEntry
+			        where ce.MemberID == memberID && ce.EntryDate >= today && ce.CoverNeeded == 0
+			        orderby ce.EntryDate
+			        select ce).FirstOrDefault();
+		}
+
 		public void SetCalendarLastGenerateDate(DateTime upTo)
 		{
 			log.LogStart();

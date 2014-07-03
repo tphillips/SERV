@@ -17,41 +17,55 @@ namespace SERVDataContract
 		public RunLog(SERVDataContract.DbLinq.RunLog metal)
 		{
 			PropertyMapper.MapProperties(metal, this);
+			this.MemberName = metal.Member.FirstName + " " + metal.Member.LastName;
+			this.DeliverToDestinationName = metal.Location.Location1;
 		}
 
+		[DataMember]
 		public int RunLogID { get; set; }
 
+		[DataMember]
 		public int Boxes { get; set; }
 
+		[DataMember]
 		public Dictionary<string, int> Products
 		{
 			get;
 			set;
 		}
 
+		[DataMember]
 		public string Vehicle
 		{
 			get;
 			set;
 		}
 
+		[DataMember]
 		public DateTime? CallDateTime { get; set; }
+
+		[DataMember]
 		public string CallDate
 		{
 			get { return CallDateTime != null ? ((DateTime)CallDateTime).ToString("dd MMM yyyy") : ""; }
 		}
+
+		[DataMember]
 		public string CallTime
 		{
 			get { return CallDateTime != null ? ((DateTime)CallDateTime).ToString("HH:mm") : ""; }
 		}
 
+		[DataMember]
 		public int CallFromLocationID { get; set; }
 
 		public DateTime? CollectDateTime { get; set; }
+
 		public string CollectDate
 		{
 			get { return CollectDateTime != null ? ((DateTime)CollectDateTime).ToString("dd MMM yyyy") : ""; }
 		}
+
 		public string CollectTime
 		{
 			get { return CollectDateTime != null ? ((DateTime)CollectDateTime).ToString("HH:mm") : ""; }
@@ -114,6 +128,10 @@ namespace SERVDataContract
 			get { return CallDateTime != null; }
 		}
 
+		[DataMember]
+		public string MemberName{get;set;}
+
+		public string DeliverToDestinationName{get;set;}
 	}
 }
 

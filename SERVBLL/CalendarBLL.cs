@@ -194,6 +194,16 @@ namespace SERVBLL
 			return ret;
 		}
 
+		public CalendarEntry GetMemberNextShift(int memberID)
+		{
+			SERVDataContract.DbLinq.CalendarEntry lret = SERVDALFactory.Factory.CalendarDAL().GetMemberNextShift(memberID);
+			if (lret != null)
+			{
+				return new CalendarEntry(lret);
+			}
+			return null;
+		}
+
 		public int CreateCalendarEntry(int calendarID, int memberID, DateTime date)
 		{
 			return CreateCalendarEntry(calendarID, memberID, date, false);

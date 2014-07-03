@@ -20,6 +20,7 @@ namespace SERVIBLL
 		List<List<CalendarEntry>> ListSpansCaledarEntries(int days);
 		List<List<CalendarEntry>> ListSpansCaledarEntries(string dateToParse, int days);
 		List<List<CalendarEntry>> ListSpansCaledarEntries(DateTime dayInWeek, int days);
+		CalendarEntry GetMemberNextShift(int memberID);
 		bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate);
 		bool AddVolunteerToCalendar(int calendarId, int memberId, DateTime shiftDate, bool memberIsMember);
 		void _GenerateCalendar();

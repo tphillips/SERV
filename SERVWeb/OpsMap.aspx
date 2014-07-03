@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="/css/icons.css" />
         <script src="/js/jquery-1.10.1.min.js"></script>
         <script src="/js/jquery-ui-1.10.3.custom.min.js"></script>
-        <script language="JavaScript" src="js/JS.js"></script>
+        <script language="JavaScript" src="js/JS.1.6.4.1.min.js"></script>
 		<style type="text/css">
 			html { height: 100% }
 			body { height: 100%; margin: 0px; padding: 0; }

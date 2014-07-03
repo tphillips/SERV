@@ -331,6 +331,17 @@ namespace SERVBLL
 			return ret;
 		}
 
+		public List<RunLog> ListRecent(int count)
+		{
+			List<RunLog> ret = new List<RunLog>();
+			List<SERVDataContract.DbLinq.RunLog> lret = SERVDALFactory.Factory.RunLogDAL().ListRecent(count);
+			foreach(SERVDataContract.DbLinq.RunLog rl in lret)
+			{
+				ret.Add(new RunLog(rl));
+			}
+			return ret;
+		}
+
 		int FindAAPickupLocationID()
 		{
 			return new LocationBLL().ListLocations("East Surrey")[0].LocationID;

@@ -26,6 +26,13 @@ namespace SERVDAL
 				select rl).FirstOrDefault();
 		}
 
+		public List<RunLog> ListRecent(int recent)
+		{
+			return (from rl in db.RunLog
+				orderby rl.CallDateTime descending
+			        select rl).Take(recent).ToList();
+		}
+
 		public bool CreateRawRecord(RawRunLog raw)
 		{
 			db.RawRunLog.InsertOnSubmit(raw);
