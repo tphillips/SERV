@@ -1,9 +1,10 @@
 <%@ Page Language="C#" Inherits="SERVWeb.ControllerLog" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
+<%@ Import Namespace="SERVWeb" %>
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Controller Log</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
-<script language="JavaScript" src="js/ControllerLog.js"></script>
+<%=SERVGlobal.ControllerLogJSInclude()%>	
 
 <div id="entry" style="display:none">
 

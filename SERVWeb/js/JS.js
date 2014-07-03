@@ -7,6 +7,7 @@ var memberNames = new Array();
 var controllers = new Array();
 var controllerNames = new Array();
 var greetings = new Array("Hi", "Greetings", "Well Hello", "Sup", "Wagwan", "Haai", "Hola", "Hej", "Konnichiwa", "Zdravstvujte", "Yo", "Howdy", "Hiya", "Good day to you", "Oh, Hi");
+var wentVerbs = new Array("went to","visited","warped to","travelled to","piloted themselves to","stopped off at", "took some air at","helped out","parked up at","delivered to","took something to", "set sail for", "plotted a course to", "bimbled along to");
 
 function setGreeting()
 {
@@ -52,7 +53,7 @@ function listRecentRuns()
 			var toAppend = "<table class='table table-striped table-bordered table-condensed'><tr><th>Recently</th></tr>";
 			for(var x = 0; x < json.d.length; x++)
 			{
-				toAppend += "<tr><td>" + json.d[x].MemberName + " went to " + json.d[x].DeliverToDestinationName + "</td></tr>";
+				toAppend += "<tr><td>" + json.d[x].MemberName + " " + wentVerbs[Math.floor(Math.random()*wentVerbs.length)] + " " + json.d[x].DeliverToDestinationName + "</td></tr>";
 			}
 			toAppend += "</table>";
 			$("#recentActivity").append(toAppend);

@@ -1,6 +1,7 @@
 <%@ Master Language="C#" Inherits="SERVWeb.Master" %>
 <%@ Register TagPrefix="SERV" TagName="TopControl" Src="TopControl.ascx" %>
 <%@ Register TagPrefix="SERV" TagName="Panels" Src="Panels.ascx" %>
+<%@ Import Namespace="SERVWeb" %>
 
 <!DOCTYPE html>
 <html>
@@ -16,7 +17,7 @@
         <script src="/js/jquery-ui-1.10.3.custom.min.js"></script>
         <script src="/js/knockout-min.js"></script>
         <script src="/js/knockout.mapping.js"></script>
-        <script language="JavaScript" src="js/JS.1.6.4.1.min.js"></script>
+        <%=SERVGlobal.MainJSInclude()%>	
     </head>
     
     <body>

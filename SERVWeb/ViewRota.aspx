@@ -1,9 +1,10 @@
 ﻿<%@ Page Language="C#" Inherits="SERVWeb.ViewRota" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
+<%@ Import Namespace="SERVWeb" %>
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Rota</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
-<script language="JavaScript" src="js/Calendar.js"></script>
+<%=SERVGlobal.CalendarJSInclude()%>	
 
 	<div id="entry" style="display:none">
 

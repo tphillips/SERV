@@ -16,7 +16,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG; LOCALDEV;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -25,12 +25,14 @@
     </AspNet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <AspNet>
+      <AspNet DisableCodeBehindGeneration="True" />
+    </AspNet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -121,7 +123,6 @@
     <Content Include="img\glyphicons-halflings-red.png" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
-    <Content Include="bloodCalendarInclude.htm" />
     <Content Include="PasswordReset.aspx" />
     <Content Include="js\knockout.mapping.js" />
     <Content Include="js\knockout-min.js" />
@@ -134,7 +135,6 @@
     <Content Include="js\Calendar.js" />
     <Content Include="ViewRota.aspx" />
     <Content Include="Calendar.aspx" />
-    <Content Include="js\JS.1.6.4.1.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">

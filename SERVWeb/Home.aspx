@@ -1,10 +1,11 @@
 <%@ Page Language="C#" Inherits="SERVWeb.Home" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
+<%@ Import Namespace="SERVWeb" %>
 
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">System</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
-	<script language="JavaScript" src="js/Calendar.js"></script>	
+	<%=SERVGlobal.CalendarJSInclude()%>	
 
 	<div class="row">
 		<div class="span6">
@@ -84,14 +85,16 @@
 	<div class="row">
 		
 		<div class="span12">
-			<h4>Version 1.6.4.1</h4>
+			<h4>Version <%=SERVGlobal.SERVVersion%></h4>
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
-				<ul>	
-					<li>New home screen layout</li>
+				<ul>
+					<li>Cache safe JS minification and build script</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Verbs</li>	
+					<li>New home screen layout</li>
 					<li>Adding key to home calendar</li>
 					<li>Caching mods</li>
 					<li>Calendar Sorting</li>

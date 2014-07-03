@@ -1,6 +1,7 @@
 <%@ Page Language="C#" Inherits="SERVWeb.OpsMap" %>
 <%@ Register TagPrefix="SERV" TagName="TopControl" Src="TopControl.ascx" %>
 <%@ Register TagPrefix="SERV" TagName="Panels" Src="Panels.ascx" %>
+<%@ Import Namespace="SERVWeb" %>
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
         <link rel="stylesheet" href="/css/icons.css" />
         <script src="/js/jquery-1.10.1.min.js"></script>
         <script src="/js/jquery-ui-1.10.3.custom.min.js"></script>
-        <script language="JavaScript" src="js/JS.1.6.4.1.min.js"></script>
+        <%=SERVGlobal.MainJSInclude()%>	
 		<style type="text/css">
 			html { height: 100% }
 			body { height: 100%; margin: 0px; padding: 0; }
@@ -27,7 +28,7 @@
         <script src="/js/bootstrap.min.js"></script>
     	<script type="text/javascript" 
     		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-Wccd0zvGm6GyENJJs7d3lQNmysym9o&sensor=true&libraries=weather"></script>
-		<script type="text/javascript" src="js/opsMap.js"></script>
+		<%=SERVGlobal.OpsMapJSInclude()%>	
 			
 		<SERV:TopControl runat="server" id="topControl" />
 

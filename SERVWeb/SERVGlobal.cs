@@ -8,6 +8,8 @@ namespace SERVWeb
 
 		public static Service Service = new Service();
 
+		public static string SERVVersion = "1.6.5";
+
 		public static User User
 		{
 			get
@@ -43,6 +45,42 @@ namespace SERVWeb
 			{
 				System.Web.HttpContext.Current.Response.Redirect("Home.aspx?message=" + rejectionMessage);
 			}
+		}
+
+		public static string CalendarJSInclude()
+		{
+#if DEBUG
+			return "<script language=\"JavaScript\" src=\"js/Calendar.js\"></script>";
+#else
+			return "<script language=\"JavaScript\" src=\"js/Calendar." + SERVVersion + ".min.js\"></script>";
+#endif
+		}
+
+		public static string MainJSInclude()
+		{
+#if DEBUG
+			return "<script language=\"JavaScript\" src=\"js/JS.js\"></script>";
+#else
+		return "<script language=\"JavaScript\" src=\"js/JS." + SERVVersion + ".min.js\"></script>";
+#endif
+		}
+
+		public static string ControllerLogJSInclude()
+		{
+#if DEBUG
+			return "<script language=\"JavaScript\" src=\"js/ControllerLog.js\"></script>";
+#else
+			return "<script language=\"JavaScript\" src=\"js/ControllerLog." + SERVVersion + ".min.js\"></script>";
+#endif
+		}
+
+		public static string OpsMapJSInclude()
+		{
+#if DEBUG
+			return "<script language=\"JavaScript\" src=\"js/opsMap.js\"></script>";
+#else
+			return "<script language=\"JavaScript\" src=\"js/opsMap." + SERVVersion + ".min.js\"></script>";
+#endif
 		}
 
 	}
