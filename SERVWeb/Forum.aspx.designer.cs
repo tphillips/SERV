@@ -11,14 +11,8 @@
 namespace SERVWeb {
 	
 	
-	public partial class TopControl {
+	public partial class Forum {
 		
-		protected System.Web.UI.WebControls.Literal pnlNotLoggedIn;
-		
-		protected System.Web.UI.WebControls.Literal pnlLoggedIn;
-		
-		protected System.Web.UI.WebControls.Literal litLoginName;
-		
-		protected System.Web.UI.HtmlControls.HtmlGenericControl newsBanner;
+		protected SERVWeb.TopControl topControl;
 	}
 }

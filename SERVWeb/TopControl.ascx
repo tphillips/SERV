@@ -11,6 +11,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">SERV <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="Home.aspx"><i class="icon-home"></i> Home</a></li>
+						<li><a href="Forum.aspx"><i class="icon-comment"></i> The Forum</a></li>
 						<li class="divider"></li>
 						<li><a href="ChangePassword.aspx"><i class="icon-lock"></i> Change Password</a></li>
 						<li><a href="Login.aspx?Logout=yes"><i class="icon-off"></i> Logout</a></li>
@@ -46,24 +47,25 @@
 								<li><a href="RecentRuns.aspx">Recent Runs (Controller View)</a></li>
 							</ul>
 						</li>
+						<li class="divider"></li>
+						<li><a href="Forum.aspx"><i class="icon-comment"></i> The Forum</a></li>
 					</ul>
 				</li>
-			</asp:Literal>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="OpsMap.aspx"><i class="icon-globe"></i> Operations Map</a></li>
-						<asp:Literal runat="server" id="pnlPowerUser">
-							<li class="divider"></li>
-							<li><a href="ControllerLog.aspx"><i class="icon-edit"></i> Controller Logging</a></li>
-							<li><a href="ControllerLog.aspx" target="_blank"><i class="icon-chevron-right"></i> Controller Logging (New Tab)</a></li>
-							<li><a href="TakeControl.aspx"><i class="icon-random"></i> Take Control of SERV NOW</a></li>
-							<li class="divider"></li>
-							<li><a href="SMS.aspx"><i class="icon-envelope"></i> Bulk SMS</a></li>
-						</asp:Literal>
+						<li class="divider"></li>
+						<li><a href="ControllerLog.aspx"><i class="icon-edit"></i> Controller Logging</a></li>
+						<li><a href="ControllerLog.aspx" target="_blank"><i class="icon-chevron-right"></i> Controller Logging (New Tab)</a></li>
+						<li><a href="TakeControl.aspx"><i class="icon-random"></i> Take Control of SERV NOW</a></li>
+						<li class="divider"></li>
+						<li><a href="SMS.aspx"><i class="icon-envelope"></i> Bulk SMS</a></li>
 					</ul>
 				</li>
+			</asp:Literal>
 		</ul>
 		<p class="navbar-text pull-right"><span id="lblLoginName"><asp:Literal runat="server" id="litLoginName"/></span></p>
+		<span class="newsBanner pull-right" id="newsBanner" runat="server"><m--arquee><span id="newsBannerText"></span></m--arquee></span>
 	</div>
 </nav>

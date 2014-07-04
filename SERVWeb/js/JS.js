@@ -9,6 +9,11 @@ var controllerNames = new Array();
 var greetings = new Array("Hi", "Greetings", "Well Hello", "Sup", "Wagwan", "Haai", "Hola", "Hej", "Konnichiwa", "Zdravstvujte", "Yo", "Howdy", "Hiya", "Good day to you", "Oh, Hi");
 var wentVerbs = new Array("went to","visited","warped to","travelled to","piloted themselves to","stopped off at", "took some air at","helped out","parked up at","delivered to","took something to", "set sail for", "plotted a course to", "bimbled along to");
 
+function loadNewsBanner()
+{
+	$("#newsBannerText").load("NewsHeadlines.htm");
+}
+
 function setGreeting()
 {
 	$("#lblGreeting").text(greetings[Math.floor(Math.random()*greetings.length)]);

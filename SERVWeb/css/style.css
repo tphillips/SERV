@@ -9,6 +9,25 @@ h1, h2, h3, h4
 	margin-top:30px;
 }
 
+	.forumPageContainer
+	{
+		height:100%;
+		width:100%
+		margin-top:0px;
+		margin-left:0px;
+		margin-right:0px;
+		margin-bottom:0px;
+		padding:0px;
+	}
+
+	.newsBanner
+	{
+		w--idth:50%;
+		padding-top:11px;
+		margin-right:50px;
+		color: #777777;
+	}
+
 .no-close .ui-dialog-titlebar-close {
   display: none;
 }

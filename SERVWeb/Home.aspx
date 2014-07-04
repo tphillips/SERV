@@ -13,6 +13,7 @@
 				<h2><span id="lblGreeting">Hey</span> <%=this.Username%>!</h2>
 				<span id="lblNextShift" style="display:none"><p>Your next duty is a <strong><span id="lblNextShiftType">?</span></strong> shift <strong><span id="lblNextShiftDate">?</span></strong>.  Feeling generous? Why not sign up for a few more? Click <a href="Calendar.aspx">here</a> to view <a href="Calendar.aspx">the Calendar</a>.</p></span>
 				<span id="lblNoShift" style="display:none; color:red"><p><strong>You don't appear to have any upcoming shifts? Why not sign up for a few now? Click <a href="Calendar.aspx">here</a> to view <a href="Calendar.aspx">the Calendar.</a></strong></p></span>
+				<p><span style="color:red">New:</span>  You can now view the <a href="Forum.aspx">forum from the system</a>.</p>
 				<p><small>Don't use Internet Explorer to view this site. It's a terrible browser and you will be FAR better off using Chrome or Firefox.</small></p>
 			</div>
 		</div>
@@ -89,10 +90,11 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Cache safe JS minification and build script</li>
+					<li>Forum in the system!  Click View > The Forum, or SERV > The forum.  One less place to visit.  The system is now your one stop SERV shop.</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Cache safe JS minification and build script</li>
 					<li>Verbs</li>	
 					<li>New home screen layout</li>
 					<li>Adding key to home calendar</li>
@@ -224,6 +226,7 @@
 	<script>
 		$("#loading").hide();
 		$("#loading").empty();
+		loadNewsBanner();
 		FullName = "<%=this.FullName%>";
 		setGreeting();
 		getNextShift();
