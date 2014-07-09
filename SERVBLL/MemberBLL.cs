@@ -162,6 +162,11 @@ namespace SERVBLL
 			return new User(SERVDALFactory.Factory.MemberDAL().GetUserForMember(memberId));
 		}
 
+		public int GetUserIdForMember(int memberId)
+		{
+			return SERVDALFactory.Factory.MemberDAL().GetUserIdForMember(memberId);
+		}
+
 		public void SetPassword(string username, string passwordHash)
 		{
 			SERVDALFactory.Factory.MemberDAL().SetPasswordHash(username, passwordHash);

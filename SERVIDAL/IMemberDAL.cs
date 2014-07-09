@@ -16,6 +16,7 @@ namespace SERVIDAL
 		List<Tag> ListMemberTags(int memberId);
 		User Login(string username, string passwordHash);
 		User GetUserForMember(int memberId);
+		int GetUserIdForMember(int memberId);
 		void AddMemberTag(int memberId, string tagName);
 		void RemoveMemberTag(int memberId, string tagName);
 		void SetPasswordHash(string username, string passwordHash);

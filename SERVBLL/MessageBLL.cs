@@ -58,7 +58,7 @@ namespace SERVBLL
 				"This is an email to let you know that you have been put down for a shift on the " + c.CalendarName + " calendar on " + c.EntryDateShortStringWithDay + ".  This is not a recurring shift.  Why not add this to your personal calendar now?\n\n" +
 				"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
 				"Thanks,\n\n" +
-				"SERV SSL System" + FOOTER, cargs.MemberId);
+				"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(cargs.MemberId));
 		}
 
 		public void SendCalendarVolunteeringThanksEmail(int memberID, int calendarEntryID)
@@ -86,7 +86,7 @@ namespace SERVBLL
 				"You are a star!  Thank you very much for putting your name down on the " + c.CalendarName + " calendar on " + c.EntryDateShortStringWithDay + ".  Why not add this to your personal calendar now?\n\n" +
 				"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
 				"Thanks,\n\n" +
-				"SERV SSL System" + FOOTER, cargs.MemberId);
+				"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(cargs.MemberId));
 		}
 
 		public void SendShiftSwapNeededEmail(int memberID, int calendarID, DateTime date)
@@ -128,7 +128,7 @@ namespace SERVBLL
 					"We really could use your help!  Are you free?  If you have a few hours spare please put your name down.\n\n" +
 					"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
 					"Thanks very much in advance!\n\n" +
-					"SERV SSL System" + FOOTER, cargs.MemberId);
+					"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(cargs.MemberId));
 			}
 
 		}

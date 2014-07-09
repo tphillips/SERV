@@ -8,7 +8,7 @@ namespace SERVWeb
 
 		public static Service Service = new Service();
 
-		public static string SERVVersion = "1.6.7";
+		public static string SERVVersion = "1.6.8";
 
 		public static User User
 		{

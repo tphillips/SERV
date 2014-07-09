@@ -602,6 +602,43 @@ namespace SERVBLL
 			reports.Add(rep);
 
 			rep = new Report();
+			rep.Heading = "Members on the Rota";
+			rep.Description = "This report shows members who have committed to the rota.";
+			rep.Anchor = "membersOnRota";
+			rep.Query = "select distinct(concat(FirstName, ' ', LastName)) as Member, " +
+				"concat('<a href=\"ViewMember.aspx?memberId=', m.MemberId,'\">view/edit</a>') as Link " +
+				"from CalendarEntry ce join Member m on ce.MemberID = m.MemberID " +
+				"where EntryDate > NOW() and m.LeaveDate is null order by m.LastName";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Members NOT on the Rota";
+			rep.Description = "This report shows members who have not committed to the rota.";
+			rep.Anchor = "membersNotOnRota";
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', m.MobileNumber as Phone,  coalesce(date(LastDuty), '<span style=\"color:red\">NOTHING IN 2014</span>') as 'Last Run', date(JoinDate) as 'Join Date', " +
+				"concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link' " +
+				"from Member m " +
+				"left join " +
+				"( " +
+				"select RiderMemberID, max(DutyDate) as LastDuty from RunLog group by RiderMemberID " +
+				") rl on m.MemberID = rl.RiderMemberID " +
+				"where m.MemberID not in (select distinct MemberID from CalendarEntry where EntryDate > NOW()) and m.LeaveDate is null " +
+				"order by date(LastDuty);";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "Top Ad-Hocs";
+			rep.Description = "This report shows the number of shifts volunteers have put themselves forward for over and above rostered shifts (if applicable).";
+			rep.Anchor = "topAdHocs";
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', " +
+				"count(*) as Count from CalendarEntry ce " +
+				"join Member m on ce.MemberID = m.MemberID " +
+				"where AdHoc =1 " +
+				"group by concat(FirstName, ' ', LastName) " +
+				"order by count(*) desc;";
+			reports.Add(rep);
+
+			rep = new Report();
 			rep.Heading = "AdQual Members";
 			rep.Description = "This report shows members who are adqual and the relevant data. Part of the reason for this report is to aid in data cleansing.";
 			rep.Anchor = "adQualMembers";

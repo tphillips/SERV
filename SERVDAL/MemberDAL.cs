@@ -108,6 +108,13 @@ namespace SERVDAL
 			return ret;
 		}
 
+		public int GetUserIdForMember(int memberId)
+		{
+			return (from u in db.User
+			       where u.Member.MemberID == memberId
+				select u.UserID).FirstOrDefault();
+		}
+
 		public User Login(string username, string passwordHash)
 		{
 			SERVDataContract.DbLinq.User ret = (from u in db.User where u.Member.EmailAddress == username select u).FirstOrDefault();
