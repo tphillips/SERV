@@ -1553,6 +1553,8 @@ namespace SERVDataContract.DbLinq
 		
 		private sbyte _hospital;
 		
+		private sbyte _inNetwork;
+		
 		private string _lat;
 		
 		private string _lng;
@@ -1581,6 +1583,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnHospitalChanged();
 		
 		partial void OnHospitalChanging(sbyte value);
+		
+		partial void OnInNetworkChanged();
+		
+		partial void OnInNetworkChanging(sbyte value);
 		
 		partial void OnLatChanged();
 		
@@ -1686,6 +1692,27 @@ namespace SERVDataContract.DbLinq
 					this._hospital = value;
 					this.SendPropertyChanged("Hospital");
 					this.OnHospitalChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_inNetwork", Name="InNetwork", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public sbyte InNetwork
+		{
+			get
+			{
+				return this._inNetwork;
+			}
+			set
+			{
+				if ((_inNetwork != value))
+				{
+					this.OnInNetworkChanging(value);
+					this.SendPropertyChanging();
+					this._inNetwork = value;
+					this.SendPropertyChanged("InNetwork");
+					this.OnInNetworkChanged();
 				}
 			}
 		}

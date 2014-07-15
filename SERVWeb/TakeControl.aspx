@@ -6,7 +6,7 @@
 <div id="entry">
 	<h3>Controller Signon</h3>
 	<div class="row">
-		<div class="span7">
+		<div class="span12">
 			<p>Using this screen controllers can divert the SERV NOW FlexTel number to their mobile / landline.</p>
 		
 			<div class="input-prepend input-append">
@@ -16,11 +16,6 @@
 			</div>
 			<br/></br>
 		</div>
-		<div class="span1"></div>
-		<div class="span3">
-			<div id="pnlBloodCal" class="calDay calToday">...
-			</div>
-		</div>
 	</div>
 	<br/>
 
@@ -29,7 +24,6 @@
 <script>
 
 	$('#txtNumber').attr('disabled', 'disabled');
-	showCals();
 	$("#loading").slideUp();
 
 </script>

@@ -202,6 +202,7 @@
 		}
 		$(".date").datepicker({ dateFormat: 'dd M yy' });
 		DisplayMember(<%=this.MemberId%>);
+		initFeedback();
 	});
 
 	function onChkEmergencyListChanged()

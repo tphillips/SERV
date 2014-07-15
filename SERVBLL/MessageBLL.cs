@@ -33,6 +33,36 @@ namespace SERVBLL
 			public DateTime ShiftDate;
 		}
 
+		struct FeedbackEmailArgs
+		{
+			public User user;
+			public string feedback;
+
+		}
+
+		public void SendFeedback(User user, string feedback)
+		{
+			ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendFeedback);
+			FeedbackEmailArgs args = new FeedbackEmailArgs();
+			args.feedback = feedback;
+			args.user = user;
+			Thread t = new Thread(pts);
+			t.IsBackground = true;
+			t.Start(args);
+		}
+
+		public void _SendFeedback(object args)
+		{
+			FeedbackEmailArgs cargs = (FeedbackEmailArgs)args;
+			foreach (Member m in new MemberBLL().ListAdministrators())
+			{
+				SendEmail(m.EmailAddress, "SERV System - Feedback Sent", 
+					string.Format("Hi {0},\r\n\r\n" +
+						"A member left feedback on the system or SERV: \r\n\r\n{1}{2}", 
+						m.FirstName, cargs.feedback, MessageBLL.FOOTER), cargs.user.UserID);
+			}
+		}
+
 		public void SendCalendarVolunteerNotificationEmail(int memberID, int calendarEntryID)
 		{
 			ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendCalendarVolunteerNotificationEmail);
@@ -133,11 +163,17 @@ namespace SERVBLL
 
 		}
 
-		public bool SendSMSMessage(string numbers, string message, int senderUserID)
+		public bool SendSMSMessage(string numbers, string message, int senderUserID, bool fromServ)
 		{
 			numbers = numbers.Trim().Replace(" ", "");
 			if (numbers.EndsWith(",")) { numbers = numbers.Substring(0, numbers.Length - 1); }
 			SERVDALFactory.Factory.MessageDAL().LogSentSMSMessage(numbers, message, senderUserID);
+			if (!fromServ)
+			{
+				Member sender = new MemberBLL().GetByUserID(senderUserID);
+				SERV.Utils.Messaging.SendTextMessage(numbers, message, sender.MobileNumber);
+				return true;
+			}
 			SERV.Utils.Messaging.SendTextMessage(numbers, message);
 			return true;
 		}

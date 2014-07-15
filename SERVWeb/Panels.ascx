@@ -25,6 +25,25 @@
 	<p><span id="alertMessage">Default message</span></p>
 </div>
 
+<div id="feedbackDialog" style="display:none; background-color:#fcfcfc" title="Feedback">
+	<p>Use this form to provide <strong>anonymous</strong> feedback on <i>any</i> aspect of SERV or this system.</p>
+	<textarea id="txtFeedback" cols="40" rows="5" style="width:450px" onkeypress="filterKeys()"></textarea>
+	<br/><br/>
+	<input type="button" value="Submit" class="btn btn-primary btn-lg" onclick="cmdSubmitFeedbackClicked();"></input> <input type="button" value="Cancel" class="btn btn-lg" onclick="$('#feedbackDialog').dialog('close');"></input>
+	<br/><br/>
+</div>
+
+<button onmouseover="showFeedbackButton();" onmouseout="hideFeedbackButton();" onclick="showFeedbackForm()" id="cmdFeedback" class="btn btn-large bnt-primary" style="position:fixed;top:50%;right:-300px;"><i class="icon-comment icon-green"></i> &nbsp;Feedback</button>
+
+
+<script>
+
+
+
+
+
+</script>
+
 <!--
 <div class="alert">
   <button type="button" class="close" data-dismiss="alert">&times;</button>

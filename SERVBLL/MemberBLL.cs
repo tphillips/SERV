@@ -54,6 +54,26 @@ namespace SERVBLL
 			}
 		}
 
+		public Member GetByUserID(int senderUserID)
+		{
+			try
+			{
+				SERVDataContract.DbLinq.Member lret = SERVDALFactory.Factory.MemberDAL().GetByUserID(senderUserID);
+				Member ret = new Member(lret);
+				ret.Tags = new List<Tag>();
+				for(int x = 0; x < lret.MemberTag.Count; x++)
+				{
+					ret.Tags.Add(new Tag(lret.MemberTag[x].Tag));
+				}
+				return ret;
+			}
+			catch(Exception ex)
+			{
+				log.Error(ex.Message, ex);
+				return null;
+			}
+		}
+
 		public int Create(Member member)
 		{
 			SERVDataContract.DbLinq.Member m = new SERVDataContract.DbLinq.Member();

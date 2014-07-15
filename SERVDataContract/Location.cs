@@ -26,6 +26,7 @@ namespace SERVDataContract
 			this.Hospital = metal.Hospital;
 			this.Lat = metal.Lat;
 			this.Lng = metal.Lng;
+			this.InNetwork = metal.InNetwork;
 		}
 
 		[DataMember]
@@ -65,6 +66,10 @@ namespace SERVDataContract
 		[DataMember]
 		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
 		public string Lng {get;set;}
+
+		[DataMember]
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
+		public sbyte InNetwork {get;set;}
 
 	}
 }

@@ -1,4 +1,5 @@
 var asyncRequests = true;
+var enableFeedback = false;
 var FullName = "";
 var locations = new Array();
 var locationNames = new Array();
@@ -8,6 +9,69 @@ var controllers = new Array();
 var controllerNames = new Array();
 var greetings = new Array("Hi", "Greetings", "Well Hello", "Sup", "Wagwan", "Haai", "Hola", "Hej", "Konnichiwa", "Zdravstvujte", "Yo", "Howdy", "Hiya", "Good day to you", "Oh, Hi");
 var wentVerbs = new Array("went to","visited","warped to","travelled to","piloted themselves to","stopped off at", "took some air at","helped out","parked up at","delivered to","took something to", "set sail for", "plotted a course to", "bimbled along to");
+
+function initFeedback()
+{
+	$("#feedbackDialog").dialog({
+		width:493,
+		show: { effect: "clip", duration: 200 },
+		hide: { effect: "clip", duration: 200 },
+		autoOpen: false
+	});
+	window.setTimeout('hideFeedbackButton()', 1500);
+	window.setTimeout('showFeedbackButton()', 1600);
+	window.setTimeout('hideFeedbackButton()', 2100);
+}
+
+function showFeedbackButton()
+{
+	$("#cmdFeedback").animate({
+		right: "+=95",
+		}, 500, function() {
+		// Animation complete.
+	});
+}
+
+function hideFeedbackButton()
+{
+	$("#cmdFeedback").animate({
+		right: "-100",
+		}, 500, function() {
+		// Animation complete.
+	});
+}
+
+function cmdSubmitFeedbackClicked()
+{
+	callServerSide(
+		"Service/Service.asmx/SendFeedback", 
+		"{'feedback':'" + $("#txtFeedback").val() + "'}",
+		function(json)
+		{
+			$("#feedbackDialog").dialog('close');
+			$("#txtFeedback").val("");
+			niceAlert("Thanks, your feedback has been sent.");
+		},
+		function(json)
+		{
+			
+		}
+	);
+}	
+
+function showFeedbackForm()
+{
+	$("#feedbackDialog").dialog('open');
+}
+
+function filterKeys()
+{
+	if (event.charCode==13 || event.charCode == 39)
+	{
+		event.preventDefault();
+		return false;
+	}
+}
 
 function loadNewsBanner()
 {
@@ -196,7 +260,7 @@ function DisplayLocation(locationId)
 			$("#chkHospital").prop('checked', json.d.Hospital == 1);
 			$("#chkChangeOver").prop('checked', json.d.ChangeOver == 1);
 			$("#chkBloodBank").prop('checked', json.d.BloodBank == 1);
-			
+			$("#chkInNetwork").prop('checked', json.d.InNetwork == 1);
 			$("#loading").slideUp();
 			$("#entry").slideDown();
 
@@ -234,7 +298,9 @@ function JsonifyLocationFromForm(locationId)
 	return '{"location":{"LocationID":' + locationId + ',' + 
 		'"LocationName":"' + $("#txtLocationName").val() + '","Hospital":"' + ($("#chkHospital").prop('checked') ? "1" : "0") + '",' + 
 		'"Lat":"' + $("#txtLat").val() + '","Lng":"' + $("#txtLng").val() + '",' + 
-		'"ChangeOver":"' + ($("#chkChangeOver").prop('checked')? "1" : "0") + '","BloodBank":"' + ($("#chkBloodBank").prop('checked')? "1" : "0") + '", "Enabled":"1"}}';
+		'"ChangeOver":"' + ($("#chkChangeOver").prop('checked')? "1" : "0") + '",' +
+		'"BloodBank":"' + ($("#chkBloodBank").prop('checked')? "1" : "0") + '",' + 
+		'"InNetwork":"' + ($("#chkInNetwork").prop('checked')? "1" : "0") + '", "Enabled":"1"}}';
 }
 
 function sendSMSMessage(numbers, message)
@@ -243,7 +309,7 @@ function sendSMSMessage(numbers, message)
 	$("#entry").slideUp();
 	callServerSide(
 		"Service/Service.asmx/SendSMSMessage", 
-		"{'numbers':'" + numbers + "', 'message':'"+ message + "'}",
+		"{'numbers':'" + numbers + "', 'message':'"+ message + "', 'fromServ':'" + fromServ + "'}",
 		function(json)
 		{
 			$("#loading").slideUp();
@@ -525,7 +591,7 @@ function ListLocations(userLevel)
 		function(json)
 		{
 			var append = '<table class="table table-striped table-bordered table-condensed">' +
-			'<thead><tr><th></th><th>Location</th><th>Bloodbank</th><th>Handover</th><th>Hospital</th><th>Lat</th><th>Lng</th></tr></thead><tbody>';
+			'<thead><tr><th></th><th>Location</th><th>Bloodbank</th><th>Handover</th><th>Hospital</th><th>Lat</th><th>Lng</th><th>In Network</th></tr></thead><tbody>';
 			for(var x = 0; x < json.d.length; x++)
 			{
 				var name ='<a href="ViewLocation.aspx?locationId=' + json.d[x].LocationID + '">' + json.d[x].LocationName + '</a>';
@@ -535,6 +601,7 @@ function ListLocations(userLevel)
 					"<td>" + (json.d[x].Hospital ? "X" : "") + "</td>" + 
 					"<td>" + (json.d[x].Lat ? json.d[x].Lat.substr(0,8) : "???") + "</td>" + 
 					"<td>" + (json.d[x].Lng ? json.d[x].Lng.substr(0,8) : "???") + "</td>" + 
+					"<td>" + (json.d[x].InNetwork ? "X" : "") + "</td>" + 
 					"</tr>"
 				append += row;
 			}

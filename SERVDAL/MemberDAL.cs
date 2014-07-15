@@ -34,6 +34,12 @@ namespace SERVDAL
 			SERVDataContract.DbLinq.Member mem = (from m in db.Member where m.EmailAddress == email select m).FirstOrDefault();
 			return mem;
 		}
+
+		public Member GetByUserID(int userID)
+		{
+			SERVDataContract.DbLinq.Member mem = (from u in db.User where u.UserID == userID select u.Member).FirstOrDefault();
+			return mem;
+		}
 		
 		public int Create(Member member)
 		{

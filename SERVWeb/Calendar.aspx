@@ -166,6 +166,7 @@
 		keepAlive();
 		initCalendar(false, 28);
 		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
+		initFeedback();
 	});
 
 </script>

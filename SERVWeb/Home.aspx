@@ -90,12 +90,16 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Additional reports around the new calendar</li>
-					<li>Session keep alive on the calendar page</li>
-					<li>Minor bug fixes</li>
+					<li>In Network flag for locations</li>
+					<li>Removed calendar from take control</li>
+					<li>Allow controllers to send SMS from their number if required</li>
+					<li>Feedback button</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Additional reports around the new calendar</li>
+					<li>Session keep alive on the calendar page</li>
+					<li>Minor bug fixes</li>
 					<li>Forum in the system!  Click View > The Forum, or SERV > The forum.  One less place to visit.  The system is now your one stop SERV shop.</li>
 					<li>Cache safe JS minification and build script</li>
 					<li>Verbs</li>	
@@ -238,6 +242,7 @@
 		initCalendar(true, 14);
 		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
 		listRecentRuns();
+		initFeedback();
 	</script>
 	
 </asp:Content>

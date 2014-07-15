@@ -9,6 +9,7 @@ namespace SERVIBLL
 	{
         Member Get(int memberId);
 		Member GetByEmail(string email);
+		Member GetByUserID(int senderUserID);
         int Create(Member member);
 		int Save(Member member, User user);
 		int Register(Member member);

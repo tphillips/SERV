@@ -258,6 +258,8 @@
 		$("#txtController").val("<%=this.MemberName%>");
 	}
 
+	initFeedback();
+
 </script>
 
 </asp:Content>

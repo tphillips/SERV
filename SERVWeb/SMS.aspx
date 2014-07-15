@@ -7,6 +7,15 @@
 <div id="entry">
 <h3>Bulk SMS</h3>
 <p>Credits remaining: <strong><span id="lblCredits">...</span></strong></p>
+<label>Send From:</label>
+
+<div class="btn-group" data-toggle="buttons-radio">
+    <button type="button" class="btn active" onclick="fromServ = true;" id="btnSERVSSL">SERVSSL</button>
+    <button type="button" class="btn" onclick="fromServ = false;" id="btnYou">You</button>
+</div>
+<br/><br/>
+
+</div>
 <label>Send To:</label>
 <div class="checkbox">
 	<label>
@@ -43,6 +52,7 @@
 <script>
 	$("#loading").slideUp();
 	var smsCount = 0;
+	var fromServ = true;
 
 	GetSMSCreditCount("lblCredits");
 
@@ -64,15 +74,6 @@
 		{
 			$("#loading").slideDown();
 			var numbers = getNumbersForTags(tags, "txtNumbers");
-		}
-	}
-
-	function filterKeys()
-	{
-		if (event.charCode==13 || event.charCode == 39)
-		{
-			event.preventDefault();
-			return false;
 		}
 	}
 	

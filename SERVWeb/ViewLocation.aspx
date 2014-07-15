@@ -36,6 +36,10 @@
 							<input type="checkbox" id="chkChangeOver" /> Changeover
 						</label>
 
+						<label>
+							<input type="checkbox" id="chkInNetwork" /> In Network
+						</label>
+
 					</div>
 
 					<label>Location:</label>

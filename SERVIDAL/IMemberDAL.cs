@@ -9,6 +9,7 @@ namespace SERVIDAL
 	{
 		Member Get(int memberId);
 		Member GetByEmail(string email);
+		Member GetByUserID(int userID);
 		int Create(Member member);
 		int Save(Member member);
 		int Update(Member member);

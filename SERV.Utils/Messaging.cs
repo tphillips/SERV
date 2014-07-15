@@ -24,24 +24,34 @@ namespace SERV.Utils
 
 		public static string SendTextMessage(string to, string message)
 		{
+			string smsFrom = System.Configuration.ConfigurationManager.AppSettings["SMSFrom"];
+			return SendTextMessage(to, message, smsFrom);
+		}
+
+		public static string SendTextMessage(string to, string message, string from)
+		{
+			if (from.StartsWith("07"))
+			{
+				from = "44" + from.Substring(1, from.Length - 1);
+				from = from.Replace(" ","");
+			}
 			message = message.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
 			message = System.Web.HttpUtility.UrlEncode(message);
 			string provider = System.Configuration.ConfigurationManager.AppSettings["SMSProvider"];
 			string smsUser = System.Configuration.ConfigurationManager.AppSettings["SMSUser"];
 			string smsPassword = System.Configuration.ConfigurationManager.AppSettings["SMSPassword"];
-			string smsFrom = System.Configuration.ConfigurationManager.AppSettings["SMSFrom"];
 			string res = "";
 			if (provider == "Dynmark")
 			{
 				res = new System.Net.WebClient().DownloadString(
 					string.Format("http://services.dynmark.com/HttpServices/SendMessage.ashx?user={0}&password={1}&to={2}&from={3}&text={4}", 
-					smsUser, smsPassword, to, smsFrom, message));
+						smsUser, smsPassword, to, from, message));
 			}
 			else
 			{
 				res = new System.Net.WebClient().DownloadString(
 					string.Format("http://gw.aql.com/sms/sms_gw.php?username={0}&password={1}&destination={2}&originator={3}&message={4}", 
-					smsUser, smsPassword, to, smsFrom, message));
+						smsUser, smsPassword, to, from, message));
 			}
 			log.Info("SMS: " + res);
 			return res;

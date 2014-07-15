@@ -290,14 +290,22 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
-		public bool SendSMSMessage(string numbers, string message)
+		public bool SendSMSMessage(string numbers, string message, bool fromServ)
 		{
 			Authenticate();
 			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.MessageBLL().SendSMSMessage(numbers, message, CurrentUser().UserID);
+			return SERVBLLFactory.Factory.MessageBLL().SendSMSMessage(numbers, message, CurrentUser().UserID, fromServ);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool SendFeedback(string feedback)
+		{
+			Authenticate();
+			SERVBLLFactory.Factory.MessageBLL().SendFeedback(CurrentUser(), feedback);
+			return true;
 		}
 
 		[WebMethod(EnableSession = true)]
