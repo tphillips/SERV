@@ -18,27 +18,33 @@ function initFeedback()
 		hide: { effect: "clip", duration: 200 },
 		autoOpen: false
 	});
-	window.setTimeout('hideFeedbackButton()', 1500);
-	window.setTimeout('showFeedbackButton()', 1600);
-	window.setTimeout('hideFeedbackButton()', 2100);
+	$("#cmdFeedback").fadeIn(2000);
+	//window.setTimeout('hideFeedbackButton()', 1500);
+	//window.setTimeout('showFeedbackButton()', 1600);
+	//window.setTimeout('hideFeedbackButton()', 2100);
 }
 
 function showFeedbackButton()
 {
+
+	/*
 	$("#cmdFeedback").animate({
 		right: "+=95",
 		}, 500, function() {
 		// Animation complete.
 	});
+	*/
 }
 
 function hideFeedbackButton()
 {
+	/*
 	$("#cmdFeedback").animate({
 		right: "-100",
 		}, 500, function() {
 		// Animation complete.
 	});
+	*/
 }
 
 function cmdSubmitFeedbackClicked()

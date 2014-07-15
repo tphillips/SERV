@@ -33,7 +33,7 @@
 	<br/><br/>
 </div>
 
-<button onmouseover="showFeedbackButton();" onmouseout="hideFeedbackButton();" onclick="showFeedbackForm()" id="cmdFeedback" class="btn btn-large bnt-primary" style="position:fixed;top:50%;right:-300px;"><i class="icon-comment icon-green"></i> &nbsp;Feedback</button>
+<button onmouseover="showFeedbackButton();" onmouseout="hideFeedbackButton();" onclick="showFeedbackForm()" id="cmdFeedback" class="btn btn-lg btn-primary" style="position:fixed;top:50%;right:-7px;display:none;"><img src="img/Feedback.png"></img></button>
 
 
 <script>

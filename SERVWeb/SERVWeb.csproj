@@ -137,6 +137,7 @@
     <Content Include="Calendar.aspx" />
     <Content Include="Forum.aspx" />
     <Content Include="NewsHeadlines.htm" />
+    <Content Include="img\Feedback.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
