@@ -63,6 +63,10 @@ namespace SERVDataContract
 		public DateTime? GeneratedUpTo { get; set; }
 
 		[DataMember]
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Committee)]
+		public int SortOrder { get; set; }
+
+		[DataMember]
 		public string LastGeneratedString 
 		{
 			get

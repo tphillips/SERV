@@ -47,6 +47,11 @@ namespace SERVBLL
 			return ret;
 		}
 
+		public bool SaveCalendarProps(int calendarId, string calendarName, int sortOrder, int requiredTagId, int defaultRequirement)
+		{
+			return SERVDALFactory.Factory.CalendarDAL().SaveCalendarProps(calendarId, calendarName, sortOrder, requiredTagId, defaultRequirement);
+		}
+
 		public bool RosterVolunteer(int calendarId, int memberId, string rosteringWeek, int rosteringDay)
 		{
 			SERVDALFactory.Factory.CalendarDAL().RosterVolunteer(calendarId, memberId, rosteringWeek, rosteringDay);
@@ -190,6 +195,68 @@ namespace SERVBLL
 					toAdd.Add(new CalendarEntry() { EntryDate = curDay.AddDays(x), MemberName = "Nada, zero, not a sausage." });
 				}
 				ret.Add(toAdd);
+			}
+			return ret;
+		}
+
+		public List<string> GetCalendarDayBulletins(DateTime date)
+		{
+			return GetCalendarDayBulletins(date, null);
+		}
+
+		public List<string> GetNextXDaysCalendarBulletins(int days)
+		{
+			return GetCalendarDayBulletins(DateTime.Now, days);
+		}
+
+		public List<string> GetNext5DaysCalendarBulletins()
+		{
+			return GetCalendarDayBulletins(DateTime.Now, 5);
+		}
+
+		public List<string> GetNext7DaysCalendarBulletins()
+		{
+			return GetCalendarDayBulletins(DateTime.Now, 7);
+		}
+
+		public List<string> GetCalendarDayBulletins(DateTime date, int days)
+		{
+			List<Calendar> calendars = ListCalendars();
+			List<string> ret = new List<string>();
+			for(int x = 0; x < days; x++)
+			{
+				ret.AddRange(GetCalendarDayBulletins(date.AddDays(x), calendars));
+			}
+			return ret;
+		}
+
+		public List<string> GetCalendarDayBulletins(DateTime date, List<Calendar> calendars)
+		{
+			List<string> ret = new List<string>();
+			DateTime clean = new DateTime(date.Year, date.Month, date.Day);
+			List<CalendarEntry> entries = ListCalendarEntries(clean);
+			if (calendars == null) { calendars = ListCalendars(); }
+			string dateDesc = string.Format("on {0:ddd dd MMM}.", clean);
+			if (clean == new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
+			{
+				dateDesc = "today!";
+			}
+			foreach (Calendar c in calendars)
+			{
+				int volunteers = (from ce in entries
+				                  where ce.CalendarID == c.CalendarID && ce.CoverNeeded == false
+				                  select ce).Count();
+				if (volunteers < c.DefaultRequirement)
+				{
+					if (volunteers == 0)
+					{
+						ret.Add(string.Format("There is no {0} cover {1}", c.Name, dateDesc));
+					}
+					else
+					{
+						ret.Add(string.Format("There is only {0} on {1} cover {2}", volunteers, c.Name, dateDesc));
+					}
+				}
 			}
 			return ret;
 		}

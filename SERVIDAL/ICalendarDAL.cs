@@ -8,6 +8,7 @@ namespace SERVIDAL
 	public interface ICalendarDAL : IDisposable
 	{
 		int Create(SERVDataContract.DbLinq.Calendar c);
+		bool SaveCalendarProps(int calendarId, string calendarName, int sortOrder, int requiredTagId, int defaultRequirement);
 		List<SERVDataContract.DbLinq.Calendar> ListCalendars();
 		List<SERVDataContract.DbLinq.CalendarEntry> ListCalendarEntries(DateTime date);
 		List<SERVDataContract.DbLinq.CalendarEntry> ListCalendarEntries(DateTime startDate, DateTime endDate);

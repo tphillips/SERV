@@ -8,20 +8,28 @@
 	<%=SERVGlobal.CalendarJSInclude()%>	
 
 	<div class="row">
-		<div class="span6">
+		<div class="span12">
 			<div class="hero-unit">
 				<h2><span id="lblGreeting">Hey</span> <%=this.Username%>!</h2>
 				<span id="lblNextShift" style="display:none"><p>Your next duty is a <strong><span id="lblNextShiftType">?</span></strong> shift <strong><span id="lblNextShiftDate">?</span></strong>.  Feeling generous? Why not sign up for a few more? Click <a href="Calendar.aspx">here</a> to view <a href="Calendar.aspx">the Calendar</a>.</p></span>
 				<span id="lblNoShift" style="display:none; color:red"><p><strong>You don't appear to have any upcoming shifts? Why not sign up for a few now? Click <a href="Calendar.aspx">here</a> to view <a href="Calendar.aspx">the Calendar.</a></strong></p></span>
-				<p><span style="color:red">New:</span>  You can now view the <a href="Forum.aspx">forum from the system</a>.</p>
+				<!---<p><span style="color:red">New:</span>  You can now view the <a href="Forum.aspx">forum from the system</a>.</p>-->
 				<p><small>Don't use Internet Explorer to view this site. It's a terrible browser and you will be FAR better off using Chrome or Firefox.</small></p>
 			</div>
 		</div>
-		<div class="span3">
-			<div id="recentActivity" style="display:none">
+	</div>
+	<div class="row">
+		<div class="span4">
+			<div id="calendarBulletins" style="display:">
+				<img src="img/spinnerLarge.gif" width="30" />
 			</div>
 		</div>
-		<div class="span3 pull-right">
+		<div class="span4">
+			<div id="recentActivity" style="display:">
+				<img src="img/spinnerLarge.gif" width="30" />
+			</div>
+		</div>
+		<div class="span4 pull-right">
 			<a class="twitter-timeline" width="400px" href="https://twitter.com/SERV_SSL" data-widget-id="484637303671771137" data-tweet-limit="2">Tweets by @SERV_SSL</a>
 			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 		</div>
@@ -90,13 +98,16 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
+					<li>Calendar Urgencies</li>
+					<li>Calendar properties editing</li>
+					<li>Favicon</li>
+				</ul>
+				<h5>Previously</h5>
+				<ul>
 					<li>In Network flag for locations</li>
 					<li>Removed calendar from take control</li>
 					<li>Allow controllers to send SMS from their number if required</li>
 					<li>Feedback button</li>
-				</ul>
-				<h5>Previously</h5>
-				<ul>
 					<li>Additional reports around the new calendar</li>
 					<li>Session keep alive on the calendar page</li>
 					<li>Minor bug fixes</li>
@@ -224,10 +235,17 @@
 				<ul>
 					<li>Do <strong>not</strong> use IE.  Use Chrome or Firefox.</li>
 				</ul>
-				<p>Found an issue? PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</p>
+				<p>Found an issue? PM <a target="_blank" href="http://servssl.org.uk/members/index.php?/user/29-tristan-phillips/">Tris</a></p>
 			</div>
 		</div>
+			
+	</div>
+	<br/>
 
+	<div class="row">
+		<div class="span12">
+			
+		</div>
 	</div>
 
 	<script>
@@ -241,6 +259,7 @@
 		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
 		initCalendar(true, 14);
 		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
+		listCalendarBulletins();
 		listRecentRuns();
 		initFeedback();
 	</script>

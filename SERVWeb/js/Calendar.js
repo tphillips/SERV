@@ -8,6 +8,9 @@ var rosteringWeek = -1;
 var rosteringRepeatInterval = -1;
 var rosteringCalendarId = -1;
 
+var defReq=0;
+var rotaTagId=0;
+
 var removingMemberId = -1;
 var removingWeek = '';
 var removingDay = -1;
@@ -55,6 +58,42 @@ function initCalendar(simple, days)
 		listCalendarsForDroppdown("lstVolunteerCalendar");
 		listCalendarsForDroppdown("lstAddVolunteerCalendar");
 	}
+}
+
+function listCalendarBulletins()
+{
+	callServerSide(
+		"Service/Service.asmx/GetNextXDaysCalendarBulletins", 
+		"{'days':'7'}",
+		function(json)
+		{
+			var toAppend = "<table class='table table-striped table-bordered table-condensed'><tr><th><span style='color:red'>Urgencies!</span> <small><a href='Calendar.aspx'>Click to help</a></small></th></tr>";
+			for(var x = 0; x < json.d.length; x++)
+			{
+				var alert = json.d[x];
+				if (alert.indexOf("no Hooleygan ") > -1)
+				{
+					alert = "<span style='color:red'>" + alert + "</span>";
+				}
+				if (alert.indexOf("no Night Controller") > -1)
+				{
+					alert = "<span style='color:red'>" + alert + "</span>";
+				}
+				if (alert.indexOf("today") > -1)
+				{
+					alert = "<span style='color:red'><strong>" + alert + "</strong></span>";
+				}
+				toAppend += "<tr><td>" + alert + "</td></tr>";
+			}
+			toAppend += "</table>";
+			$("#calendarBulletins").empty();
+			$("#calendarBulletins").append(toAppend);
+			$("#calendarBulletins").slideDown();
+		},
+		function()
+		{
+		}
+	);
 }
 
 function listCalendarsForDroppdown(dropDownId)
@@ -269,13 +308,14 @@ function loadCalendar(memberId, userLevel)
 	);
 }
 
-function initViewCalendar(userlevel, calendarId) 
+function initViewRota(userlevel, calendarId) 
 {
 	userLevel = userlevel;
 	if (userLevel < MANAGE_CALENDAR_USER_LEVEL)
 	{
 		$(".rosterNew").hide();
 		$("#cmdGenerate").hide();
+		$("#cmdShowProps").hide();
 	}
 	if (userLevel < 4)
 	{
@@ -298,7 +338,7 @@ function initViewCalendar(userlevel, calendarId)
 	$("#exCal").datepicker({ dateFormat: 'dd M yy' });
 	renderWeekATitles();
 	renderWeekBTitles();
-	showViewCalendar(calendarId);
+	showViewRota(calendarId);
 	listRosteredVolunteers(calendarId);
 }
 
@@ -443,8 +483,17 @@ function clearRosterSlots()
 	}
 }
 
-function showViewCalendar(calendarId)
+function showViewRota(calendarId)
 {
+	$("#radTag7").removeClass("active");
+	$("#radTag8").removeClass("active");
+	$("#radTag3").removeClass("active");
+	$("#radReq0").removeClass("active");
+	$("#radReq1").removeClass("active");
+	$("#radReq2").removeClass("active");
+	$("#radReq3").removeClass("active");
+	$("#radReq4").removeClass("active");
+	$("#radReq5").removeClass("active");
 	callServerSide(
 		"Service/Service.asmx/GetCalendar", 
 		"{'calendarId':'" + calendarId + "'}",
@@ -452,6 +501,11 @@ function showViewCalendar(calendarId)
 		{
 			$(".calendarName").text(json.d.Name);
 			$("#txtCalendarName").val(json.d.Name);
+			$("#txtSortOrder").val(json.d.SortOrder);
+			$("#radTag" + json.d.RequiredTagID).addClass("active");
+			rotaTagId = json.d.RequiredTagID;
+			$("#radReq" + json.d.DefaultRequirement).addClass("active");
+			defReq = json.d.DefaultRequirement;
 			$("#lblLastGenerated").text(json.d.LastGeneratedString);
 			$("#lblGeneratedTo").text(json.d.GeneratedUpToString);
 			if (json.d.SimpleCalendar)
@@ -472,6 +526,30 @@ function showViewCalendar(calendarId)
 		},
 		function()
 		{
+		}
+	);
+}
+
+function cmdSaveRotaPropsClicked()
+{
+	saveRotaProps(rosteringCalendarId);
+}
+
+function saveRotaProps(calendarId)
+{
+	$("#loading").slideDown();
+	callServerSide(
+		"Service/Service.asmx/SaveCalendarProps", 
+		"{'calendarId':'" + calendarId + "', 'calendarName':'" + $("#txtCalendarName").val() + "', 'sortOrder':'" + $("#txtSortOrder").val() + "', 'requiredTagId':'" + rotaTagId + "', 'defaultRequirement':'" + defReq + "'}",
+		function(json)
+		{
+			$("#loading").slideUp();
+			$("#divProperties").slideUp();
+		},
+		function()
+		{
+			$("#loading").slideUp();
+			$("#error").slideDown();
 		}
 	);
 }

@@ -10,6 +10,7 @@ namespace SERVIBLL
 		List<Calendar> ListCalendars();
 		int Create(Calendar cal, User user);
 		Calendar Get(int calendarId);
+		bool SaveCalendarProps(int calendarId, string calendarName, int sortOrder, int requiredTagId, int defaultRequirement);
 		bool RosterVolunteer(int calendarId, int memberId, string rosteringWeek, int rosteringDay);
 		bool RemoveRotaSlot(int calendarId, int memberId, string rosteringWeek, int rosteringDay);
 		List<RosteredVolunteer> ListRosteredVolunteers(int calendarId);
@@ -32,6 +33,10 @@ namespace SERVIBLL
 		List<string> GetCurrentWeekADateStrings(string format);
 		List<string> GetCurrentWeekBDateStrings(string format);
 		List<string> GetWeekDays(DateTime weekStart, string format);
+		List<string> GetCalendarDayBulletins(DateTime date);
+		List<string> GetNext7DaysCalendarBulletins();
+		List<string> GetCalendarDayBulletins(DateTime date, int days);
+		List<string> GetNextXDaysCalendarBulletins(int days);
 	}
 }
 

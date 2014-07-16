@@ -46,6 +46,23 @@ namespace SERVDAL
 			return e.CalendarEntryID;
 		}
 
+		public bool SaveCalendarProps(int calendarId, string calendarName, int sortOrder, int requiredTagId, int defaultRequirement)
+		{
+			Calendar cal = (from c in db.Calendar
+			                where c.CalendarID == calendarId
+			                select c).FirstOrDefault();
+			if (cal == null)
+			{
+				return false;
+			}
+			cal.Name = calendarName;
+			cal.SortOrder = sortOrder;
+			cal.RequiredTagID = requiredTagId;
+			cal.DefaultRequirement = defaultRequirement;
+			db.SubmitChanges();
+			return true;
+		}
+
 		public List<CalendarEntry> ListCalendarEntries(DateTime date)
 		{
 			return (from e in db.CalendarEntry where e.EntryDate == date orderby e.CalendarID, e.AdHoc select e).ToList();

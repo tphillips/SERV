@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.10.3.custom.min.css" />
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/css/icons.css" />
+        <link rel="icon" type="image/png" href="img/logo.png">
         <script src="/js/jquery-1.10.1.min.js"></script>
         <script src="/js/jquery-ui-1.10.3.custom.min.js"></script>
         <%=SERVGlobal.MainJSInclude()%>	

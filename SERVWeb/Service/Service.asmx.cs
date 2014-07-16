@@ -180,6 +180,24 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
+		public bool SaveCalendarProps(int calendarId, string calendarName, int sortOrder, int requiredTagId, int defaultRequirement)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Committee)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.CalendarBLL().SaveCalendarProps(calendarId, calendarName, sortOrder, requiredTagId, defaultRequirement);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<string> GetNextXDaysCalendarBulletins(int days)
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().GetNextXDaysCalendarBulletins(days);
+		}
+
+		[WebMethod(EnableSession = true)]
 		public Location GetLocation(int locationId)
 		{
 			Authenticate();

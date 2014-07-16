@@ -17,12 +17,48 @@
 			Please note, managing the rota is not the same as managing the calendar. 
 			The calendar is built from the rota. To add exceptions, remove a member from an individual shift or to add an ad-hoc volunteer to an individual shift, please use the calendar manager.
 		</div>
+
+		<p></p>
 			
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			The calendar was last generated from this rota on <strong><span id="lblLastGenerated"></span></strong> up to: <strong><span id="lblGeneratedTo"></span></strong>. <a id="cmdGenerate" class="pull-right" href="#" onclick="generateCalendars();">Generate Now</a> This is a <span id="lblCalendarType"></span> rota <span id="lblSimpleDesc">with a <span id="lblIncrement"></span> day rotation</span>.
+			The calendar was last generated from this rota on <strong><span id="lblLastGenerated"></span></strong> up to: <strong><span id="lblGeneratedTo"></span></strong>.  
+			<a id="cmdGenerate" class="pull-right" href="#" onclick="generateCalendars();">Generate Now</a> This is a <span id="lblCalendarType"></span> rota <span id="lblSimpleDesc">with a 
+			<span id="lblIncrement"></span> day rotation</span>. <a href="#" id="cmdShowProps" onclick="$('#divProperties').slideDown();">Click to edit rota properties</a>
 		</div>
 
+		<div class="well" style="display:none" id="divProperties">
+			<div class="row">
+				<div class="span12">
+					
+					<label>Calendar Name:</label>
+					<input type="text" id="txtCalendarName"/>
+
+					<label>Sort Order (where on the calendar do these slots appear):</label>
+					<input type="text" style="width:30px;" id="txtSortOrder"/>
+
+					<label>Tag required for volunteer (also controls who alert emails are sent to):</label>
+					<div class="btn-group" data-toggle="buttons-radio">
+					    <button type="button" class="btn" onclick="rotaTagId=7;" id="radTag7">Blood volunteer</button>
+					    <button type="button" class="btn" onclick="rotaTagId=8;" id="radTag8">Air ambulance volunteer</button>
+					    <button type="button" class="btn" onclick="rotaTagId=3;" id="radTag3">Controller</button>
+					</div>
+					<br/><br/>
+				
+					<label>Default nightly requirement (controls help alerts):</label>
+					<div class="btn-group" data-toggle="buttons-radio">
+						<button type="button" class="btn" onclick="defReq=0;" id="radReq0">0</button>
+					    <button type="button" class="btn" onclick="defReq=1;" id="radReq1">1</button>
+					    <button type="button" class="btn" onclick="defReq=2;" id="radReq2">2</button>
+					    <button type="button" class="btn" onclick="defReq=3;" id="radReq3">3</button>
+					    <button type="button" class="btn" onclick="defReq=4;" id="radReq4">4</button>
+					    <button type="button" class="btn" onclick="defReq=5;" id="radReq5">5</button>
+					</div><br/><br/>
+				
+					<p><input class="btn" type="button" onclick="cmdSaveRotaPropsClicked();" value="Save"></p>
+				</div>
+			</div>
+		</div>
 
 		<div class="row" style="display:none">
 			<div class="span4">
@@ -213,7 +249,7 @@
 	{
 		rosteringCalendarId = <%=this.CalendarId%>;
 		userLevel = <%=this.UserLevel%>;
-		initViewCalendar(userLevel, rosteringCalendarId);
+		initViewRota(userLevel, rosteringCalendarId);
 	});
 
 	</script>

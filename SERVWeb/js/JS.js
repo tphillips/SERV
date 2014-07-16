@@ -131,6 +131,7 @@ function listRecentRuns()
 				toAppend += "<tr><td>" + json.d[x].MemberName + " " + wentVerbs[Math.floor(Math.random()*wentVerbs.length)] + " " + json.d[x].DeliverToDestinationName + "</td></tr>";
 			}
 			toAppend += "</table>";
+			$("#recentActivity").empty();
 			$("#recentActivity").append(toAppend);
 			$("#recentActivity").slideDown();
 		},
