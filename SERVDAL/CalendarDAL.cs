@@ -65,12 +65,18 @@ namespace SERVDAL
 
 		public List<CalendarEntry> ListCalendarEntries(DateTime date)
 		{
-			return (from e in db.CalendarEntry where e.EntryDate == date orderby e.CalendarID, e.AdHoc select e).ToList();
+			DateTime start = log.LogStart();
+			List<CalendarEntry> ret = (from e in db.CalendarEntry where e.EntryDate == date orderby e.CalendarID, e.AdHoc select e).ToList();
+			log.LogPerformace(start);
+			return ret;
 		}
 
 		public List<CalendarEntry> ListCalendarEntries(DateTime startDate, DateTime endDate)
 		{
-			return (from e in db.CalendarEntry where e.EntryDate >= startDate && e.EntryDate <= endDate orderby e.CalendarID, e.EntryDate, e.AdHoc select e).ToList();
+			DateTime start = log.LogStart();
+			List<CalendarEntry> ret = (from e in db.CalendarEntry where e.EntryDate >= startDate && e.EntryDate <= endDate orderby e.CalendarID, e.EntryDate, e.AdHoc select e).ToList();
+			log.LogPerformace(start);
+			return ret;
 		}
 
 		public void RemoveCalendarEntry(int calendarEntryID)
@@ -149,7 +155,10 @@ namespace SERVDAL
 
 		public List<Calendar> ListCalendars()
 		{
-			return (from c in db.Calendar select c).ToList();
+			DateTime start = log.LogStart();
+			List<Calendar> ret = (from c in db.Calendar select c).ToList();
+			log.LogPerformace(start);
+			return ret;
 		}
 
 		public List<MemberCalendar> ListRosteredVolunteers()

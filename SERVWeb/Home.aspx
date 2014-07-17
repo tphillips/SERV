@@ -98,12 +98,13 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Calendar Urgencies</li>
-					<li>Calendar properties editing</li>
-					<li>Favicon</li>
+					<li>Performance tuning</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Calendar Urgencies</li>
+					<li>Calendar properties editing</li>
+					<li>Favicon</li>
 					<li>In Network flag for locations</li>
 					<li>Removed calendar from take control</li>
 					<li>Allow controllers to send SMS from their number if required</li>

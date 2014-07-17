@@ -55,8 +55,7 @@ function initCalendar(simple, days)
 	{
 		listMembersWithTag("Rider,Driver,Blood,AA,Controller", null);
 		$(".riders").autocomplete({ source: memberNames });
-		listCalendarsForDroppdown("lstVolunteerCalendar");
-		listCalendarsForDroppdown("lstAddVolunteerCalendar");
+		listCalendarsForDroppdowns(new Array("lstAddVolunteerCalendar", "lstVolunteerCalendar"));
 	}
 }
 
@@ -96,7 +95,7 @@ function listCalendarBulletins()
 	);
 }
 
-function listCalendarsForDroppdown(dropDownId)
+function listCalendarsForDroppdowns(dropdowns)
 {
 	callServerSide(
 		"Service/Service.asmx/ListCalendars", 
@@ -105,7 +104,11 @@ function listCalendarsForDroppdown(dropDownId)
 		{
 			for(var x = 0; x < json.d.length; x++)
 			{
-				$("#" + dropDownId).append('<li><a href="#" onclick="volunteerCalendarId = ' + json.d[x].CalendarID + '; volunteerCalendarName=\'' + json.d[x].Name + '\'; setVolunteerCalendarDisplay();">' + json.d[x].Name + '</a></li>');
+				for(var y = 0; y < dropdowns.length; y++)
+				{
+					var dropDownId = dropdowns[y];
+					$("#" + dropDownId).append('<li><a href="#" onclick="volunteerCalendarId = ' + json.d[x].CalendarID + '; volunteerCalendarName=\'' + json.d[x].Name + '\'; setVolunteerCalendarDisplay();">' + json.d[x].Name + '</a></li>');
+				}
 			}
 		},
 		function()
@@ -224,8 +227,8 @@ function loadCalendar(memberId, userLevel)
 {
 	calMemberId = memberId;
 	calUserLevel = userLevel;
-	$("#entry").slideUp();
-	$("#loading").slideDown();
+	//$("#entry").slideUp();
+	//$("#loading").slideDown();
 	for (var x = 0; x < showCalendarDays; x++)
 	{
 		$("#scheduledDay" + (x + 1)).empty();

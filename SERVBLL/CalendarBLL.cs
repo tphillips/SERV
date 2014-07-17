@@ -236,7 +236,7 @@ namespace SERVBLL
 			DateTime clean = new DateTime(date.Year, date.Month, date.Day);
 			List<CalendarEntry> entries = ListCalendarEntries(clean);
 			if (calendars == null) { calendars = ListCalendars(); }
-			string dateDesc = string.Format("on {0:ddd dd MMM}.", clean);
+			string dateDesc = string.Format("on {0:ddd dd MMM}", clean);
 			if (clean == new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day))
 			{
 				dateDesc = "today!";
