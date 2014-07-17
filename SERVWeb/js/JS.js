@@ -91,9 +91,8 @@ function setGreeting()
 
 function getNextShift()
 {
-	callServerSide(
+	callServerSideGet(
 		"Service/Service.asmx/GetNextShift", 
-		"{}",
 		function(json)
 		{
 			if (json.d != null)
@@ -120,9 +119,8 @@ function getNextShift()
 
 function listRecentRuns()
 {
-	callServerSide(
+	callServerSideGet(
 		"Service/Service.asmx/ListRecentRuns", 
-		"{}",
 		function(json)
 		{
 			var toAppend = "<table class='table table-striped table-bordered table-condensed'><tr><th>Recently</th></tr>";
@@ -138,7 +136,8 @@ function listRecentRuns()
 		function(json)
 		{
 			
-		}
+		},
+		true
 	);
 }
 
@@ -354,9 +353,8 @@ function getNumbersForTags(tags, target)
 
 function listMembersWithTag(tag, callBack)
 {
-	callServerSide(
-		"Service/Service.asmx/ListMembersWithTags", 
-		"{'tagsCsv':'" + tag + "'}",
+	callServerSideGet(
+		"Service/Service.asmx/ListMembersWithTags?tagsCsv='" + tag + "'", 
 		function(json)
 		{
 			for(var x = 0; x < json.d.length; x++)
@@ -368,7 +366,8 @@ function listMembersWithTag(tag, callBack)
 		},
 		function()
 		{
-		}
+		},
+		true
 	);
 }
 
@@ -461,9 +460,8 @@ function GetSMSCreditCount(targetElementName)
 
 function listControllers(callBack)
 {
-	callServerSide(
-		"Service/Service.asmx/ListMembersWithTags", 
-		"{'tagsCsv':'controller'}",
+	callServerSideGet(
+		"Service/Service.asmx/ListMembersWithTags?tagsCsv='controller'", 
 		function(json)
 		{
 			for(var x = 0; x < json.d.length; x++)
@@ -475,7 +473,8 @@ function listControllers(callBack)
 		},
 		function()
 		{
-		}
+		},
+		true
 	);
 }
 
@@ -513,9 +512,8 @@ function writeLocations(target, onClick)
 
 function listLocations(callBack)
 {
-	callServerSide(
+	callServerSideGet(
 		"Service/Service.asmx/ListLocations", 
-		"{}",
 		function(json)
 		{
 			for(var x = 0; x < json.d.length; x++)
@@ -527,15 +525,15 @@ function listLocations(callBack)
 		},
 		function()
 		{
-		}
+		},
+		true
 	);
 }
 
 function writeVehicleTypes(target, onClick)
 {
-	callServerSide(
+	callServerSideGet(
 		"Service/Service.asmx/ListVehicleTypes", 
-		"{}",
 		function(json)
 		{
 			for(var x = 0; x < json.d.length; x++)
@@ -548,7 +546,8 @@ function writeVehicleTypes(target, onClick)
 		},
 		function()
 		{
-		}
+		},
+		true
 	);
 }
 
@@ -592,9 +591,8 @@ function SearchMembers(userLevel, search, onlyActive)
 
 function ListLocations(userLevel)
 {
-	callServerSide(
+	callServerSideGet(
 		"Service/Service.asmx/ListLocations", 
-		"{}",
 		function(json)
 		{
 			var append = '<table class="table table-striped table-bordered table-condensed">' +
@@ -619,7 +617,8 @@ function ListLocations(userLevel)
 		},
 		function()
 		{
-		}
+		},
+		false
 	);
 }
 
@@ -867,13 +866,30 @@ function niceAlert(msg)
 	});
 }
 
-function callServerSide(url, data, success, error)
+function callServerSide(url, data, success, error, allowCache)
 {
+	allowCache = (typeof allowCache === "undefined") ? false : allowCache;
 	$.ajax({
 		type: "POST",
 		url: url,
 		data: data,
 		async: asyncRequests,
+		cache: allowCache,
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: success,
+		error: error
+	});
+}
+
+function callServerSideGet(url, success, error, allowCache)
+{
+	allowCache = (typeof allowCache === "undefined") ? false : allowCache;
+	$.ajax({
+		type: "GET",
+		url: url,
+		async: asyncRequests,
+		cache: allowCache,
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: success,

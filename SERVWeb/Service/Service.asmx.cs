@@ -48,7 +48,7 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.CalendarBLL().GetMemberNextShift(CurrentUser().MemberID);
 		}
 
-		[WebMethod(EnableSession = true)]
+		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<RunLog> ListRecentRuns()
 		{
 			Authenticate();
@@ -140,14 +140,14 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.MemberBLL().List(search, onlyActive);
 		}
 
-		[WebMethod(EnableSession = true)]
+		[WebMethod(EnableSession = true, CacheDuration=60)]
 		public List<Member> ListMembersWithTags(string tagsCsv)
 		{
 			Authenticate();
 			return SERVBLLFactory.Factory.MemberBLL().ListMembersWithTags(tagsCsv);
 		}
 
-		[WebMethod(EnableSession = true)]
+		[WebMethod(EnableSession = true, CacheDuration=60)]
 		public List<string> ListMobileNumbersWithTags(string tagsCsv)
 		{
 			Authenticate();
@@ -158,14 +158,14 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.MemberBLL().ListMobileNumbersWithTags(tagsCsv);
 		}
 
-		[WebMethod(EnableSession = true)]
+		[WebMethod(EnableSession = true, CacheDuration=60)]
 		public List<Location> ListLocations()
 		{
 			Authenticate();
 			return SERVBLLFactory.Factory.LocationBLL().ListLocations("");
 		}
 
-		[WebMethod(EnableSession = true)]
+		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<SERVDataContract.Calendar> ListCalendars()
 		{
 			Authenticate();
@@ -190,7 +190,7 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.CalendarBLL().SaveCalendarProps(calendarId, calendarName, sortOrder, requiredTagId, defaultRequirement);
 		}
 
-		[WebMethod(EnableSession = true)]
+		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<string> GetNextXDaysCalendarBulletins(int days)
 		{
 			Authenticate();
@@ -248,7 +248,7 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.LocationBLL().Create(m);
 		}
 
-		[WebMethod(EnableSession = true)]
+		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<VehicleType> ListVehicleTypes()
 		{
 			Authenticate();
@@ -421,10 +421,10 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
-		public List<List<CalendarEntry>> ListSpansCaledarEntries(int days)
+		public List<List<CalendarEntry>> ListSpansCaledarEntries(int days, int page)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().ListSpansCaledarEntries(days);
+			return SERVBLLFactory.Factory.CalendarBLL().ListSpansCaledarEntries(days, page);
 		}
 
 		[WebMethod(EnableSession = true)]

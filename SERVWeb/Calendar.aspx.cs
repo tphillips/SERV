@@ -25,6 +25,18 @@ namespace SERVWeb
 			}
 		}
 
+		protected int PageNum
+		{
+			get 
+			{
+				if (Request["Page"] != null)
+				{
+					return int.Parse(Request["Page"].ToString());
+				}
+				return 0;
+			}
+		}
+
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication();

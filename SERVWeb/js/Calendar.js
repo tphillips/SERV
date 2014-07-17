@@ -28,6 +28,7 @@ var volunteerCalendarName = "";
 
 var showCalendarDays = 28;
 var simpleCalendar = false;
+var calendarPage = 0;
 
 function initCalendar(simple, days)
 {
@@ -61,9 +62,8 @@ function initCalendar(simple, days)
 
 function listCalendarBulletins()
 {
-	callServerSide(
-		"Service/Service.asmx/GetNextXDaysCalendarBulletins", 
-		"{'days':'7'}",
+	callServerSideGet(
+		"Service/Service.asmx/GetNextXDaysCalendarBulletins?days=7", 
 		function(json)
 		{
 			var toAppend = "<table class='table table-striped table-bordered table-condensed'><tr><th><span style='color:red'>Urgencies!</span> <small><a href='Calendar.aspx'>Click to help</a></small></th></tr>";
@@ -91,15 +91,15 @@ function listCalendarBulletins()
 		},
 		function()
 		{
-		}
+		},
+		true
 	);
 }
 
 function listCalendarsForDroppdowns(dropdowns)
 {
-	callServerSide(
+	callServerSideGet(
 		"Service/Service.asmx/ListCalendars", 
-		"{}",
 		function(json)
 		{
 			for(var x = 0; x < json.d.length; x++)
@@ -113,7 +113,8 @@ function listCalendarsForDroppdowns(dropdowns)
 		},
 		function()
 		{
-		}
+		},
+		true
 	);
 }
 
@@ -233,9 +234,8 @@ function loadCalendar(memberId, userLevel)
 	{
 		$("#scheduledDay" + (x + 1)).empty();
 	}
-	callServerSide(
-		"Service/Service.asmx/ListSpansCaledarEntries",
-		"{'days':" + showCalendarDays + "}",
+	callServerSideGet(
+		"Service/Service.asmx/ListSpansCaledarEntries?days=" + showCalendarDays + "&page=" + calendarPage,
 		function(json)
 		{
 			for(var day = 0; day < showCalendarDays; day++)
@@ -307,7 +307,8 @@ function loadCalendar(memberId, userLevel)
 		function()
 		{
 			$("#error").slideDown();
-		}
+		},
+		false
 	);
 }
 
@@ -597,9 +598,8 @@ function setRosterDialogWeek()
 
 function listCalendars(userLevel)
 {
-	callServerSide(
+	callServerSideGet(
 		"Service/Service.asmx/ListCalendars", 
-		"{}",
 		function(json)
 		{
 			var append = '<table class="table table-striped table-bordered table-condensed">' +
@@ -620,7 +620,8 @@ function listCalendars(userLevel)
 		},
 		function()
 		{
-		}
+		},
+		false
 	);
 }
 

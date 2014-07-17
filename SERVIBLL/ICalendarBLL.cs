@@ -19,6 +19,7 @@ namespace SERVIBLL
 		List<List<CalendarEntry>> ListWeeksCaledarEntries();
 		List<List<CalendarEntry>> ListWeeksCaledarEntries(string dateToParse);
 		List<List<CalendarEntry>> ListSpansCaledarEntries(int days);
+		List<List<CalendarEntry>> ListSpansCaledarEntries(int days, int page);
 		List<List<CalendarEntry>> ListSpansCaledarEntries(string dateToParse, int days);
 		List<List<CalendarEntry>> ListSpansCaledarEntries(DateTime dayInWeek, int days);
 		CalendarEntry GetMemberNextShift(int memberID);

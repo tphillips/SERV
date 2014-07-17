@@ -172,6 +172,11 @@ namespace SERVBLL
 			return ListSpansCaledarEntries(DateTime.Now, days);
 		}
 
+		public List<List<CalendarEntry>> ListSpansCaledarEntries(int days, int page)
+		{
+			return ListSpansCaledarEntries(DateTime.Now.AddDays(page * days), days);
+		}
+
 		public List<List<CalendarEntry>> ListSpansCaledarEntries(string dateToParse, int days)
 		{
 			DateTime parsed = DateTime.Parse(dateToParse);

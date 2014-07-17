@@ -10,8 +10,15 @@
 
 <div id="entry" style="display:none">
 	<small>
+
 		<div class="row" id="calendar">
-			
+			<div class="span12">
+				<div class="btn-group" style="margin-bottom:7px;">
+					<button type="button" class="btn btn-mini" onclick="window.location.href='Calendar.aspx?Page=<%=this.PageNum-1%>'"><i class="icon icon-chevron-left"></i></button>
+					<button type="button" class="btn btn-mini" onclick="window.location.href='Calendar.aspx?Page=0'">Today</button>
+					<button type="button" class="btn btn-mini" onclick="window.location.href='Calendar.aspx?Page=<%=this.PageNum+1%>'"><i class="icon icon-chevron-right"></i></button>
+				</div>
+				<br/>
 				<table class="table table-striped table-bordered table-condensed">
 					
 					<tr>
@@ -89,9 +96,8 @@
 						<td><div id="scheduledDay27"></div></td>
 						<td><div id="scheduledDay28"></div></td>
 					</tr>
-
 				</table>
-			
+			</div>
 		</div>
 	</small>
 	<p>Key:</p>
@@ -165,6 +171,7 @@
 	{
 		keepAlive();
 		initCalendar(false, 28);
+		calendarPage = <%=this.PageNum%>;
 		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
 		initFeedback();
 	});

@@ -98,10 +98,11 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Performance tuning</li>
+					<li>Calendar paging, you can now view/edit the calendar into the future and the past</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Performance tuning</li>
 					<li>Calendar Urgencies</li>
 					<li>Calendar properties editing</li>
 					<li>Favicon</li>
