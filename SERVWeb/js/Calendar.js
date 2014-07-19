@@ -91,6 +91,9 @@ function listCalendarBulletins()
 		},
 		function()
 		{
+			$("#calendarBulletins").empty();
+			$("#calendarBulletins").append($("#errorImg").html());
+			$("#calendarBulletins").slideDown();
 		},
 		true
 	);
@@ -268,14 +271,14 @@ function loadCalendar(memberId, userLevel)
 						if (adHoc) { icon = "<i class='icon icon-heart icon-star icon-green'></i> ";}
 						if (swapMarked) { strikeout="text-decoration: line-through"; icon = "<i class='icon icon-exclamation-sign icon-red'></i> ";}
 						if (calendarName == "") { icon = ""; }
-						var toAppend = '<div title="' + calendarName + '" class="calendarSlot calendarSlot' + calendarId + '" style="width:150px">' + icon +
+						var toAppend = '<div title="' + calendarName + '" class="calendarSlot calendarSlot' + calendarId + '" style="w--idth:150px">' + icon +
 									strong + italic + '<a style="' + strikeout + '" href="#" onclick="' +
 									'calSlotClicked(' + slotMemberId + ', ' + calendarId + ', \'' + calendarName + '\', \'' + shiftDate + '\', \'' + niceShiftDate + '\', ' + swapMarked + ');' + 
 									'">' + memberName + '</a></i></strong>' + 
 								'</div>';
 						if ((slotMemberId != memberId && userLevel < MANAGE_CALENDAR_USER_LEVEL) || simpleCalendar)
 						{
-							var toAppend = '<div title="' + calendarName + '" class="calendarSlot calendarSlot' + calendarId + '" style="width:150px; ' + strikeout + '">' + icon + strong + italic + memberName  + '</i></strong></div>';
+							var toAppend = '<div title="' + calendarName + '" class="calendarSlot calendarSlot' + calendarId + '" style="w--idth:150px; ' + strikeout + '">' + icon + strong + italic + memberName  + '</i></strong></div>';
 						}
 						$("#scheduledDay" + (day + 1)).append(toAppend);
 					}
@@ -283,7 +286,7 @@ function loadCalendar(memberId, userLevel)
 					{
 						if (userLevel < MANAGE_CALENDAR_USER_LEVEL)
 						{
-							toAppend = '<div class="calendarSlot" style="width:150px">' +
+							toAppend = '<div class="calendarSlot" style="w--idth:150px">' +
 											'<a href="#" onclick="' +
 											'volunteerSlotClicked(' + calendarId + ', \'' + calendarName + '\', \'' + shiftDate + '\', \'' + niceShiftDate + '\');' + 
 											'"><i class="icon-plus-sign icon-green"></i> Volunteer!</a>' + 
@@ -291,7 +294,7 @@ function loadCalendar(memberId, userLevel)
 						}
 						else
 						{
-							toAppend = '<div class="calendarSlot" style="width:150px">' +
+							toAppend = '<div class="calendarSlot" style="w--idth:150px">' +
 											'<a href="#" onclick="addVolunteerSlotClicked(' + calendarId + ', \'' + calendarName + '\', \'' + shiftDate + '\', \'' + niceShiftDate + '\');"><i class="icon-plus-sign icon-green"></i> Add Volunteer</a>' + 
 										'</div>';
 						}

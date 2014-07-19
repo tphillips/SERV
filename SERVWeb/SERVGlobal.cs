@@ -8,7 +8,7 @@ namespace SERVWeb
 
 		public static Service Service = new Service();
 
-		public static string SERVVersion = "1.7.1.2";
+		public static string SERVVersion = "1.7.1.5";
 
 		public static User User
 		{
@@ -45,6 +45,15 @@ namespace SERVWeb
 			{
 				System.Web.HttpContext.Current.Response.Redirect("Home.aspx?message=" + rejectionMessage);
 			}
+		}
+
+		public static string CSSInclude()
+		{
+			#if DEBUG
+			return "<link rel=\"stylesheet\" href=\"/css/style.css\" />";
+			#else
+			return "<link rel=\"stylesheet\" href=\"/css/style." + SERVVersion + ".css\" />";
+			#endif
 		}
 
 		public static string CalendarJSInclude()

@@ -1,13 +1,22 @@
 <%@ Control Language="C#" Inherits="SERVWeb.Panels" %>
 <div id="loading">
-	<h2>Loading</h2>
+<br/>
 	<p><img src="img/spinnerLarge.gif" width="40" /></p>
-	<p>Please wait, this may take a moment . . .</p>
 </div>
 
 <div id="error" style="display:none">
-	<h2>Ooops!</h2>	
-	<p>There was an error :(</p>	
+	<div class="row">
+		<div class="span3" id="errorImg">
+			<img id="imgError" class="img-rounded" src="" width="200"/><br/>
+		</div>
+		<div class="span9">
+			<h4>Sorry, something went wrong</h4>
+			<br/>
+			<p>Your session may have timed out, or you <i>may</i> have discovered a bug.</p>
+			<p>If this keeps happening, please contact Tris</p>
+		</div>
+	</div>
+	<br/>
 </div>
 
 <div id="success" style="display:none" class="hero-unit">
@@ -38,7 +47,7 @@
 
 <script>
 
-
+	$("#imgError").attr('src', getErrorImage());
 
 
 

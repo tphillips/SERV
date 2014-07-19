@@ -18,6 +18,9 @@ uglifyjs Calendar.js -o Calendar.$version.min.js
 uglifyjs opsMap.js -o opsMap.$version.min.js
 uglifyjs ControllerLog.js -o ControllerLog.$version.min.js
 cd ..
+cd css
+cp style.css style.$version.css
+cd ..
 cd ..
 Echo zipping and archiving release
 rm SERVWeb.zip
@@ -29,4 +32,7 @@ rm -f JS*min.js
 rm -f opsMap*min.js
 rm -f Calendar*min.js
 rm -f ControllerLog*min.js
+cd ..
+cd css
+rm style.$version.css
 echo Done . . .

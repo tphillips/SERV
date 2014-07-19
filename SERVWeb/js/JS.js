@@ -89,6 +89,12 @@ function setGreeting()
 	$("#lblGreeting").text(greetings[Math.floor(Math.random()*greetings.length)]);
 }
 
+function getErrorImage()
+{
+	var num = Math.floor(Math.random()*5) + 1;
+	return "/img/error/Wrong" + num + ".jpg";
+}
+
 function getNextShift()
 {
 	callServerSideGet(
@@ -135,7 +141,9 @@ function listRecentRuns()
 		},
 		function(json)
 		{
-			
+			$("#recentActivity").empty();
+			$("#recentActivity").append($("#errorImg").html());
+			$("#recentActivity").slideDown();
 		},
 		true
 	);
@@ -194,55 +202,62 @@ function DisplayMember(memberId)
 		"{'memberId':" + memberId + "}",
 		function(json)
 		{
-			$("#lblTitle").text(json.d.FirstName + " " + json.d.LastName);
-			$("#txtFirstName").val(json.d.FirstName);
-			$("#txtLastName").val(json.d.LastName);
-			$("#txtEmail").val(json.d.EmailAddress);
-			$("#txtMobile").val(json.d.MobileNumber);
-			$("#txtHomePhone").val(json.d.HomeNumber);
-			$("#txtBirthYear").val(json.d.BirthYear);
-			
-			$("#txtAddress1").val(json.d.Address1);
-			$("#txtAddress2").val(json.d.Address2);
-			$("#txtAddress3").val(json.d.Address3);
-			$("#txtTown").val(json.d.Town);
-			$("#txtCounty").val(json.d.County);
-			$("#txtPostCode").val(json.d.PostCode);
-			$("#lnkPostCode").attr("href", "http://maps.google.com/maps?saddr=" + json.d.PostCode);
-			
-			$("#txtOccupation").val(json.d.Occupation);
-			$("#txtNOK").val(json.d.NextOfKin);
-			$("#txtNOKAddress").val(json.d.NextOfKinAddress);
-			$("#txtNOKPhone").val(json.d.NextOfKinPhone);
-			
-			$("#cboUserLevel").val(json.d.UserLevelID);
-			$("#txtJoinDate").val(json.d.JoinDateString);
-			$("#txtLeaveDate").val(json.d.LeaveDateString);
-			$("#txtAssessmentDate").val(json.d.RiderAssesmentPassDateString);
-			$("#txtAdQualDate").val(json.d.AdQualPassDateString);
-			$("#txtGMPDate").val(json.d.LastGDPGMPDateString);
-			$("#txtAdQualType").val(json.d.AdQualType);
-			$("#txtNotes").val(json.d.Notes);
-			
-			for(var x = 0; x < json.d.Tags.length; x++)
+			if (json.d != null)
 			{
-				if (json.d.Tags[x].TagName == "Rider") { $("#chkRider").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "Driver") { $("#chkDriver").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "4x4") { $("#chk4x4").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "EmergencyList") { $("#chkEmergencyList").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "Fundraiser") { $("#chkFundraiser").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "Blood") { $("#chkBlood").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "AA") { $("#chkAA").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "Milk") { $("#chkMilk").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "Water") { $("#chkWater").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "Controller") { $("#chkController").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "OnRota") { $("#chkOnRota").prop('checked', true); }
-				if (json.d.Tags[x].TagName == "Committee") { $("#chkCommittee").prop('checked', true); }
+				$("#lblTitle").text(json.d.FirstName + " " + json.d.LastName);
+				$("#txtFirstName").val(json.d.FirstName);
+				$("#txtLastName").val(json.d.LastName);
+				$("#txtEmail").val(json.d.EmailAddress);
+				$("#txtMobile").val(json.d.MobileNumber);
+				$("#txtHomePhone").val(json.d.HomeNumber);
+				$("#txtBirthYear").val(json.d.BirthYear);
+				
+				$("#txtAddress1").val(json.d.Address1);
+				$("#txtAddress2").val(json.d.Address2);
+				$("#txtAddress3").val(json.d.Address3);
+				$("#txtTown").val(json.d.Town);
+				$("#txtCounty").val(json.d.County);
+				$("#txtPostCode").val(json.d.PostCode);
+				$("#lnkPostCode").attr("href", "http://maps.google.com/maps?saddr=" + json.d.PostCode);
+				
+				$("#txtOccupation").val(json.d.Occupation);
+				$("#txtNOK").val(json.d.NextOfKin);
+				$("#txtNOKAddress").val(json.d.NextOfKinAddress);
+				$("#txtNOKPhone").val(json.d.NextOfKinPhone);
+				
+				$("#cboUserLevel").val(json.d.UserLevelID);
+				$("#txtJoinDate").val(json.d.JoinDateString);
+				$("#txtLeaveDate").val(json.d.LeaveDateString);
+				$("#txtAssessmentDate").val(json.d.RiderAssesmentPassDateString);
+				$("#txtAdQualDate").val(json.d.AdQualPassDateString);
+				$("#txtGMPDate").val(json.d.LastGDPGMPDateString);
+				$("#txtAdQualType").val(json.d.AdQualType);
+				$("#txtNotes").val(json.d.Notes);
+				
+				for(var x = 0; x < json.d.Tags.length; x++)
+				{
+					if (json.d.Tags[x].TagName == "Rider") { $("#chkRider").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "Driver") { $("#chkDriver").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "4x4") { $("#chk4x4").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "EmergencyList") { $("#chkEmergencyList").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "Fundraiser") { $("#chkFundraiser").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "Blood") { $("#chkBlood").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "AA") { $("#chkAA").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "Milk") { $("#chkMilk").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "Water") { $("#chkWater").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "Controller") { $("#chkController").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "OnRota") { $("#chkOnRota").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "Committee") { $("#chkCommittee").prop('checked', true); }
+				}
+				
+				$("#loading").slideUp();
+				$("#entry").slideDown();
 			}
-			
-			$("#loading").slideUp();
-			$("#entry").slideDown();
-			
+			else
+			{
+				$("#loading").slideUp();
+				$("#error").slideDown();
+			}
 		},
 		function(json)
 		{

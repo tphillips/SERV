@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SERV.Utils;
 using SERVDALFactory;
+using SERVIDAL;
 using SERVDataContract;
 using SERVIBLL;
 using System.Linq;
@@ -24,12 +25,15 @@ namespace SERVBLL
 		public List<Calendar> ListCalendars()
 		{
 			List<Calendar> ret = new List<Calendar>();
-			List<SERVDataContract.DbLinq.Calendar> cals = SERVDALFactory.Factory.CalendarDAL().ListCalendars();
-			foreach (SERVDataContract.DbLinq.Calendar c in cals)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				ret.Add(new Calendar(c));
+				List<SERVDataContract.DbLinq.Calendar> cals = dal.ListCalendars();
+				foreach (SERVDataContract.DbLinq.Calendar c in cals)
+				{
+					ret.Add(new Calendar(c));
+				}
+				return ret;
 			}
-			return ret;
 		}
 
 		public int Create(Calendar cal, User user)
@@ -42,9 +46,12 @@ namespace SERVBLL
 
 		public Calendar Get(int calendarId)
 		{
-			SERVDataContract.DbLinq.Calendar lret = SERVDALFactory.Factory.CalendarDAL().Get(calendarId);
-			Calendar ret = new Calendar(lret);
-			return ret;
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			{
+				SERVDataContract.DbLinq.Calendar lret = dal.Get(calendarId);
+				Calendar ret = new Calendar(lret);
+				return ret;
+			}
 		}
 
 		public bool SaveCalendarProps(int calendarId, string calendarName, int sortOrder, int requiredTagId, int defaultRequirement)
@@ -67,88 +74,112 @@ namespace SERVBLL
 		public List<RosteredVolunteer> ListRosteredVolunteers(int calendarId)
 		{
 			List<RosteredVolunteer> ret = new List<RosteredVolunteer>();
-			List<SERVDataContract.DbLinq.MemberCalendar> lret = SERVDALFactory.Factory.CalendarDAL().ListRosteredVolunteers(calendarId);
-			foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				ret.Add(new RosteredVolunteer(mc));
+				List<SERVDataContract.DbLinq.MemberCalendar> lret = dal.ListRosteredVolunteers(calendarId);
+				foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
+				{
+					ret.Add(new RosteredVolunteer(mc));
+				}
+				return ret;
 			}
-			return ret;
 		}
 
 		public List<RosteredVolunteer> ListRosteredVolunteers(string week, int day)
 		{
 			List<RosteredVolunteer> ret = new List<RosteredVolunteer>();
-			List<SERVDataContract.DbLinq.MemberCalendar> lret = SERVDALFactory.Factory.CalendarDAL().ListRosteredVolunteers(week, day);
-			foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				ret.Add(new RosteredVolunteer(mc));
+				List<SERVDataContract.DbLinq.MemberCalendar> lret = dal.ListRosteredVolunteers(week, day);
+				foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
+				{
+					ret.Add(new RosteredVolunteer(mc));
+				}
+				return ret;
 			}
-			return ret;
 		}
 
 		public List<RosteredVolunteer> ListRosteredVolunteers()
 		{
 			List<RosteredVolunteer> ret = new List<RosteredVolunteer>();
-			List<SERVDataContract.DbLinq.MemberCalendar> lret = SERVDALFactory.Factory.CalendarDAL().ListRosteredVolunteers();
-			foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				ret.Add(new RosteredVolunteer(mc));
+				List<SERVDataContract.DbLinq.MemberCalendar> lret = dal.ListRosteredVolunteers();
+				foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
+				{
+					ret.Add(new RosteredVolunteer(mc));
+				}
+				return ret;
 			}
-			return ret;
 		}
 
 		public CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId, bool adhoc)
 		{
 			DateTime cleanDate = new DateTime(date.Year, date.Month, date.Day);
-			SERVDataContract.DbLinq.CalendarEntry entry = SERVDALFactory.Factory.CalendarDAL().GetCalendarEntry(cleanDate, calendarId, memberId, adhoc ? 1 : 0);
-			if (entry == null)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				return null;
+				SERVDataContract.DbLinq.CalendarEntry entry = dal.GetCalendarEntry(cleanDate, calendarId, memberId, adhoc ? 1 : 0);
+				if (entry == null)
+				{
+					return null;
+				}
+				return new CalendarEntry(entry);
 			}
-			return new CalendarEntry(entry);
 		}
 
 		public CalendarEntry GetCalendarEntry(int calendarEntryId)
 		{
-			SERVDataContract.DbLinq.CalendarEntry entry = SERVDALFactory.Factory.CalendarDAL().GetCalendarEntry(calendarEntryId);
-			if (entry == null)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				return null;
+				SERVDataContract.DbLinq.CalendarEntry entry = dal.GetCalendarEntry(calendarEntryId);
+				if (entry == null)
+				{
+					return null;
+				}
+				return new CalendarEntry(entry);
 			}
-			return new CalendarEntry(entry);
 		}
 
 		public CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId)
 		{
 			DateTime cleanDate = new DateTime(date.Year, date.Month, date.Day);
-			SERVDataContract.DbLinq.CalendarEntry entry = SERVDALFactory.Factory.CalendarDAL().GetCalendarEntry(cleanDate, calendarId, memberId);
-			if (entry == null)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				return null;
+				SERVDataContract.DbLinq.CalendarEntry entry = dal.GetCalendarEntry(cleanDate, calendarId, memberId);
+				if (entry == null)
+				{
+					return null;
+				}
+				return new CalendarEntry(entry);
 			}
-			return new CalendarEntry(entry);
 		}
 
 		public List<CalendarEntry> ListCalendarEntries(DateTime date)
 		{
 			List<CalendarEntry> ret = new List<CalendarEntry>();
-			List<SERVDataContract.DbLinq.CalendarEntry> lret = SERVDALFactory.Factory.CalendarDAL().ListCalendarEntries(date);
-			foreach (SERVDataContract.DbLinq.CalendarEntry e in lret)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				ret.Add(new CalendarEntry(e));
+				List<SERVDataContract.DbLinq.CalendarEntry> lret = dal.ListCalendarEntries(date);
+				foreach (SERVDataContract.DbLinq.CalendarEntry e in lret)
+				{
+					ret.Add(new CalendarEntry(e));
+				}
+				return ret;
 			}
-			return ret;
 		}
 
 		public List<CalendarEntry> ListCalendarEntries(DateTime date, int days)
 		{
 			List<CalendarEntry> ret = new List<CalendarEntry>();
-			List<SERVDataContract.DbLinq.CalendarEntry> lret = SERVDALFactory.Factory.CalendarDAL().ListCalendarEntries(date, date.AddDays(days));
-			foreach (SERVDataContract.DbLinq.CalendarEntry e in lret)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				ret.Add(new CalendarEntry(e));
+				List<SERVDataContract.DbLinq.CalendarEntry> lret = dal.ListCalendarEntries(date, date.AddDays(days));
+				foreach (SERVDataContract.DbLinq.CalendarEntry e in lret)
+				{
+					ret.Add(new CalendarEntry(e));
+				}
+				return ret;
 			}
-			return ret;
 		}
 
 		public List<List<CalendarEntry>> ListWeeksCaledarEntries()
@@ -268,12 +299,15 @@ namespace SERVBLL
 
 		public CalendarEntry GetMemberNextShift(int memberID)
 		{
-			SERVDataContract.DbLinq.CalendarEntry lret = SERVDALFactory.Factory.CalendarDAL().GetMemberNextShift(memberID);
-			if (lret != null)
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
 			{
-				return new CalendarEntry(lret);
+				SERVDataContract.DbLinq.CalendarEntry lret = dal.GetMemberNextShift(memberID);
+				if (lret != null)
+				{
+					return new CalendarEntry(lret);
+				}
+				return null;
 			}
-			return null;
 		}
 
 		public int CreateCalendarEntry(int calendarID, int memberID, DateTime date)

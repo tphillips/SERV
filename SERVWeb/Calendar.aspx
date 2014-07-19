@@ -11,24 +11,24 @@
 <div id="entry" style="display:none">
 	<small>
 
-		<div class="row" id="calendar">
-			<div class="span12">
-				<div class="btn-group" style="margin-bottom:7px;">
+		<div id="calendar">
+			
+				<div class="btn-group" style="position:absolute; top:8px;right:50%">
 					<button type="button" class="btn btn-mini" onclick="window.location.href='Calendar.aspx?Page=<%=this.PageNum-1%>'"><i class="icon icon-chevron-left"></i></button>
 					<button type="button" class="btn btn-mini" onclick="window.location.href='Calendar.aspx?Page=0'">Today</button>
 					<button type="button" class="btn btn-mini" onclick="window.location.href='Calendar.aspx?Page=<%=this.PageNum+1%>'"><i class="icon icon-chevron-right"></i></button>
 				</div>
-				<br/>
+
 				<table class="table table-striped table-bordered table-condensed">
 					
 					<tr>
-						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay1"></span></td>
-						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay2"></span></td>
-						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay3"></span></td>
-						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay4"></span></td>
-						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay5"></span></td>
-						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay6"></span></td>
-						<td style="text-align:center; vertical-align:top; width:150px"><span id="titleDay7"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay1"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay2"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay3"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay4"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay5"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay6"></span></td>
+						<td style="text-align:center; vertical-align:top;"><span id="titleDay7"></span></td>
 					</tr>
 					<tr style="height:130px;">
 						<td><div id="scheduledDay1"></div></td>
@@ -97,32 +97,34 @@
 						<td><div id="scheduledDay28"></div></td>
 					</tr>
 				</table>
-			</div>
+			
 		</div>
 	</small>
-	<p>Key:</p>
-	<div class="row">
-		<div class="span3">
-			<p>
-				<div class="calendarSlot calendarSlot1" style="">Blood</div>
-				<div class="calendarSlot calendarSlot2" style="">AA Night</div>
-				<div class="calendarSlot calendarSlot3" style="">Day Controller</div>
-				<div class="calendarSlot calendarSlot4" style="">Night Controller</div>
-				<div class="calendarSlot calendarSlot5" style="">AA Night 2</div>
-				<div class="calendarSlot calendarSlot6" style="">AA Daytime</div>
-				<div class="calendarSlot calendarSlot7" style="">Hooleygan</div>
-			</p>
+	<div style="display:none">
+		<p>Key:</p>
+		<div class="row">
+			<div class="span3">
+				<p>
+					<div class="calendarSlot calendarSlot1" style="">Blood</div>
+					<div class="calendarSlot calendarSlot2" style="">AA Night</div>
+					<div class="calendarSlot calendarSlot3" style="">Day Controller</div>
+					<div class="calendarSlot calendarSlot4" style="">Night Controller</div>
+					<div class="calendarSlot calendarSlot5" style="">AA Night 2</div>
+					<div class="calendarSlot calendarSlot6" style="">AA Daytime</div>
+					<div class="calendarSlot calendarSlot7" style="">Hooleygan</div>
+				</p>
+			</div>
+			<div class="span9">
+				<p>
+					<i class="icon-star icon-green"></i> = Ad-Hoc / Member volunteered.<br/>
+					<i class="icon-exclamation-sign icon-red"></i> = Swap needed, member cannot do shift. <br/>
+					<i class="icon icon-calendar"></i> = Scheduled slot.<br/>
+				</p>
+			</div>
 		</div>
-		<div class="span9">
-			<p>
-				<i class="icon-star icon-green"></i> = Ad-Hoc / Member volunteered.<br/>
-				<i class="icon-exclamation-sign icon-red"></i> = Swap needed, member cannot do shift. <br/>
-				<i class="icon icon-calendar"></i> = Scheduled slot.<br/>
-			</p>
-		</div>
+		<br/>
 	</div>
 
-	<br/>
 </div>
 
 <div id="calSlotDialog" style="display:none; background-color:#fcfcfc" title="Your Shift">
@@ -169,11 +171,13 @@
 
 	$(function() 
 	{
+		$("#container").removeClass("container");
+		$("#container").addClass("fullScreenContainer");
 		keepAlive();
 		initCalendar(false, 28);
 		calendarPage = <%=this.PageNum%>;
 		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
-		initFeedback();
+		//initFeedback();
 	});
 
 </script>

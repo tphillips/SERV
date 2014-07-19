@@ -60,6 +60,7 @@
     <Folder Include="Service\" />
     <Folder Include="img\" />
     <Folder Include="Register\" />
+    <Folder Include="img\error\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SERVBLLFactory\SERVBLLFactory.csproj">
@@ -138,6 +139,17 @@
     <Content Include="Forum.aspx" />
     <Content Include="NewsHeadlines.htm" />
     <Content Include="img\Feedback.png" />
+    <Content Include="img\BlackHelicopter.png" />
+    <Content Include="img\GreenHelicopter.png" />
+    <Content Include="img\GreenPhone.png" />
+    <Content Include="img\Car.png" />
+    <Content Include="img\BlackPhone.png" />
+    <Content Include="img\Blood.png" />
+    <Content Include="img\error\Wrong1.jpg" />
+    <Content Include="img\error\Wrong2.jpg" />
+    <Content Include="img\error\Wrong3.jpg" />
+    <Content Include="img\error\Wrong4.jpg" />
+    <Content Include="img\error\Wrong5.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">

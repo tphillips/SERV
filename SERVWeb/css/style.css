@@ -9,24 +9,30 @@ h1, h2, h3, h4
 	margin-top:30px;
 }
 
-	.forumPageContainer
-	{
-		height:100%;
-		width:100%
-		margin-top:0px;
-		margin-left:0px;
-		margin-right:0px;
-		margin-bottom:0px;
-		padding:0px;
-	}
+.fullScreenContainer
+{
+	margin-top:-5px;
+	margin-left:15px;
+	margin-right:15px;
+}
 
-	.newsBanner
-	{
-		w--idth:50%;
-		padding-top:11px;
-		margin-right:50px;
-		color: #777777;
-	}
+.forumPageContainer
+{
+	height:100%;
+	width:100%
+	margin-top:0px;
+	margin-left:0px;
+	margin-right:0px;
+	margin-bottom:0px;
+	padding:0px;
+}
+
+.newsBanner
+{
+	padding-top:11px;
+	margin-right:50px;
+	color: #777777;
+}
 
 .no-close .ui-dialog-titlebar-close {
   display: none;
@@ -52,50 +58,85 @@ h1, h2, h3, h4
 	padding-left:4px;
 	padding-right:4px;
 	overflow:hidden;
-	width:100px;
 	margin-bottom:2px;
 	white-space:nowrap;
-	c--olor: steelblue;
+	padding-left:20px;
 }
 
+/* Nothing */
 .calendarSlot0
 {
 	background-color:#ffffff;
 }
 
+/* Blood */
 .calendarSlot1
 {
 	background-color:#ffe8e8;
+	background-image: url('/img/Blood.png');
+	background-repeat:no-repeat;
+	background-size: 14px 14px;
+	background-position:3px; 
 }
 
+/* AA Night */
 .calendarSlot2
 {
 	background-color:#d2e5ff;
+	background-image: url('/img/BlackHelicopter.png');
+	background-repeat:no-repeat;
+	background-size: 14px 14px;
+	background-position:3px; 
 }
 
+/* Day Controller */
 .calendarSlot3
 {
-	background-color:#eff9d8
+	background-color:#eff9d8;
+	background-image: url('/img/GreenPhone.png');
+	background-repeat:no-repeat;
+	background-size: 14px 14px;
+	background-position:3px; 
 }
 
+/* Night Controller */
 .calendarSlot4
 {
 	background-color:#dff0d8;
+	background-image: url('/img/BlackPhone.png');
+	background-repeat:no-repeat;
+	background-size: 14px 14px;
+	background-position:3px; 
 }
 
+/* AA Night Standby */
 .calendarSlot5
 {
 	background-color:#dfeff9;
+	background-image: url('/img/GreyHelicopter.png');
+	background-repeat:no-repeat;
+	background-size: 14px 14px;
+	background-position:3px; 
 }
 
+/* AA Day */
 .calendarSlot6
 {
 	background-color:#f9f8ed;
+	background-image: url('/img/GreenHelicopter.png');
+	background-repeat:no-repeat;
+	background-size: 14px 14px;
+	background-position:3px; 
 }
 
+/* Hooleygan */
 .calendarSlot7
 {
 	background-color:#dbcfde;
+	background-image: url('/img/Car.png');
+	background-repeat:no-repeat;
+	background-size: 14px 14px;
+	background-position:3px; 
 }
 
 .rosterNew
@@ -109,10 +150,5 @@ h1, h2, h3, h4
 	font-style:italic;
 	color:red;
 }
-
-.calDay h4 { margin-top: 0px; margin-bottom:3px; border: 1px solid gainsboro; padding 2px; padding-left:3px; background-color: whitesmoke; font-size:small; font-weight: bold; }
-.calDay ul { margin-bottom: 0px; }
-.calDay ul,li { list-style-type: none; margin-left:0px; margin-top:1px; padding:0px; }
-.calDay li { border: 1px solid gainsboro; padding-left:3px;}
 
 

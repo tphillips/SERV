@@ -44,6 +44,7 @@ namespace SERVDataContract
 		[DataMember]
 		public DateTime EntryDate { get; set; }
 
+		[DataMember]
 		public bool IsToday
 		{
 			get

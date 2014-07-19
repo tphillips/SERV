@@ -20,18 +20,23 @@
 	</div>
 	<div class="row">
 		<div class="span4">
-			<div id="calendarBulletins" style="display:">
+			<a href="#" id="cmdShowUrgencies" onclick="$('#calendarBulletins').slideDown(); listCalendarBulletins(); $('#cmdShowUrgencies').slideUp();">+ Show Urgencies . . .</a>
+			<div id="calendarBulletins" style="display:none">
 				<img src="img/spinnerLarge.gif" width="30" />
 			</div>
 		</div>
 		<div class="span4">
-			<div id="recentActivity" style="display:">
+			<center><a href="#" id="cmdShowRecent" onclick="$('#recentActivity').slideDown(); listRecentRuns(); $('#cmdShowRecent').slideUp();">+ Show Recent Runs . . .</a></center>
+			<div id="recentActivity" style="display:none">
 				<img src="img/spinnerLarge.gif" width="30" />
 			</div>
 		</div>
 		<div class="span4 pull-right">
-			<a class="twitter-timeline" width="400px" href="https://twitter.com/SERV_SSL" data-widget-id="484637303671771137" data-tweet-limit="2">Tweets by @SERV_SSL</a>
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			<a href="#" class="pull-right" id="cmdShowTweets" onclick="$('#twitter').slideDown(); $('#cmdShowTweets').slideUp();">+ Show Tweets . . .</a>
+			<div id="twitter" style="display:none">
+				<a class="twitter-timeline" width="400px" href="https://twitter.com/SERV_SSL" data-widget-id="484637303671771137" data-tweet-limit="2">Tweets by @SERV_SSL</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
 		</div>
 	</div>
 
@@ -98,10 +103,14 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Calendar paging, you can now view/edit the calendar into the future and the past</li>
+					<li>Calendar memory optimisation</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Calendar Icons</li>
+					<li>Tidying up stylesheets and versionifying</li>
+					<li>New calendar layout on main calendar screen</li>
+					<li>Calendar paging, you can now view/edit the calendar into the future and the past</li>
 					<li>Performance tuning</li>
 					<li>Calendar Urgencies</li>
 					<li>Calendar properties editing</li>
@@ -261,8 +270,8 @@
 		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
 		initCalendar(true, 14);
 		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
-		listCalendarBulletins();
-		listRecentRuns();
+		//listCalendarBulletins();
+		//listRecentRuns();
 		initFeedback();
 	</script>
 	
