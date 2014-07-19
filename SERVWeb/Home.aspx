@@ -20,26 +20,27 @@
 	</div>
 	<div class="row">
 		<div class="span4">
-			<a href="#" id="cmdShowUrgencies" onclick="$('#calendarBulletins').slideDown(); listCalendarBulletins(); $('#cmdShowUrgencies').slideUp();">+ Show Urgencies . . .</a>
+			<a href="#" class="btn" id="cmdShowUrgencies" onclick="$('#calendarBulletins').slideDown(); listCalendarBulletins(); $('#cmdShowUrgencies').slideUp();"><i class="icon icon-chevron-down"></i> Show Urgencies . . .</a>
 			<div id="calendarBulletins" style="display:none">
 				<img src="img/spinnerLarge.gif" width="30" />
 			</div>
 		</div>
 		<div class="span4">
-			<center><a href="#" id="cmdShowRecent" onclick="$('#recentActivity').slideDown(); listRecentRuns(); $('#cmdShowRecent').slideUp();">+ Show Recent Runs . . .</a></center>
+			<center><a href="#" class="btn" id="cmdShowRecent" onclick="$('#recentActivity').slideDown(); listRecentRuns(); $('#cmdShowRecent').slideUp();"><i class="icon icon-chevron-down"></i> Show Recent Runs . . .</a></center>
 			<div id="recentActivity" style="display:none">
 				<img src="img/spinnerLarge.gif" width="30" />
 			</div>
 		</div>
-		<div class="span4 pull-right">
-			<a href="#" class="pull-right" id="cmdShowTweets" onclick="$('#twitter').slideDown(); $('#cmdShowTweets').slideUp();">+ Show Tweets . . .</a>
+		<div class="span4 pull-right" style="text-align:right">
+			<a href="#" class="btn" class="pull-right" id="cmdShowTweets" onclick="$('#twitter').slideDown(); $('#cmdShowTweets').slideUp();"><i class="icon icon-chevron-down"></i> Show Tweets . . .</a>
 			<div id="twitter" style="display:none">
 				<a class="twitter-timeline" width="400px" href="https://twitter.com/SERV_SSL" data-widget-id="484637303671771137" data-tweet-limit="2">Tweets by @SERV_SSL</a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
 		</div>
 	</div>
-
+	<br/>
+	<a href="#" class="btn" id="cmdShowCalendar" onclick="loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>); $('#cmdShowCalendar').slideUp();"><i class="icon icon-chevron-down"></i> Show The Calendar . . .</a>
 	<div class="row">
 		<small>
 			<div class="span12" id="calendar" style="display:none">
@@ -103,10 +104,12 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Calendar memory optimisation</li>
+					<li>Error memes</li>
+					<li>calendar, Recent runs, Twitter and Calendar bulletins are not loaded by default to try and save server resources.  This can change back once we are on a better server.  Sorry :(</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Calendar memory optimisation</li>
 					<li>Calendar Icons</li>
 					<li>Tidying up stylesheets and versionifying</li>
 					<li>New calendar layout on main calendar screen</li>
@@ -262,14 +265,14 @@
 	<script>
 		$("#loading").hide();
 		$("#loading").empty();
-		loadNewsBanner();
+		//loadNewsBanner();
 		FullName = "<%=this.FullName%>";
 		setGreeting();
 		getNextShift();
 		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); window.setTimeout('$("#success").slideUp()',4000); }
 		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
 		initCalendar(true, 14);
-		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
+		//loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
 		//listCalendarBulletins();
 		//listRecentRuns();
 		initFeedback();
