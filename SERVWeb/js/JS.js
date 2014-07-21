@@ -911,3 +911,13 @@ function callServerSideGet(url, success, error, allowCache)
 		error: error
 	});
 }
+
+function onMasterLoaded()
+{
+	var readOnly=false;
+	if(readOnly)
+	{
+		$("#pnlReadOnly").slideDown();
+		$(".readOnlyHidden").hide();
+	}
+}

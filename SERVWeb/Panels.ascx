@@ -34,6 +34,11 @@
 	<p><span id="alertMessage">Default message</span></p>
 </div>
 
+<div id="pnlReadOnly" class="alert" style="display:none" title="SERV">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>CAUTION!</strong> The system is currently in <strong>Read Only mode</strong>.  You will not be able to save any changes.
+</div>
+
 <div id="feedbackDialog" style="display:none; background-color:#fcfcfc" title="Feedback">
 	<p>Use this form to provide <strong>anonymous</strong> feedback on <i>any</i> aspect of SERV or this system.</p>
 	<textarea id="txtFeedback" cols="40" rows="5" style="width:450px" onkeypress="filterKeys()"></textarea>

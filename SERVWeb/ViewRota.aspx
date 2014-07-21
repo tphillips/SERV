@@ -23,7 +23,7 @@
 		<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			The calendar was last generated from this rota on <strong><span id="lblLastGenerated"></span></strong> up to: <strong><span id="lblGeneratedTo"></span></strong>.  
-			<a id="cmdGenerate" class="pull-right" href="#" onclick="generateCalendars();">Generate Now</a> This is a <span id="lblCalendarType"></span> rota <span id="lblSimpleDesc">with a 
+			<a id="cmdGenerate" class="pull-right readOnlyHidden" href="#" onclick="generateCalendars();">Generate Now</a> This is a <span id="lblCalendarType"></span> rota <span id="lblSimpleDesc">with a 
 			<span id="lblIncrement"></span> day rotation</span>. <a href="#" id="cmdShowProps" onclick="$('#divProperties').slideDown();">Click to edit rota properties</a>
 		</div>
 
@@ -55,7 +55,7 @@
 					    <button type="button" class="btn" onclick="defReq=5;" id="radReq5">5</button>
 					</div><br/><br/>
 				
-					<p><input class="btn" type="button" onclick="cmdSaveRotaPropsClicked();" value="Save"></p>
+					<p><input class="btn readOnlyHidden" type="button" onclick="cmdSaveRotaPropsClicked();" value="Save"></p>
 				</div>
 			</div>
 		</div>
@@ -232,14 +232,14 @@
 		</div><br/>
 
 		<br/><br/>
-		<input style="width:70px" type="button" value="Roster" class="btn btn-primary btn-lg" onclick="rosterVolunteer();"></input>
+		<input style="width:70px" type="button" value="Roster" class="btn btn-primary btn-lg readOnlyHidden" onclick="rosterVolunteer();"></input>
 		<br/><br/>
 	</div>
 
 	<div id="removeSlot" style="display:none; background-color:#fcfcfc" title="Remove a Rota Slot">
 		<p>Do you really want to remove "<span id="lblRemoveMember"></span>" from day <span id="lblRemoveNight"></span> week <span id="lblRemoveWeek"></span>?</p>
 		<br/>
-		<input type="button" value="Yes" class="btn btn-primary btn-lg" onclick="removeRotaSlot();"></input> <input type="button" value="No" class="btn btn-lg" onclick="$('#removeSlot').dialog('close');"></input>
+		<input type="button" value="Yes" class="btn btn-primary btn-lg readOnlyHidden" onclick="removeRotaSlot();"></input> <input type="button" value="No" class="btn btn-lg" onclick="$('#removeSlot').dialog('close');"></input>
 		<br/>
 	</div>
 

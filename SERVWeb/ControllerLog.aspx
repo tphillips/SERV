@@ -239,10 +239,10 @@
 	<hr/>
 	<div class="row">
 		<div class="span6">
-			<button type=button class="btn btn-primary btn-lg" id="cmdSave" onclick="saveRun()"><i class="icon-ok icon-white"></i> Save Run</button> 
+			<button type="button" class="btn btn-primary btn-lg readOnlyHidden" id="cmdSave" onclick="saveRun()"><i class="icon-ok icon-white"></i> Save Run</button> 
 		</div>
-		<div class="span6 pull-right" style="text-align:right">
-			<button type=button class="btn btn-lg" id="cmdNotRun" onclick="saveNotRun()" style="display:none"><i class="icon-remove icon-red"></i> Not Completed</button>
+		<div class="span6 pull-right readOnlyHidden" style="text-align:right">
+			<button type="button" class="btn btn-lg readOnlyHidden" id="cmdNotRun" onclick="saveNotRun()" style="display:none"><i class="icon-remove icon-red"></i> Not Completed</button>
 		</div>
 	</div>
 </div>

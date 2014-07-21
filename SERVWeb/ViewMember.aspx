@@ -6,7 +6,7 @@
 	
 	<div id="entry" style="display:none">
 		<h3><span id="lblTitle"></span> <span id="memNav" style="display:none"><a class="btn" href="ViewMember.aspx?memberId=<%=this.MemberId-1%>"><</a> <a class="btn" href="ViewMember.aspx?memberId=<%=this.MemberId+1%>">></a></span></h3>
-		<button type=button class="btn btn-primary btn-lg" onclick="SaveMember()"><i class="icon-ok icon-white"></i> Save</button>
+		<button type=button class="btn btn-primary btn-lg readOnlyHidden" onclick="SaveMember()"><i class="icon-ok icon-white"></i> Save</button>
 		<hr/>
 		
 			<div class="row">
@@ -163,7 +163,7 @@
 
 		<br/>
 		<hr/>
-		<button type=button class="btn btn-primary btn-lg" onclick="SaveMember()"><i class="icon-ok icon-white"></i> Save</button>
+		<button type=button class="btn btn-primary btn-lg readOnlyHidden" onclick="SaveMember()"><i class="icon-ok icon-white"></i> Save</button>
 	
 	</div>
 	

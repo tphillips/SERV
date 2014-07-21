@@ -54,7 +54,7 @@
 		</div>
 
 		<br/>
-		<button type=button id="cmdSave" class="btn btn-primary btn-lg" onclick="_SaveLocation()"><i class="icon-ok icon-white"></i> Save</button>
+		<button type=button id="cmdSave" class="btn btn-primary btn-lg readOnlyHidden" onclick="_SaveLocation()"><i class="icon-ok icon-white"></i> Save</button>
 
 	</div>
 

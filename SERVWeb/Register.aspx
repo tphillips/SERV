@@ -120,7 +120,7 @@
 		</label>
 	</div>
 	<hr/>
-	<button type=button class="btn btn-primary btn-lg" onclick="register()"><i class="icon-ok icon-white"></i> Register!</button>
+	<button type=button class="btn btn-primary btn-lg readOnlyHidden" onclick="register()"><i class="icon-ok icon-white"></i> Register!</button>
 </div>
 
 <script>

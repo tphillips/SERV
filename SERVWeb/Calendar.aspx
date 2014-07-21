@@ -131,7 +131,7 @@
 	<p>We realise you have a life outside of SERV.</p>
 	<p>If you cannot carry out your <strong><span id="swapDialogCalendarName">CAL TYPE</span></strong> shift on <strong><span id="swapDialogShiftDate">SHIFT DATE</span></strong>, please click "Swap Needed"</p>
 	<br/>
-	<input type="button" value="Swap Needed" class="btn btn-primary btn-lg" onclick="swapNeededClicked();"></input> <input type="button" value="Cancel" class="btn btn-lg" onclick="$('#calSlotDialog').dialog('close');"></input>
+	<input type="button" value="Swap Needed" class="btn btn-primary btn-lg readOnlyHidden" onclick="swapNeededClicked();"></input> <input type="button" value="Cancel" class="btn btn-lg" onclick="$('#calSlotDialog').dialog('close');"></input>
 	<br/><br/>
 </div>
 
@@ -144,7 +144,7 @@
 		</ul>
 	</li>
 	<br/><br/><br/><br/><br/><br/><br/><br/>
-	<input type="button" value="OK, Add Me!" class="btn btn-primary btn-lg" onclick="volunteerClicked();"></input> <input type="button" value="No" class="btn btn-lg" onclick="$('#volunteerDialog').dialog('close');"></input>
+	<input type="button" value="OK, Add Me!" class="btn btn-primary btn-lg readOnlyHidden" onclick="volunteerClicked();"></input> <input type="button" value="No" class="btn btn-lg" onclick="$('#volunteerDialog').dialog('close');"></input>
 	<br/><br/>
 </div>
 
@@ -153,7 +153,7 @@
 	<label>Member:</label>
 		<div class="input-append">
 			<input style="width:250px" type="text" class="riders" id="txtFindMember" />
-			<a style="width:10px" type=button class="btn btn-lg" disabled><i class="icon-search"></i></a>
+			<a style="width:10px" type=button class="btn btn-lg readOnlyHidden" disabled><i class="icon-search"></i></a>
 		</div>
 		<br/>
 	<label>Please select the type of shift:</label>
@@ -163,7 +163,7 @@
 		</ul>
 	</li>
 	<br/><br/><br/><br/><br/><br/><br/><br/>
-	<input type="button" value="Add" class="btn btn-primary btn-lg" onclick="addVolunteerClicked();"></input> <input type="button" value="Cancel" class="btn btn-lg" onclick="$('#addVolunteerDialog').dialog('close');"></input>
+	<input type="button" value="Add" class="btn btn-primary btn-lg readOnlyHidden" onclick="addVolunteerClicked();"></input> <input type="button" value="Cancel" class="btn btn-lg" onclick="$('#addVolunteerDialog').dialog('close');"></input>
 	<br/><br/>
 </div>
 
