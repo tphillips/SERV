@@ -8,7 +8,7 @@
 
 apt-get update
 apt-get upgrade
-apt-get install apache2 mysql-server libapache2-mod-mono mono-apache-server4 mono-devel unzip
+apt-get install apache2 mysql-server libapache2-mod-mono mono-apache-server4 mono-devel unzip postfix
 
 # The server may hang now, do a reboot.
 

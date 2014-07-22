@@ -28,7 +28,7 @@ namespace SERVDAL
 
 		public List<RunLog> ListRecent(int recent)
 		{
-			return (from rl in db.RunLog
+			return (from rl in db.RunLog where rl.DeliverDateTime != null
 				orderby rl.CallDateTime descending
 			        select rl).Take(recent).ToList();
 		}

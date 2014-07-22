@@ -100,10 +100,11 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Adding read only mode</li>
+					<li>Bug fix to RE runs that were not completed</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Adding read only mode</li>
 					<li>Error memes</li>
 					<li>calendar, Recent runs, Twitter and Calendar bulletins are not loaded by default to try and save server resources.  This can change back once we are on a better server.  Sorry :(</li>
 					<li>Calendar memory optimisation</li>

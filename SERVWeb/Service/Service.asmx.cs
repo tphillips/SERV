@@ -448,6 +448,12 @@ namespace SERVWeb
 			}
 			return SERVBLLFactory.Factory.CalendarBLL().AddVolunteerToCalendar(calendarId, memberId, shiftDate, memberId == CurrentUser().MemberID);
 		}
+			
+		[WebMethod]
+		public void GCCollect()
+		{
+			GC.Collect();
+		}
 
 		private User CurrentUser()
 		{

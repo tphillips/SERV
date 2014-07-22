@@ -17,7 +17,10 @@ namespace SERVDataContract
 		public RunLog(SERVDataContract.DbLinq.RunLog metal)
 		{
 			PropertyMapper.MapProperties(metal, this);
-			this.MemberName = metal.Member.FirstName + " " + metal.Member.LastName;
+			if (metal.Member != null)
+			{
+				this.MemberName = metal.Member.FirstName + " " + metal.Member.LastName;
+			}
 			this.DeliverToDestinationName = metal.Location.Location1;
 		}
 
