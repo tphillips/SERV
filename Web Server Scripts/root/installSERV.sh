@@ -16,9 +16,5 @@ rm -r __MACOSX
 rm -r SERVWeb
 cd /root/
 /etc/init.d/apache2 restart
-./updateWebCalendarIncludes.sh 0
-./updateWebCalendarIncludes.sh 1
-./updateWebCalendarIncludes.sh 2
-./updateWebCalendarIncludes.sh 3
 sudo wget http://localhost/Default.aspx
 sudo rm Default.aspx

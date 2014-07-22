@@ -7,7 +7,7 @@ var members = new Array();
 var memberNames = new Array();
 var controllers = new Array();
 var controllerNames = new Array();
-var greetings = new Array("Hi", "Greetings", "Well Hello", "Sup", "Wagwan", "Haai", "Hola", "Hej", "Konnichiwa", "Zdravstvujte", "Yo", "Howdy", "Hiya", "Good day to you", "Oh, Hi");
+var greetings = new Array("Hi", "Greetings", "Well Hello", "Sup", "Wagwan", "Haai", "Hola", "Hej", "Konnichiwa", "Zdravstvujte", "Yo", "Howdy", "Hiya", "Good day to you", "Oh Hi,");
 var wentVerbs = new Array("went to","visited","warped to","travelled to","piloted themselves to","stopped off at", "took some air at","helped out","parked up at","delivered to","took something to", "set sail for", "plotted a course to", "bimbled along to");
 
 function initFeedback()
@@ -847,7 +847,7 @@ function promptForLogin()
 {
 	$("#icoSessionStatus").removeClass("icon-green");
 	$("#icoSessionStatus").addClass("icon-red");
-	niceAlert("Session error!! This should not happen, but it did.  Open a new tab and login to the SERV system again.  If you are attempting to make a sumbission, for example logging a run, you NEED to log back in before that will work.  There is no need to close this tab and lose your work.");
+	niceAlert("Session error!! This should not happen, but it did.  Open a new tab and log in again.  If you are attempting to make a sumbission, for example logging a run, you NEED to log back in before that will work.  There is no need to close this tab and lose your work.");
 	window.setTimeout("keepAlive()", 40000);
 }
 

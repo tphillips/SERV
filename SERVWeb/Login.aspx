@@ -5,6 +5,7 @@
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Login</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
+<div class="well">
 <h3>Login</h3>
 <label>Email Address:</label>
 <asp:TextBox runat="server" id="txtEmail" />
@@ -15,6 +16,7 @@
 <br/><br/>
 <asp:Button runat="server" id="cmdLogin" Text="Login" class="btn btn-primary btn-lg" onclick="cmdLoginClick"/>
 
+</div>
 <script>
 	$("#loading").hide();
 </script>

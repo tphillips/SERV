@@ -1,4 +1,6 @@
 <%@ Control Language="C#" Inherits="SERVWeb.Panels" %>
+<%@ Import Namespace="SERVWeb" %>
+
 <div id="loading">
 <br/>
 	<p><img src="img/spinnerLarge.gif" width="40" /></p>
@@ -36,11 +38,11 @@
 
 <div id="pnlReadOnly" class="alert" style="display:none" title="SERV">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>CAUTION!</strong> The system is currently in <strong>Read Only mode</strong>.  You will not be able to save any changes.
+  <strong>CAUTION!</strong> <%=SERVGlobal.SystemName%> is currently in <strong>Read Only mode</strong>.  You will not be able to save any changes.
 </div>
 
 <div id="feedbackDialog" style="display:none; background-color:#fcfcfc" title="Feedback">
-	<p>Use this form to provide <strong>anonymous</strong> feedback on <i>any</i> aspect of SERV or this system.</p>
+	<p>Use this form to provide <strong>anonymous</strong> feedback on <i>any</i> aspect of SERV or the <%=SERVGlobal.SystemName%> system.</p>
 	<textarea id="txtFeedback" cols="40" rows="5" style="width:450px" onkeypress="filterKeys()"></textarea>
 	<br/><br/>
 	<input type="button" value="Submit" class="btn btn-primary btn-lg" onclick="cmdSubmitFeedbackClicked();"></input> <input type="button" value="Cancel" class="btn btn-lg" onclick="$('#feedbackDialog').dialog('close');"></input>

@@ -1,4 +1,6 @@
 <%@ Control Language="C#" Inherits="SERVWeb.TopControl" %>
+<%@ Import Namespace="SERVWeb" %>
+
 <nav class="navbar navbar-static-top" role="navigation">
 	<div class="navbar-inner">
 		<ul class="nav">

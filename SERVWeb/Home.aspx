@@ -2,7 +2,7 @@
 <%@ MasterType VirtualPath="~/Master.master" %>
 <%@ Import Namespace="SERVWeb" %>
 
-<asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">System</asp:Content>
+<asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Home</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
 	<%=SERVGlobal.CalendarJSInclude()%>	
@@ -20,27 +20,23 @@
 	</div>
 	<div class="row">
 		<div class="span4">
-			<a href="#" class="btn" id="cmdShowUrgencies" onclick="$('#calendarBulletins').slideDown(); listCalendarBulletins(); $('#cmdShowUrgencies').slideUp();"><i class="icon icon-chevron-down"></i> Show Urgencies . . .</a>
 			<div id="calendarBulletins" style="display:none">
 				<img src="img/spinnerLarge.gif" width="30" />
 			</div>
 		</div>
 		<div class="span4">
-			<center><a href="#" class="btn" id="cmdShowRecent" onclick="$('#recentActivity').slideDown(); listRecentRuns(); $('#cmdShowRecent').slideUp();"><i class="icon icon-chevron-down"></i> Show Recent Runs . . .</a></center>
 			<div id="recentActivity" style="display:none">
 				<img src="img/spinnerLarge.gif" width="30" />
 			</div>
 		</div>
 		<div class="span4 pull-right" style="text-align:right">
-			<a href="#" class="btn" class="pull-right" id="cmdShowTweets" onclick="$('#twitter').slideDown(); $('#cmdShowTweets').slideUp();"><i class="icon icon-chevron-down"></i> Show Tweets . . .</a>
-			<div id="twitter" style="display:none">
+			<div id="twitter">
 				<a class="twitter-timeline" width="400px" href="https://twitter.com/SERV_SSL" data-widget-id="484637303671771137" data-tweet-limit="2">Tweets by @SERV_SSL</a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
 		</div>
 	</div>
 	<br/>
-	<a href="#" class="btn" id="cmdShowCalendar" onclick="loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>); $('#cmdShowCalendar').slideUp();"><i class="icon icon-chevron-down"></i> Show The Calendar . . .</a>
 	<div class="row">
 		<small>
 			<div class="span12" id="calendar" style="display:none">
@@ -273,9 +269,9 @@
 		if ("<%=this.Success%>" == "yes") { $("#success").slideDown(); window.setTimeout('$("#success").slideUp()',4000); }
 		if ("<%=this.Message%>" != "") { niceAlert("<%=this.Message%>"); }
 		initCalendar(true, 14);
-		//loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
-		//listCalendarBulletins();
-		//listRecentRuns();
+		loadCalendar(<%=this.MemberId%>, <%=this.UserLevel%>);
+		listCalendarBulletins();
+		listRecentRuns();
 		initFeedback();
 	</script>
 	

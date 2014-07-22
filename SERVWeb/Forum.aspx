@@ -3,12 +3,11 @@
 <%@ Register TagPrefix="SERV" TagName="Panels" Src="Panels.ascx" %>
 <%@ Import Namespace="SERVWeb" %>
 
-
 <!DOCTYPE html>
 <html>
     
     <head>
-        <title>SERV - The Forum</title>
+        <title><%=SERVGlobal.SystemName%> - The Forum</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <%=SERVGlobal.CSSInclude()%>
         <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.10.3.custom.min.css" />

@@ -7,7 +7,7 @@
 <html>
     
     <head>
-        <title>SERV - Ops Map</title>
+        <title><%=SERVGlobal.SystemName%> - Ops Map</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <%=SERVGlobal.CSSInclude()%>
         <link rel="stylesheet" href="/css/smoothness/jquery-ui-1.10.3.custom.min.css" />

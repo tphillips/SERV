@@ -461,6 +461,119 @@ Monday == 0*/,
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+USE `SERV` ;
+
+-- -----------------------------------------------------
+-- procedure LastMonthRunStats
+-- -----------------------------------------------------
+
+USE `SERV`;
+DROP procedure IF EXISTS `SERV`.`LastMonthRunStats`;
+
+DELIMITER $$
+USE `SERV`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `LastMonthRunStats`()
+BEGIN
+SET @FROMDATE= date_format((date_sub(CURRENT_DATE, INTERVAL 1 MONTH)), '%Y-%m-01 00:00:00');
+SET @TODATE= date_format(CURRENT_DATE, '%Y-%m-01 00:00:00');
+
+select sum(rlp.Quantity) into @BLOOD from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 1;
+
+select sum(rlp.Quantity) into @PLATELETS from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 2;
+
+select sum(rlp.Quantity) into @PLASMA from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 3;
+
+select sum(rlp.Quantity) into @SAMPLE from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 4;
+
+select sum(rlp.Quantity) into @MILK from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 5;
+
+select sum(rlp.Quantity) into @AA from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID in (7,8,9,10,11,12,13);
+
+select sum(rlp.Quantity) into @PACKAGE from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 16;
+
+select count(*) into @RUNS from RunLog where RiderMemberID is not null and DutyDate > @FROMDATE and DutyDate < @TODATE;
+
+select concat(monthname(@FROMDATE), ' ', year(@FROMDATE)) as Month, 
+@RUNS as 'Total Runs', @BLOOD as 'Blood Boxes', 
+@PLATELETS as 'Platelet Boxes', @PLASMA as 'Plasma Boxes', @SAMPLE as 'Samples', @MILK as 'Milk', @AA as 'AA Boxes', 
+@PACKAGE as 'Packages';
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure ThisMonthRunStats
+-- -----------------------------------------------------
+
+USE `SERV`;
+DROP procedure IF EXISTS `SERV`.`ThisMonthRunStats`;
+
+DELIMITER $$
+USE `SERV`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ThisMonthRunStats`()
+BEGIN
+SET @TODATE= date_format((date_add(CURRENT_DATE, INTERVAL 1 MONTH)), '%Y-%m-01 00:00:00');
+SET @FROMDATE= date_format(CURRENT_DATE, '%Y-%m-01 00:00:00');
+
+select sum(rlp.Quantity) into @BLOOD from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 1;
+
+select sum(rlp.Quantity) into @PLATELETS from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 2;
+
+select sum(rlp.Quantity) into @PLASMA from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 3;
+
+select sum(rlp.Quantity) into @SAMPLE from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 4;
+
+select sum(rlp.Quantity) into @MILK from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 5;
+
+select sum(rlp.Quantity) into @AA from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID in (7,8,9,10,11,12,13);
+
+select sum(rlp.Quantity) into @PACKAGE from RunLog rl
+join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID
+where rl.RiderMemberID is not null and rl.DutyDate >= @FROMDATE and rl.DutyDate < @TODATE and rlp.productID = 16;
+
+select count(*) into @RUNS from RunLog where RiderMemberID is not null and DutyDate > @FROMDATE and DutyDate < @TODATE;
+
+select concat(monthname(@FROMDATE), ' ', year(@FROMDATE)) as Month, 
+@RUNS as 'Total Runs', @BLOOD as 'Blood Boxes', 
+@PLATELETS as 'Platelet Boxes', @PLASMA as 'Plasma Boxes', @SAMPLE as 'Samples', @MILK as 'Milk', @AA as 'AA Boxes', 
+@PACKAGE as 'Packages';
+END$$
+
+DELIMITER ;
+SET SQL_MODE = '';
+GRANT USAGE ON *.* TO localweb@localhost;
+ DROP USER localweb@localhost;
+SET SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+CREATE USER 'localweb'@'localhost' IDENTIFIED BY 'Tooting2Hooley';
+
+GRANT LOCK TABLES ON SERV.* TO 'localweb'@'localhost';
+GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE SERV.* TO 'localweb'@'localhost';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -687,3 +800,8 @@ INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDa
 
 COMMIT;
 
+GRANT EXECUTE ON PROCEDURE serv.LastMonthRunStats TO 'localweb'@'localhost';
+GRANT EXECUTE ON PROCEDURE serv.ThisMonthRunStats TO 'localweb'@'localhost';
+
+GRANT EXECUTE ON PROCEDURE SERV.LastMonthRunStats TO 'localweb'@'localhost';
+GRANT EXECUTE ON PROCEDURE SERV.ThisMonthRunStats TO 'localweb'@'localhost';
