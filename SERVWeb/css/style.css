@@ -16,6 +16,11 @@ h1, h2, h3, h4
 	margin-right:15px;
 }
 
+.fullScreenContainer_noReally
+{
+	margin:0px;
+}
+
 .forumPageContainer
 {
 	height:100%;
@@ -134,6 +139,16 @@ h1, h2, h3, h4
 {
 	background-color:#dbcfde;
 	background-image: url('/img/Car.png');
+	background-repeat:no-repeat;
+	background-size: 14px 14px;
+	background-position:3px; 
+}
+
+/* Water */
+.calendarSlot8
+{
+	background-color:#e2f5ff;
+	background-image: url('/img/Water.png');
 	background-repeat:no-repeat;
 	background-size: 14px 14px;
 	background-position:3px; 

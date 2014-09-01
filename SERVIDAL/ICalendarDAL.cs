@@ -25,6 +25,7 @@ namespace SERVIDAL
 		List<MemberCalendar> ListRosteredVolunteers();
 		List<MemberCalendar> ListRosteredVolunteers(int calendarId);
 		List<MemberCalendar> ListRosteredVolunteers(string week, int day);
+		List<SERVDataContract.DbLinq.Member> ListMembersOnShift(int calendarId, DateTime date);
 		bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate);
 		bool MarkShiftSwapNoLongerNeeded(int calendarEntryID);
 	}

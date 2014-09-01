@@ -100,10 +100,22 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Bug fix to RE runs that were not completed</li>
+					<li>Contact number on controller log (Thanks John Steel)</li>
+					<li>Mods to controller for layout for ease of use</li>
+					<li>Controller form will warn before navigating away where data loss could occur, I got burned by this at the weekend</li>
+					<li>Controller form session pinger is less agressive and will only warn when saving the log</li>
+					<li>New "System Homepage" for people who are not logged in, showing off the system features</li>
+					<li>Bug fix on the ops map where bottom menu would not show on smaller screens</li>
+					<li>Show riders on shift on ops map</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Show members who have left as red strikeouts on the member list</li>
+					<li>Water run calendar</li>
+					<li>New, "New Members" Report</li>
+					<li>Removing committee members and controllers from Not on rota report</li>
+					<li>Extending date range of recent runs report</li>
+					<li>Bug fix to RE runs that were not completed</li>
 					<li>Adding read only mode</li>
 					<li>Error memes</li>
 					<li>calendar, Recent runs, Twitter and Calendar bulletins are not loaded by default to try and save server resources.  This can change back once we are on a better server.  Sorry :(</li>

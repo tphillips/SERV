@@ -77,7 +77,7 @@ namespace SERVDAL
 			{
 				ret = (from m in db.Member
 				       where (m.FirstName.Contains(search) || m.LastName.Contains(search))
-				       orderby m.LastName
+				       orderby m.LeaveDate, m.LastName
 				       select m).ToList();
 			}
 			return ret;

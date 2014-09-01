@@ -14,6 +14,7 @@ namespace SERVBLL
 	public class CalendarBLL : ICalendarBLL
 	{
 		const int GENERATE_CALENDAR_DAYS = 182;
+		const int SHIFT_THRESHOLD_HOUR = 6;
 
 		static DateTime WEEK_A_START = new DateTime(2013, 12, 30);
 		static Logger log = new Logger();
@@ -94,6 +95,27 @@ namespace SERVBLL
 				foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
 				{
 					ret.Add(new RosteredVolunteer(mc));
+				}
+				return ret;
+			}
+		}
+
+		public List<Member> ListMembersOnBloodShift()
+		{
+			return ListMembersOnShift(1);
+		}
+
+		public List<Member> ListMembersOnShift(int calendarId)
+		{
+			List<Member> ret = new List<Member>();
+			DateTime shiftDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+			if (DateTime.Now.Hour < SHIFT_THRESHOLD_HOUR){ shiftDate = shiftDate.AddDays(-1); }
+			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			{
+				List<SERVDataContract.DbLinq.Member> lret = dal.ListMembersOnShift(calendarId, shiftDate);
+				foreach (SERVDataContract.DbLinq.Member m in lret)
+				{
+					ret.Add(new Member(m));
 				}
 				return ret;
 			}

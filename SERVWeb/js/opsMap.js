@@ -51,6 +51,28 @@ function initialize()
 	window.onbeforeunload = function(){ return 'You will lose all rider positions and notes' };
 }
 
+function showRidersOnDuty()
+{
+	callServerSideGet(
+		"Service/Service.asmx/ListMembersOnBloodShift", 
+		function(json)
+		{
+			for(var x = 0; x < json.d.length; x++)
+			{
+				if (json.d[x].PostCode != null && json.d[x].PostCode != "" )
+				{
+					var pcode = json.d[x].PostCode.replace(/ /g,'');
+					geocode(pcode);
+				}
+			}
+		},
+		function()
+		{
+		},
+		true
+	);
+}
+
 function initDialogues()
 {
 	$("#routeDialog").dialog({

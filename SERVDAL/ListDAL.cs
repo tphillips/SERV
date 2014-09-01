@@ -23,7 +23,7 @@ namespace SERVDAL
 
 		public List<VehicleType> ListVehicleTypes()
 		{
-			return (from l in db.VehicleType select l).ToList();
+			return (from l in db.VehicleType where l.Enabled == 1 select l).ToList();
 		}
 
 		public void Dispose()

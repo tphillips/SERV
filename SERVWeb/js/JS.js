@@ -9,6 +9,7 @@ var controllers = new Array();
 var controllerNames = new Array();
 var greetings = new Array("Hi", "Greetings", "Well Hello", "Sup", "Wagwan", "Haai", "Hola", "Hej", "Konnichiwa", "Zdravstvujte", "Yo", "Howdy", "Hiya", "Good day to you", "Oh Hi,");
 var wentVerbs = new Array("went to","visited","warped to","travelled to","piloted themselves to","stopped off at", "took some air at","helped out","parked up at","delivered to","took something to", "set sail for", "plotted a course to", "bimbled along to");
+var sessionOK = true;
 
 function initFeedback()
 {
@@ -579,17 +580,23 @@ function SearchMembers(userLevel, search, onlyActive)
 			for(var x = 0; x < json.d.length; x++)
 			{
 				var name = json.d[x].LastName
+				var leftStyle="";
+				if (json.d[x].LeaveDate != null)
+				{
+					leftStyle= ' style="color:red; text-decoration: line-through" ';
+				}
 				if (userLevel >= 3)
 				{
 					name = '<a href="ViewMember.aspx?memberId=' + json.d[x].MemberID + '">' + name + '</a>';
 				}
-				var row="<tr><td>" + (x + 1) + "</td><td>" + json.d[x].FirstName + "</td>" +
-					"<td>" + name + "</td>" + 
+				var row="<tr><td" + leftStyle + ">" + (x + 1) + "</td>" +
+					"<td" + leftStyle + ">" + json.d[x].FirstName + "</td>" +
+					"<td" + leftStyle + ">" + name + "</td>" + 
 					//"<td>" + json.d[x].EmailAddress + "</td>" + 
 					"<td nowrap>" + json.d[x].MobileNumber + "</td>" + 
 					"<td>" + json.d[x].Town + "</td>" + 
-					"<td nowrap><small>" + json.d[x].TagsText + "</small></td>" +
-					"<td>" + json.d[x].UserLevelName + "</td>" +
+					"<td nowrap" + leftStyle + "><small>" + json.d[x].TagsText + "</small></td>" +
+					"<td" + leftStyle + ">" + json.d[x].UserLevelName + "</td>" +
 					"</tr>"
 				append += row;
 			}
@@ -834,21 +841,27 @@ function keepAlive()
 		"{}",
 		function(json)
 		{
+			sessionOK = true;
 			$("#icoSessionStatus").removeClass("icon-red");
 			$("#icoSessionStatus").removeClass("icon-green");
 			window.setTimeout('$("#icoSessionStatus").addClass("icon-green");',500);
 			window.setTimeout("keepAlive()", 20000);
 		},
-		promptForLogin
+		onSessionError
 	);
+}
+
+function onSessionError()
+{
+	sessionOK = false;
+	$("#icoSessionStatus").removeClass("icon-green");
+	$("#icoSessionStatus").addClass("icon-red");
+	window.setTimeout("keepAlive()", 5000);
 }
 
 function promptForLogin()
 {
-	$("#icoSessionStatus").removeClass("icon-green");
-	$("#icoSessionStatus").addClass("icon-red");
-	niceAlert("Session error!! This should not happen, but it did.  Open a new tab and log in again.  If you are attempting to make a sumbission, for example logging a run, you NEED to log back in before that will work.  There is no need to close this tab and lose your work.");
-	window.setTimeout("keepAlive()", 40000);
+	niceAlert("Session / Connection error!! You may have temporarily lost your connection to the internet, or a release may have been performed.  Don't panic. Open a NEW tab and log in again.  If you are attempting to make a sumbission, for example logging a run, you NEED to log back in before that will work.  There is no need to close this tab and lose your work. Wait for the globe in the top right (next to your name) to be green before retrying.");
 }
 
 function isValidTime(val)

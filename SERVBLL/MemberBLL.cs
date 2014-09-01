@@ -136,7 +136,8 @@ namespace SERVBLL
 					MobileNumber = m.MobileNumber,
 					Town = m.Town,
 					PostCode = m.PostCode,
-					UserLevelName = m.User[0].UserLevel.UserLevel1
+					UserLevelName = m.User[0].UserLevel.UserLevel1,
+					LeaveDate = m.LeaveDate
 				};
 				mem.Tags = new List<Tag>();
 				for(int x = 0; x < m.MemberTag.Count; x++)

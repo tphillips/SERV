@@ -38,6 +38,8 @@ namespace SERVIBLL
 		List<string> GetNext7DaysCalendarBulletins();
 		List<string> GetCalendarDayBulletins(DateTime date, int days);
 		List<string> GetNextXDaysCalendarBulletins(int days);
+		List<Member> ListMembersOnShift(int calendarId);
+		List<Member> ListMembersOnBloodShift();
 	}
 }
 

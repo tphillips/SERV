@@ -22,18 +22,13 @@
 	<h3>Controller Log</h3>
 
 	<div class="row">
-		<div class="span12">
-			<input type="text" id="txtController" class="controllers" placeholder="Choose the controller" />
-			<div id="runTypeDiv">
-				<h4>What sort of run are you recording?</h4>
-				<div class="btn-group" data-toggle="buttons-radio">
-				    <button type="button" class="btn" onclick="showBloodPanel()" id="btnBloodRun">Blood Run / Other</button>
-				    <button type="button" class="btn" onclick="showAAPanel()" id="btnAARun">Air Ambulance</button>
-				</div>
-			</div>
-			<br/><br/>
+		<div class="span12 input-append">
+			<input type="text" id="txtController" style="width:150px" class="controllers" placeholder="Choose the controller" />
+		    <button type="button" class="btn" onclick="showBloodPanel()" id="btnBloodRun">Blood Run / Other</button>
+		    <button type="button" class="btn" onclick="showAAPanel()" id="btnAARun">Air Ambulance</button>
 		</div>
 	</div>
+	<br/>
 	
 	<div class="row">
 
@@ -120,13 +115,13 @@
 			<div class="span4">
 
 				<label>Shift Start Date:</label>
-				<input type="text" id="txtShiftDate" class="date" data-bind="value: vm.DutyDateString" />
+				<input type="text" id="txtShiftDate" class="date" data-bind="value: vm.DutyDateString" placeholder="Select a Date"/>
 
-				<label>Call Date:</label>
-				<input type="text" id="txtCallDate" class="date" data-bind="value: vm.CallDate"/>
-
-				<label>Call Time:</label>
-				<input type="text" id="txtCallTime" class="time" placeholder="HH:MM" data-bind="value: vm.CallTime"/>
+				<label>Call Date &amp; Time:</label>
+				<div class="input-append">
+					<input type="text" id="txtCallDate" class="date" style="width:125px" data-bind="value: vm.CallDate" placeholder="Select a Date"/>
+					<input type="text" class="add-on" id="txtCallTime" style="width:70px;background-color:white" class="time" placeholder="HH:MM" data-bind="value: vm.CallTime"/>
+				</div>
 
 				<label>Call From:</label>
 				<input type="text" id="txtCaller" class="locations" placeholder="Type and Choose" onblur="callerSelected();"/>
@@ -146,6 +141,12 @@
 			</div>
 
 			<div class="span4">
+
+				<label>Callers Number:</label>
+				<div class="input-append">
+					<input type="text" id="txtCallerNumber" style="width:125px" placeholder="Caller Telephone" data-bind="value: vm.CallerNumber" /> 
+					<input type="text" class="add-on" style="width:70px;background-color:white" id="txtCallerExt" placeholder="Ext / Bleep" data-bind="value: vm.CallerExt" />
+				</div>
 
 				<label>Urgency:</label>
 				<div class="btn-group">
@@ -193,6 +194,10 @@
 				</div>
 				<br/><br/>
 
+			</div>
+
+			<div class="span4">
+
 				<label>Rider / Driver:</label>
 				<input type="text" id="txtRider" class="riders" placeholder="Choose the rider / driver" onblur="riderSelected()"/>
 
@@ -205,27 +210,23 @@
 				</div>
 				<br/><br/>
 
-			</div>
+				<label>Pickup Date &amp; Time:</label>
+				<div class="input-append">
+					<input type="text" style="width:125px;" id="txtPickupDate" class="date" data-bind="value: vm.CollectDate" placeholder="Select a Date"/>
+					<input type="text" class="add-on" style="width:70px;background-color:white" id="txtPickupTime" placeholder="HH:MM" data-bind="value: vm.CollectTime" />
+				</div>
 
-			<div class="span4">
+				<label>Delivery / Exchange Date &amp; Time:</label>
+				<div class="input-append">
+					<input type="text" style="width:125px;" id="txtDeliverDate" class="date" data-bind="value: vm.DeliverDate" placeholder="Select a Date"/>
+					<input type="text" class="add-on" style="width:70px;background-color:white" id="txtDeliverTime" placeholder="HH:MM" data-bind="value: vm.DeliverTime"/>
+				</div>
 
-				<label>Pickup Date:</label>
-				<input type="text" id="txtPickupDate" class="date" data-bind="value: vm.CollectDate"/>
-
-				<label>Pickup Time:</label>
-				<input type="text" id="txtPickupTime" placeholder="HH:MM" data-bind="value: vm.CollectTime"/>
-
-				<label>Delivery / Exchange Date:</label>
-				<input type="text" id="txtDeliverDate" class="date" data-bind="value: vm.DeliverDate"/>
-
-				<label>Delivery / Exchange Time:</label>
-				<input type="text" id="txtDeliverTime" placeholder="HH:MM" data-bind="value: vm.DeliverTime"/>
-
-				<label>Home Safe Date:</label>
-				<input type="text" id="txtHomeSafeDate" class="date" data-bind="value: vm.HomeSafeDate"/>
-
-				<label>Home Safe Time:</label>
-				<input type="text" id="txtHomeSafeTime" placeholder="HH:MM" data-bind="value: vm.HomeSafeTime"/>
+				<label>Home Safe Date &amp; Time:</label>
+				<div class="input-append">
+					<input type="text" style="width:125px;" id="txtHomeSafeDate" class="date" data-bind="value: vm.HomeSafeDate" placeholder="Select a Date"/>
+					<input type="text" class="add-on" style="width:70px;background-color:white" id="txtHomeSafeTime" placeholder="HH:MM" data-bind="value: vm.HomeSafeTime"/>
+				</div>
 
 				<label>Notes:</label>
 				<textarea id="txtNotes" maxlength="599" data-bind="value: vm.Notes"></textarea>

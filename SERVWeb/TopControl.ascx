@@ -40,6 +40,7 @@
 								<li><a href="RunStats.aspx#top10Controllers">Top 10 Controllers</a></li>
 								<li class="divider"></li>
 								<li><a href="RunStats.aspx#todaysUsers">Today's Users</a></li>
+								<li><a href="RunStats.aspx#newMembers">New Members</a></li>
 								<li><a href="RunStats.aspx#membersNotOnRota">Members Not on Rota</a></li>
 								<li><a href="RunStats.aspx#activeNoLogin">Active Member No Login</a></li>
 								<li><a href="RunStats.aspx#lastRunByMember">Latest Run by Member</a></li>

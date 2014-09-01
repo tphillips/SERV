@@ -202,7 +202,7 @@ namespace SERVBLL
 		public bool CreateRunLog(DateTime callDateTime, int callFromLocationId, DateTime collectDateTime, int collectionLocationId, 
 			int controllerMemberId, int createdByUserId, DateTime deliverDateTime, int deliverToLocationId, DateTime dutyDate, 
 			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, 
-			string productIdCsv, DateTime? homeSafeDateTime, string notes)
+			string productIdCsv, DateTime? homeSafeDateTime, string notes, string callerNumber, string callerExt)
 		{
 			List<int> prods = new List<int>();
 			foreach (string p in productIdCsv.Split(','))
@@ -229,6 +229,8 @@ namespace SERVBLL
 			log.HomeSafeDateTime = homeSafeDateTime;
 			log.Notes = notes;
 			log.Boxes = prods.Count;
+			log.CallerNumber = callerNumber.Trim().Replace(" ", "");
+			log.CallerExt = callerExt.Trim().Replace(" ", "");
 			// Not completed run
 			if (riderMemberId == -1)
 			{
@@ -623,6 +625,7 @@ namespace SERVBLL
 				"select RiderMemberID, max(DutyDate) as LastDuty from RunLog group by RiderMemberID " +
 				") rl on m.MemberID = rl.RiderMemberID " +
 				"where m.MemberID not in (select distinct MemberID from CalendarEntry where EntryDate > NOW()) and m.LeaveDate is null " +
+				"and MemberID not in (select MemberID from Member_Tag where TagID in(3,12)) " +
 				"order by date(LastDuty);";
 			reports.Add(rep);
 
@@ -666,6 +669,15 @@ namespace SERVBLL
 			            "concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link'" +
 			            "from Member where  LeaveDate is null " +
 			            "order by LastGDPGMPDate";
+			reports.Add(rep);
+
+			rep = new Report();
+			rep.Heading = "New Members";
+			rep.Description = "This report shows members who are not tagged as active therefore need their induction / site ride / assesment.";
+			rep.Anchor = "newMembers";
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', date(JoinDate) as 'Join Date', " +
+						"concat('<a href=\"ViewMember.aspx?memberId=', MemberId,'\">view/edit</a>') as 'Link' " +
+						"from Member where MemberID not in (select MemberID from Member_Tag where TagID in(3,7,8,9,12,10)) and LeaveDate is NULL order by MemberID desc";
 			reports.Add(rep);
 
 			rep = new Report();

@@ -259,7 +259,7 @@ namespace SERVWeb
 		public bool LogRun(int runLogID, string callDateTime, int callFromLocationId, string collectDateTime, int collectionLocationId, 
 			int controllerMemberId, string deliverDateTime, int deliverToLocationId, string dutyDate, 
 			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, 
-			int vehicleTypeId, string productIdCsv, string homeSafeDateTime, string notes)
+			int vehicleTypeId, string productIdCsv, string homeSafeDateTime, string notes, string callerNumber, string callerExt)
 		{
 			Authenticate();
 			// Fix dates and times
@@ -277,7 +277,7 @@ namespace SERVWeb
 			// Log it
 			bool res = SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
 				controllerMemberId, CurrentUser().UserID, _deliverDateTime, deliverToLocationId, _dutyDate, 
-				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, _homeSafeDateTime, notes);
+				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, _homeSafeDateTime, notes, callerNumber, callerExt);
 			// If we were updating a record, delete the old one
 			if (runLogID > 0)
 			{
@@ -425,6 +425,23 @@ namespace SERVWeb
 		{
 			Authenticate();
 			return SERVBLLFactory.Factory.CalendarBLL().ListSpansCaledarEntries(days, page);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<Member> ListMembersOnBloodShift()
+		{
+			return ListMembersOnShift(1);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<Member> ListMembersOnShift(int calendarId)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Controller)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.CalendarBLL().ListMembersOnShift(calendarId);
 		}
 
 		[WebMethod(EnableSession = true)]

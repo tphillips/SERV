@@ -183,6 +183,13 @@ namespace SERVDAL
 				select mc).ToList();
 		}
 
+		public List<Member> ListMembersOnShift(int calendarId, DateTime date)
+		{
+			return (from m in db.CalendarEntry
+			        where m.CalendarID == calendarId && m.CoverNeeded == 0 && m.EntryDate == date
+				select m.Member).ToList();
+		}
+
 		public CalendarEntry GetMemberNextShift(int memberID)
 		{
 			DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);

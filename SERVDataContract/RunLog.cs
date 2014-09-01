@@ -118,6 +118,10 @@ namespace SERVDataContract
 
 		public string Notes { get; set; }
 
+		public string CallerNumber { get; set; }
+
+		public string CallerExt { get; set; }
+
 		public int OriginLocationID { get; set; }
 
 		public int RiderMemberID { get; set; }

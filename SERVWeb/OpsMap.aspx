@@ -35,12 +35,13 @@
 
 		<div id="map_canvas" style="width:100%; height:100%;"></div>	
 	
-        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <nav class="navbar navbar-default navbar-fixed-bottom" style="width:100px; position:fixed; bottom:0px; paddong:20px; margin:0px;" role="navigation">
 			<div class="navbar-inner">
 				<ul class="nav">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Map <b class="caret"></b></a>
 						<ul class="dropdown-menu">
+							<li id="lnkShowRidersOnDuty"><a href="#" onclick="showRidersOnDuty();"><i class="icon-map-marker"></i> Show Members On Shift On Map</a></li>
 							<li id="lnkShowMember"><a href="#" onclick="showMemberSearchDialog();"><i class="icon-map-marker"></i> Show Member On Map</a></li>
 							<li id="lnkShowMembers"><a href="#" onclick="showMembers();"><i class="icon-map-marker"></i> Show All Members On Map</a></li>
 							<li><a href="#" onclick="showHideWeather();"><i class="icon-cog"></i> Show / Hide Weather</a></li>
@@ -100,7 +101,7 @@
 
 		</div>
 
-		<textarea id="txtNotes" style="opacity:0.9; position:absolute; bottom:36px; right:3px; width:350px; height: 600px; 
+		<textarea id="txtNotes" style="opacity:0.9; position:absolute; bottom:3px; right:3px; width:350px; height: 600px; 
 			font-family: tahoma, arial, clean, font-size: small; display:none">
 Controller Log:
 
@@ -118,6 +119,7 @@ Controller Log:
     	{
     		$("#lnkShowMember").hide();
     		$("#lnkShowHideNotes").hide();
+    		$("#lnkShowRidersOnDuty").hide();
     	}
 
     </script>

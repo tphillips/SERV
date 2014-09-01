@@ -17,6 +17,14 @@ namespace SERVWeb {
 		
 		protected System.Web.UI.WebControls.Content contentPlaceholderContent;
 		
+		protected System.Web.UI.WebControls.TextBox txtEmail;
+		
+		protected System.Web.UI.WebControls.TextBox txtPassword;
+		
+		protected System.Web.UI.WebControls.Button cmdLogin;
+		
+		protected System.Web.UI.WebControls.Literal litServerClient;
+		
 		public new SERVWeb.Master Master {
 			get {
 				return ((SERVWeb.Master)(base.Master));

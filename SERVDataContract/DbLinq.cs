@@ -4352,6 +4352,10 @@ namespace SERVDataContract.DbLinq
 		
 		private System.Nullable<System.DateTime> _callDateTime;
 		
+		private string _callerExt;
+		
+		private string _callerNumber;
+		
 		private int _callFromLocationID;
 		
 		private System.Nullable<System.DateTime> _collectDateTime;
@@ -4410,6 +4414,14 @@ namespace SERVDataContract.DbLinq
 		partial void OnCallDateTimeChanged();
 		
 		partial void OnCallDateTimeChanging(System.Nullable<System.DateTime> value);
+		
+		partial void OnCallerExtChanged();
+		
+		partial void OnCallerExtChanging(string value);
+		
+		partial void OnCallerNumberChanged();
+		
+		partial void OnCallerNumberChanging(string value);
 		
 		partial void OnCallFromLocationIDChanged();
 		
@@ -4533,6 +4545,48 @@ namespace SERVDataContract.DbLinq
 					this._callDateTime = value;
 					this.SendPropertyChanged("CallDateTime");
 					this.OnCallDateTimeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_callerExt", Name="CallerExt", DbType="varchar(10)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string CallerExt
+		{
+			get
+			{
+				return this._callerExt;
+			}
+			set
+			{
+				if (((_callerExt == value) == false))
+				{
+					this.OnCallerExtChanging(value);
+					this.SendPropertyChanging();
+					this._callerExt = value;
+					this.SendPropertyChanged("CallerExt");
+					this.OnCallerExtChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_callerNumber", Name="CallerNumber", DbType="varchar(20)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string CallerNumber
+		{
+			get
+			{
+				return this._callerNumber;
+			}
+			set
+			{
+				if (((_callerNumber == value) == false))
+				{
+					this.OnCallerNumberChanging(value);
+					this.SendPropertyChanging();
+					this._callerNumber = value;
+					this.SendPropertyChanged("CallerNumber");
+					this.OnCallerNumberChanged();
 				}
 			}
 		}

@@ -149,6 +149,7 @@ function LoadRunLog()
 				$("#entry").slideDown();
 			}
 		);
+		window.onbeforeunload = null;
 	}
 }
 
@@ -219,6 +220,11 @@ function inCsv()
 
 function saveRun()
 {
+	if (!sessionOK)
+	{
+		promptForLogin();
+		return;
+	}
 	if (validate(false))
 	{
 		if (runType == "blood")
@@ -229,6 +235,7 @@ function saveRun()
 		{
 			saveAARun();
 		}
+		window.onbeforeunload = null;
 	}
 }
 
@@ -247,6 +254,7 @@ function saveNotRun()
 			riderId = -1;
 			saveBloodRun();
 		}
+		window.onbeforeunload = null;
 	}
 }
 
@@ -275,6 +283,8 @@ function saveBloodRun()
 			"', 'productIdCsv':'" + productCsv() + 
 			"', 'homeSafeDateTime':'" + $("#txtHomeSafeDate").val() + " " + $("#txtHomeSafeTime").val().replace(/\./g, ':') +
 			"', 'notes':'" + $("#txtNotes").val().replace(/'/g, '') + 
+			"', 'callerNumber':'" + $("#txtCallerNumber").val() + 
+			"', 'callerExt':'" + $("#txtCallerExt").val() + 
 		"'}";
 	$("#loading").slideDown();
 	$("#entry").slideUp();
@@ -519,8 +529,14 @@ function updateBoxCounts()
 	$("#btnInBox2").text(inBox2);
 }
 
+function warnOnUnload()
+{
+	window.onbeforeunload = function(){ return 'You will lose all data you have entered!' };
+}
+
 function showBloodPanel()
 {
+	warnOnUnload();
 	runType="blood";
 	$("#cmdNotRun").slideDown();
 	$("#blood").slideUp();
@@ -538,6 +554,7 @@ function showBloodPanel()
 
 function showAAPanel()
 {
+	warnOnUnload();
 	runType="aa";
 	$("#cmdNotRun").slideUp();
 	$("#blood").slideUp();
@@ -549,6 +566,7 @@ function showAAPanel()
 
 function showMilkPanel()
 {
+	warnOnUnload();
 	runType="milk";
 	$("#blood").slideUp();
 	$("#AA").slideUp();
@@ -560,6 +578,7 @@ function showMilkPanel()
 
 function showWaterPanel()
 {
+	warnOnUnload();
 	runType="water";
 	$("#blood").slideUp();
 	$("#AA").slideUp();

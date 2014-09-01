@@ -51,7 +51,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties VerifyCodeBehindFields="True" VerifyCodeBehindEvents="True">
+      <Properties>
         <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
@@ -61,6 +61,7 @@
     <Folder Include="img\" />
     <Folder Include="Register\" />
     <Folder Include="img\error\" />
+    <Folder Include="img\screenshots\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SERVBLLFactory\SERVBLLFactory.csproj">
@@ -150,6 +151,13 @@
     <Content Include="img\error\Wrong3.jpg" />
     <Content Include="img\error\Wrong4.jpg" />
     <Content Include="img\error\Wrong5.jpg" />
+    <Content Include="img\Water.png" />
+    <Content Include="img\screenshots\1.png" />
+    <Content Include="img\screenshots\2.png" />
+    <Content Include="img\screenshots\3.png" />
+    <Content Include="img\screenshots\4.png" />
+    <Content Include="img\screenshots\5.png" />
+    <Content Include="img\HeaderBg.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
