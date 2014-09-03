@@ -54,7 +54,7 @@ function initCalendar(simple, days)
 	});
 	if (!simpleCalendar)
 	{
-		listMembersWithTag("Rider,Driver,Blood,AA,Controller", null);
+		listMembersWithTag("Blood,AA,Controller,Water,Milk", null);
 		$(".riders").autocomplete({ source: memberNames });
 		listCalendarsForDroppdowns(new Array("lstAddVolunteerCalendar", "lstVolunteerCalendar"));
 	}
@@ -340,7 +340,7 @@ function initViewRota(userlevel, calendarId)
 		hide: { effect: "clip", duration: 200 },
 		autoOpen: false
 	});
-	listMembersWithTag("Rider,Driver,Blood,AA,Controller", null);
+	listMembersWithTag("Blood,AA,Controller,Water,Milk", null);
 	$(".riders").autocomplete({ source: memberNames });
 	$("#exCal").datepicker({ dateFormat: 'dd M yy' });
 	renderWeekATitles();

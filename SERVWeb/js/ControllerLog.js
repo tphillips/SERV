@@ -63,7 +63,7 @@ $(function()
 	$( ".riders" ).autocomplete({ source: memberNames });
 	asyncRequests = false;
 	listControllers(null);
-	listMembersWithTag("Rider,Driver,Blood", null);
+	listMembersWithTag("Blood,AA,Milk", null);
 	listLocations(null);
 	listVehicleTypes();
 	showCurrentController();

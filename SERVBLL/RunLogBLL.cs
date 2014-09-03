@@ -19,47 +19,6 @@ namespace SERVBLL
 
 		public RunLogBLL()
 		{
-			// Temporary dictionary to fix common spelling mistakes
-			// TEMPORARY
-			nameReplacements.Add("Bowers Jeff", "Bowers Jeffrey");
-			nameReplacements.Add("Chappel Chris", "Chappell Chris");
-			nameReplacements.Add("Chapple Chris", "Chappell Chris");
-			nameReplacements.Add("Clark Bruce", "Clarke Bruce");
-			nameReplacements.Add("Davis Terry", "Davies Terry");
-			nameReplacements.Add("Faulty Jon", "Fautley Jon");
-			nameReplacements.Add("Faurtney Jon", "Fautley Jon");
-			nameReplacements.Add("Fautney Jon", "Fautley Jon");
-			nameReplacements.Add("Fourtney John", "Fautley Jon");
-			nameReplacements.Add("Fourtley Jon", "Fautley Jon");
-			nameReplacements.Add("Foutney John", "Fautley Jon");
-			nameReplacements.Add("Foutley Jon", "Fautley Jon");
-			nameReplacements.Add("Fortney John", "Fautley Jon");
-			nameReplacements.Add("Gardner Bob", "Gardner William");
-			nameReplacements.Add("Hardy Edd", "Hardy Edward");
-			nameReplacements.Add("Heler Caruel Pierre", "Heler-Caruel Pierre");
-			nameReplacements.Add("Hickey David", "Hickey Dave");
-			nameReplacements.Add("Keeynoy Mike", "Keenoy Mike");
-			nameReplacements.Add("Kiernon Joe", "Kiernan Joe");
-			nameReplacements.Add("King", "King Paul");
-			nameReplacements.Add("Kirkham Iam=n", "Kirkham Ian");
-			nameReplacements.Add("Lawence David", "Lawrence David");
-			nameReplacements.Add("Lock Ally", "Lock Alison");
-			nameReplacements.Add("MacDonald Jan", "MacDonald Janet");
-			nameReplacements.Add("McCullock Ian", "McCulloch Ian");
-			nameReplacements.Add("Mizsler Frank", "Miszler Frank");
-			nameReplacements.Add("McEacham Ema", "McEachan Emma");
-			nameReplacements.Add("McEacham Emma", "McEachan Emma");
-			nameReplacements.Add("McEchan Emma", "McEachan Emma");
-			nameReplacements.Add("Ney Mike", "Ney Michael");
-			nameReplacements.Add("SoperAndrew", "Soper Andrew");
-			nameReplacements.Add("Soper Andy", "Soper Andrew");
-			nameReplacements.Add("Semmens Raymond", "Semmens Ray");
-			nameReplacements.Add("Semmons Ray", "Semmens Ray");
-			nameReplacements.Add("Whiteman Martin", "Whitehead Martin");
-			nameReplacements.Add("Watson Phil", "Watson Philip");
-			nameReplacements.Add("Watsom Philip", "Watson Philip");
-			nameReplacements.Add("Wats Philip", "Watson Philip");
-
 		}
 
 		[Obsolete]
@@ -192,6 +151,7 @@ namespace SERVBLL
 			return true;
 		}
 
+		[Obsolete]
 		private string FixTime(string time)
 		{
 			time = time.Replace("\"", "").Replace(".", ":");
@@ -346,12 +306,14 @@ namespace SERVBLL
 
 		int FindAAPickupLocationID()
 		{
-			return new LocationBLL().ListLocations("East Surrey")[0].LocationID;
+			string find = new System.Configuration.AppSettingsReader().GetValue("AAPickupLocation", typeof(string)).ToString();
+			return new LocationBLL().ListLocations(find)[0].LocationID;
 		}
 
 		int FindAADeliverLocationID()
 		{
-			return new LocationBLL().ListLocations("Redhill Aerodrome")[0].LocationID;
+			string find = new System.Configuration.AppSettingsReader().GetValue("AADeliverLocation", typeof(string)).ToString();
+			return new LocationBLL().ListLocations(find)[0].LocationID;
 		}
 
 		public List<Report> RunReports()

@@ -149,16 +149,29 @@ namespace SERVBLL
 			{
 				throw new InvalidOperationException();
 			}
-			List<Member> members = new MemberBLL().List("", true);
+			List<Member> members = new MemberBLL().ListMembersWithTags("Blood,AA,Water,Controller,Milk");
 			foreach (Member tom in members)
 			{
-				SendEmail(m.EmailAddress, m.FirstName + " " + m.LastName + " needs your help!", 
-					"Hi " + tom.FirstName + ",\n\n" +
-					"Sadly, " + m.FirstName + " cannot perform his/her " + c.Name + " duty on " + cargs.ShiftDate.ToString("ddd dd MMM") + ".\n\n" +
-					"We really could use your help!  Are you free?  If you have a few hours spare please put your name down.\n\n" +
-					"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
-					"Thanks very much in advance!\n\n" +
-					"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(cargs.MemberId));
+				if (tom.MemberID != cargs.MemberId)
+				{
+					SendEmail(m.EmailAddress, m.FirstName + " " + m.LastName + " needs your help!", 
+						"Hi " + tom.FirstName + ",\n\n" +
+						"Sadly, " + m.FirstName + " cannot perform his/her " + c.Name + " duty on " + cargs.ShiftDate.ToString("ddd dd MMM") + ".\n\n" +
+						"We really could use your help!  Are you free?  If you have a few hours spare please put your name down.\n\n" +
+						"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
+						"Thanks very much in advance!\n\n" +
+						"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(cargs.MemberId));
+				}
+				else
+				{
+					SendEmail(m.EmailAddress, "A swap request has been sent out for you", 
+						"Hi " + tom.FirstName + ",\n\n" +
+						"As requested, you have been removed from " + c.Name + " duty on " + cargs.ShiftDate.ToString("ddd dd MMM") + ".\n\n" +
+						"An email has been sent out to see if someone can cover for you.\n\n" +
+						"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
+						"Thanks,\n\n" +
+						"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(cargs.MemberId));
+				}
 			}
 
 		}

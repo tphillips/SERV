@@ -62,6 +62,7 @@ function showRidersOnDuty()
 				if (json.d[x].PostCode != null && json.d[x].PostCode != "" )
 				{
 					var pcode = json.d[x].PostCode.replace(/ /g,'');
+					geoCodingName = "";
 					geocode(pcode);
 				}
 			}

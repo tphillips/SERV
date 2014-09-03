@@ -11,6 +11,7 @@
 			<img src="img/logo.png"/>
 			<br/><br/>
 			<h2>SERV SSL</h2>	
+			<h5 style="color:#999999;">System for Emergency Rider Volunteers</h5>
 			<h4>Welcome to <%=SERVGlobal.SystemName%> <%=SERVGlobal.SERVVersion%>.  </h4>	
 		</div>
 		<div class="span5 pull-right">
@@ -18,7 +19,8 @@
 			<asp:TextBox runat="server" id="txtEmail" Style="width:250px; height:30px; font-size:medium" /><br/>
 			<asp:TextBox runat="server" id="txtPassword" TextMode="password" Style="width:250px; height:30px; font-size:medium"/><br/>
 			<asp:Button runat="server" id="cmdLogin" Text="Login" class="btn btn-primary btn-lg" onclick="cmdLoginClick" Style="width:265px; height:40px;"/><br/>
-			<asp:Literal runat="server" id="litServerClient"></asp:Literal>
+			<asp:Literal runat="server" id="litServerClient"></asp:Literal><br/>
+			<p class="small">If you are interested in using the SERV system<br/>for your organisation, please <a href="http://www.servssl.org.uk/contact">contact us</a>.</p>
 		</div>
 	</div>
 		
@@ -66,12 +68,12 @@
 		<center>
 			<table style="width:70%; text-align:center; margin-top:50px">
 				<tr>
-					<td style="width:50%"><img src="img/screenshots/1.png" width="400px" /></td>
-					<td style="width:50%"><img src="img/screenshots/2.png" width="400px" /></td>
+					<td style="width:50%"><img style="max-width:400px;" class="img-rounded" src="img/screenshots/1.png" width="400px" /></td>
+					<td style="width:50%"><img style="max-width:400px;" class="img-rounded" src="img/screenshots/2.png" width="400px" /></td>
 				</tr>
 				<tr>
-					<td style="width:50%"><img src="img/screenshots/3.png" width="400px" /></td>
-					<td style="width:50%"><img src="img/screenshots/4.png" width="400px" /></td>
+					<td style="width:50%"><img style="max-width:400px;" class="img-rounded" src="img/screenshots/3.png" width="400px" /></td>
+					<td style="width:50%"><img style="max-width:400px;" class="img-rounded" src="img/screenshots/4.png" width="400px" /></td>
 				</tr>
 			</table>
 		</center>
