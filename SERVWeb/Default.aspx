@@ -65,18 +65,20 @@
 		<h2>The easiest way to manage Emergency Rider Volunteers.</h2>
 		<h4><a href="http://www.servssl.org.uk/contact">Contact Us</a> Today for a Demonstration</h4>
 		<p><a class="btn btn-large btn-success" href="http://www.servssl.org.uk/contact">Contact Us</a></p>
-		<center>
-			<table style="width:70%; text-align:center; margin-top:50px">
-				<tr>
-					<td style="width:50%"><img style="max-width:400px;" class="img-rounded" src="img/screenshots/1.png" width="400px" /></td>
-					<td style="width:50%"><img style="max-width:400px;" class="img-rounded" src="img/screenshots/2.png" width="400px" /></td>
-				</tr>
-				<tr>
-					<td style="width:50%"><img style="max-width:400px;" class="img-rounded" src="img/screenshots/3.png" width="400px" /></td>
-					<td style="width:50%"><img style="max-width:400px;" class="img-rounded" src="img/screenshots/4.png" width="400px" /></td>
-				</tr>
-			</table>
-		</center>
+		<div style="text-align:center;">
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/1.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/2.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/5.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/4.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/7.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/6.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/8.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/9.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/10.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/11.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/12.png" />
+			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/13.png" />
+		</div>
 	</div>
 
 	<div class="row" style="margin:0px;background-color:black; color:white; padding:50px;text-align:center">

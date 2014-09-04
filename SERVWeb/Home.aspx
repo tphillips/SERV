@@ -100,11 +100,12 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Mods to tags used for listing members on calendars and run logs to ensure members who have not been "processed" cannot be used</li>
-					<li>Tweaks to swap needed emails and enabling</li>
+				<li><a href="BloodBoxBingo.aspx">Blood Box Bingo</a> - Just because . . .</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Mods to tags used for listing members on calendars and run logs to ensure members who have not been "processed" cannot be used</li>
+					<li>Tweaks to swap needed emails and enabling</li>
 					<li>Contact number on controller log (Thanks John Steel)</li>
 					<li>Mods to controller for layout for ease of use</li>
 					<li>Controller form will warn before navigating away where data loss could occur, I got burned by this at the weekend</li>

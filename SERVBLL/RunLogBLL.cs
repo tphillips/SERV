@@ -674,6 +674,20 @@ namespace SERVBLL
 			return reports;
 		}
 
+		public string[] GetMemberUniqueRuns(int memberID)
+		{
+			List<string> ret = new List<string>();
+			DataTable t = SERVDALFactory.Factory.RunLogDAL().GetMemberUniqueRuns(memberID);
+			if (t != null)
+			{
+				foreach (DataRow r in t.Rows)
+				{
+					ret.Add(r["Location"] + "-" + r["Product"]);
+				}
+			}
+			return ret.ToArray();
+		}
+
 		public DataTable Report_RunLog()
 		{
 			return SERVDALFactory.Factory.RunLogDAL().Report_RunLog();

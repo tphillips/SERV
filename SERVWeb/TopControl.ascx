@@ -48,7 +48,7 @@
 								<li><a href="RunStats.aspx#lastGdpDates">Last GDP Dates</a></li>
 								<li><a href="RunStats.aspx#riderAssessmentDates">Rider Assessment Dates</a></li>
 								<li class="divider"></li>
-								<li><a href="RecentRuns.aspx">Recent Runs (Controller View)</a></li>
+								<li><a href="RecentRuns.aspx">Run Log</a></li>
 							</ul>
 						</li>
 						<li class="divider"></li>

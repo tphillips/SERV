@@ -22,6 +22,7 @@ namespace SERVIBLL
 		List<Report> RunReports();
 		void DeleteRun(int runLogID);
 		DataTable Report_RunLog();
+		string[] GetMemberUniqueRuns(int memberID);
 	}
 }
 

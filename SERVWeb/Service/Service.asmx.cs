@@ -465,6 +465,13 @@ namespace SERVWeb
 			}
 			return SERVBLLFactory.Factory.CalendarBLL().AddVolunteerToCalendar(calendarId, memberId, shiftDate, memberId == CurrentUser().MemberID);
 		}
+
+		[WebMethod(EnableSession = true)]
+		public string[] GetMemberUniqueRuns()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.RunLogBLL().GetMemberUniqueRuns(CurrentUser().MemberID);
+		}
 			
 		[WebMethod]
 		public void GCCollect()

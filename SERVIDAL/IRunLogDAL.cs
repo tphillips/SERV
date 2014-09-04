@@ -17,6 +17,7 @@ namespace SERVIDAL
 		void DeleteRunLog(int runLogID);
 		DataTable RunReport(SERVDataContract.Report report);
 		DataTable Report_RunLog();
+		DataTable GetMemberUniqueRuns(int memberID);
 	}
 }
 

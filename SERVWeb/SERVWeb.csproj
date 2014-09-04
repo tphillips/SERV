@@ -158,6 +158,21 @@
     <Content Include="img\screenshots\4.png" />
     <Content Include="img\screenshots\5.png" />
     <Content Include="img\HeaderBg.jpg" />
+    <Content Include="img\Brb.png" />
+    <Content Include="img\Box.png" />
+    <Content Include="img\BoxGrey.png" />
+    <Content Include="img\BoxGreenPen.png" />
+    <Content Include="img\BoxFlare.png" />
+    <Content Include="img\BoxDisabled.png" />
+    <Content Include="BloodBoxBingo.aspx" />
+    <Content Include="img\screenshots\6.png" />
+    <Content Include="img\screenshots\7.png" />
+    <Content Include="img\screenshots\8.png" />
+    <Content Include="img\screenshots\9.png" />
+    <Content Include="img\screenshots\10.png" />
+    <Content Include="img\screenshots\11.png" />
+    <Content Include="img\screenshots\12.png" />
+    <Content Include="img\screenshots\13.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -301,6 +316,12 @@
     </Compile>
     <Compile Include="Forum.aspx.designer.cs">
       <DependentUpon>Forum.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BloodBoxBingo.aspx.cs">
+      <DependentUpon>BloodBoxBingo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BloodBoxBingo.aspx.designer.cs">
+      <DependentUpon>BloodBoxBingo.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

@@ -122,7 +122,7 @@
 						<label>Last GMP Date:</label>
 						<input type="text" id="txtGMPDate"  class="date"/>
 						
-						<div class="checkbox">
+						<div class="checkbox" id="adminTags">
 							<label>
 								<input type="checkbox" id="chkBlood" onchange="onTagChecked('chkBlood', 'Blood')" /> Blood volunteer
 							</label>
@@ -145,10 +145,6 @@
 
 							<label>
 								<input type="checkbox" id="chkCommittee" onchange="onTagChecked('chkCommittee', 'Committee')"  /> Committee Member
-							</label>
-
-							<label>
-								<input type="checkbox" id="chkOnRota" onchange="onTagChecked('chkOnRota', 'OnRota')"  /> On Rota
 							</label>
 							
 						</div>

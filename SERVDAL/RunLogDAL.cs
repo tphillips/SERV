@@ -101,6 +101,17 @@ namespace SERVDAL
 			db.ExecuteCommand("truncate table RawRunLog");
 		}
 
+		public DataTable GetMemberUniqueRuns(int memberID)
+		{
+			string sql = "select distinct l.Location, p.Product from RunLog rl " +
+				"join RunLog_Product rlp on rlp.RunLogID = rl.RunLogID " +
+				"join Product p on rlp.ProductID = p.ProductID " +
+				"join Location l on l.LocationID = rl.DeliverToLocationID " +
+				"where rl.RiderMemberID = " + memberID + " " +
+				"order by Location";
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+		}
+
 		public DataTable RunReport(SERVDataContract.Report report)
 		{
 			return DBHelperFactory.DBHelper().ExecuteDataTable(report.Query);

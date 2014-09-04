@@ -166,4 +166,68 @@ h1, h2, h3, h4
 	color:red;
 }
 
+#bingo
+{
+	font-family:impact;
+	text-shadow: 2px 2px #e3dede;
+	font-size:25px;
+	color:#666666;
+	margin:40px;
+	padding-left:180px; 
+	padding-top:140px;
+}
+
+#bingoCard
+{
+	border-radius:20px; 
+	border: 5px solid #d40505; 
+	width:530px; 
+	height: 460px;
+	background:#fdfdf8; 
+	padding:30px;
+}
+
+.bingoHeader
+{
+	margin-left:150px;
+	margin-bottom:40px;
+}
+
+.bingoHeader span
+{
+	margin-left:100px;
+}
+
+.bingoRow
+{
+	margin-bottom:60px;
+	height: 50px;
+}
+
+.bingoBox
+{
+	margin-left:100px;
+	margin-right:14px;
+	height:60px;
+	width:60px;
+	float:left;
+	background-image:url('../img/BoxDisabled.png');
+	background-size:60px 60px; 
+	background-repeat:no-repeat;
+}
+
+.bingoBoxDone
+{
+	background-image:url('../img/Box.png');
+	background-size:60px 60px; 
+	background-repeat:no-repeat;
+}
+
+.bingoHosp
+{
+	float:left;
+	width:150px;
+	margin-top:13px;
+}
+
 

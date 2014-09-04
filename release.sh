@@ -35,4 +35,7 @@ rm -f ControllerLog*min.js
 cd ..
 cd css
 rm style.$version.css
+echo Wait for Dropbox to sync and press return . . .
+read bla
+ssh -i ~/Dropbox/Dev/Resources/AmazonAWSKeys/SERV-EU.pem ubuntu@system.servssl.org.uk "sudo /root/installSERV.sh"
 echo Done . . .
