@@ -11,7 +11,7 @@ namespace SERVBLL
 	public class ControllerBLL : IControllerBLL
 	{
 
-		Logger log = new Logger();
+		static Logger log = new Logger();
 
 		public ControllerBLL()
 		{
@@ -25,6 +25,7 @@ namespace SERVBLL
 
 		public bool DivertNumber(string mobile)
 		{
+			log.LogStart();
 			System.Net.ServicePointManager.ServerCertificateValidationCallback += SERV.Utils.Authentication.AcceptAllCertificates;
 			string num = mobile.Replace(" ","");
 			string servNow = System.Configuration.ConfigurationManager.AppSettings["FlextelNumber"];
@@ -32,6 +33,7 @@ namespace SERVBLL
 			string format = System.Configuration.ConfigurationManager.AppSettings["FlextelFormat"];
 			try
 			{
+				log.Info("Diverting flextel to " + num);
 				string res = new System.Net.WebClient().DownloadString(string.Format(format, servNow, pin, num));
 				log.Info(res);
 				res = res.Trim();

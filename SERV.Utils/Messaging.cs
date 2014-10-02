@@ -30,14 +30,14 @@ namespace SERV.Utils
 
 		public static string SendTextMessage(string to, string message, string from)
 		{
-			if (from.StartsWith("07"))
-			{
-				from = "44" + from.Substring(1, from.Length - 1);
-				from = from.Replace(" ","");
-			}
+			from = from.Replace(" ","");
+			to = to.Replace(" ","");
+			if (from.StartsWith("07")){ from = "44" + from.Substring(1, from.Length - 1); }
+			if (to.StartsWith("07")) { to = "44" + to.Substring(1, to.Length - 1); }
 			message = message.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
 			message = System.Web.HttpUtility.UrlEncode(message);
 			string provider = System.Configuration.ConfigurationManager.AppSettings["SMSProvider"];
+			log.Info(string.Format("SMS using {0} To {1} - {2}",provider, to, message));
 			string smsUser = System.Configuration.ConfigurationManager.AppSettings["SMSUser"];
 			string smsPassword = System.Configuration.ConfigurationManager.AppSettings["SMSPassword"];
 			string res = "";
