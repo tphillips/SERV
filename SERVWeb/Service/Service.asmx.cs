@@ -472,6 +472,12 @@ namespace SERVWeb
 			Authenticate();
 			return SERVBLLFactory.Factory.RunLogBLL().GetMemberUniqueRuns(CurrentUser().MemberID);
 		}
+
+		[WebMethod]
+		public string SwitchController()
+		{
+			return SERVBLLFactory.Factory.ShiftBLL().SwitchController();
+		}
 			
 		[WebMethod]
 		public void GCCollect()

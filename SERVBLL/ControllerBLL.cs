@@ -17,10 +17,9 @@ namespace SERVBLL
 		{
 		}
 
-		public bool DivertNumber(int memberID, string overrideNumber)
+		public bool DivertNumber(Member member, string overrideNumber)
 		{
-			Member controller = new MemberBLL().Get(memberID);
-			string number = string.IsNullOrEmpty(overrideNumber) ? controller.MobileNumber : overrideNumber;
+			string number = string.IsNullOrEmpty(overrideNumber) ? member.MobileNumber : overrideNumber;
 			return DivertNumber(number);
 		}
 
@@ -31,14 +30,21 @@ namespace SERVBLL
 			string servNow = System.Configuration.ConfigurationManager.AppSettings["FlextelNumber"];
 			string pin = System.Configuration.ConfigurationManager.AppSettings["FlextelPin"];
 			string format = System.Configuration.ConfigurationManager.AppSettings["FlextelFormat"];
-			string res = new System.Net.WebClient().DownloadString(string.Format(format, servNow, pin, num));
-			log.Info(res);
-			res = res.Trim();
-			if (res.Contains(","))
+			try
 			{
-				return res.Split(',')[0].Replace(" ","") == num;
+				string res = new System.Net.WebClient().DownloadString(string.Format(format, servNow, pin, num));
+				log.Info(res);
+				res = res.Trim();
+				if (res.Contains(","))
+				{
+					return res.Split(',')[0].Replace(" ","") == num;
+				}
+				return false;
 			}
-			return false;
+			catch
+			{
+				return false;
+			}
 		}
 
 	}

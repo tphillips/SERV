@@ -13,7 +13,7 @@ namespace SERVDAL
 	public class MessageDAL : IMessageDAL
 	{
 
-		static SERVDataContract.DbLinq.SERVDB db;
+		private SERVDataContract.DbLinq.SERVDB db;
 		static Logger log = new Logger();
 
 		public MessageDAL()

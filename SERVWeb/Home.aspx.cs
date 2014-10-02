@@ -45,7 +45,7 @@ namespace SERVWeb
 			{
 				if (SERVGlobal.User != null)
 				{
-					return SERVGlobal.User.Member.FirstName + " " + SERVGlobal.User.Member.LastName;
+					return SERVGlobal.User.Member.Name;
 				}
 				else
 				{

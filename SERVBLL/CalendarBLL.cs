@@ -16,6 +16,10 @@ namespace SERVBLL
 		const int GENERATE_CALENDAR_DAYS = 182;
 		const int SHIFT_THRESHOLD_HOUR = 6;
 
+		const int BLOOD_CALENDAR_ID = 1;
+		const int DAY_CONTROL_CALENDAR_ID = 3;
+		const int NIGHT_CONTROL_CALENDAR_ID = 4;
+
 		static DateTime WEEK_A_START = new DateTime(2013, 12, 30);
 		static Logger log = new Logger();
 
@@ -102,7 +106,27 @@ namespace SERVBLL
 
 		public List<Member> ListMembersOnBloodShift()
 		{
-			return ListMembersOnShift(1);
+			return ListMembersOnShift(BLOOD_CALENDAR_ID);
+		}
+
+		public Member GetCurrentDayController()
+		{
+			List<Member> l = ListMembersOnShift(DAY_CONTROL_CALENDAR_ID);
+			if (l.Count > 0)
+			{
+				return l[0];
+			}
+			return null;
+		}
+
+		public Member GetCurrentNightController()
+		{
+			List<Member> l = ListMembersOnShift(NIGHT_CONTROL_CALENDAR_ID);
+			if (l.Count > 0)
+			{
+				return l[0];
+			}
+			return null;
 		}
 
 		public List<Member> ListMembersOnShift(int calendarId)

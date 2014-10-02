@@ -12,7 +12,7 @@ namespace SERVDAL
 {
 	public class RunLogDAL : IRunLogDAL
 	{
-		static SERVDataContract.DbLinq.SERVDB db;
+		private SERVDataContract.DbLinq.SERVDB db;
 
 		public RunLogDAL()
 		{
@@ -68,7 +68,7 @@ namespace SERVDAL
 			db.SubmitChanges();
 		}
 
-		static void LinkRunLogToProducts(RunLog log, List<int> prods)
+		private void LinkRunLogToProducts(RunLog log, List<int> prods)
 		{
 			Dictionary<int, int> prodD = new Dictionary<int, int>();
 			foreach (int p in prods)

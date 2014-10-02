@@ -14,7 +14,7 @@ namespace SERVDAL
 	{
 
 		static Logger log = new Logger();
-		static SERVDataContract.DbLinq.SERVDB db;
+		private SERVDataContract.DbLinq.SERVDB db;
 
 		public CalendarDAL()
 		{

@@ -8,6 +8,7 @@ namespace SERVIBLL
 	public interface IShiftBLL
 	{
 		bool TakeControl(int memberID, string overrideNumber);
+		string SwitchController();
 	}
 }
 

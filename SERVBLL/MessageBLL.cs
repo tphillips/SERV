@@ -143,37 +143,43 @@ namespace SERVBLL
 		private void _SendShiftSwapNeededEmail(object args)
 		{
 			CalendarEmailArgs cargs = (CalendarEmailArgs)args;
-			Member m = new MemberBLL().Get(cargs.MemberId);
-			Calendar c = new CalendarBLL().Get(cargs.CalendarId);
-			if (m == null || c == null)
+			Member shiftSwapper = new MemberBLL().Get(cargs.MemberId);
+			Calendar calendar = new CalendarBLL().Get(cargs.CalendarId);
+			if (shiftSwapper == null || calendar == null)
 			{
 				throw new InvalidOperationException();
 			}
-			List<Member> members = new MemberBLL().ListMembersWithTags("Blood,AA,Water,Controller,Milk");
-			foreach (Member tom in members)
+			List<Member> distroList = new MemberBLL().ListMembersWithTags("Blood,AA,Water,Controller,Milk");
+			foreach (Member recipient in distroList)
 			{
-				if (tom.MemberID != cargs.MemberId)
+				if (recipient.MemberID != shiftSwapper.MemberID)
 				{
-					SendEmail(m.EmailAddress, m.FirstName + " " + m.LastName + " needs your help!", 
-						"Hi " + tom.FirstName + ",\n\n" +
-						"Sadly, " + m.FirstName + " cannot perform his/her " + c.Name + " duty on " + cargs.ShiftDate.ToString("ddd dd MMM") + ".\n\n" +
-						"We really could use your help!  Are you free?  If you have a few hours spare please put your name down.\n\n" +
-						"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
-						"Thanks very much in advance!\n\n" +
-						"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(cargs.MemberId));
+					Member mailToMember = new MemberBLL().Get(recipient.MemberID);
+					if (mailToMember != null && !string.IsNullOrEmpty(mailToMember.EmailAddress) && mailToMember.EmailAddress.Trim() != "@")
+					{
+						SendEmail(mailToMember.EmailAddress, shiftSwapper.Name + " needs your help!", 
+							"Hi " + mailToMember.FirstName + ",\n\n" +
+							"Sadly, " + shiftSwapper.FirstName + " cannot perform his/her " + calendar.Name + " duty on " + cargs.ShiftDate.ToString("ddd dd MMM") + ".\n\n" +
+							"We really could use your help!  Are you free?  If you have a few hours spare please put your name down.\n\n" +
+							"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
+							"Thanks very much in advance!\n\n" +
+							"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(shiftSwapper.MemberID));
+					}
 				}
 				else
 				{
-					SendEmail(m.EmailAddress, "A swap request has been sent out for you", 
-						"Hi " + tom.FirstName + ",\n\n" +
-						"As requested, you have been removed from " + c.Name + " duty on " + cargs.ShiftDate.ToString("ddd dd MMM") + ".\n\n" +
-						"An email has been sent out to see if someone can cover for you.\n\n" +
-						"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
-						"Thanks,\n\n" +
-						"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(cargs.MemberId));
+					if (!string.IsNullOrEmpty(shiftSwapper.EmailAddress) && shiftSwapper.EmailAddress.Trim() != "@")
+					{
+						SendEmail(shiftSwapper.EmailAddress, "A swap request has been sent out for you", 
+							"Hi " + shiftSwapper.FirstName + ",\n\n" +
+							"As requested, you have been removed from " + calendar.Name + " duty on " + cargs.ShiftDate.ToString("ddd dd MMM") + ".\n\n" +
+							"An email has been sent out to see if someone can cover for you.\n\n" +
+							"The SERV SSL Calendar can be found here: http://system.servssl.org.uk/Calendar\n\n" +
+							"Thanks,\n\n" +
+							"SERV SSL System" + FOOTER, new MemberBLL().GetUserIdForMember(cargs.MemberId));
+					}
 				}
 			}
-
 		}
 
 		public bool SendSMSMessage(string numbers, string message, int senderUserID, bool fromServ)
@@ -359,7 +365,7 @@ namespace SERVBLL
 						"{1} has just signed up as a new volunteer!\r\n\r\n" +
 					"Thanks,\r\n\r\n" +
 						"SERV SSL System {2}", 
-						m.FirstName, member.FirstName + " " + member.LastName, MessageBLL.FOOTER), userId);
+						m.FirstName, member.Name, MessageBLL.FOOTER), userId);
 			}
 
 			SendEmail(member.EmailAddress, "Welcome to SERV", 

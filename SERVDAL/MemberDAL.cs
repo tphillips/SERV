@@ -15,8 +15,8 @@ namespace SERVDAL
 	public class MemberDAL : IMemberDAL, IDisposable
 	{
 
-		Logger log = new Logger();
-		static SERVDataContract.DbLinq.SERVDB db;
+		static Logger log = new Logger();
+		private SERVDataContract.DbLinq.SERVDB db;
 
 		public MemberDAL()
 		{

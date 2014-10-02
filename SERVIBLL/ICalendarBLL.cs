@@ -40,6 +40,8 @@ namespace SERVIBLL
 		List<string> GetNextXDaysCalendarBulletins(int days);
 		List<Member> ListMembersOnShift(int calendarId);
 		List<Member> ListMembersOnBloodShift();
+		Member GetCurrentNightController();
+		Member GetCurrentDayController();
 	}
 }
 

@@ -13,7 +13,7 @@ namespace SERVDAL
 	public class LocationDAL : ILocationDAL
 	{
 		static Logger log = new Logger();
-		static SERVDataContract.DbLinq.SERVDB db;
+		private SERVDataContract.DbLinq.SERVDB db;
 
 		public LocationDAL()
 		{

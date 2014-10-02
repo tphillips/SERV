@@ -34,6 +34,15 @@ namespace SERVDataContract
 		public string LastName { get; set; }
 
 		[DataMember]
+		public string Name
+		{
+			get
+			{
+				return string.Format("{0} {1}", FirstName, LastName);
+			}
+		}
+
+		[DataMember]
 		[UpdatePolicy(AllowOwner = false)]
 		public DateTime JoinDate { get; set; }
 

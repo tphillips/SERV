@@ -11,6 +11,8 @@ namespace SERVBLL
 	public class ShiftBLL : IShiftBLL
 	{
 
+		const int CONTROLLER_THRESHOLD_HOUR = 16;
+
 		public ShiftBLL()
 		{
 		}
@@ -26,9 +28,36 @@ namespace SERVBLL
 			
 		public bool TakeControl(int memberID, string overrideNumber)
 		{
-			return new ControllerBLL().DivertNumber(memberID, overrideNumber);
+			User u = new MemberBLL().GetUserForMember(memberID);
+			Member m = new MemberBLL().Get(memberID);
+			bool ret = new ControllerBLL().DivertNumber(m, overrideNumber);
+			if (ret)
+			{
+				new MessageBLL().SendSMSMessage(m.MobileNumber, "You now have control", u.UserID, true);
+			}
+			return ret;
 		}
 
+		public string SwitchController()
+		{
+			Member c = null;
+			if (DateTime.Now.Hour > CONTROLLER_THRESHOLD_HOUR)
+			{
+				c = new CalendarBLL().GetCurrentNightController();
+			}
+			else
+			{
+				c = new CalendarBLL().GetCurrentDayController();
+			}
+			if (TakeControl(c.MemberID, null))
+			{
+				return c.Name;
+			}
+			else
+			{
+				return "???";
+			}
+		}
 	}
 }
 
