@@ -32,7 +32,7 @@
 	function search()
 	{
 		$("#entry").hide();
-		$("#loading").slideDown();
+		loading();
 		SearchMembers(<%=this.UserLevel%>, "", !$("#chkInactive").prop("checked"));
 	}
 	

@@ -232,7 +232,7 @@ function loadCalendar(memberId, userLevel)
 	calMemberId = memberId;
 	calUserLevel = userLevel;
 	//$("#entry").slideUp();
-	//$("#loading").slideDown();
+	//loading();
 	for (var x = 0; x < showCalendarDays; x++)
 	{
 		$("#scheduledDay" + (x + 1)).empty();
@@ -302,7 +302,7 @@ function loadCalendar(memberId, userLevel)
 					}
 				}
 			}
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideDown();
 			$("#calendar").slideDown();
 			$("#calendar").slideDown();
@@ -384,7 +384,7 @@ function listRosteredVolunteers(calendarId)
 								'</div>';
 				$("#rosteredWeek" + week + "Day" + day).append(toAppend);
 			}
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideDown();
 		},
 		function()
@@ -398,13 +398,13 @@ function rosterVolunteer()
 	$("#error").slideUp();
 	rosteringMemberId = getMemberId($("#txtFindMember").val());
 	if (rosteringMemberId == 0) { niceAlert('Please choose a valid member'); return; }
-	//$("#loading").slideDown();
+	//loading();
 	callServerSide(
 		"Service/Service.asmx/RosterVolunteer", 
 		"{'calendarId':'" + rosteringCalendarId + "','memberId':'" + rosteringMemberId + "','rosteringWeek':'" + rosteringWeek + "','rosteringDay':'" + rosteringDay + "'}",
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 			if (json.d == true)
 			{
 				$("#txtFindMember").val("");
@@ -442,7 +442,7 @@ function listRosteredVolunteers(calendarId)
 								'</div>';
 				$("#rosteredWeek" + week + "Day" + day).append(toAppend);
 			}
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideDown();
 		},
 		function()
@@ -544,18 +544,18 @@ function cmdSaveRotaPropsClicked()
 
 function saveRotaProps(calendarId)
 {
-	$("#loading").slideDown();
+	loading();
 	callServerSide(
 		"Service/Service.asmx/SaveCalendarProps", 
 		"{'calendarId':'" + calendarId + "', 'calendarName':'" + $("#txtCalendarName").val() + "', 'sortOrder':'" + $("#txtSortOrder").val() + "', 'requiredTagId':'" + rotaTagId + "', 'defaultRequirement':'" + defReq + "'}",
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#divProperties").slideUp();
 		},
 		function()
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#error").slideDown();
 		}
 	);
@@ -618,7 +618,7 @@ function listCalendars(userLevel)
 			}
 			append += "</tbody></table>";
 			$("#results").append(append);
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideDown();
 		},
 		function()

@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<script>
-		$("#loading").hide();
+		_loaded();
 	</script>
 </asp:Content>
 

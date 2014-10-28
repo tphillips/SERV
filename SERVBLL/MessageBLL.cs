@@ -149,7 +149,7 @@ namespace SERVBLL
 			{
 				throw new InvalidOperationException();
 			}
-			List<Member> distroList = new MemberBLL().ListMembersWithTags("Blood,AA,Water,Controller,Milk");
+			List<Member> distroList = new MemberBLL().ListMembersWithAnyTagsIn("Blood,AA,Water,Controller,Milk");
 			foreach (Member recipient in distroList)
 			{
 				if (recipient.MemberID != shiftSwapper.MemberID)

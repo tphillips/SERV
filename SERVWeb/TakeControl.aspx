@@ -24,7 +24,7 @@
 <script>
 
 	$('#txtNumber').attr('disabled', 'disabled');
-	$("#loading").slideUp();
+	loaded();
 
 </script>
 

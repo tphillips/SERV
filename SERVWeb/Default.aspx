@@ -92,7 +92,7 @@
 
 	$(function() 
 	{
-		$("#loading").hide();
+		_loaded();
 		$("#container").removeClass("container");
 		$("#container").addClass("fullScreenContainer_noReally");
 	});

@@ -204,10 +204,15 @@ namespace SERVBLL
 			SetPassword(m.EmailAddress, passHash);
 		}
 
-		public List<string> ListMobileNumbersWithTags(string tagsCsv)
+		/// <summary>
+		/// Each result must have at least one tag match
+		/// </summary>
+		/// <returns>The mobile numbers with tags.</returns>
+		/// <param name="tagsCsv">Tags csv.</param>
+		public List<string> ListMobileNumbersWithAnyTagsIn(string tagsCsv)
 		{
 			List<string> ret = new List<string>();
-			List<string> res = SERVDALFactory.Factory.MemberDAL().ListMobileNumbersWithTags(tagsCsv);
+			List<string> res = SERVDALFactory.Factory.MemberDAL().ListMobileNumbersWithAnyTagsIn(tagsCsv);
 			foreach (string m in res)
 			{
 				string num = m.Replace(" ", "");
@@ -223,10 +228,71 @@ namespace SERVBLL
 			return ret;
 		}
 
-		public List<Member> ListMembersWithTags(string tagsCsv)
+		/// <summary>
+		/// Each result must have all tags
+		/// </summary>
+		/// <returns>The mobile numbers with all tags.</returns>
+		/// <param name="tagsCsv">Tags csv.</param>
+		public List<string> ListMobileNumbersWithAllTags(string tagsCsv)
+		{
+			List<List<string>> seperateTagLists = new List<List<string>>();
+			List<string> ret = new List<string>();
+			string[] tags = tagsCsv.Split(',');
+			foreach(string tag in tags)
+			{
+				if (tag.Trim() != "")
+				{
+					seperateTagLists.Add(SERVDALFactory.Factory.MemberDAL().ListMobileNumbersWithTag(tag.Trim()));
+				}
+			}
+			// Primative intersection (I have a cold, there must be a better way . . .)
+			if (seperateTagLists.Count > 0)
+			{
+				foreach (string number in seperateTagLists[0])
+				{
+					bool ok = true;
+					foreach (List<string> l in seperateTagLists)
+					{
+						bool found = false;
+						foreach (string s in l)
+						{
+							if (s.Trim() == number.Trim())
+							{
+								found = true;
+							}
+						}
+						if (!found)
+						{
+							ok = false;
+						}
+					}
+					if (ok)
+					{
+						ret.Add(number);
+					}
+				}
+			}
+			// EO Primative intersection
+			List<string> res = new List<string>();
+			foreach (string m in ret)
+			{
+				string num = m.Replace(" ", "");
+				if (num.Length == 11)
+				{
+					if (num.StartsWith("07"))
+					{
+						num = "44" + num.Substring(1, num.Length - 1);
+						res.Add(num);
+					}
+				}
+			}
+			return res;
+		}
+
+		public List<Member> ListMembersWithAnyTagsIn(string tagsCsv)
 		{
 			List<Member> ret = new List<Member>();
-			List<SERVDataContract.DbLinq.Member> ms = SERVDALFactory.Factory.MemberDAL().ListMembersWithTags(tagsCsv);
+			List<SERVDataContract.DbLinq.Member> ms = SERVDALFactory.Factory.MemberDAL().ListMembersWithAnyTagsIn(tagsCsv);
 			foreach (SERVDataContract.DbLinq.Member m in ms)
 			{
 				ret.Add(new Member() { MemberID = m.MemberID, FirstName = m.FirstName, LastName = m.LastName });

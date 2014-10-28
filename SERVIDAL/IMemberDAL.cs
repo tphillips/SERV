@@ -22,8 +22,9 @@ namespace SERVIDAL
 		void RemoveMemberTag(int memberId, string tagName);
 		void SetPasswordHash(string username, string passwordHash);
 		void SetUserLastLoginDate(SERVDataContract.DbLinq.User u);
-		List<string> ListMobileNumbersWithTags(string tagsCsv);
-		List<Member> ListMembersWithTags(string tagsCsv);
+		List<string> ListMobileNumbersWithAnyTagsIn(string tagsCsv);
+		List<string> ListMobileNumbersWithTag(string tag);
+		List<Member> ListMembersWithAnyTagsIn(string tagsCsv);
 		List<Member> ListAdministrators();
 		void SetMemberUserLevel(int memberId, int userLevelId);
 	}

@@ -31,7 +31,7 @@
 		<iframe src="http://servssl.org.uk/members/index.php?app=core&module=search&do=viewNewContent&search_app=forums" style="width:100%; height:100%"  frameborder="0">
 		</iframe>
 		<script>
-			$("#loading").hide();
+			_loaded();
 			loadNewsBanner();
 		</script>
 	</body>

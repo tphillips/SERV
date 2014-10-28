@@ -22,7 +22,7 @@ var selectDest = false;
 
 $(function() 
 {
-	$("#loading").slideUp();
+	loaded();
 	$("#entry").slideDown();
 	initialize();
 });

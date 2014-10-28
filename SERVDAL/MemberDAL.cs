@@ -156,8 +156,28 @@ namespace SERVDAL
 			u.LastLoginDate = DateTime.Now;
 			db.SubmitChanges();
 		}
-		
-		public List<string> ListMobileNumbersWithTags(string tagsCsv)
+
+		public List<string> ListMobileNumbersWithTag(string tag)
+		{
+			List<string> ret = new List<string>();
+			string sql = "select distinct m.MobileNumber " +
+				"from Member m " +
+				"join Member_Tag mt on mt.MemberID = m.MemberID " +
+				"join Tag t on t.TagID = mt.TagID " +
+				"and m.LeaveDate is null " +
+				"where t.Tag = '" + tag + "'";
+			DataTable tbl = DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+			if (tbl != null && tbl.Rows.Count > 0)
+			{
+				foreach (DataRow r in tbl.Rows)
+				{
+					ret.Add(r[0].ToString());
+				}
+			}
+			return ret;
+		}
+
+		public List<string> ListMobileNumbersWithAnyTagsIn(string tagsCsv)
 		{
 			List<string> ret = new List<string>();
 			string[] tags = tagsCsv.Split(',');
@@ -190,7 +210,7 @@ namespace SERVDAL
 			return ret;
 		}
 
-		public List<Member> ListMembersWithTags(string tagsCsv)
+		public List<Member> ListMembersWithAnyTagsIn(string tagsCsv)
 		{
 			string[] tags = tagsCsv.Split(',');
 			List<string> tagList = new List<string>();

@@ -592,6 +592,13 @@ namespace SERVBLL
 			reports.Add(rep);
 
 			rep = new Report();
+			rep.Heading = "Emergency List - Last Run Date";
+			rep.Description = "This report shows members who are tagged as on the emergency and when they last did a run.";
+			rep.Anchor = "emergencyListWaste";
+			rep.Query = "select concat(FirstName, ' ', LastName) as 'Member', m.MobileNumber as Phone,  coalesce(date(LastDuty), '<span style=\\\"color:red\\\">NOTHING IN 2014</span>') as 'Last Run', date(JoinDate) as 'Join Date', \nconcat('<a href=\\\"ViewMember.aspx?memberId=', MemberId,'\\\">view/edit</a>') as 'Link' \nfrom Member m \nleft join \n( \nselect RiderMemberID, max(DutyDate) as LastDuty from RunLog group by RiderMemberID \n) rl on m.MemberID = rl.RiderMemberID \nwhere m.LeaveDate is null \nand m.MemberID in\n(\nselect distinct m.MemberID from Tag t\njoin Member_Tag mt on t.TagID = mt.TagID \njoin Member m on mt.MemberID = m.MemberID\nwhere t.Tag = 'EmergencyList'\nand m.LeaveDate is null\nand m.MobileNumber is not null\n)\norder by LastDuty, JoinDate";
+			reports.Add(rep);
+
+			rep = new Report();
 			rep.Heading = "Top Ad-Hocs";
 			rep.Description = "This report shows the number of shifts volunteers have put themselves forward for over and above rostered shifts (if applicable).";
 			rep.Anchor = "topAdHocs";

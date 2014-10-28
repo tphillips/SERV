@@ -2,8 +2,7 @@
 <%@ Import Namespace="SERVWeb" %>
 
 <div id="loading">
-<br/>
-	<p><img src="img/spinnerLarge.gif" width="40" /></p>
+    <p><button class="btn btn-warning"><i class="icon-time icon-white"></i> <span id="lblLoading">Please wait . . .</span></button></p>
 </div>
 
 <div id="error" style="display:none">

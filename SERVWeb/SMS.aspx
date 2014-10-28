@@ -16,7 +16,7 @@
 <br/><br/>
 
 </div>
-<label>Send To:</label>
+<label>Send To <small>(This is now an intersection, so AND combination. Each member must have ALL the selected tags)</small>:</label>
 <div class="checkbox">
 	<label>
 		<input type="checkbox" id="chkEmergencyList" onchange="genTags();" /> Emergency List
@@ -28,17 +28,24 @@
 		<input type="checkbox" id="chkFundraisers" onchange="genTags();" /> Fundraisers
 	</label>
 	<label>
-		<input type="checkbox" id="chkBlood" onchange="genTags();" /> Blood Riders / Drivers
+		<input type="checkbox" id="chkRiders" onchange="genTags();" /> Riders
 	</label>
 	<label>
-		<input type="checkbox" id="chkAA" onchange="genTags();" /> Air Ambulance Riders / Drivers
-	</label>
-	<label>
-		<input type="checkbox" id="chkMilk" onchange="genTags();" /> Milk Riders / Drivers
+		<input type="checkbox" id="chkDrivers" onchange="genTags();" /> Drivers
 	</label>
 	<label>
 		<input type="checkbox" id="chk4x4" onchange="genTags();" /> 4x4 Owners
 	</label>
+	<label>
+		<input type="checkbox" id="chkBlood" onchange="genTags();" /> Blood Volunteers
+	</label>
+	<label>
+		<input type="checkbox" id="chkAA" onchange="genTags();" /> Air Ambulance Volunteers
+	</label>
+	<label>
+		<input type="checkbox" id="chkMilk" onchange="genTags();" /> Milk Volunteers
+	</label>
+
 </div>
 <input type="hidden" id="txtTags" disabled width="200" />
 <input type="hidden" id="txtNumbers" disabled width="200" />
@@ -50,7 +57,7 @@
 <input type="button" id="cmdSend" value="Send" class="btn btn-primary btn-lg" onclick="sendSMSMessage($('#txtNumbers').val(), $('#txtSMS').val());"></input>
 </div>
 <script>
-	$("#loading").slideUp();
+	loaded();
 	var smsCount = 0;
 	var fromServ = true;
 
@@ -64,6 +71,8 @@
 		if ($("#chkControllers").prop('checked')) { tags += "Controller,"; }
 		if ($("#chkFundraisers").prop('checked')) { tags += "Fundraiser,"; }
 		if ($("#chk4x4").prop('checked')) { tags += "4x4,"; }
+		if ($("#chkRiders").prop('checked')) { tags += "Rider,"; }
+		if ($("#chkDrivers").prop('checked')) { tags += "Driver,"; }
 		if ($("#chkBlood").prop('checked')) { tags += "Blood,"; }
 		if ($("#chkAA").prop('checked')) { tags += "AA,"; }
 		if ($("#chkWater").prop('checked')) { tags += "Water,"; }
@@ -72,7 +81,7 @@
 		$("#txtNumbers").val("");
 		if (tags != "")
 		{
-			$("#loading").slideDown();
+			loading();
 			var numbers = getNumbersForTags(tags, "txtNumbers");
 		}
 	}

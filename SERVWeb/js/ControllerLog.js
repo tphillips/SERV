@@ -73,7 +73,7 @@ $(function()
 	}
 	else
 	{
-		$("#loading").slideUp();
+		loaded();
 		$("#entry").slideDown();
 	}
 	asyncRequests = true;
@@ -85,7 +85,7 @@ function LoadRunLog()
 	if (runLogID > 0)
 	{
 		
-		$("#loading").slideDown();
+		loading();
 		$("#entry").slideUp();
 		callServerSide(
 			"Service/Service.asmx/GetRunLog", 
@@ -134,7 +134,7 @@ function LoadRunLog()
 					$("#cmdSave").hide();
 				}
 
-				$("#loading").slideUp();
+				loaded();
 				$("#entry").slideDown();
 
 				showBloodPanel();
@@ -144,7 +144,7 @@ function LoadRunLog()
 			},
 			function()
 			{
-				$("#loading").slideUp();
+				loaded();
 				$("#error").slideDown();
 				$("#entry").slideDown();
 			}
@@ -286,7 +286,7 @@ function saveBloodRun()
 			"', 'callerNumber':'" + $("#txtCallerNumber").val() + 
 			"', 'callerExt':'" + $("#txtCallerExt").val() + 
 		"'}";
-	$("#loading").slideDown();
+	loading();
 	$("#entry").slideUp();
 	$("#error").slideUp();
 	// Hit it
@@ -295,13 +295,13 @@ function saveBloodRun()
 		json,
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#success").slideDown();
 			//window.setTimeout('window.location.href="RecentRuns.aspx"', 3000);
 		},
 		function()
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#error").slideDown();
 			$("#entry").slideDown();
 		}
@@ -323,7 +323,7 @@ function saveAARun()
 			"', 'boxesInCsv':'" + inCsv() + 
 			"', 'notes':'" + $("#txtAANotes").val().replace(/'/g, '') + 
 		"'}";
-	$("#loading").slideDown();
+	loading();
 	$("#entry").slideUp();
 	$("#error").slideUp();
 	// Hit it
@@ -332,13 +332,13 @@ function saveAARun()
 		json,
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#success").slideDown();
 			//window.setTimeout('window.location.href="RecentRuns.aspx"', 3000);
 		},
 		function()
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#error").slideDown();
 			$("#entry").slideDown();
 		}

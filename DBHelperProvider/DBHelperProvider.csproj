@@ -35,7 +35,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
     <Reference Include="MySql.Data">
-      <HintPath>..\..\TalkingEye\3party\mysql-connector-net-6\v2\mysql.data.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Users\tris\Dropbox\Dev\Code\SERV\res\DbLinqGen\mysql.data.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

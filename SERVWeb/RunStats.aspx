@@ -8,7 +8,7 @@
 	
 	$(function() 
 	{
-		$("#loading").slideUp();
+		loaded();
 	});
 	
 	</script>

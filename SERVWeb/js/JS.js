@@ -9,7 +9,24 @@ var controllers = new Array();
 var controllerNames = new Array();
 var greetings = new Array("Hi", "Greetings", "Well Hello", "Sup", "Wagwan", "Haai", "Hola", "Hej", "Konnichiwa", "Zdravstvujte", "Yo", "Howdy", "Hiya", "Good day to you", "Oh Hi,");
 var wentVerbs = new Array("went to","visited","warped to","travelled to","piloted themselves to","stopped off at", "took some air at","helped out","parked up at","delivered to","took something to", "set sail for", "plotted a course to", "bimbled along to");
+var loadingMessages = new Array("Please wait . . .", "One second . . .", "Loading . . .", "Hold on . . .", "Nearly there . . .", "Calibrating the hyper-drive . . .", "Hold yer horses . . .", "Setting the flux-capacitor . . .", "Breeding the bits . . .", "Hold your breath . . .");
 var sessionOK = true;
+
+function loading()
+{
+	$("#lblLoading").text(loadingMessages[Math.floor(Math.random()*loadingMessages.length)]);
+	$("#loading").fadeIn();
+}
+
+function loaded()
+{
+	$("#loading").fadeOut();
+}
+
+function _loaded()
+{
+	$("#loading").hide();
+}
 
 function initFeedback()
 {
@@ -152,7 +169,7 @@ function listRecentRuns()
 
 function ImpersonateMember(memberId)
 {
-	$("#loading").slideDown();
+	loading();
 	callServerSide(
 		"Service/Service.asmx/Impersonate", 
 		"{'memberId':" + memberId + "}",
@@ -163,14 +180,14 @@ function ImpersonateMember(memberId)
 		function(json)
 		{
 			niceAlert("Something went wrong.  You may not have sufficient privileges to view other member's details.  If you believe you should, please contact Admin.");
-			$("#loading").slideUp();
+			loaded();
 		}
 	);
 }
 
 function takeControl(overrideNum)
 {
-	$("#loading").slideDown();
+	loading();
 	$("#entry").slideUp();
 	callServerSide(
 		"Service/Service.asmx/TakeControl", 
@@ -180,18 +197,18 @@ function takeControl(overrideNum)
 			if (json.d == true)
 			{
 				$("#success").slideDown();
-				$("#loading").slideUp();
+				loaded();
 			}
 			else
 			{
 				niceAlert("Something went wrong!");
-				$("#loading").slideUp();
+				loaded();
 			}
 		},
 		function(json)
 		{
 			niceAlert("Something went wrong!");
-			$("#loading").slideUp();
+			loaded();
 		}
 	);
 }
@@ -251,19 +268,19 @@ function DisplayMember(memberId)
 					if (json.d.Tags[x].TagName == "Committee") { $("#chkCommittee").prop('checked', true); }
 				}
 				
-				$("#loading").slideUp();
+				loaded();
 				$("#entry").slideDown();
 			}
 			else
 			{
-				$("#loading").slideUp();
+				loaded();
 				$("#error").slideDown();
 			}
 		},
 		function(json)
 		{
 			niceAlert("Something went wrong trying to show this member to you.  You may not have sufficient privileges to view other member's details.  If you believe you should, please contact Admin.");
-			$("#loading").slideUp();
+			loaded();
 		}
 	);
 }
@@ -283,7 +300,7 @@ function DisplayLocation(locationId)
 			$("#chkChangeOver").prop('checked', json.d.ChangeOver == 1);
 			$("#chkBloodBank").prop('checked', json.d.BloodBank == 1);
 			$("#chkInNetwork").prop('checked', json.d.InNetwork == 1);
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideDown();
 
 			initializeMap();
@@ -296,7 +313,7 @@ function DisplayLocation(locationId)
 
 function SaveLocation(locationId)
 {
-	$("#loading").slideDown();
+	loading();
 	$("#entry").slideUp();
 	var json = JsonifyLocationFromForm(locationId);
 	callServerSide(
@@ -304,12 +321,12 @@ function SaveLocation(locationId)
 		json,
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#success").slideDown();
 		},
 		function()
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#error").slideDown();
 		}
 	);
@@ -327,14 +344,14 @@ function JsonifyLocationFromForm(locationId)
 
 function sendSMSMessage(numbers, message)
 {
-	$("#loading").slideDown();
+	loading();
 	$("#entry").slideUp();
 	callServerSide(
 		"Service/Service.asmx/SendSMSMessage", 
 		"{'numbers':'" + numbers + "', 'message':'"+ message + "', 'fromServ':'" + fromServ + "'}",
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#success").slideDown();
 		},
 		function()
@@ -357,7 +374,7 @@ function getNumbersForTags(tags, target)
 			}
 			$("#" + target).val(nums);
 			smsCount = json.d.length;
-			$("#loading").slideUp();
+			loaded();
 			$("#lblCount").text(smsCount);
 		},
 		function()
@@ -602,7 +619,7 @@ function SearchMembers(userLevel, search, onlyActive)
 			}
 			append += "</tbody></table>";
 			$("#results").append(append);
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideDown();
 		},
 		function()
@@ -634,7 +651,7 @@ function ListLocations(userLevel)
 			}
 			append += "</tbody></table>";
 			$("#results").append(append);
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideDown();
 		},
 		function()
@@ -646,17 +663,17 @@ function ListLocations(userLevel)
 
 function addMemberTag(memberId, tag)
 {
-	$("#loading").slideDown();
+	$("#loading").fadeIn();
 	callServerSide(
 		"Service/Service.asmx/TagMember", 
 		"{'memberId':" + memberId + ", 'tagName': '" + tag + "'}",
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 		},
 		function()
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideUp();
 			$("#error").slideDown();
 		}
@@ -665,17 +682,17 @@ function addMemberTag(memberId, tag)
 
 function setMemberUserLevel(memberId, userLevel)
 {
-	$("#loading").slideDown();
+	loading();
 	callServerSide(
 		"Service/Service.asmx/SetMemberUserLevel", 
 		"{'memberId':" + memberId + ", 'userLevelId': " + userLevel + "}",
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 		},
 		function()
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideUp();
 			$("#error").slideDown();
 		}
@@ -684,17 +701,17 @@ function setMemberUserLevel(memberId, userLevel)
 
 function removeMemberTag(memberId, tag)
 {
-	$("#loading").slideDown();
+	loading();
 	callServerSide(
 		"Service/Service.asmx/UnTagMember", 
 		"{'memberId':" + memberId + ", 'tagName': '" + tag + "'}",
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 		},
 		function()
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#entry").slideUp();
 			$("#error").slideDown();
 		}
@@ -703,7 +720,7 @@ function removeMemberTag(memberId, tag)
 
 function SaveBasicMember(memberId)
 {
-	$("#loading").slideDown();
+	loading();
 	$("#entry").slideUp();
 	var json = JsonifyBasicMemberFromForm(memberId);
 	callServerSide(
@@ -711,12 +728,12 @@ function SaveBasicMember(memberId)
 		json,
 		function(json)
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#success").slideDown();
 		},
 		function()
 		{
-			$("#loading").slideUp();
+			loaded();
 			$("#error").slideDown();
 		}
 	);
@@ -748,7 +765,7 @@ function register()
 {
 	if(validateRegistrationForm())
 	{
-		$("#loading").slideDown();
+		loading();
 		$("#entry").slideUp();
 		var json = JsonifyBasicMemberFromForm(-1);
 		callServerSide(
@@ -779,13 +796,13 @@ function register()
 					{
 						callServerSide("Service/Service.asmx/TagMember", "{'memberId':" + memberId + ", 'tagName': 'Fundraiser'}", function(json){}, function(){} );
 					}
-					$("#loading").slideUp();
+					loaded();
 					$("#success").slideDown();
 					niceAlert("Thank you " + $("#txtFirstName").val() + ". Someone will be in touch with you very soon to arrange the next steps.  The system will send you your password by email now.");
 				}
 				else
 				{
-					$("#loading").slideUp();
+					loaded();
 					$("#error").slideDown();
 					$("#entry").slideDown();
 					if (memberId == -1)
@@ -796,7 +813,7 @@ function register()
 			},
 			function()
 			{
-				$("#loading").slideUp();
+				loaded();
 				$("#error").slideDown();
 				$("#entry").slideDown();
 			}

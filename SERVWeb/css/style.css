@@ -3,6 +3,16 @@ h1, h2, h3, h4
 	color: #444444;
 }
 
+#loading
+{
+    position:fixed;
+    top:25%;
+    left:0px;
+    z-index:10000;
+    width:100%;
+    text-align:center;
+}
+
 .container
 {
 	margin:50px;
@@ -225,7 +235,7 @@ h1, h2, h3, h4
 
 .bingoBoxBlank
 {
-	background-image:url('../img/HeaderBg.jpg');
+	background-image:url('../img/Brb.png');
 	background-size:60px 60px; 
 	background-repeat:no-repeat;
 }

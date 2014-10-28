@@ -100,12 +100,13 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>Switching controller automatically (controller notified by SMS)</li>
-					<li>DB Context instances no longer static</li>
-					<li>Shift swap mass email fix</li>
+					<li>SMS tag mods, tags are now intersected. You can filter on rider and driver.</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Switching controller automatically (controller notified by SMS)</li>
+					<li>DB Context instances no longer static</li>
+					<li>Shift swap mass email fix</li>
 					<li><a href="BloodBoxBingo.aspx">Blood Box Bingo</a> Level 2!</li>
 					<li>GA Tags</li>
 					<li><a href="BloodBoxBingo.aspx">Blood Box Bingo</a> - Just because . . .</li>
@@ -281,8 +282,7 @@
 	</div>
 
 	<script>
-		$("#loading").hide();
-		$("#loading").empty();
+		_loaded();
 		//loadNewsBanner();
 		FullName = "<%=this.FullName%>";
 		setGreeting();

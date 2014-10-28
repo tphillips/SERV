@@ -20,7 +20,7 @@
 <asp:Button runat="server" id="cmdChange" Text="Change Password" class="btn btn-primary btn-lg readOnlyHidden" onclick="cmdChangeClick"/>
 
 <script>
-	$("#loading").hide();
+	_loaded();
 </script>
 
 </asp:Content>

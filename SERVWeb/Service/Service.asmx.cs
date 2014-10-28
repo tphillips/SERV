@@ -144,7 +144,7 @@ namespace SERVWeb
 		public List<Member> ListMembersWithTags(string tagsCsv)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.MemberBLL().ListMembersWithTags(tagsCsv);
+			return SERVBLLFactory.Factory.MemberBLL().ListMembersWithAnyTagsIn(tagsCsv);
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=60)]
@@ -155,7 +155,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.MemberBLL().ListMobileNumbersWithTags(tagsCsv);
+			return SERVBLLFactory.Factory.MemberBLL().ListMobileNumbersWithAllTags(tagsCsv);
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=60)]

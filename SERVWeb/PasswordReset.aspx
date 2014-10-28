@@ -12,7 +12,7 @@
 <asp:Button runat="server" id="cmdChange" Text="Reset" class="btn btn-primary btn-lg readOnlyHidden" onclick="cmdResetClick"/>
 
 <script>
-	$("#loading").hide();
+	_loaded();
 </script>
 
 </asp:Content>
