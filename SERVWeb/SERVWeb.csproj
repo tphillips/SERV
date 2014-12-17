@@ -173,6 +173,7 @@
     <Content Include="img\screenshots\11.png" />
     <Content Include="img\screenshots\12.png" />
     <Content Include="img\screenshots\13.png" />
+    <Content Include="img\Sun.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">

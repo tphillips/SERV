@@ -6,7 +6,7 @@ h1, h2, h3, h4
 #loading
 {
     position:fixed;
-    top:25%;
+    top:50%;
     left:0px;
     z-index:10000;
     width:100%;
@@ -159,6 +159,15 @@ h1, h2, h3, h4
 {
 	background-color:#e2f5ff;
 	background-image: url('/img/Water.png');
+	background-repeat:no-repeat;
+	background-size: 14px 14px;
+	background-position:3px; 
+}
+
+.calendarSlot9
+{
+	background-color:#fffee8;
+	background-image: url('/img/Sun.png');
 	background-repeat:no-repeat;
 	background-size: 14px 14px;
 	background-position:3px; 

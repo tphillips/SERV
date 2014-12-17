@@ -43,15 +43,22 @@ namespace SERV.Utils
 			string res = "";
 			if (provider == "Dynmark")
 			{
-				res = new System.Net.WebClient().DownloadString(
-					string.Format("http://services.dynmark.com/HttpServices/SendMessage.ashx?user={0}&password={1}&to={2}&from={3}&text={4}", 
-						smsUser, smsPassword, to, from, message));
+				try
+				{
+					res = new System.Net.WebClient().DownloadString(
+						string.Format("http://services.dynmark.com/HttpServices/SendMessage.ashx?user={0}&password={1}&to={2}&from={3}&text={4}", 
+							smsUser, smsPassword, to, from, message));
+				}catch{
+				}
 			}
 			else
 			{
-				res = new System.Net.WebClient().DownloadString(
-					string.Format("http://gw.aql.com/sms/sms_gw.php?username={0}&password={1}&destination={2}&originator={3}&message={4}", 
-						smsUser, smsPassword, to, from, message));
+				try
+				{
+					res = new System.Net.WebClient().DownloadString(
+						string.Format("http://gw.aql.com/sms/sms_gw.php?username={0}&password={1}&destination={2}&originator={3}&message={4}", 
+							smsUser, smsPassword, to, from, message));
+				}
 			}
 			log.Info("SMS: " + res);
 			return res;
