@@ -316,6 +316,20 @@ namespace SERVBLL
 			SERVDALFactory.Factory.MemberDAL().SetMemberUserLevel(memberId, userLevelId);
 		}
 	
+		public void GoOnDuty(int memberId)
+		{
+			SERVDALFactory.Factory.MemberDAL().GoOnDuty(memberId);
+		}
+
+		public void GoOffDuty(int memberId)
+		{
+			SERVDALFactory.Factory.MemberDAL().GoOffDuty(memberId);
+		}
+
+		public void UpdateLocation(int memberId, string lat, string lng)
+		{
+			SERVDALFactory.Factory.MemberDAL().UpdateLocation(memberId, lat, lng);
+		}
 
 	}
 

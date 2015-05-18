@@ -53,6 +53,8 @@
 						</li>
 						<li class="divider"></li>
 						<li><a href="Forum.aspx"><i class="icon-comment"></i> The Forum</a></li>
+						<li class="divider"></li>
+						<li><a href="BloodBoxBingo.aspx"><i class="icon-ok-circle"></i> Blood Box Bingo!</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">

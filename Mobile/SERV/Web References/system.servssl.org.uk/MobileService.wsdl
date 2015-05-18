@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s0="http://tempuri.org/" name="MobileService" targetNamespace="http://tempuri.org/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="StartSession">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="username" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="User">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="UserID" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="MemberID" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Member" type="s0:Member" />
+          <xs:element minOccurs="1" maxOccurs="1" name="UserLevelID" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="LastLoginDate" nillable="true" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Member">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="MemberID" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="FirstName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="LastName" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="JoinDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" maxOccurs="1" name="JoinDateString" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="MobileNumber" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="HomeNumber" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Occupation" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="MemberStatusID" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="AvailabilityID" nillable="true" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="RiderAssesmentPassDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" maxOccurs="1" name="RiderAssesmentPassDateString" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="AdQualPassDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" maxOccurs="1" name="AdQualPassDateString" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="AdQualType" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="BikeType" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="CarType" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Notes" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Address1" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Address2" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Address3" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Town" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="County" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="PostCode" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="BirthYear" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="NextOfKin" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="NextOfKinAddress" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="NextOfKinPhone" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="LegalConfirmation" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="LeaveDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" maxOccurs="1" name="LeaveDateString" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="LastGdpgmpdAte" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" maxOccurs="1" name="LastGDPGMPDateString" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Tags" type="s0:ArrayOfTag" />
+          <xs:element minOccurs="1" maxOccurs="1" name="UserLevelID" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="UserLevelName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfTag">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Tag" nillable="true" type="s0:Tag" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Tag">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="TagID" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="TagName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="StartSessionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="StartSessionResult" type="s0:User" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GoOnDuty">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="GoOnDutyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="GoOnDutyResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GoOffDuty">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="GoOffDutyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="GoOffDutyResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateLocation">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="lat" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="lng" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateLocationResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="UpdateLocationResult" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCurrentController">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="GetCurrentControllerResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetCurrentControllerResult" type="s0:Member" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCalendarBulletins">
+        <xs:complexType />
+      </xs:element>
+      <xs:complexType name="ArrayOfString">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetCalendarBulletinsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetCalendarBulletinsResult" type="s0:ArrayOfString" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetNextShift">
+        <xs:complexType />
+      </xs:element>
+      <xs:complexType name="CalendarEntry">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="CalendarID" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="CalendarName" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="CalendarSortOrder" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="CalendarEntryID" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="EntryDate" type="xs:dateTime" />
+          <xs:element minOccurs="1" maxOccurs="1" name="MemberID" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="CoverNeeded" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="CoverCalendarEntryID" nillable="true" type="xs:int" />
+          <xs:element minOccurs="1" maxOccurs="1" name="AdHoc" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="ManuallyAdded" type="xs:boolean" />
+          <xs:element minOccurs="0" maxOccurs="1" name="MemberName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetNextShiftResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetNextShiftResult" type="s0:CalendarEntry" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="User" nillable="true" type="s0:User" />
+      <xs:element name="boolean" type="xs:boolean" />
+      <xs:element name="Member" nillable="true" type="s0:Member" />
+      <xs:element name="ArrayOfString" nillable="true" type="s0:ArrayOfString" />
+      <xs:element name="CalendarEntry" nillable="true" type="s0:CalendarEntry" />
+    </xs:schema>
+  </types>
+  <message name="StartSessionSoapIn">
+    <part name="parameters" element="s0:StartSession" />
+  </message>
+  <message name="StartSessionSoapOut">
+    <part name="parameters" element="s0:StartSessionResponse" />
+  </message>
+  <message name="GoOnDutySoapIn">
+    <part name="parameters" element="s0:GoOnDuty" />
+  </message>
+  <message name="GoOnDutySoapOut">
+    <part name="parameters" element="s0:GoOnDutyResponse" />
+  </message>
+  <message name="GoOffDutySoapIn">
+    <part name="parameters" element="s0:GoOffDuty" />
+  </message>
+  <message name="GoOffDutySoapOut">
+    <part name="parameters" element="s0:GoOffDutyResponse" />
+  </message>
+  <message name="UpdateLocationSoapIn">
+    <part name="parameters" element="s0:UpdateLocation" />
+  </message>
+  <message name="UpdateLocationSoapOut">
+    <part name="parameters" element="s0:UpdateLocationResponse" />
+  </message>
+  <message name="GetCurrentControllerSoapIn">
+    <part name="parameters" element="s0:GetCurrentController" />
+  </message>
+  <message name="GetCurrentControllerSoapOut">
+    <part name="parameters" element="s0:GetCurrentControllerResponse" />
+  </message>
+  <message name="GetCalendarBulletinsSoapIn">
+    <part name="parameters" element="s0:GetCalendarBulletins" />
+  </message>
+  <message name="GetCalendarBulletinsSoapOut">
+    <part name="parameters" element="s0:GetCalendarBulletinsResponse" />
+  </message>
+  <message name="GetNextShiftSoapIn">
+    <part name="parameters" element="s0:GetNextShift" />
+  </message>
+  <message name="GetNextShiftSoapOut">
+    <part name="parameters" element="s0:GetNextShiftResponse" />
+  </message>
+  <message name="StartSessionHttpGetIn">
+    <part name="username" type="s:string" />
+    <part name="password" type="s:string" />
+  </message>
+  <message name="StartSessionHttpGetOut">
+    <part name="Body" element="s0:User" />
+  </message>
+  <message name="GoOnDutyHttpGetIn" />
+  <message name="GoOnDutyHttpGetOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="GoOffDutyHttpGetIn" />
+  <message name="GoOffDutyHttpGetOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="UpdateLocationHttpGetIn">
+    <part name="lat" type="s:string" />
+    <part name="lng" type="s:string" />
+  </message>
+  <message name="UpdateLocationHttpGetOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="GetCurrentControllerHttpGetIn" />
+  <message name="GetCurrentControllerHttpGetOut">
+    <part name="Body" element="s0:Member" />
+  </message>
+  <message name="GetCalendarBulletinsHttpGetIn" />
+  <message name="GetCalendarBulletinsHttpGetOut">
+    <part name="Body" element="s0:ArrayOfString" />
+  </message>
+  <message name="GetNextShiftHttpGetIn" />
+  <message name="GetNextShiftHttpGetOut">
+    <part name="Body" element="s0:CalendarEntry" />
+  </message>
+  <message name="StartSessionHttpPostIn">
+    <part name="username" type="s:string" />
+    <part name="password" type="s:string" />
+  </message>
+  <message name="StartSessionHttpPostOut">
+    <part name="Body" element="s0:User" />
+  </message>
+  <message name="GoOnDutyHttpPostIn" />
+  <message name="GoOnDutyHttpPostOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="GoOffDutyHttpPostIn" />
+  <message name="GoOffDutyHttpPostOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="UpdateLocationHttpPostIn">
+    <part name="lat" type="s:string" />
+    <part name="lng" type="s:string" />
+  </message>
+  <message name="UpdateLocationHttpPostOut">
+    <part name="Body" element="s0:boolean" />
+  </message>
+  <message name="GetCurrentControllerHttpPostIn" />
+  <message name="GetCurrentControllerHttpPostOut">
+    <part name="Body" element="s0:Member" />
+  </message>
+  <message name="GetCalendarBulletinsHttpPostIn" />
+  <message name="GetCalendarBulletinsHttpPostOut">
+    <part name="Body" element="s0:ArrayOfString" />
+  </message>
+  <message name="GetNextShiftHttpPostIn" />
+  <message name="GetNextShiftHttpPostOut">
+    <part name="Body" element="s0:CalendarEntry" />
+  </message>
+  <portType name="MobileServiceSoap">
+    <operation name="StartSession">
+      <input message="s0:StartSessionSoapIn" />
+      <output message="s0:StartSessionSoapOut" />
+    </operation>
+    <operation name="GoOnDuty">
+      <input message="s0:GoOnDutySoapIn" />
+      <output message="s0:GoOnDutySoapOut" />
+    </operation>
+    <operation name="GoOffDuty">
+      <input message="s0:GoOffDutySoapIn" />
+      <output message="s0:GoOffDutySoapOut" />
+    </operation>
+    <operation name="UpdateLocation">
+      <input message="s0:UpdateLocationSoapIn" />
+      <output message="s0:UpdateLocationSoapOut" />
+    </operation>
+    <operation name="GetCurrentController">
+      <input message="s0:GetCurrentControllerSoapIn" />
+      <output message="s0:GetCurrentControllerSoapOut" />
+    </operation>
+    <operation name="GetCalendarBulletins">
+      <input message="s0:GetCalendarBulletinsSoapIn" />
+      <output message="s0:GetCalendarBulletinsSoapOut" />
+    </operation>
+    <operation name="GetNextShift">
+      <input message="s0:GetNextShiftSoapIn" />
+      <output message="s0:GetNextShiftSoapOut" />
+    </operation>
+  </portType>
+  <portType name="MobileServiceSoap12">
+    <operation name="StartSession">
+      <input message="s0:StartSessionSoapIn" />
+      <output message="s0:StartSessionSoapOut" />
+    </operation>
+    <operation name="GoOnDuty">
+      <input message="s0:GoOnDutySoapIn" />
+      <output message="s0:GoOnDutySoapOut" />
+    </operation>
+    <operation name="GoOffDuty">
+      <input message="s0:GoOffDutySoapIn" />
+      <output message="s0:GoOffDutySoapOut" />
+    </operation>
+    <operation name="UpdateLocation">
+      <input message="s0:UpdateLocationSoapIn" />
+      <output message="s0:UpdateLocationSoapOut" />
+    </operation>
+    <operation name="GetCurrentController">
+      <input message="s0:GetCurrentControllerSoapIn" />
+      <output message="s0:GetCurrentControllerSoapOut" />
+    </operation>
+    <operation name="GetCalendarBulletins">
+      <input message="s0:GetCalendarBulletinsSoapIn" />
+      <output message="s0:GetCalendarBulletinsSoapOut" />
+    </operation>
+    <operation name="GetNextShift">
+      <input message="s0:GetNextShiftSoapIn" />
+      <output message="s0:GetNextShiftSoapOut" />
+    </operation>
+  </portType>
+  <portType name="MobileServiceHttpGet">
+    <operation name="StartSession">
+      <input message="s0:StartSessionHttpGetIn" />
+      <output message="s0:StartSessionHttpGetOut" />
+    </operation>
+    <operation name="GoOnDuty">
+      <input message="s0:GoOnDutyHttpGetIn" />
+      <output message="s0:GoOnDutyHttpGetOut" />
+    </operation>
+    <operation name="GoOffDuty">
+      <input message="s0:GoOffDutyHttpGetIn" />
+      <output message="s0:GoOffDutyHttpGetOut" />
+    </operation>
+    <operation name="UpdateLocation">
+      <input message="s0:UpdateLocationHttpGetIn" />
+      <output message="s0:UpdateLocationHttpGetOut" />
+    </operation>
+    <operation name="GetCurrentController">
+      <input message="s0:GetCurrentControllerHttpGetIn" />
+      <output message="s0:GetCurrentControllerHttpGetOut" />
+    </operation>
+    <operation name="GetCalendarBulletins">
+      <input message="s0:GetCalendarBulletinsHttpGetIn" />
+      <output message="s0:GetCalendarBulletinsHttpGetOut" />
+    </operation>
+    <operation name="GetNextShift">
+      <input message="s0:GetNextShiftHttpGetIn" />
+      <output message="s0:GetNextShiftHttpGetOut" />
+    </operation>
+  </portType>
+  <portType name="MobileServiceHttpPost">
+    <operation name="StartSession">
+      <input message="s0:StartSessionHttpPostIn" />
+      <output message="s0:StartSessionHttpPostOut" />
+    </operation>
+    <operation name="GoOnDuty">
+      <input message="s0:GoOnDutyHttpPostIn" />
+      <output message="s0:GoOnDutyHttpPostOut" />
+    </operation>
+    <operation name="GoOffDuty">
+      <input message="s0:GoOffDutyHttpPostIn" />
+      <output message="s0:GoOffDutyHttpPostOut" />
+    </operation>
+    <operation name="UpdateLocation">
+      <input message="s0:UpdateLocationHttpPostIn" />
+      <output message="s0:UpdateLocationHttpPostOut" />
+    </operation>
+    <operation name="GetCurrentController">
+      <input message="s0:GetCurrentControllerHttpPostIn" />
+      <output message="s0:GetCurrentControllerHttpPostOut" />
+    </operation>
+    <operation name="GetCalendarBulletins">
+      <input message="s0:GetCalendarBulletinsHttpPostIn" />
+      <output message="s0:GetCalendarBulletinsHttpPostOut" />
+    </operation>
+    <operation name="GetNextShift">
+      <input message="s0:GetNextShiftHttpPostIn" />
+      <output message="s0:GetNextShiftHttpPostOut" />
+    </operation>
+  </portType>
+  <binding name="MobileServiceSoap" type="s0:MobileServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="StartSession">
+      <soap:operation soapAction="http://tempuri.org/StartSession" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GoOnDuty">
+      <soap:operation soapAction="http://tempuri.org/GoOnDuty" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GoOffDuty">
+      <soap:operation soapAction="http://tempuri.org/GoOffDuty" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="UpdateLocation">
+      <soap:operation soapAction="http://tempuri.org/UpdateLocation" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCurrentController">
+      <soap:operation soapAction="http://tempuri.org/GetCurrentController" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCalendarBulletins">
+      <soap:operation soapAction="http://tempuri.org/GetCalendarBulletins" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetNextShift">
+      <soap:operation soapAction="http://tempuri.org/GetNextShift" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="MobileServiceSoap12" type="s0:MobileServiceSoap12">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="StartSession">
+      <soap12:operation soapAction="http://tempuri.org/StartSession" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GoOnDuty">
+      <soap12:operation soapAction="http://tempuri.org/GoOnDuty" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GoOffDuty">
+      <soap12:operation soapAction="http://tempuri.org/GoOffDuty" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="UpdateLocation">
+      <soap12:operation soapAction="http://tempuri.org/UpdateLocation" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCurrentController">
+      <soap12:operation soapAction="http://tempuri.org/GetCurrentController" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCalendarBulletins">
+      <soap12:operation soapAction="http://tempuri.org/GetCalendarBulletins" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetNextShift">
+      <soap12:operation soapAction="http://tempuri.org/GetNextShift" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="MobileServiceHttpGet" type="s0:MobileServiceHttpGet">
+    <http:binding verb="GET" />
+    <operation name="StartSession">
+      <http:operation location="/StartSession" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GoOnDuty">
+      <http:operation location="/GoOnDuty" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GoOffDuty">
+      <http:operation location="/GoOffDuty" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="UpdateLocation">
+      <http:operation location="/UpdateLocation" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetCurrentController">
+      <http:operation location="/GetCurrentController" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetCalendarBulletins">
+      <http:operation location="/GetCalendarBulletins" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetNextShift">
+      <http:operation location="/GetNextShift" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="MobileServiceHttpPost" type="s0:MobileServiceHttpPost">
+    <http:binding verb="POST" />
+    <operation name="StartSession">
+      <http:operation location="/StartSession" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GoOnDuty">
+      <http:operation location="/GoOnDuty" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GoOffDuty">
+      <http:operation location="/GoOffDuty" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="UpdateLocation">
+      <http:operation location="/UpdateLocation" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetCurrentController">
+      <http:operation location="/GetCurrentController" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetCalendarBulletins">
+      <http:operation location="/GetCalendarBulletins" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetNextShift">
+      <http:operation location="/GetNextShift" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <service name="MobileService">
+    <port name="MobileServiceSoap" binding="s0:MobileServiceSoap">
+      <soap:address location="http://system.servssl.org.uk/Service/MobileService.asmx" />
+    </port>
+    <port name="MobileServiceSoap12" binding="s0:MobileServiceSoap12">
+      <soap12:address location="http://system.servssl.org.uk/Service/MobileService.asmx" />
+    </port>
+    <port name="MobileServiceHttpGet" binding="s0:MobileServiceHttpGet">
+      <http:address location="http://system.servssl.org.uk/Service/MobileService.asmx" />
+    </port>
+    <port name="MobileServiceHttpPost" binding="s0:MobileServiceHttpPost">
+      <http:address location="http://system.servssl.org.uk/Service/MobileService.asmx" />
+    </port>
+  </service>
+</definitions>

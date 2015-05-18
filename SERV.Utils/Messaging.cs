@@ -59,6 +59,8 @@ namespace SERV.Utils
 						string.Format("http://gw.aql.com/sms/sms_gw.php?username={0}&password={1}&destination={2}&originator={3}&message={4}", 
 							smsUser, smsPassword, to, from, message));
 				}
+				catch{
+				}
 			}
 			log.Info("SMS: " + res);
 			return res;

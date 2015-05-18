@@ -169,6 +169,14 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		public Table<SERVDBGROUp> SERVDBGROUp
+		{
+			get
+			{
+				return this.GetTable <SERVDBGROUp>();
+			}
+		}
+		
 		public Table<Tag> Tag
 		{
 			get
@@ -403,6 +411,8 @@ namespace SERVDataContract.DbLinq
 		
 		private System.Nullable<System.DateTime> _generatedUpTo;
 		
+		private int _groupID;
+		
 		private System.Nullable<System.DateTime> _lastGenerated;
 		
 		private string _name;
@@ -425,6 +435,8 @@ namespace SERVDataContract.DbLinq
 		
 		private EntitySet<MemberCalendar> _memberCalendar;
 		
+		private EntityRef<SERVDBGROUp> _serVGrouP = new EntityRef<SERVDBGROUp>();
+		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
 		
@@ -439,6 +451,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnGeneratedUpToChanged();
 		
 		partial void OnGeneratedUpToChanging(System.Nullable<System.DateTime> value);
+		
+		partial void OnGroupIDChanged();
+		
+		partial void OnGroupIDChanging(int value);
 		
 		partial void OnLastGeneratedChanged();
 		
@@ -541,6 +557,31 @@ namespace SERVDataContract.DbLinq
 					this._generatedUpTo = value;
 					this.SendPropertyChanged("GeneratedUpTo");
 					this.OnGeneratedUpToChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_groupID", Name="GroupID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int GroupID
+		{
+			get
+			{
+				return this._groupID;
+			}
+			set
+			{
+				if ((_groupID != value))
+				{
+					if (_serVGrouP.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnGroupIDChanging(value);
+					this.SendPropertyChanging();
+					this._groupID = value;
+					this.SendPropertyChanged("GroupID");
+					this.OnGroupIDChanged();
 				}
 			}
 		}
@@ -753,6 +794,40 @@ namespace SERVDataContract.DbLinq
 			set
 			{
 				this._memberCalendar = value;
+			}
+		}
+		#endregion
+		
+		#region Parents
+		[Association(Storage="_serVGrouP", OtherKey="GroupID", ThisKey="GroupID", Name="fk_Calendar_SERVGroup1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public SERVDBGROUp SERVDBGROUp
+		{
+			get
+			{
+				return this._serVGrouP.Entity;
+			}
+			set
+			{
+				if (((this._serVGrouP.Entity == value) == false))
+				{
+					if ((this._serVGrouP.Entity != null))
+					{
+						SERVDBGROUp previousSERVDBGROUp = this._serVGrouP.Entity;
+						this._serVGrouP.Entity = null;
+						previousSERVDBGROUp.Calendar.Remove(this);
+					}
+					this._serVGrouP.Entity = value;
+					if ((value != null))
+					{
+						value.Calendar.Add(this);
+						_groupID = value.GroupID;
+					}
+					else
+					{
+						_groupID = default(int);
+					}
+				}
 			}
 		}
 		#endregion
@@ -1884,11 +1959,17 @@ namespace SERVDataContract.DbLinq
 		
 		private string _firstName;
 		
+		private int _groupID;
+		
 		private string _homeNumber;
 		
 		private System.Nullable<System.DateTime> _joinDate;
 		
 		private System.Nullable<System.DateTime> _lastGdpgmpdAte;
+		
+		private string _lastLat;
+		
+		private string _lastLng;
 		
 		private string _lastName;
 		
@@ -1912,6 +1993,8 @@ namespace SERVDataContract.DbLinq
 		
 		private string _occupation;
 		
+		private System.Nullable<sbyte> _onDuty;
+		
 		private string _postCode;
 		
 		private System.Nullable<System.DateTime> _riderAssesmentPassDate;
@@ -1927,6 +2010,8 @@ namespace SERVDataContract.DbLinq
 		private EntitySet<RunLog> _runLog;
 		
 		private EntitySet<User> _user;
+		
+		private EntityRef<SERVDBGROUp> _serVGrouP = new EntityRef<SERVDBGROUp>();
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
@@ -1979,6 +2064,10 @@ namespace SERVDataContract.DbLinq
 		
 		partial void OnFirstNameChanging(string value);
 		
+		partial void OnGroupIDChanged();
+		
+		partial void OnGroupIDChanging(int value);
+		
 		partial void OnHomeNumberChanged();
 		
 		partial void OnHomeNumberChanging(string value);
@@ -1990,6 +2079,14 @@ namespace SERVDataContract.DbLinq
 		partial void OnLastGdpgmpdAteChanged();
 		
 		partial void OnLastGdpgmpdAteChanging(System.Nullable<System.DateTime> value);
+		
+		partial void OnLastLatChanged();
+		
+		partial void OnLastLatChanging(string value);
+		
+		partial void OnLastLngChanged();
+		
+		partial void OnLastLngChanging(string value);
 		
 		partial void OnLastNameChanged();
 		
@@ -2034,6 +2131,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnOccupationChanged();
 		
 		partial void OnOccupationChanging(string value);
+		
+		partial void OnOnDutyChanged();
+		
+		partial void OnOnDutyChanging(System.Nullable<sbyte> value);
 		
 		partial void OnPostCodeChanged();
 		
@@ -2311,6 +2412,31 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		[Column(Storage="_groupID", Name="GroupID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int GroupID
+		{
+			get
+			{
+				return this._groupID;
+			}
+			set
+			{
+				if ((_groupID != value))
+				{
+					if (_serVGrouP.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnGroupIDChanging(value);
+					this.SendPropertyChanging();
+					this._groupID = value;
+					this.SendPropertyChanged("GroupID");
+					this.OnGroupIDChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_homeNumber", Name="HomeNumber", DbType="varchar(12)", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
 		public string HomeNumber
@@ -2370,6 +2496,48 @@ namespace SERVDataContract.DbLinq
 					this._lastGdpgmpdAte = value;
 					this.SendPropertyChanged("LastGdpgmpdAte");
 					this.OnLastGdpgmpdAteChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_lastLat", Name="LastLat", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string LastLat
+		{
+			get
+			{
+				return this._lastLat;
+			}
+			set
+			{
+				if (((_lastLat == value) == false))
+				{
+					this.OnLastLatChanging(value);
+					this.SendPropertyChanging();
+					this._lastLat = value;
+					this.SendPropertyChanged("LastLat");
+					this.OnLastLatChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_lastLng", Name="LastLng", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string LastLng
+		{
+			get
+			{
+				return this._lastLng;
+			}
+			set
+			{
+				if (((_lastLng == value) == false))
+				{
+					this.OnLastLngChanging(value);
+					this.SendPropertyChanging();
+					this._lastLng = value;
+					this.SendPropertyChanged("LastLng");
+					this.OnLastLngChanged();
 				}
 			}
 		}
@@ -2605,6 +2773,27 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		[Column(Storage="_onDuty", Name="OnDuty", DbType="tinyint(1)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<sbyte> OnDuty
+		{
+			get
+			{
+				return this._onDuty;
+			}
+			set
+			{
+				if ((_onDuty != value))
+				{
+					this.OnOnDutyChanging(value);
+					this.SendPropertyChanging();
+					this._onDuty = value;
+					this.SendPropertyChanged("OnDuty");
+					this.OnOnDutyChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_postCode", Name="PostCode", DbType="varchar(10)", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
 		public string PostCode
@@ -2736,6 +2925,40 @@ namespace SERVDataContract.DbLinq
 			set
 			{
 				this._user = value;
+			}
+		}
+		#endregion
+		
+		#region Parents
+		[Association(Storage="_serVGrouP", OtherKey="GroupID", ThisKey="GroupID", Name="fk_Member_SERVGroup1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public SERVDBGROUp SERVDBGROUp
+		{
+			get
+			{
+				return this._serVGrouP.Entity;
+			}
+			set
+			{
+				if (((this._serVGrouP.Entity == value) == false))
+				{
+					if ((this._serVGrouP.Entity != null))
+					{
+						SERVDBGROUp previousSERVDBGROUp = this._serVGrouP.Entity;
+						this._serVGrouP.Entity = null;
+						previousSERVDBGROUp.Member.Remove(this);
+					}
+					this._serVGrouP.Entity = value;
+					if ((value != null))
+					{
+						value.Member.Add(this);
+						_groupID = value.GroupID;
+					}
+					else
+					{
+						_groupID = default(int);
+					}
+				}
 			}
 		}
 		#endregion
@@ -5412,6 +5635,161 @@ namespace SERVDataContract.DbLinq
 				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
 			}
 		}
+	}
+	
+	[Table(Name="SERV.SERVGroup")]
+	public partial class SERVDBGROUp : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private string _group;
+		
+		private int _groupID;
+		
+		private EntitySet<Calendar> _calendar;
+		
+		private EntitySet<Member> _member;
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnGroupChanged();
+		
+		partial void OnGroupChanging(string value);
+		
+		partial void OnGroupIDChanged();
+		
+		partial void OnGroupIDChanging(int value);
+		#endregion
+		
+		
+		public SERVDBGROUp()
+		{
+			_calendar = new EntitySet<Calendar>(new Action<Calendar>(this.Calendar_Attach), new Action<Calendar>(this.Calendar_Detach));
+			_member = new EntitySet<Member>(new Action<Member>(this.Member_Attach), new Action<Member>(this.Member_Detach));
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_group", Name="Group", DbType="varchar(45)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public string Group
+		{
+			get
+			{
+				return this._group;
+			}
+			set
+			{
+				if (((_group == value) == false))
+				{
+					this.OnGroupChanging(value);
+					this.SendPropertyChanging();
+					this._group = value;
+					this.SendPropertyChanged("Group");
+					this.OnGroupChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_groupID", Name="GroupID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int GroupID
+		{
+			get
+			{
+				return this._groupID;
+			}
+			set
+			{
+				if ((_groupID != value))
+				{
+					this.OnGroupIDChanging(value);
+					this.SendPropertyChanging();
+					this._groupID = value;
+					this.SendPropertyChanged("GroupID");
+					this.OnGroupIDChanged();
+				}
+			}
+		}
+		
+		#region Children
+		[Association(Storage="_calendar", OtherKey="GroupID", ThisKey="GroupID", Name="fk_Calendar_SERVGroup1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<Calendar> Calendar
+		{
+			get
+			{
+				return this._calendar;
+			}
+			set
+			{
+				this._calendar = value;
+			}
+		}
+		
+		[Association(Storage="_member", OtherKey="GroupID", ThisKey="GroupID", Name="fk_Member_SERVGroup1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<Member> Member
+		{
+			get
+			{
+				return this._member;
+			}
+			set
+			{
+				this._member = value;
+			}
+		}
+		#endregion
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
+			if ((h != null))
+			{
+				h(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(string propertyName)
+		{
+			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
+			if ((h != null))
+			{
+				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		#region Attachment handlers
+		private void Calendar_Attach(Calendar entity)
+		{
+			this.SendPropertyChanging();
+			entity.SERVDBGROUp = this;
+		}
+		
+		private void Calendar_Detach(Calendar entity)
+		{
+			this.SendPropertyChanging();
+			entity.SERVDBGROUp = null;
+		}
+		
+		private void Member_Attach(Member entity)
+		{
+			this.SendPropertyChanging();
+			entity.SERVDBGROUp = this;
+		}
+		
+		private void Member_Detach(Member entity)
+		{
+			this.SendPropertyChanging();
+			entity.SERVDBGROUp = null;
+		}
+		#endregion
 	}
 	
 	[Table(Name="SERV.Tag")]

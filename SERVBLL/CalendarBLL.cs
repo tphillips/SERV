@@ -451,7 +451,7 @@ namespace SERVBLL
 					{
 						CreateCalendarEntry(rv.CalendarID, rv.MemberID, curDay);
 					}
-					Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
+					//Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
 				}
 				// Check calendar to make sure there are not schedules that should not be there (after removing a rostered slot for example, make sure its not an ad-hoc)
 				foreach (CalendarEntry e in (from ce in allUpcomingCalendarEntries where ce.EntryDate == curDay select ce).ToList())
@@ -467,11 +467,11 @@ namespace SERVBLL
 							RemoveCalendarEntry(e.CalendarEntryID);
 						}
 					}
-					Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
+					//Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
 				}
 				// move on
 				curDay = curDay.AddDays(1);
-				Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
+				//Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
 			}
 			SetCalendarLastGenerateDate(DateTime.Now, curDay);
 			GC.Collect();

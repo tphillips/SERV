@@ -212,6 +212,7 @@ namespace SERVDAL
 
 		public List<Member> ListMembersWithAnyTagsIn(string tagsCsv)
 		{
+			tagsCsv = tagsCsv.Replace("'", "").Replace("\"","");
 			string[] tags = tagsCsv.Split(',');
 			List<string> tagList = new List<string>();
 			foreach (string tag in tags)
@@ -221,17 +222,15 @@ namespace SERVDAL
 			string inClause = "in (";
 			foreach (string t in tagList)
 			{
-				inClause += "'" + t.Trim() + "',";
+				inClause += string.Format("'{0}',", t.Trim());
 			}
-			inClause = inClause.Substring(0, inClause.Length - 1);
-			inClause += ")";
-			string sql = "select distinct m.MemberID, m.FirstName, m.LastName " +
-			             "from Member m " +
-			             "join Member_Tag mt on mt.MemberID = m.MemberID " +
-			             "join Tag t on t.TagID = mt.TagID " +
-			             "where t.Tag " + inClause +
-			             " and m.LeaveDate is null " +
-			             "order by m.LastName";
+			inClause = string.Format("{0})", inClause.Substring(0, inClause.Length - 1));
+			string sql = string.Format("select distinct m.MemberID, m.FirstName, m.LastName " +
+				"from Member m join Member_Tag mt on mt.MemberID = m.MemberID " +
+				"join Tag t on t.TagID = mt.TagID " +
+				"where t.Tag {0} " +
+				"and m.LeaveDate is null " +
+				"order by m.LastName", inClause);
 			return db.ExecuteQuery<Member>(sql).ToList();
 		}
 
@@ -245,6 +244,24 @@ namespace SERVDAL
 		public void SetMemberUserLevel(int memberId, int userLevelId)
 		{
 			string sql = string.Format("Update User set UserlevelID = {0} where MemberID = {1}", userLevelId, memberId);
+			db.ExecuteCommand(sql);
+		}
+
+		public void GoOnDuty(int memberId)
+		{
+			string sql = "update Member set OnDuty = 1 where memberId = " + memberId;
+			db.ExecuteCommand(sql);
+		}
+
+		public void GoOffDuty(int memberId)
+		{
+			string sql = "update Member set OnDuty = 0 where memberId = " + memberId;
+			db.ExecuteCommand(sql);
+		}
+
+		public void UpdateLocation(int memberId, string lat, string lng)
+		{
+			string sql = string.Format("update Member set LastLat = '{0}', LastLng = '{1}' where memberId = {2}", lat, lng, memberId);
 			db.ExecuteCommand(sql);
 		}
 

@@ -100,10 +100,13 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-					<li>SMS tag mods, tags are now intersected. You can filter on rider and driver.</li>
+					<li>Delete run function for admin</li>
+					<li>Starting multi group support</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+					<li>Daytime blood calendar</li>
+					<li>SMS tag mods, tags are now intersected. You can filter on rider and driver</li>
 					<li>Switching controller automatically (controller notified by SMS)</li>
 					<li>DB Context instances no longer static</li>
 					<li>Shift swap mass email fix</li>

@@ -222,7 +222,7 @@ function DisplayMember(memberId)
 		{
 			if (json.d != null)
 			{
-				$("#lblTitle").text(json.d.FirstName + " " + json.d.LastName);
+				$("#lblTitle").text(json.d.FirstName + " " + json.d.LastName + " (" + json.d.Group + ")");
 				$("#txtFirstName").val(json.d.FirstName);
 				$("#txtLastName").val(json.d.LastName);
 				$("#txtEmail").val(json.d.EmailAddress);

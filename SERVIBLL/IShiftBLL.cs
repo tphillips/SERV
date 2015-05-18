@@ -9,6 +9,7 @@ namespace SERVIBLL
 	{
 		bool TakeControl(int memberID, string overrideNumber);
 		string SwitchController();
+		Member GetCurrentController();
 	}
 }
 

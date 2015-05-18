@@ -24,5 +24,8 @@ namespace SERVIBLL
 		List<Member> ListMembersWithAnyTagsIn(string tagsCsv);
 		void SendPasswordReset(string username);
 		void SetMemberUserLevel(int memberId, int userLevelId);
+		void GoOnDuty(int memberId);
+		void GoOffDuty(int memberId);
+		void UpdateLocation(int memberId, string lat, string lng);
 	}
 }

@@ -1,3 +1,11 @@
+
+/*
+ALTER TABLE `SERV`.`Member` 
+ADD COLUMN `OnDuty` TINYINT(1) NULL AFTER `LastGDPGMPDate`,
+ADD COLUMN `LastLat` VARCHAR(45) NULL AFTER `OnDuty`,
+ADD COLUMN `LastLng` VARCHAR(45) NULL AFTER `LastLat`;
+
+
 /*   1.5.3
 
 -- -----------------------------------------------------

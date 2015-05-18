@@ -14,38 +14,18 @@ namespace SERVWeb
     {
 		static Logger log = new Logger();
 
-		[Obsolete]
-		[WebMethod]
-		public bool ImportRawRunLog()
+		private User CurrentUser()
 		{
-			log.LogStart();
-			System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(_ImportRawRunLog));
-			t.IsBackground = true;
-			t.Start();
-			log.LogEnd();
-			return true;
+			if (System.Web.HttpContext.Current.Session["User"] == null) { return null; }
+			return (User)System.Web.HttpContext.Current.Session["User"];
 		}
 
-		[Obsolete]
-		private void _ImportRawRunLog()
+		public void Authenticate()
 		{
-			log.LogStart();
-			try
+			if (CurrentUser() == null)
 			{
-				SERVBLLFactory.Factory.RunLogBLL().ImportRawRunLog();
+				throw new System.Security.Authentication.AuthenticationException();
 			}
-			catch(Exception e)
-			{
-				log.Error(e.Message, e);
-			}
-			log.LogEnd();
-		}
-
-		[WebMethod(EnableSession = true)]
-		public CalendarEntry GetNextShift()
-		{
-			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().GetMemberNextShift(CurrentUser().MemberID);
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=120)]
@@ -97,6 +77,7 @@ namespace SERVWeb
 			m.LastName = "-";
 			m.EmailAddress = "@";
 			m.MobileNumber = "07";
+			m.GroupID = user.Member.GroupID;
 			return SERVBLLFactory.Factory.MemberBLL().Create(m);
 		}
 
@@ -164,39 +145,7 @@ namespace SERVWeb
 			Authenticate();
 			return SERVBLLFactory.Factory.LocationBLL().ListLocations("");
 		}
-
-		[WebMethod(EnableSession = true, CacheDuration=120)]
-		public List<SERVDataContract.Calendar> ListCalendars()
-		{
-			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().ListCalendars();
-		}
-
-		[WebMethod(EnableSession = true)]
-		public SERVDataContract.Calendar GetCalendar(int calendarId)
-		{
-			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().Get(calendarId);
-		}
-
-		[WebMethod(EnableSession = true)]
-		public bool SaveCalendarProps(int calendarId, string calendarName, int sortOrder, int requiredTagId, int defaultRequirement)
-		{
-			Authenticate();
-			if (CurrentUser().UserLevelID < (int)UserLevel.Committee)
-			{
-				throw new System.Security.Authentication.AuthenticationException();
-			}
-			return SERVBLLFactory.Factory.CalendarBLL().SaveCalendarProps(calendarId, calendarName, sortOrder, requiredTagId, defaultRequirement);
-		}
-
-		[WebMethod(EnableSession = true, CacheDuration=120)]
-		public List<string> GetNextXDaysCalendarBulletins(int days)
-		{
-			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().GetNextXDaysCalendarBulletins(days);
-		}
-
+			
 		[WebMethod(EnableSession = true)]
 		public Location GetLocation(int locationId)
 		{
@@ -223,18 +172,6 @@ namespace SERVWeb
 		{
 			Authenticate();
 			return true;
-		}
-			
-		[WebMethod]
-		public List<string> GetCurrentWeekADateStrings(string format)
-		{
-			return SERVBLLFactory.Factory.CalendarBLL().GetCurrentWeekADateStrings(format);
-		}
-
-		[WebMethod]
-		public List<string> GetCurrentWeekBDateStrings(string format)
-		{
-			return SERVBLLFactory.Factory.CalendarBLL().GetCurrentWeekBDateStrings(format);
 		}
 
 		public int CreateBlankLocation(User user)
@@ -284,6 +221,18 @@ namespace SERVWeb
 				SERVBLLFactory.Factory.RunLogBLL().DeleteRun(runLogID);
 			}
 			return res;
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool DeleteRun(int runLogID)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Admin)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			SERVBLLFactory.Factory.RunLogBLL().DeleteRun(runLogID);
+			return true;
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -378,6 +327,40 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.ShiftBLL().TakeControl(CurrentUser().MemberID, overrideNumber);
 		}
 
+
+		[WebMethod(EnableSession = true)]
+		public string[] GetMemberUniqueRuns()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.RunLogBLL().GetMemberUniqueRuns(CurrentUser().MemberID);
+		}
+
+		[WebMethod]
+		public string SwitchController()
+		{
+			return SERVBLLFactory.Factory.ShiftBLL().SwitchController();
+		}
+			
+		[WebMethod]
+		public void GCCollect()
+		{
+			GC.Collect();
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<List<CalendarEntry>> ListWeeksCaledarEntries()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().ListWeeksCaledarEntries();
+		}
+
+		[WebMethod(EnableSession = true)]
+		public List<List<CalendarEntry>> ListSpansCaledarEntries(int days, int page)
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().ListSpansCaledarEntries(days, page);
+		}
+
 		[WebMethod(EnableSession = true)]
 		public bool RosterVolunteer(int calendarId, int memberId, string rosteringWeek, int rosteringDay)
 		{
@@ -411,20 +394,6 @@ namespace SERVWeb
 		public void GenerateCalendar()
 		{
 			SERVBLLFactory.Factory.CalendarBLL().GenerateCalendar();
-		}
-
-		[WebMethod(EnableSession = true)]
-		public List<List<CalendarEntry>> ListWeeksCaledarEntries()
-		{
-			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().ListWeeksCaledarEntries();
-		}
-
-		[WebMethod(EnableSession = true)]
-		public List<List<CalendarEntry>> ListSpansCaledarEntries(int days, int page)
-		{
-			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().ListSpansCaledarEntries(days, page);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -467,36 +436,54 @@ namespace SERVWeb
 		}
 
 		[WebMethod(EnableSession = true)]
-		public string[] GetMemberUniqueRuns()
+		public CalendarEntry GetNextShift()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.RunLogBLL().GetMemberUniqueRuns(CurrentUser().MemberID);
+			return SERVBLLFactory.Factory.CalendarBLL().GetMemberNextShift(CurrentUser().MemberID);
 		}
 
 		[WebMethod]
-		public string SwitchController()
+		public List<string> GetCurrentWeekADateStrings(string format)
 		{
-			return SERVBLLFactory.Factory.ShiftBLL().SwitchController();
+			return SERVBLLFactory.Factory.CalendarBLL().GetCurrentWeekADateStrings(format);
 		}
-			
+
 		[WebMethod]
-		public void GCCollect()
+		public List<string> GetCurrentWeekBDateStrings(string format)
 		{
-			GC.Collect();
+			return SERVBLLFactory.Factory.CalendarBLL().GetCurrentWeekBDateStrings(format);
 		}
 
-		private User CurrentUser()
+		[WebMethod(EnableSession = true, CacheDuration=120)]
+		public List<SERVDataContract.Calendar> ListCalendars()
 		{
-			if (System.Web.HttpContext.Current.Session["User"] == null) { return null; }
-			return (User)Session["User"];
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().ListCalendars();
 		}
 
-		private void Authenticate()
+		[WebMethod(EnableSession = true)]
+		public SERVDataContract.Calendar GetCalendar(int calendarId)
 		{
-			if (CurrentUser() == null)
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().Get(calendarId);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool SaveCalendarProps(int calendarId, string calendarName, int sortOrder, int requiredTagId, int defaultRequirement)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Committee)
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
+			return SERVBLLFactory.Factory.CalendarBLL().SaveCalendarProps(calendarId, calendarName, sortOrder, requiredTagId, defaultRequirement);
+		}
+
+		[WebMethod(EnableSession = true, CacheDuration=120)]
+		public List<string> GetNextXDaysCalendarBulletins(int days)
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.CalendarBLL().GetNextXDaysCalendarBulletins(days);
 		}
 
     }

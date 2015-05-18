@@ -19,11 +19,20 @@ namespace SERVDataContract
 		{
 			PropertyMapper.MapProperties(metal, this);
 			this.UserLevelID = metal.User[0].UserLevelID;
+			this.Group = metal.SERVDBGROUp.Group;
 		}
 
 		[DataMember]
 		[UpdatePolicy(ReadOnly = true)]
 		public int MemberID { get; set; }
+
+		[DataMember]
+		[UpdatePolicy]
+		public int GroupID { get; set; }
+
+		[DataMember]
+		[UpdatePolicy]
+		public string Group { get; set; }
 
 		[DataMember]
 		[UpdatePolicy]

@@ -21,7 +21,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AspNet>
-      <AspNet DisableCodeBehindGeneration="True" />
+      <AspNet DisableCodeBehindGeneration="true" />
     </AspNet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AspNet>
-      <AspNet DisableCodeBehindGeneration="True" />
+      <AspNet DisableCodeBehindGeneration="true" />
     </AspNet>
+    <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -49,10 +50,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties>
-        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+      <Properties VerifyCodeBehindFields="true" VerifyCodeBehindEvents="true">
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="true" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
@@ -174,6 +176,7 @@
     <Content Include="img\screenshots\12.png" />
     <Content Include="img\screenshots\13.png" />
     <Content Include="img\Sun.png" />
+    <Content Include="Service\MobileService.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -323,6 +326,9 @@
     </Compile>
     <Compile Include="BloodBoxBingo.aspx.designer.cs">
       <DependentUpon>BloodBoxBingo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Service\MobileService.asmx.cs">
+      <DependentUpon>MobileService.asmx</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

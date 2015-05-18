@@ -49,6 +49,12 @@ namespace SERVWeb
 
 		protected override void OnLoad (EventArgs e)
 		{
+			if (Request["Delete"] != null)
+			{
+				SERVGlobal.AssertAuthentication((int)SERVDataContract.UserLevel.Admin, "Sorry, only administrators can delete from the controller log.");
+				SERVGlobal.Service.DeleteRun(RunLogID);
+				Response.Redirect("RecentRuns.aspx");
+			}
 			if (RunLogID < 0)
 			{
 				SERVGlobal.AssertAuthentication((int)SERVDataContract.UserLevel.Controller, "Sorry, only controllers and above have access to contribute to the controller log.");

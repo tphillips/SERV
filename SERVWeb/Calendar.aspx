@@ -143,7 +143,7 @@
 		<ul class="dropdown-menu" id="lstVolunteerCalendar">
 		</ul>
 	</li>
-	<br/><br/><br/><br/><br/><br/><br/><br/>
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 	<input type="button" value="OK, Add Me!" class="btn btn-primary btn-lg readOnlyHidden" onclick="volunteerClicked();"></input> <input type="button" value="No" class="btn btn-lg" onclick="$('#volunteerDialog').dialog('close');"></input>
 	<br/><br/>
 </div>
@@ -162,7 +162,7 @@
 		<ul class="dropdown-menu" id="lstAddVolunteerCalendar">
 		</ul>
 	</li>
-	<br/><br/><br/><br/><br/><br/><br/><br/>
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 	<input type="button" value="Add" class="btn btn-primary btn-lg readOnlyHidden" onclick="addVolunteerClicked();"></input> <input type="button" value="Cancel" class="btn btn-lg" onclick="$('#addVolunteerDialog').dialog('close');"></input>
 	<br/><br/>
 </div>

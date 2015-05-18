@@ -4,6 +4,7 @@ using SERV.Utils.Data;
 using System.Text;
 using System.Runtime.Serialization;
 using SERV.Utils;
+using System.Xml.Serialization;
 
 namespace SERVDataContract
 {
@@ -31,6 +32,7 @@ namespace SERVDataContract
 		public int Boxes { get; set; }
 
 		[DataMember]
+		[XmlIgnore]
 		public Dictionary<string, int> Products
 		{
 			get;

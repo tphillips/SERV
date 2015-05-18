@@ -24,6 +24,11 @@
 					<asp:BoundField HeaderText="Consignment" DataField="Consignment" />
 					<asp:BoundField HeaderText="Controller" DataField="Controller" />
 					<asp:HyperLinkField HeaderText="" DataNavigateUrlFormatString="ControllerLog.aspx?RunLogID={0}" DataNavigateUrlFields="ID" Text="View/Edit" />
+					<asp:TemplateField HeaderText="">
+						<ItemTemplate>
+						        <a onclick="javascript:return confirm('Are you sure you want to delete this run? This cannot be undone!!')" href="ControllerLog.aspx?RunLogID=<%#Eval("ID")%>&delete=1">Delete</a>
+						</ItemTemplate>
+					</asp:TemplateField>
 				</Columns>
 			</asp:GridView>
 		</div>

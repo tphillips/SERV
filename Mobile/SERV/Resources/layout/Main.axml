@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <Switch
+        android:layout_height="wrap_content"
+        android:id="@+id/swDuty"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:text="On Duty"
+        android:layout_width="match_parent" />
+    <TextView
+        android:text="Current controller:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/swDuty"
+        android:id="@+id/lblYourController"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
+    <TextView
+        android:text=". . ."
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/lblYourController"
+        android:id="@+id/lblController"
+        android:layout_below="@+id/swDuty"
+        android:layout_marginRight="15dp"
+        android:gravity="right" />
+    <TextView
+        android:text="Current location:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblYourController"
+        android:id="@+id/lblYourLocation"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
+    <TextView
+        android:text="Off"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblLocation"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="right"
+        android:layout_below="@id/lblController"
+        android:layout_toRightOf="@+id/lblYourLocation" />
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblShift"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="left"
+        android:layout_below="@id/lblYourLocation"
+        android:layout_marginLeft="15dp"
+        android:textColor="#ff4990ff" />
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblBulletins"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="left"
+        android:layout_below="@id/lblShift"
+        android:layout_marginLeft="15dp"
+        android:textColor="#ffff3b3b" />
+<!--
+    <Button
+        android:text="On Route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/lblYourLocation"
+        android:id="@+id/cmdOnRoute" />
+    <Button
+        android:text="Waiting to Pick Up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/cmdOnRoute"
+        android:id="@+id/cmdWaiting" />
+    <Button
+        android:text="Picked Up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/cmdWaiting"
+        android:id="@+id/cmdPickedUp" />
+    <Button
+        android:text="Dropped Off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/cmdPickedUp"
+        android:id="@+id/cmdDroppedOff" />
+    <Button
+        android:text="Home Safe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/cmdDroppedOff"
+        android:id="@+id/cmdHomeSafe" />
+        -->
+</RelativeLayout>

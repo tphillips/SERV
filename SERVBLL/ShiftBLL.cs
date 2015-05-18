@@ -41,7 +41,7 @@ namespace SERVBLL
 			return ret;
 		}
 
-		public string SwitchController()
+		public Member GetCurrentController()
 		{
 			Member c = null;
 			if (DateTime.Now.Hour > CONTROLLER_THRESHOLD_HOUR)
@@ -52,6 +52,12 @@ namespace SERVBLL
 			{
 				c = new CalendarBLL().GetCurrentDayController();
 			}
+			return c;
+		}
+
+		public string SwitchController()
+		{
+			var c = GetCurrentController();
 			if (TakeControl(c.MemberID, null))
 			{
 				return c.Name;

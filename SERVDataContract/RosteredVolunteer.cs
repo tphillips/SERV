@@ -12,6 +12,11 @@ namespace SERVDataContract
 	[Serializable]
 	public class RosteredVolunteer
 	{
+
+		public RosteredVolunteer()
+		{
+		}
+
 		public RosteredVolunteer(SERVDataContract.DbLinq.MemberCalendar metal)
 		{
 			this.CalendarID = metal.CalendarID;
