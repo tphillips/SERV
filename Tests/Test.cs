@@ -37,6 +37,12 @@ namespace SERVTests
 			SERVBLLFactory.Factory.CalendarBLL().GenerateCalendar();
 		}
 
+		[Test]
+		public void PushBullet()
+		{
+			SERVBLLFactory.Factory.MessageBLL().PushBullet("This is a Unit Test", "System Notification", "servssl_system");
+		}
+
     }
 }
 

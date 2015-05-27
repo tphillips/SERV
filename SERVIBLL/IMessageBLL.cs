@@ -16,6 +16,8 @@ namespace SERVIBLL
 		void SendCalendarVolunteeringThanksEmail(int memberID, int calendarEntryID);
 		void SendShiftSwapNeededEmail(int memberID, int calendarID, DateTime shiftDate);
 		void SendFeedback(SERVDataContract.User user, string feedback);
+		void PushBullet(string channel, string subject, string message);
+		void SendShiftSwapNeededPushNotification(int memberID, int calendarID, DateTime date);
 	}
 }
 

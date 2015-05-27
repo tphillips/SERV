@@ -37,6 +37,7 @@ namespace SERVBLL
 			{
 				log.Info("Informing controller . . .");
 				new MessageBLL().SendSMSMessage(m.MobileNumber, string.Format("Hi {0}, You now have control", m.FirstName), u.UserID, true);
+				new MessageBLL().PushBullet("servssl_controllers", "Controller On Shift", string.Format("{0} now has control", m.FirstName));
 			}
 			return ret;
 		}

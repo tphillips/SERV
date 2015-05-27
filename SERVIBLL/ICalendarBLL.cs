@@ -42,6 +42,7 @@ namespace SERVIBLL
 		List<Member> ListMembersOnBloodShift();
 		Member GetCurrentNightController();
 		Member GetCurrentDayController();
+		void SendCalendarDayBulletinsNotification();
 	}
 }
 

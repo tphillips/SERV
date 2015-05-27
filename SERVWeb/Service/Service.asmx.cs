@@ -486,6 +486,13 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.CalendarBLL().GetNextXDaysCalendarBulletins(days);
 		}
 
+		[WebMethod]
+		public bool SendCalendarDayBulletinsNotification()
+		{
+			SERVBLLFactory.Factory.CalendarBLL().SendCalendarDayBulletinsNotification();
+			return true;
+		}
+
     }
 }
 

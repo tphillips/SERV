@@ -7,6 +7,9 @@ using SERVDALFactory;
 using SERV.Utils;
 using System.Net.Mail;
 using System.Threading;
+using System.Web;
+using System.Net;
+using System.IO;
 
 namespace SERVBLL
 {
@@ -138,6 +141,27 @@ namespace SERVBLL
 				t.IsBackground = true;
 				t.Start(args);
 			}
+		}
+
+		public void SendShiftSwapNeededPushNotification(int memberID, int calendarID, DateTime date)
+		{
+			ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendShiftSwapNeededPushNotification);
+			CalendarEmailArgs args = new CalendarEmailArgs();
+			args.MemberId = memberID;
+			args.CalendarId = calendarID;
+			args.ShiftDate = date;
+			Thread t = new Thread(pts);
+			t.IsBackground = true;
+			t.Start(args);
+		}
+
+		private void _SendShiftSwapNeededPushNotification(object args)
+		{
+			CalendarEmailArgs cargs = (CalendarEmailArgs)args;
+			Member shiftSwapper = new MemberBLL().Get(cargs.MemberId);
+			Calendar calendar = new CalendarBLL().Get(cargs.CalendarId);
+			new MessageBLL().PushBullet("servssl_calendar", "Swap Needed", 
+				string.Format("{0} cannot perform his/her {1} duty on {2:ddd dd MMM}. Can you help?", shiftSwapper.FirstName, calendar.Name, cargs.ShiftDate.ToString("ddd dd MMM")));
 		}
 
 		private void _SendShiftSwapNeededEmail(object args)
@@ -377,6 +401,42 @@ namespace SERVBLL
 					"SERV SSL System {1}", 
 					member.FirstName, MessageBLL.FOOTER), userId);
 
+		}
+
+		public void PushBullet(string channel, string subject, string message)
+		{
+			log.LogStart();
+			try
+			{
+				System.Net.ServicePointManager.ServerCertificateValidationCallback += SERV.Utils.Authentication.AcceptAllCertificates;
+				HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create("https://api.pushbullet.com/v2/pushes");
+				request.Method = "POST";
+				string auth = System.Configuration.ConfigurationManager.AppSettings["BulletAuth"];
+				request.Headers.Add("Authorization", string.Format("Bearer {0}", auth));
+				request.ContentType = "application/json";
+				//subject = subject.Replace(" ", "+");
+				//message = message.Replace(" ", "+");
+				string postData = string.Format("\"channel_tag\":\"{0}\",\"type\": \"note\", \"title\": \"{1}\", \"body\": \"{2}\"", channel, subject, message);
+				postData = "{" + postData + "}";
+				log.Info(postData);
+				byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+				request.ContentLength = byteArray.Length;
+				Stream dataStream = request.GetRequestStream();
+				dataStream.Write (byteArray, 0, byteArray.Length);
+				dataStream.Close();
+				WebResponse response = request.GetResponse();
+				dataStream = response.GetResponseStream();
+				StreamReader reader = new StreamReader(dataStream);
+				string responseFromServer = reader.ReadToEnd();
+				log.Info(responseFromServer);
+				reader.Close ();
+				dataStream.Close ();
+				response.Close ();
+			}
+			catch(Exception ex)
+			{
+				log.Error(ex.Message, ex);
+			}
 		}
 
 	}

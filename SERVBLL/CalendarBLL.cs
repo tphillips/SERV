@@ -343,6 +343,18 @@ namespace SERVBLL
 			return ret;
 		}
 
+		public void SendCalendarDayBulletinsNotification()
+		{
+			List<string> notifications = GetNextXDaysCalendarBulletins(3);
+			if (notifications != null)
+			{
+				foreach (string n in notifications)
+				{
+					new MessageBLL().PushBullet("servssl_calendar", "Calendar Bulletin", n);
+				}
+			}
+		}
+
 		public CalendarEntry GetMemberNextShift(int memberID)
 		{
 			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
@@ -385,6 +397,7 @@ namespace SERVBLL
 			if (ret)
 			{
 				new MessageBLL().SendShiftSwapNeededEmail(memberId, calendarId, shiftDate);
+				new MessageBLL().SendShiftSwapNeededPushNotification(memberId, calendarId, shiftDate);
 			}
 			return true;
 		}
@@ -474,6 +487,7 @@ namespace SERVBLL
 				//Thread.Sleep(100); if (x > 14){ Thread.Sleep(200); }
 			}
 			SetCalendarLastGenerateDate(DateTime.Now, curDay);
+			new MessageBLL().PushBullet("servssl_calendar", "Calendars Generated", "The calendars have been refreshed!");
 			GC.Collect();
 			log.LogEnd();
 			log.LogPerformace(start);
