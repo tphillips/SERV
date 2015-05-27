@@ -148,7 +148,8 @@
 							</label>
 							
 						</div>
-						
+						<input type="text" id="txtGroupID" style="display:none"/>
+						<label>Group: <i><span id="lblGroup"></span></i></label>
 						<label>Notes:</label>
 						<textarea id="txtNotes" rows="1"></textarea>
 					</div>

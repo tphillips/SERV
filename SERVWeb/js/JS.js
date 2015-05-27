@@ -250,6 +250,8 @@ function DisplayMember(memberId)
 				$("#txtAdQualDate").val(json.d.AdQualPassDateString);
 				$("#txtGMPDate").val(json.d.LastGDPGMPDateString);
 				$("#txtAdQualType").val(json.d.AdQualType);
+				$("#txtGroupID").val(json.d.GroupID);
+				$("#lblGroup").text(json.d.Group);
 				$("#txtNotes").val(json.d.Notes);
 				
 				for(var x = 0; x < json.d.Tags.length; x++)
@@ -758,6 +760,7 @@ function JsonifyBasicMemberFromForm(memberId)
 		'"AdQualPassDateString":"' + $("#txtAdQualDate").val() + '", ' +
 		'"LastGDPGMPDateString":"' + $("#txtGMPDate").val() + '", ' +
 		'"AdQualType":"' + $("#txtAdQualType").val() + '", ' +
+		'"GroupID":"' + $("#txtGroupID").val() + '", ' +
 		'"Notes":"' + $("#txtNotes").val() + '"}}';
 }
 

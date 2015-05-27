@@ -1,3 +1,29 @@
+-- -----------------------------------------------------
+-- Table `SERV`.`SERVGroup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SERV`.`SERVGroup` ;
+
+CREATE TABLE IF NOT EXISTS `SERV`.`SERVGroup` (
+  `GroupID` INT NOT NULL AUTO_INCREMENT,
+  `Group` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`GroupID`))
+ENGINE = InnoDB;
+
+ALTER TABLE `SERV`.`Member` 
+ADD COLUMN `GroupID` INT NOT NULL AFTER `LastLng`;
+
+ALTER TABLE `SERV`.`Calendar` 
+ADD COLUMN `GroupID` INT NOT NULL AFTER `GeneratedUpTo`;
+
+ALTER TABLE `SERV`.`Member` 
+ADD CONSTRAINT `fk_Member_SERVGroup1`
+    FOREIGN KEY (`GroupID`)
+    REFERENCES `SERV`.`SERVGroup` (`GroupID`);
+
+ALTER TABLE `SERV`.`Calendar` 
+     ADD CONSTRAINT `fk_Calendar_SERVGroup1`
+    FOREIGN KEY (`GroupID`)
+    REFERENCES `SERV`.`SERVGroup` (`GroupID`)
 
 /*
 ALTER TABLE `SERV`.`Member` 

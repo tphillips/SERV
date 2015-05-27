@@ -269,7 +269,8 @@ namespace SERVDAL
 			             "left join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
 			             "where DutyDate > '2013-12-31' or CallDateTime > '2013-12-31' " +
 			             "order by rl.DutyDate desc, rl.CallDateTime desc;";
-			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+			DataTable ret = DBHelperFactory.DBHelper().ExecuteDataTable(sql);
+			return ret;
 		}
 
 		public void Dispose()
