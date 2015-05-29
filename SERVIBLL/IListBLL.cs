@@ -8,6 +8,7 @@ namespace SERVIBLL
 	public interface IListBLL
 	{
 		List<VehicleType> ListVehicleTypes();
+		List<Group> ListGroups();
 	}
 }
 

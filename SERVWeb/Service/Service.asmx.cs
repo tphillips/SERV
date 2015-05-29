@@ -192,6 +192,13 @@ namespace SERVWeb
 			return SERVBLLFactory.Factory.ListBLL().ListVehicleTypes();
 		}
 
+		[WebMethod(EnableSession = true, CacheDuration=120)]
+		public List<Group> ListGroups()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.ListBLL().ListGroups();
+		}
+
 		[WebMethod(EnableSession = true)]
 		public bool LogRun(int runLogID, string callDateTime, int callFromLocationId, string collectDateTime, int collectionLocationId, 
 			int controllerMemberId, string deliverDateTime, int deliverToLocationId, string dutyDate, 

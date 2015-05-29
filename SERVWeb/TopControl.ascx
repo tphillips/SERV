@@ -67,16 +67,6 @@
 						<li><a href="TakeControl.aspx"><i class="icon-random"></i> Take Control of SERV NOW</a></li>
 						<li class="divider"></li>
 						<li><a href="SMS.aspx"><i class="icon-envelope"></i> Bulk SMS</a></li>
-						<li class="dropdown-submenu">
-							<a tabindex="-1" href="RunStats.aspx"><i class="icon-bullhorn"></i> Push Notifications</a>
-							<ul class="dropdown-menu">
-								<div style="padding: 10px;">
-								<a class="pushbullet-subscribe-widget" data-channel="servssl_calendar" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script>
-								<a class="pushbullet-subscribe-widget" data-channel="servssl_controllers" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script>
-								<a class="pushbullet-subscribe-widget" data-channel="servssl" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script>
-								</div>
-							</ul>
-						</li>
 					</ul>
 				</li>
 			</asp:Literal>

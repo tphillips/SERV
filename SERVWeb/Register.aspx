@@ -124,6 +124,7 @@
 </div>
 
 <script>
+	var groupID = 1;
 	_loaded();
 </script>
 

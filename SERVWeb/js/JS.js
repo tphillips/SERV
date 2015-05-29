@@ -3,6 +3,8 @@ var enableFeedback = false;
 var FullName = "";
 var locations = new Array();
 var locationNames = new Array();
+var groups = new Array();
+var groupNames = new Array();
 var members = new Array();
 var memberNames = new Array();
 var controllers = new Array();
@@ -250,9 +252,9 @@ function DisplayMember(memberId)
 				$("#txtAdQualDate").val(json.d.AdQualPassDateString);
 				$("#txtGMPDate").val(json.d.LastGDPGMPDateString);
 				$("#txtAdQualType").val(json.d.AdQualType);
-				$("#txtGroupID").val(json.d.GroupID);
-				$("#lblGroup").text(json.d.Group);
 				$("#txtNotes").val(json.d.Notes);
+
+				groupSelected(json.d.GroupID, json.d.Group);
 				
 				for(var x = 0; x < json.d.Tags.length; x++)
 				{
@@ -478,6 +480,30 @@ function getLocationName(locationId)
 	return 0;
 }
 
+function getGroupId(group)
+{
+	for(var x = 0; x < groups.length; x++)
+	{
+		if (groups[x].GroupName == group)
+		{
+			return groups[x].GroupID;
+		}
+	}
+	return 0;
+}
+
+function getGroupName(groupId)
+{
+	for(var x = 0; x < groups.length; x++)
+	{
+		if (groups[x].GroupID == groupId)
+		{
+			return groups[x].GroupName;
+		}
+	}
+	return 0;
+}
+
 function GetSMSCreditCount(targetElementName)
 {
 	callServerSide(
@@ -565,6 +591,47 @@ function listLocations(callBack)
 	);
 }
 
+function listGroups(callBack)
+{
+	callServerSideGet(
+		"Service/Service.asmx/ListGroups", 
+		function(json)
+		{
+			for(var x = 0; x < json.d.length; x++)
+			{
+				groups[groups.length] = json.d[x];
+				groupNames[groupNames.length] = json.d[x].GroupName;
+			}
+			if (callBack != null) { callBack(); }
+		},
+		function()
+		{
+		},
+		true
+	);
+}
+
+function writeGroups(target, onClick)
+{
+	callServerSideGet(
+		"Service/Service.asmx/ListGroups", 
+		function(json)
+		{
+			for(var x = 0; x < json.d.length; x++)
+			{
+				$("#" + target).append("<li id=\"" + target + x + "\"><a>" + json.d[x].GroupName + "</a></li>");
+				$("#" + target + x).click({param1: json.d[x]}, function(event) {
+					onClick(event.data.param1.GroupID, event.data.param1.GroupName);
+				});
+			}
+		},
+		function()
+		{
+		},
+		true
+	);
+}
+
 function writeVehicleTypes(target, onClick)
 {
 	callServerSideGet(
@@ -595,7 +662,7 @@ function SearchMembers(userLevel, search, onlyActive)
 		function(json)
 		{
 			var append = '<table class="table table-striped table-bordered table-condensed">' +
-			'<thead><tr><th></th><th>First Name</th><th>Last Name</th><th>Mobile</th><th>Town</th><th>Tags</th><th>User Level</th></tr></thead><tbody>';
+			'<thead><tr><th></th><th>First Name</th><th>Last Name</th><th>Mobile</th><th>Town & Post Code</th><th>Tags</th><th>User Level</th></tr></thead><tbody>';
 			for(var x = 0; x < json.d.length; x++)
 			{
 				var name = json.d[x].LastName
@@ -613,7 +680,7 @@ function SearchMembers(userLevel, search, onlyActive)
 					"<td" + leftStyle + ">" + name + "</td>" + 
 					//"<td>" + json.d[x].EmailAddress + "</td>" + 
 					"<td nowrap>" + json.d[x].MobileNumber + "</td>" + 
-					"<td>" + json.d[x].Town + "</td>" + 
+					"<td>" + json.d[x].Town + " - " + json.d[x].PostCode + "</td>" + 
 					"<td nowrap" + leftStyle + "><small>" + json.d[x].TagsText + "</small></td>" +
 					"<td" + leftStyle + ">" + json.d[x].UserLevelName + "</td>" +
 					"</tr>"
@@ -760,7 +827,7 @@ function JsonifyBasicMemberFromForm(memberId)
 		'"AdQualPassDateString":"' + $("#txtAdQualDate").val() + '", ' +
 		'"LastGDPGMPDateString":"' + $("#txtGMPDate").val() + '", ' +
 		'"AdQualType":"' + $("#txtAdQualType").val() + '", ' +
-		'"GroupID":"' + $("#txtGroupID").val() + '", ' +
+		'"GroupID":"' + groupID + '", ' +
 		'"Notes":"' + $("#txtNotes").val() + '"}}';
 }
 

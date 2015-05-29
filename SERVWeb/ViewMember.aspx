@@ -149,7 +149,14 @@
 							
 						</div>
 						<input type="text" id="txtGroupID" style="display:none"/>
-						<label>Group: <i><span id="lblGroup"></span></i></label>
+						<label>Group:</label>
+						<div class="btn-group">
+							<button type="button" class="btn" disabled id="btnGroup">Group</button>
+							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+							<ul class="dropdown-menu" id="lstGroups">
+							</ul>
+						</div>
+						<br/><br/>
 						<label>Notes:</label>
 						<textarea id="txtNotes" rows="1"></textarea>
 					</div>
@@ -165,6 +172,8 @@
 	</div>
 	
 	<script>
+
+	var groupID = -1;
 	
 	$(function() 
 	{
@@ -186,6 +195,7 @@
 			$("#chkOnRota").attr('disabled', true);
 			$("#chkCommittee").attr('disabled', true);
 			$("#cmdImpersonate").attr('disabled', true);
+			$("#btnGroup").attr('disabled', true);
 		}
 		else
 		{
@@ -198,6 +208,7 @@
 			$("#chkOnRota").attr('disabled', false);
 		}
 		$(".date").datepicker({ dateFormat: 'dd M yy' });
+		writeGroups("lstGroups", groupSelected);
 		DisplayMember(<%=this.MemberId%>);
 		initFeedback();
 	});
@@ -246,7 +257,13 @@
 			setMemberUserLevel(<%=this.MemberId%>, $("#cboUserLevel").val());
 		}
 	}
-		
+
+	function groupSelected(groupId, groupName)
+	{
+		$("#btnGroup").text(groupName);
+		groupID = groupId;
+	}
+			
 	</script>
 
 </asp:Content>

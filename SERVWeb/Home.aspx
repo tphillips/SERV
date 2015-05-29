@@ -15,6 +15,9 @@
 				<span id="lblNoShift" style="display:none; color:red"><p><strong>You don't appear to have any upcoming shifts? Why not sign up for a few now? Click <a href="Calendar.aspx">here</a> to view <a href="Calendar.aspx">the Calendar.</a></strong></p></span>
 				<!---<p><span style="color:red">New:</span>  You can now view the <a href="Forum.aspx">forum from the system</a>.</p>-->
 				<p><small>Don't use Internet Explorer to view this site. It's a terrible browser and you will be FAR better off using Chrome or Firefox.</small></p>
+				<p>
+					<a class="pushbullet-subscribe-widget" data-channel="servssl_calendar" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script> <a class="pushbullet-subscribe-widget" data-channel="servssl_controllers" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script> <a class="pushbullet-subscribe-widget" data-channel="servssl" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script>
+				</p>
 			</div>
 		</div>
 	</div>
@@ -93,6 +96,7 @@
 	</div>
 
 	<br/>
+
 	<div class="row">
 		
 		<div class="span12">
@@ -100,14 +104,15 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
+				<li>Adding admin capability to change a members group</li>
+				</ul>
+				<h5>Previously</h5>
+				<ul>
+					<li>Added PostCode to list members</li>
 					<li>Push bullet notifications for: Daily calendar bulletins on @servssl_calendar. Shift swap notifications on @servssl_calendar. Controller swap notifications on @servssl_controllers. Calendar rebuild notifications on @servssl_calendar</li>
 					<li><a class="pushbullet-subscribe-widget" data-channel="servssl_calendar" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script></li>
 					<li><a class="pushbullet-subscribe-widget" data-channel="servssl_controllers" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script></li>
 					<li><a class="pushbullet-subscribe-widget" data-channel="servssl" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script></li>
-					
-				</ul>
-				<h5>Previously</h5>
-				<ul>
 					<li>Delete run function for admin</li>
 					<li>Starting multi group support</li>
 					<li>Daytime blood calendar</li>

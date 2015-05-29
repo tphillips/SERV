@@ -8,6 +8,7 @@ namespace SERVIDAL
 	public interface IListDAL : IDisposable
 	{
 		List<VehicleType> ListVehicleTypes();
+		List<SERVDBGROUp> ListGroups();
 	}
 }
 

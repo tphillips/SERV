@@ -26,6 +26,17 @@ namespace SERVBLL
 			return ret;
 		}
 
+		public List<Group> ListGroups()
+		{
+			List<Group> ret = new List<Group>();
+			List<SERVDataContract.DbLinq.SERVDBGROUp> groups = SERVDALFactory.Factory.ListDAL().ListGroups();
+			foreach (SERVDataContract.DbLinq.SERVDBGROUp l in groups)
+			{
+				ret.Add(new Group(l));
+			}
+			return ret;
+		}
+
 	}
 }
 
