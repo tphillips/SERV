@@ -33,6 +33,20 @@ namespace SERVDAL
 			        select rl).Take(recent).ToList();
 		}
 
+		public List<RunLog> ListYesterdays()
+		{
+			List<RunLog> ret = (from rl in db.RunLog
+			        where rl.DeliverDateTime != null
+			            //&& rl.CallDateTime >= new DateTime(DateTime.Now.AddDays(-1).Year, DateTime.Now.AddDays(-1).Month, DateTime.Now.AddDays(-1).Day) &&
+			            //rl.CallDateTime < new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 00,00)
+				orderby rl.CallDateTime descending
+				select rl).Take(100).ToList(); // This is a complete hack until I can get the commented out clause above working :S
+			return (from rl in ret
+			        where rl.DutyDate >= new DateTime(DateTime.Now.AddDays(-1).Year, DateTime.Now.AddDays(-1).Month, DateTime.Now.AddDays(-1).Day) &&
+			            rl.DutyDate < new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)
+			        select rl).ToList();
+		}
+
 		public bool CreateRawRecord(RawRunLog raw)
 		{
 			db.RawRunLog.InsertOnSubmit(raw);

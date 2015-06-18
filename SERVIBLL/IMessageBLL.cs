@@ -18,6 +18,9 @@ namespace SERVIBLL
 		void SendFeedback(SERVDataContract.User user, string feedback);
 		void PushBullet(string channel, string subject, string message);
 		void SendShiftSwapNeededPushNotification(int memberID, int calendarID, DateTime date);
+		bool SendTestTweet(int memberId);
+		bool Tweet(string message);
+		bool TweetYesterdaysSummary();
 	}
 }
 

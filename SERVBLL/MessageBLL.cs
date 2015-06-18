@@ -66,6 +66,43 @@ namespace SERVBLL
 			}
 		}
 
+		public bool SendTestTweet(int memberId)
+		{
+			return Tweet("Test System Tweet");
+		}
+
+		public bool Tweet(string message)
+		{
+			return TriggerATweet(message);
+		}
+
+		private bool TriggerATweet(string message)
+		{
+			ParameterizedThreadStart pts = new ParameterizedThreadStart(_TriggerATweet);
+			Thread t = new Thread(pts);
+			t.IsBackground = true;
+			t.Start(message);
+			return true;
+		}
+
+		private void _TriggerATweet(object message)
+		{
+			string mess = message.ToString();
+			string toEmail = System.Configuration.ConfigurationManager.AppSettings["TweetTriggerEmailAddress"];
+			int systemMeberId = int.Parse(System.Configuration.ConfigurationManager.AppSettings["SystemMemberID"]);
+			SendEmail(toEmail, "Tweet", mess, systemMeberId);
+		}
+
+		public bool TweetYesterdaysSummary()
+		{
+			string summary = new RunLogBLL().GetYesterdaysSummary();
+			if (summary != null)
+			{
+				Tweet(summary);
+			}
+			return true;
+		}
+
 		public void SendCalendarVolunteerNotificationEmail(int memberID, int calendarEntryID)
 		{
 			ParameterizedThreadStart pts = new ParameterizedThreadStart(_SendCalendarVolunteerNotificationEmail);

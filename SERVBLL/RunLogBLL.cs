@@ -6,6 +6,7 @@ using SERVDataContract;
 using SERVDALFactory;
 using SERV.Utils;
 using System.Data;
+using System.Linq;
 
 namespace SERVBLL
 {
@@ -301,6 +302,36 @@ namespace SERVBLL
 			{
 				ret.Add(new RunLog(rl));
 			}
+			return ret;
+		}
+
+		public List<RunLog> ListYesterdays()
+		{
+			List<RunLog> ret = new List<RunLog>();
+			List<SERVDataContract.DbLinq.RunLog> lret = SERVDALFactory.Factory.RunLogDAL().ListYesterdays();
+			foreach(SERVDataContract.DbLinq.RunLog rl in lret)
+			{
+				ret.Add(new RunLog(rl));
+			}
+			return ret;
+		}
+
+		public string GetYesterdaysSummary()
+		{
+			List<RunLog> y = ListYesterdays();
+			if (y.Count == 0) { return null; }
+			string twitterId = System.Configuration.ConfigurationManager.AppSettings["TwitterID"];
+			int boxes = (from r in y
+			             select r.Boxes).Sum();
+			string[] opts = new string[]
+			{"Yesterday {0} performed {1} runs delivering {2} boxes of urgently needed medical supplies.", 
+				"Yesterday the amazing volunteers of {0} delivered {2} boxes to our hospitals.", 
+				"Yesterday {0} delivered {2} boxes of urgently needed medical supplies.", 
+				"Yesterday {0} did {1} runs delivering {2} boxes of medical supplies. Want to help?",
+				"{0} performed {1} runs yesterday, delivering {2} boxes of medical supplies. Want to help?",
+			};
+			string format = opts[new Random(DateTime.Now.Millisecond).Next(0, opts.Length)];
+			string ret = string.Format(format, twitterId, y.Count, boxes);
 			return ret;
 		}
 

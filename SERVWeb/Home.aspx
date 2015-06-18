@@ -104,10 +104,11 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-				<li>Adding admin capability to change a members group</li>
+				<li>Adding Twitter automation</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+				<li>Adding admin capability to change a members group</li>
 					<li>Added PostCode to list members</li>
 					<li>Push bullet notifications for: Daily calendar bulletins on @servssl_calendar. Shift swap notifications on @servssl_calendar. Controller swap notifications on @servssl_controllers. Calendar rebuild notifications on @servssl_calendar</li>
 					<li><a class="pushbullet-subscribe-widget" data-channel="servssl_calendar" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script></li>

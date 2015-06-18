@@ -28,6 +28,25 @@ namespace SERVWeb
 			}
 		}
 
+		[WebMethod(EnableSession = true)]
+		public bool SendTestTweetEmail()
+		{
+			Authenticate();
+			return SERVBLLFactory.Factory.MessageBLL().SendTestTweet(CurrentUser().MemberID);
+		}
+
+		[WebMethod]
+		public bool TweetYesterdaysSummary()
+		{
+			return SERVBLLFactory.Factory.MessageBLL().TweetYesterdaysSummary();
+		}
+
+		[WebMethod]
+		public string GetYesterdaysSummary()
+		{
+			return SERVBLLFactory.Factory.RunLogBLL().GetYesterdaysSummary();
+		}
+
 		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<RunLog> ListRecentRuns()
 		{
