@@ -243,6 +243,11 @@ namespace SERVDataContract
 			}
 		}
 
+		[DataMember]
+		[UpdatePolicy(AllowOwner = true, MinRequiredLevel = UserLevel.Committee)]
+		public string RegNumber {get;set;}
+
+
 	}
 
 }

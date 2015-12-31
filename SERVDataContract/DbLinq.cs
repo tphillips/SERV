@@ -2058,6 +2058,8 @@ namespace SERVDataContract.DbLinq
 		
 		private string _postCode;
 		
+		private string _regNumber;
+		
 		private System.Nullable<System.DateTime> _riderAssesmentPassDate;
 		
 		private sbyte _systemController;
@@ -2204,6 +2206,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnPostCodeChanged();
 		
 		partial void OnPostCodeChanging(string value);
+		
+		partial void OnRegNumberChanged();
+		
+		partial void OnRegNumberChanging(string value);
 		
 		partial void OnRiderAssesmentPassDateChanged();
 		
@@ -2901,6 +2907,28 @@ namespace SERVDataContract.DbLinq
 					this._postCode = value;
 					this.SendPropertyChanged("PostCode");
 					this.OnPostCodeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_regNumber", Name="RegNumber", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string RegNumber
+		{
+			get
+			{
+				return this._regNumber;
+			}
+			set
+			{
+				if (((_regNumber == value) 
+							== false))
+				{
+					this.OnRegNumberChanging(value);
+					this.SendPropertyChanging();
+					this._regNumber = value;
+					this.SendPropertyChanged("RegNumber");
+					this.OnRegNumberChanged();
 				}
 			}
 		}

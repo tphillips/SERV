@@ -34,6 +34,9 @@
 					
 					<label>Occupation:</label>
 					<input type="text" id="txtOccupation" />
+
+					<label>Primary VRN:</label>
+					<input type="text" id="txtRegNumber" />
 					
 				</div>
 				

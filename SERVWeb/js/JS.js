@@ -241,6 +241,8 @@ function DisplayMember(memberId)
 				$("#lnkPostCode").attr("href", "http://maps.google.com/maps?saddr=" + json.d.PostCode);
 				
 				$("#txtOccupation").val(json.d.Occupation);
+				$("#txtRegNumber").val(json.d.RegNumber);
+
 				$("#txtNOK").val(json.d.NextOfKin);
 				$("#txtNOKAddress").val(json.d.NextOfKinAddress);
 				$("#txtNOKPhone").val(json.d.NextOfKinPhone);
@@ -817,7 +819,7 @@ function JsonifyBasicMemberFromForm(memberId)
 	return '{"member":{"MemberID":' + memberId + ',' + 
 		'"FirstName":"' + $("#txtFirstName").val() + '","LastName":"' + $("#txtLastName").val() + '",' + 
 		'"EmailAddress":"' + $("#txtEmail").val() + '","MobileNumber":"' + $("#txtMobile").val() + '",' + 
-		'"HomeNumber":"' + $("#txtHomePhone").val() + '","Occupation":"' + $("#txtOccupation").val() + '",' +
+		'"HomeNumber":"' + $("#txtHomePhone").val() + '","Occupation":"' + $("#txtOccupation").val() + '","RegNumber":"' + $("#txtRegNumber").val() + '",' +
 		'"Address1":"' + $("#txtAddress1").val() + '","Address2":"' + $("#txtAddress2").val() + '",' +
 		'"Address3":"' + $("#txtAddress3").val() + '",' + 
 		'"Town":"' + $("#txtTown").val() + '","County":"' + $("#txtCounty").val() + '",' + 
