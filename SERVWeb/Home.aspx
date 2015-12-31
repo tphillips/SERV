@@ -15,7 +15,7 @@
 				<span id="lblNoShift" style="display:none; color:red"><p><strong>You don't appear to have any upcoming shifts? Why not sign up for a few now? Click <a href="Calendar.aspx">here</a> to view <a href="Calendar.aspx">the Calendar.</a></strong></p></span>
 				<!---<p><span style="color:red">New:</span>  You can now view the <a href="Forum.aspx">forum from the system</a>.</p>-->
 				<p><small>Don't use Internet Explorer to view this site. It's a terrible browser and you will be FAR better off using Chrome or Firefox.</small></p>
-				<p>
+				<p runat="server" id="pushBulletPanel">
 					<a class="pushbullet-subscribe-widget" data-channel="servssl_calendar" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script> <a class="pushbullet-subscribe-widget" data-channel="servssl_controllers" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script> <a class="pushbullet-subscribe-widget" data-channel="servssl" data-widget="button" data-size="small"></a><script type="text/javascript">(function(){var a=document.createElement('script');a.type='text/javascript';a.async=true;a.src='https://widget.pushbullet.com/embed.js';var b=document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a,b);})();</script>
 				</p>
 			</div>
@@ -34,7 +34,7 @@
 		</div>
 		<div class="span4 pull-right" style="text-align:right">
 			<div id="twitter">
-				<a class="twitter-timeline" width="400px" href="https://twitter.com/SERV_SSL" data-widget-id="484637303671771137" data-tweet-limit="2">Tweets by @SERV_SSL</a>
+				<a class="twitter-timeline" width="400px" href="https://twitter.com/<%=SERVGlobal.TwitterID%>" data-widget-id="<%=SERVGlobal.TwitterWidgetID%>" data-tweet-limit="2">Tweets</a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
 		</div>
@@ -104,10 +104,15 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
-				<li>Adding Twitter automation</li>
+					<li>Adding 2 box flag</li>
+					<li>Removing need for : in times on controller log</li>
+					<li>Removing AA logging ;( - Please use regular log form</li>
+					<li>Adding PostCode to Locations</li>
+					<li>Prepping for multi region docker deployment</li>
 				</ul>
 				<h5>Previously</h5>
 				<ul>
+				<li>Adding Twitter automation</li>
 				<li>Adding admin capability to change a members group</li>
 					<li>Added PostCode to list members</li>
 					<li>Push bullet notifications for: Daily calendar bulletins on @servssl_calendar. Shift swap notifications on @servssl_calendar. Controller swap notifications on @servssl_controllers. Calendar rebuild notifications on @servssl_calendar</li>

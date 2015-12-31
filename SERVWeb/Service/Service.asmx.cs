@@ -12,8 +12,7 @@ namespace SERVWeb
 
     public class Service : System.Web.Services.WebService
     {
-		static Logger log = new Logger();
-
+		
 		private User CurrentUser()
 		{
 			if (System.Web.HttpContext.Current.Session["User"] == null) { return null; }
@@ -59,6 +58,17 @@ namespace SERVWeb
 		{
 			Authenticate();
 			return SERVBLLFactory.Factory.MemberBLL().List("");
+		}
+
+		[WebMethod(EnableSession = true)]
+		public string ExecuteSQL(string sql)
+		{
+			Authenticate();
+			if (CurrentUser().UserLevelID < (int)UserLevel.Admin)
+			{
+				throw new System.Security.Authentication.AuthenticationException();
+			}
+			return SERVBLLFactory.Factory.RunLogBLL().ExecuteSQL(sql);
 		}
 
 		[WebMethod(EnableSession = true)]

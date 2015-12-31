@@ -27,6 +27,7 @@ namespace SERVDataContract
 			this.Lat = metal.Lat;
 			this.Lng = metal.Lng;
 			this.InNetwork = metal.InNetwork;
+			this.PostCode = metal.PostCode;
 		}
 
 		[DataMember]
@@ -66,6 +67,10 @@ namespace SERVDataContract
 		[DataMember]
 		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
 		public string Lng {get;set;}
+
+		[DataMember]
+		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]
+		public string PostCode {get;set;}
 
 		[DataMember]
 		[UpdatePolicy(MinRequiredLevel = UserLevel.Controller)]

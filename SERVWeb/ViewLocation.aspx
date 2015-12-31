@@ -3,7 +3,7 @@
 <asp:Content ContentPlaceHolderID="titlePlaceholder" ID="titlePlaceholderContent" runat="server">Location</asp:Content>
 <asp:Content ContentPlaceHolderID="contentPlaceholder" ID="contentPlaceholderContent" runat="server">
 
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-Wccd0zvGm6GyENJJs7d3lQNmysym9o&sensor=true"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv-Wccd0zvGm6GyENJJs7d3lQNmysym9o"></script>
 
 	<div id="entry" style="display:none">
 		<h3>View / Edit Location: <span id="lblTitle"></span></h3>
@@ -43,7 +43,9 @@
 					</div>
 
 					<label>Location:</label>
-					<input type="text" id="txtLat" />	<input type="text" id="txtLng" />
+					<input type="text" id="txtLat" />	<input type="text" id="txtLng" />	
+					<label>Post Code:</label>
+					<input type="text" id="txtPostCode" />
 
 					<div id="map_canvas" class="img-rounded" style="width:500px; height:350px; border:1px solid gainsboro; margin-top: 10px; margin-bottom: 10px;">
 					</div>

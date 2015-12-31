@@ -53,8 +53,8 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties VerifyCodeBehindFields="true" VerifyCodeBehindEvents="true">
-        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="true" />
+      <Properties>
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
@@ -177,6 +177,15 @@
     <Content Include="img\screenshots\13.png" />
     <Content Include="img\Sun.png" />
     <Content Include="Service\MobileService.asmx" />
+    <Content Include="DBQuery.aspx" />
+    <Content Include="js\ace.js" />
+    <Content Include="js\ext-language_tools.js" />
+    <Content Include="js\mode-sql.js" />
+    <Content Include="js\theme-github.js" />
+    <Content Include="js\theme-twilight.js" />
+    <Content Include="js\theme-xcode.js" />
+    <Content Include="NoForum.htm" />
+    <Content Include="js\GA.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
@@ -330,5 +339,14 @@
     <Compile Include="Service\MobileService.asmx.cs">
       <DependentUpon>MobileService.asmx</DependentUpon>
     </Compile>
+    <Compile Include="DBQuery.aspx.cs">
+      <DependentUpon>DBQuery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DBQuery.aspx.designer.cs">
+      <DependentUpon>DBQuery.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="web.config.dockerdeploy" />
   </ItemGroup>
 </Project>

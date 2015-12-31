@@ -48,6 +48,7 @@
     <Compile Include="LocationDAL.cs" />
     <Compile Include="BuddhaDAL.cs" />
     <Compile Include="CalendarDAL.cs" />
+    <Compile Include="SystemSettingDAL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

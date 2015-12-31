@@ -29,6 +29,12 @@ namespace SERVDAL
 			return mem;
 		}
 
+		public Member GetSystemController()
+		{
+			SERVDataContract.DbLinq.Member mem = (from m in db.Member where m.SystemController == 1 select m).FirstOrDefault();
+			return mem;
+		}
+
 		public Member GetByEmail(string email)
 		{
 			SERVDataContract.DbLinq.Member mem = (from m in db.Member where m.EmailAddress == email select m).FirstOrDefault();

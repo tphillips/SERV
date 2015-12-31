@@ -267,12 +267,12 @@ function saveBloodRun()
 	var json = 
 		"{" +
 			"'runLogID':" + runLogID + 
-			",'callDateTime':'" + $("#txtCallDate").val() + " " + $("#txtCallTime").val().replace(/\./g, ':') + 
+			",'callDateTime':'" + $("#txtCallDate").val() + " " + formatTime($("#txtCallTime").val()) + 
 			"', 'callFromLocationId':'" + callerLocationId + 
-			"', 'collectDateTime':'" + $("#txtPickupDate").val() + " " + $("#txtPickupTime").val().replace(/\./g, ':') + 
+			"', 'collectDateTime':'" + $("#txtPickupDate").val() + " " + formatTime($("#txtPickupTime").val()) + 
 			"', 'collectionLocationId':'" + pickupLocationId + 
 			"', 'controllerMemberId':'" + controllerId + 
-			"', 'deliverDateTime':'" + $("#txtDeliverDate").val() + " " + $("#txtDeliverTime").val().replace(/\./g, ':') + 
+			"', 'deliverDateTime':'" + $("#txtDeliverDate").val() + " " + formatTime($("#txtDeliverTime").val()) + 
 			"', 'deliverToLocationId':'" + dropLocationId + 
 			"', 'dutyDate':'" + $("#txtShiftDate").val() + 
 			"', 'finalDestinationLocationId':'" + finalLocationId + 
@@ -281,7 +281,7 @@ function saveBloodRun()
 			"', 'urgency':'" + urgency + 
 			"', 'vehicleTypeId':'" + vehicleId + 
 			"', 'productIdCsv':'" + productCsv() + 
-			"', 'homeSafeDateTime':'" + $("#txtHomeSafeDate").val() + " " + $("#txtHomeSafeTime").val().replace(/\./g, ':') +
+			"', 'homeSafeDateTime':'" + $("#txtHomeSafeDate").val() + " " + formatTime($("#txtHomeSafeTime").val()) +
 			"', 'notes':'" + $("#txtNotes").val().replace(/'/g, '') + 
 			"', 'callerNumber':'" + $("#txtCallerNumber").val() + 
 			"', 'callerExt':'" + $("#txtCallerExt").val() + 
@@ -308,14 +308,25 @@ function saveBloodRun()
 	);
 }
 
+function formatTime(input)
+{
+	var output = input.replace(/\./g, ':');
+	if (output.length == 4)
+	{
+		output = output.substring(0, 2) + ":" + output.substring(2,4);
+	}
+	alert(output);
+	return output;
+}
+
 function saveAARun()
 {
 	var json = 
 		"{" +
 			"'dutyDate':'" + $("#txtAAShiftDate").val() +
-			"', 'collectDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAAPickupTime").val().replace(/\./g, ':') + 
-			"', 'deliverDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAADeliverTime").val().replace(/\./g, ':') + 
-			"', 'returnDateTime':'" + $("#txtAAShiftDate").val() + " " + $("#txtAAReturnTime").val().replace(/\./g, ':') + 
+			"', 'collectDateTime':'" + $("#txtAAShiftDate").val() + " " + formatTime($("#txtAAPickupTime").val()) + 
+			"', 'deliverDateTime':'" + $("#txtAAShiftDate").val() + " " + formatTime($("#txtAADeliverTime").val()) + 
+			"', 'returnDateTime':'" + $("#txtAAShiftDate").val() + " " + formatTime($("#txtAAReturnTime").val()) + 
 			"', 'controllerMemberId':'" + controllerId + 
 			"', 'riderMemberId':'" + aaRiderId + 
 			"', 'vehicleTypeId':'" + aaVehicleId + 

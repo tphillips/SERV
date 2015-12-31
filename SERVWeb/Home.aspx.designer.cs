@@ -17,6 +17,8 @@ namespace SERVWeb {
 		
 		protected System.Web.UI.WebControls.Content contentPlaceholderContent;
 		
+		protected System.Web.UI.HtmlControls.HtmlGenericControl pushBulletPanel;
+		
 		public new SERVWeb.Master Master {
 			get {
 				return ((SERVWeb.Master)(base.Master));

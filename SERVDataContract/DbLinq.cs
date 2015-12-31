@@ -105,6 +105,14 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		public Table<MemberRejectedRun> MemberRejectedRun
+		{
+			get
+			{
+				return this.GetTable <MemberRejectedRun>();
+			}
+		}
+		
 		public Table<MemberStatus> MemberStatus
 		{
 			get
@@ -169,11 +177,27 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		public Table<RunRejectionReason> RunRejectionReason
+		{
+			get
+			{
+				return this.GetTable <RunRejectionReason>();
+			}
+		}
+		
 		public Table<SERVDBGROUp> SERVDBGROUp
 		{
 			get
 			{
 				return this.GetTable <SERVDBGROUp>();
+			}
+		}
+		
+		public Table<SystemSetting> SystemSetting
+		{
+			get
+			{
+				return this.GetTable <SystemSetting>();
 			}
 		}
 		
@@ -617,7 +641,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_name == value) == false))
+				if (((_name == value) 
+							== false))
 				{
 					this.OnNameChanging(value);
 					this.SendPropertyChanging();
@@ -809,7 +834,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._serVGrouP.Entity == value) == false))
+				if (((this._serVGrouP.Entity == value) 
+							== false))
 				{
 					if ((this._serVGrouP.Entity != null))
 					{
@@ -1175,7 +1201,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._calendar.Entity == value) == false))
+				if (((this._calendar.Entity == value) 
+							== false))
 				{
 					if ((this._calendar.Entity != null))
 					{
@@ -1207,7 +1234,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._member.Entity == value) == false))
+				if (((this._member.Entity == value) 
+							== false))
 				{
 					if ((this._member.Entity != null))
 					{
@@ -1394,7 +1422,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._calendar.Entity == value) == false))
+				if (((this._calendar.Entity == value) 
+							== false))
 				{
 					if ((this._calendar.Entity != null))
 					{
@@ -1580,7 +1609,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_reason == value) == false))
+				if (((_reason == value) 
+							== false))
 				{
 					this.OnReasonChanging(value);
 					this.SendPropertyChanging();
@@ -1638,6 +1668,8 @@ namespace SERVDataContract.DbLinq
 		
 		private int _locationID;
 		
+		private string _postCode;
+		
 		private EntitySet<RunLog> _runLog;
 		
 		#region Extensibility Method Declarations
@@ -1678,6 +1710,10 @@ namespace SERVDataContract.DbLinq
 		partial void OnLocationIDChanged();
 		
 		partial void OnLocationIDChanging(int value);
+		
+		partial void OnPostCodeChanged();
+		
+		partial void OnPostCodeChanging(string value);
 		#endregion
 		
 		
@@ -1802,7 +1838,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_lat == value) == false))
+				if (((_lat == value) 
+							== false))
 				{
 					this.OnLatChanging(value);
 					this.SendPropertyChanging();
@@ -1823,7 +1860,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_lng == value) == false))
+				if (((_lng == value) 
+							== false))
 				{
 					this.OnLngChanging(value);
 					this.SendPropertyChanging();
@@ -1844,7 +1882,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_location1 == value) == false))
+				if (((_location1 == value) 
+							== false))
 				{
 					this.OnLocation1Changing(value);
 					this.SendPropertyChanging();
@@ -1872,6 +1911,28 @@ namespace SERVDataContract.DbLinq
 					this._locationID = value;
 					this.SendPropertyChanged("LocationID");
 					this.OnLocationIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_postCode", Name="PostCode", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string PostCode
+		{
+			get
+			{
+				return this._postCode;
+			}
+			set
+			{
+				if (((_postCode == value) 
+							== false))
+				{
+					this.OnPostCodeChanging(value);
+					this.SendPropertyChanging();
+					this._postCode = value;
+					this.SendPropertyChanged("PostCode");
+					this.OnPostCodeChanged();
 				}
 			}
 		}
@@ -1999,9 +2060,13 @@ namespace SERVDataContract.DbLinq
 		
 		private System.Nullable<System.DateTime> _riderAssesmentPassDate;
 		
+		private sbyte _systemController;
+		
 		private string _town;
 		
 		private EntitySet<CalendarEntry> _calendarEntry;
+		
+		private EntitySet<MemberRejectedRun> _memberRejectedRun;
 		
 		private EntitySet<MemberCalendar> _memberCalendar;
 		
@@ -2144,6 +2209,10 @@ namespace SERVDataContract.DbLinq
 		
 		partial void OnRiderAssesmentPassDateChanging(System.Nullable<System.DateTime> value);
 		
+		partial void OnSystemControllerChanged();
+		
+		partial void OnSystemControllerChanging(sbyte value);
+		
 		partial void OnTownChanged();
 		
 		partial void OnTownChanging(string value);
@@ -2153,6 +2222,7 @@ namespace SERVDataContract.DbLinq
 		public Member()
 		{
 			_calendarEntry = new EntitySet<CalendarEntry>(new Action<CalendarEntry>(this.CalendarEntry_Attach), new Action<CalendarEntry>(this.CalendarEntry_Detach));
+			_memberRejectedRun = new EntitySet<MemberRejectedRun>(new Action<MemberRejectedRun>(this.MemberRejectedRun_Attach), new Action<MemberRejectedRun>(this.MemberRejectedRun_Detach));
 			_memberCalendar = new EntitySet<MemberCalendar>(new Action<MemberCalendar>(this.MemberCalendar_Attach), new Action<MemberCalendar>(this.MemberCalendar_Detach));
 			_memberTag = new EntitySet<MemberTag>(new Action<MemberTag>(this.MemberTag_Attach), new Action<MemberTag>(this.MemberTag_Detach));
 			_runLog = new EntitySet<RunLog>(new Action<RunLog>(this.RunLog_Attach), new Action<RunLog>(this.RunLog_Detach));
@@ -2170,7 +2240,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_address1 == value) == false))
+				if (((_address1 == value) 
+							== false))
 				{
 					this.OnAddress1Changing(value);
 					this.SendPropertyChanging();
@@ -2191,7 +2262,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_address2 == value) == false))
+				if (((_address2 == value) 
+							== false))
 				{
 					this.OnAddress2Changing(value);
 					this.SendPropertyChanging();
@@ -2212,7 +2284,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_address3 == value) == false))
+				if (((_address3 == value) 
+							== false))
 				{
 					this.OnAddress3Changing(value);
 					this.SendPropertyChanging();
@@ -2254,7 +2327,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_adQualType == value) == false))
+				if (((_adQualType == value) 
+							== false))
 				{
 					this.OnAdQualTypeChanging(value);
 					this.SendPropertyChanging();
@@ -2296,7 +2370,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_bikeType == value) == false))
+				if (((_bikeType == value) 
+							== false))
 				{
 					this.OnBikeTypeChanging(value);
 					this.SendPropertyChanging();
@@ -2338,7 +2413,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_carType == value) == false))
+				if (((_carType == value) 
+							== false))
 				{
 					this.OnCarTypeChanging(value);
 					this.SendPropertyChanging();
@@ -2359,7 +2435,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_county == value) == false))
+				if (((_county == value) 
+							== false))
 				{
 					this.OnCountyChanging(value);
 					this.SendPropertyChanging();
@@ -2380,7 +2457,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_emailAddress == value) == false))
+				if (((_emailAddress == value) 
+							== false))
 				{
 					this.OnEmailAddressChanging(value);
 					this.SendPropertyChanging();
@@ -2401,7 +2479,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_firstName == value) == false))
+				if (((_firstName == value) 
+							== false))
 				{
 					this.OnFirstNameChanging(value);
 					this.SendPropertyChanging();
@@ -2447,7 +2526,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_homeNumber == value) == false))
+				if (((_homeNumber == value) 
+							== false))
 				{
 					this.OnHomeNumberChanging(value);
 					this.SendPropertyChanging();
@@ -2510,7 +2590,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_lastLat == value) == false))
+				if (((_lastLat == value) 
+							== false))
 				{
 					this.OnLastLatChanging(value);
 					this.SendPropertyChanging();
@@ -2531,7 +2612,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_lastLng == value) == false))
+				if (((_lastLng == value) 
+							== false))
 				{
 					this.OnLastLngChanging(value);
 					this.SendPropertyChanging();
@@ -2552,7 +2634,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_lastName == value) == false))
+				if (((_lastName == value) 
+							== false))
 				{
 					this.OnLastNameChanging(value);
 					this.SendPropertyChanging();
@@ -2657,7 +2740,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_mobileNumber == value) == false))
+				if (((_mobileNumber == value) 
+							== false))
 				{
 					this.OnMobileNumberChanging(value);
 					this.SendPropertyChanging();
@@ -2678,7 +2762,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_nextOfKin == value) == false))
+				if (((_nextOfKin == value) 
+							== false))
 				{
 					this.OnNextOfKinChanging(value);
 					this.SendPropertyChanging();
@@ -2699,7 +2784,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_nextOfKinAddress == value) == false))
+				if (((_nextOfKinAddress == value) 
+							== false))
 				{
 					this.OnNextOfKinAddressChanging(value);
 					this.SendPropertyChanging();
@@ -2720,7 +2806,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_nextOfKinPhone == value) == false))
+				if (((_nextOfKinPhone == value) 
+							== false))
 				{
 					this.OnNextOfKinPhoneChanging(value);
 					this.SendPropertyChanging();
@@ -2741,7 +2828,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_notes == value) == false))
+				if (((_notes == value) 
+							== false))
 				{
 					this.OnNotesChanging(value);
 					this.SendPropertyChanging();
@@ -2762,7 +2850,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_occupation == value) == false))
+				if (((_occupation == value) 
+							== false))
 				{
 					this.OnOccupationChanging(value);
 					this.SendPropertyChanging();
@@ -2804,7 +2893,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_postCode == value) == false))
+				if (((_postCode == value) 
+							== false))
 				{
 					this.OnPostCodeChanging(value);
 					this.SendPropertyChanging();
@@ -2836,6 +2926,27 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		
+		[Column(Storage="_systemController", Name="SystemController", DbType="tinyint(1)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public sbyte SystemController
+		{
+			get
+			{
+				return this._systemController;
+			}
+			set
+			{
+				if ((_systemController != value))
+				{
+					this.OnSystemControllerChanging(value);
+					this.SendPropertyChanging();
+					this._systemController = value;
+					this.SendPropertyChanged("SystemController");
+					this.OnSystemControllerChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_town", Name="Town", DbType="varchar(45)", AutoSync=AutoSync.Never)]
 		[DebuggerNonUserCode()]
 		public string Town
@@ -2846,7 +2957,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_town == value) == false))
+				if (((_town == value) 
+							== false))
 				{
 					this.OnTownChanging(value);
 					this.SendPropertyChanging();
@@ -2869,6 +2981,20 @@ namespace SERVDataContract.DbLinq
 			set
 			{
 				this._calendarEntry = value;
+			}
+		}
+		
+		[Association(Storage="_memberRejectedRun", OtherKey="MemberID", ThisKey="MemberID", Name="fk_MemberRejectedRun_Member1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<MemberRejectedRun> MemberRejectedRun
+		{
+			get
+			{
+				return this._memberRejectedRun;
+			}
+			set
+			{
+				this._memberRejectedRun = value;
 			}
 		}
 		
@@ -2940,7 +3066,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._serVGrouP.Entity == value) == false))
+				if (((this._serVGrouP.Entity == value) 
+							== false))
 				{
 					if ((this._serVGrouP.Entity != null))
 					{
@@ -2993,6 +3120,18 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		private void CalendarEntry_Detach(CalendarEntry entity)
+		{
+			this.SendPropertyChanging();
+			entity.Member = null;
+		}
+		
+		private void MemberRejectedRun_Attach(MemberRejectedRun entity)
+		{
+			this.SendPropertyChanging();
+			entity.Member = this;
+		}
+		
+		private void MemberRejectedRun_Detach(MemberRejectedRun entity)
 		{
 			this.SendPropertyChanging();
 			entity.Member = null;
@@ -3227,7 +3366,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_week == value) == false))
+				if (((_week == value) 
+							== false))
 				{
 					this.OnWeekChanging(value);
 					this.SendPropertyChanging();
@@ -3249,7 +3389,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._calendar.Entity == value) == false))
+				if (((this._calendar.Entity == value) 
+							== false))
 				{
 					if ((this._calendar.Entity != null))
 					{
@@ -3281,7 +3422,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._member.Entity == value) == false))
+				if (((this._member.Entity == value) 
+							== false))
 				{
 					if ((this._member.Entity != null))
 					{
@@ -3327,6 +3469,151 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
+	[Table(Name="SERV.MemberRejectedRun")]
+	public partial class MemberRejectedRun
+	{
+		
+		private int _memberID;
+		
+		private int _runLogID;
+		
+		private EntityRef<Member> _member = new EntityRef<Member>();
+		
+		private EntityRef<RunLog> _runLog = new EntityRef<RunLog>();
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnMemberIDChanged();
+		
+		partial void OnMemberIDChanging(int value);
+		
+		partial void OnRunLogIDChanged();
+		
+		partial void OnRunLogIDChanging(int value);
+		#endregion
+		
+		
+		public MemberRejectedRun()
+		{
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_memberID", Name="MemberID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int MemberID
+		{
+			get
+			{
+				return this._memberID;
+			}
+			set
+			{
+				if ((_memberID != value))
+				{
+					if (_member.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMemberIDChanging(value);
+					this._memberID = value;
+					this.OnMemberIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_runLogID", Name="RunLogID", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int RunLogID
+		{
+			get
+			{
+				return this._runLogID;
+			}
+			set
+			{
+				if ((_runLogID != value))
+				{
+					if (_runLog.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRunLogIDChanging(value);
+					this._runLogID = value;
+					this.OnRunLogIDChanged();
+				}
+			}
+		}
+		
+		#region Parents
+		[Association(Storage="_member", OtherKey="MemberID", ThisKey="MemberID", Name="fk_MemberRejectedRun_Member1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public Member Member
+		{
+			get
+			{
+				return this._member.Entity;
+			}
+			set
+			{
+				if (((this._member.Entity == value) 
+							== false))
+				{
+					if ((this._member.Entity != null))
+					{
+						Member previousMember = this._member.Entity;
+						this._member.Entity = null;
+						previousMember.MemberRejectedRun.Remove(this);
+					}
+					this._member.Entity = value;
+					if ((value != null))
+					{
+						value.MemberRejectedRun.Add(this);
+						_memberID = value.MemberID;
+					}
+					else
+					{
+						_memberID = default(int);
+					}
+				}
+			}
+		}
+		
+		[Association(Storage="_runLog", OtherKey="RunLogID", ThisKey="RunLogID", Name="fk_MemberRejectedRun_RunLog1", IsForeignKey=true)]
+		[DebuggerNonUserCode()]
+		public RunLog RunLog
+		{
+			get
+			{
+				return this._runLog.Entity;
+			}
+			set
+			{
+				if (((this._runLog.Entity == value) 
+							== false))
+				{
+					if ((this._runLog.Entity != null))
+					{
+						RunLog previousRunLog = this._runLog.Entity;
+						this._runLog.Entity = null;
+						previousRunLog.MemberRejectedRun.Remove(this);
+					}
+					this._runLog.Entity = value;
+					if ((value != null))
+					{
+						value.MemberRejectedRun.Add(this);
+						_runLogID = value.RunLogID;
+					}
+					else
+					{
+						_runLogID = default(int);
+					}
+				}
+			}
+		}
+		#endregion
+	}
+	
 	[Table(Name="SERV.MemberStatus")]
 	public partial class MemberStatus : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
@@ -3365,7 +3652,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_memberStatus1 == value) == false))
+				if (((_memberStatus1 == value) 
+							== false))
 				{
 					this.OnMemberStatus1Changing(value);
 					this.SendPropertyChanging();
@@ -3507,7 +3795,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._tag.Entity == value) == false))
+				if (((this._tag.Entity == value) 
+							== false))
 				{
 					if ((this._tag.Entity != null))
 					{
@@ -3539,7 +3828,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._member.Entity == value) == false))
+				if (((this._member.Entity == value) 
+							== false))
 				{
 					if ((this._member.Entity != null))
 					{
@@ -3635,7 +3925,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_message1 == value) == false))
+				if (((_message1 == value) 
+							== false))
 				{
 					this.OnMessage1Changing(value);
 					this.SendPropertyChanging();
@@ -3702,7 +3993,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_recipient == value) == false))
+				if (((_recipient == value) 
+							== false))
 				{
 					this.OnRecipientChanging(value);
 					this.SendPropertyChanging();
@@ -3791,7 +4083,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._messageType.Entity == value) == false))
+				if (((this._messageType.Entity == value) 
+							== false))
 				{
 					if ((this._messageType.Entity != null))
 					{
@@ -3823,7 +4116,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._user.Entity == value) == false))
+				if (((this._user.Entity == value) 
+							== false))
 				{
 					if ((this._user.Entity != null))
 					{
@@ -3910,7 +4204,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_messageType1 == value) == false))
+				if (((_messageType1 == value) 
+							== false))
 				{
 					this.OnMessageType1Changing(value);
 					this.SendPropertyChanging();
@@ -4063,7 +4358,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_product1 == value) == false))
+				if (((_product1 == value) 
+							== false))
 				{
 					this.OnProduct1Changing(value);
 					this.SendPropertyChanging();
@@ -4279,7 +4575,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_callTime == value) == false))
+				if (((_callTime == value) 
+							== false))
 				{
 					this.OnCallTimeChanging(value);
 					this.SendPropertyChanging();
@@ -4300,7 +4597,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_collectFrom == value) == false))
+				if (((_collectFrom == value) 
+							== false))
 				{
 					this.OnCollectFromChanging(value);
 					this.SendPropertyChanging();
@@ -4321,7 +4619,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_collectTime == value) == false))
+				if (((_collectTime == value) 
+							== false))
 				{
 					this.OnCollectTimeChanging(value);
 					this.SendPropertyChanging();
@@ -4342,7 +4641,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_collectTime2 == value) == false))
+				if (((_collectTime2 == value) 
+							== false))
 				{
 					this.OnCollectTime2Changing(value);
 					this.SendPropertyChanging();
@@ -4363,7 +4663,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_consignment == value) == false))
+				if (((_consignment == value) 
+							== false))
 				{
 					this.OnConsignmentChanging(value);
 					this.SendPropertyChanging();
@@ -4384,7 +4685,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_controller == value) == false))
+				if (((_controller == value) 
+							== false))
 				{
 					this.OnControllerChanging(value);
 					this.SendPropertyChanging();
@@ -4405,7 +4707,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_deliveryTime == value) == false))
+				if (((_deliveryTime == value) 
+							== false))
 				{
 					this.OnDeliveryTimeChanging(value);
 					this.SendPropertyChanging();
@@ -4426,7 +4729,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_destination == value) == false))
+				if (((_destination == value) 
+							== false))
 				{
 					this.OnDestinationChanging(value);
 					this.SendPropertyChanging();
@@ -4447,7 +4751,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_notes == value) == false))
+				if (((_notes == value) 
+							== false))
 				{
 					this.OnNotesChanging(value);
 					this.SendPropertyChanging();
@@ -4489,7 +4794,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_rider == value) == false))
+				if (((_rider == value) 
+							== false))
 				{
 					this.OnRiderChanging(value);
 					this.SendPropertyChanging();
@@ -4510,7 +4816,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_urgency == value) == false))
+				if (((_urgency == value) 
+							== false))
 				{
 					this.OnUrgencyChanging(value);
 					this.SendPropertyChanging();
@@ -4531,7 +4838,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_vehicle == value) == false))
+				if (((_vehicle == value) 
+							== false))
 				{
 					this.OnVehicleChanging(value);
 					this.SendPropertyChanging();
@@ -4570,6 +4878,8 @@ namespace SERVDataContract.DbLinq
 	{
 		
 		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private System.Nullable<System.DateTime> _acceptedDateTime;
 		
 		private int _boxes;
 		
@@ -4617,6 +4927,8 @@ namespace SERVDataContract.DbLinq
 		
 		private System.Nullable<int> _vehicleTypeID;
 		
+		private EntitySet<MemberRejectedRun> _memberRejectedRun;
+		
 		private EntitySet<RunLogProduct> _runLogProduct;
 		
 		private EntityRef<Location> _location = new EntityRef<Location>();
@@ -4629,6 +4941,10 @@ namespace SERVDataContract.DbLinq
 		
 		#region Extensibility Method Declarations
 		partial void OnCreated();
+		
+		partial void OnAcceptedDateTimeChanged();
+		
+		partial void OnAcceptedDateTimeChanging(System.Nullable<System.DateTime> value);
 		
 		partial void OnBoxesChanged();
 		
@@ -4726,8 +5042,30 @@ namespace SERVDataContract.DbLinq
 		
 		public RunLog()
 		{
+			_memberRejectedRun = new EntitySet<MemberRejectedRun>(new Action<MemberRejectedRun>(this.MemberRejectedRun_Attach), new Action<MemberRejectedRun>(this.MemberRejectedRun_Detach));
 			_runLogProduct = new EntitySet<RunLogProduct>(new Action<RunLogProduct>(this.RunLogProduct_Attach), new Action<RunLogProduct>(this.RunLogProduct_Detach));
 			this.OnCreated();
+		}
+		
+		[Column(Storage="_acceptedDateTime", Name="AcceptedDateTime", DbType="datetime", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public System.Nullable<System.DateTime> AcceptedDateTime
+		{
+			get
+			{
+				return this._acceptedDateTime;
+			}
+			set
+			{
+				if ((_acceptedDateTime != value))
+				{
+					this.OnAcceptedDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._acceptedDateTime = value;
+					this.SendPropertyChanged("AcceptedDateTime");
+					this.OnAcceptedDateTimeChanged();
+				}
+			}
 		}
 		
 		[Column(Storage="_boxes", Name="Boxes", DbType="int", AutoSync=AutoSync.Never, CanBeNull=false)]
@@ -4782,7 +5120,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_callerExt == value) == false))
+				if (((_callerExt == value) 
+							== false))
 				{
 					this.OnCallerExtChanging(value);
 					this.SendPropertyChanging();
@@ -4803,7 +5142,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_callerNumber == value) == false))
+				if (((_callerNumber == value) 
+							== false))
 				{
 					this.OnCallerNumberChanging(value);
 					this.SendPropertyChanging();
@@ -5000,7 +5340,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_description == value) == false))
+				if (((_description == value) 
+							== false))
 				{
 					this.OnDescriptionChanging(value);
 					this.SendPropertyChanging();
@@ -5105,7 +5446,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_notes == value) == false))
+				if (((_notes == value) 
+							== false))
 				{
 					this.OnNotesChanging(value);
 					this.SendPropertyChanging();
@@ -5230,6 +5572,20 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		#region Children
+		[Association(Storage="_memberRejectedRun", OtherKey="RunLogID", ThisKey="RunLogID", Name="fk_MemberRejectedRun_RunLog1")]
+		[DebuggerNonUserCode()]
+		public EntitySet<MemberRejectedRun> MemberRejectedRun
+		{
+			get
+			{
+				return this._memberRejectedRun;
+			}
+			set
+			{
+				this._memberRejectedRun = value;
+			}
+		}
+		
 		[Association(Storage="_runLogProduct", OtherKey="RunLogID", ThisKey="RunLogID", Name="fk_RunLog_Product_RunLog1")]
 		[DebuggerNonUserCode()]
 		public EntitySet<RunLogProduct> RunLogProduct
@@ -5256,7 +5612,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._location.Entity == value) == false))
+				if (((this._location.Entity == value) 
+							== false))
 				{
 					if ((this._location.Entity != null))
 					{
@@ -5288,7 +5645,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._member.Entity == value) == false))
+				if (((this._member.Entity == value) 
+							== false))
 				{
 					if ((this._member.Entity != null))
 					{
@@ -5320,7 +5678,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._user.Entity == value) == false))
+				if (((this._user.Entity == value) 
+							== false))
 				{
 					if ((this._user.Entity != null))
 					{
@@ -5352,7 +5711,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._vehicleType.Entity == value) == false))
+				if (((this._vehicleType.Entity == value) 
+							== false))
 				{
 					if ((this._vehicleType.Entity != null))
 					{
@@ -5398,6 +5758,18 @@ namespace SERVDataContract.DbLinq
 		}
 		
 		#region Attachment handlers
+		private void MemberRejectedRun_Attach(MemberRejectedRun entity)
+		{
+			this.SendPropertyChanging();
+			entity.RunLog = this;
+		}
+		
+		private void MemberRejectedRun_Detach(MemberRejectedRun entity)
+		{
+			this.SendPropertyChanging();
+			entity.RunLog = null;
+		}
+		
 		private void RunLogProduct_Attach(RunLogProduct entity)
 		{
 			this.SendPropertyChanging();
@@ -5559,7 +5931,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._product.Entity == value) == false))
+				if (((this._product.Entity == value) 
+							== false))
 				{
 					if ((this._product.Entity != null))
 					{
@@ -5591,7 +5964,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._runLog.Entity == value) == false))
+				if (((this._runLog.Entity == value) 
+							== false))
 				{
 					if ((this._runLog.Entity != null))
 					{
@@ -5613,6 +5987,100 @@ namespace SERVDataContract.DbLinq
 			}
 		}
 		#endregion
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
+			if ((h != null))
+			{
+				h(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(string propertyName)
+		{
+			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
+			if ((h != null))
+			{
+				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="SERV.RunRejectionReason")]
+	public partial class RunRejectionReason : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private string _reason;
+		
+		private int _runRejectionReasonID;
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnReasonChanged();
+		
+		partial void OnReasonChanging(string value);
+		
+		partial void OnRunRejectionReasonIDChanged();
+		
+		partial void OnRunRejectionReasonIDChanging(int value);
+		#endregion
+		
+		
+		public RunRejectionReason()
+		{
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_reason", Name="Reason", DbType="varchar(45)", AutoSync=AutoSync.Never)]
+		[DebuggerNonUserCode()]
+		public string Reason
+		{
+			get
+			{
+				return this._reason;
+			}
+			set
+			{
+				if (((_reason == value) 
+							== false))
+				{
+					this.OnReasonChanging(value);
+					this.SendPropertyChanging();
+					this._reason = value;
+					this.SendPropertyChanged("Reason");
+					this.OnReasonChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_runRejectionReasonID", Name="RunRejectionReasonID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int RunRejectionReasonID
+		{
+			get
+			{
+				return this._runRejectionReasonID;
+			}
+			set
+			{
+				if ((_runRejectionReasonID != value))
+				{
+					this.OnRunRejectionReasonIDChanging(value);
+					this.SendPropertyChanging();
+					this._runRejectionReasonID = value;
+					this.SendPropertyChanged("RunRejectionReasonID");
+					this.OnRunRejectionReasonIDChanged();
+				}
+			}
+		}
 		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
 		
@@ -5681,7 +6149,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_group == value) == false))
+				if (((_group == value) 
+							== false))
 				{
 					this.OnGroupChanging(value);
 					this.SendPropertyChanging();
@@ -5792,6 +6261,128 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
+	[Table(Name="SERV.SystemSetting")]
+	public partial class SystemSetting : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		private static System.ComponentModel.PropertyChangingEventArgs emptyChangingEventArgs = new System.ComponentModel.PropertyChangingEventArgs("");
+		
+		private string _settingName;
+		
+		private int _systemSettingID;
+		
+		private string _value;
+		
+		#region Extensibility Method Declarations
+		partial void OnCreated();
+		
+		partial void OnSettingNameChanged();
+		
+		partial void OnSettingNameChanging(string value);
+		
+		partial void OnSystemSettingIDChanged();
+		
+		partial void OnSystemSettingIDChanging(int value);
+		
+		partial void OnValueChanged();
+		
+		partial void OnValueChanging(string value);
+		#endregion
+		
+		
+		public SystemSetting()
+		{
+			this.OnCreated();
+		}
+		
+		[Column(Storage="_settingName", Name="SettingName", DbType="varchar(45)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public string SettingName
+		{
+			get
+			{
+				return this._settingName;
+			}
+			set
+			{
+				if (((_settingName == value) 
+							== false))
+				{
+					this.OnSettingNameChanging(value);
+					this.SendPropertyChanging();
+					this._settingName = value;
+					this.SendPropertyChanged("SettingName");
+					this.OnSettingNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_systemSettingID", Name="SystemSettingID", DbType="int", IsPrimaryKey=true, IsDbGenerated=true, AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public int SystemSettingID
+		{
+			get
+			{
+				return this._systemSettingID;
+			}
+			set
+			{
+				if ((_systemSettingID != value))
+				{
+					this.OnSystemSettingIDChanging(value);
+					this.SendPropertyChanging();
+					this._systemSettingID = value;
+					this.SendPropertyChanged("SystemSettingID");
+					this.OnSystemSettingIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_value", Name="Value", DbType="varchar(500)", AutoSync=AutoSync.Never, CanBeNull=false)]
+		[DebuggerNonUserCode()]
+		public string Value
+		{
+			get
+			{
+				return this._value;
+			}
+			set
+			{
+				if (((_value == value) 
+							== false))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			System.ComponentModel.PropertyChangingEventHandler h = this.PropertyChanging;
+			if ((h != null))
+			{
+				h(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(string propertyName)
+		{
+			System.ComponentModel.PropertyChangedEventHandler h = this.PropertyChanged;
+			if ((h != null))
+			{
+				h(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[Table(Name="SERV.Tag")]
 	public partial class Tag : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
@@ -5833,7 +6424,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_tag1 == value) == false))
+				if (((_tag1 == value) 
+							== false))
 				{
 					this.OnTag1Changing(value);
 					this.SendPropertyChanging();
@@ -6030,7 +6622,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_passwordHash == value) == false))
+				if (((_passwordHash == value) 
+							== false))
 				{
 					this.OnPasswordHashChanging(value);
 					this.SendPropertyChanging();
@@ -6128,7 +6721,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._member.Entity == value) == false))
+				if (((this._member.Entity == value) 
+							== false))
 				{
 					if ((this._member.Entity != null))
 					{
@@ -6160,7 +6754,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((this._userLevel.Entity == value) == false))
+				if (((this._userLevel.Entity == value) 
+							== false))
 				{
 					if ((this._userLevel.Entity != null))
 					{
@@ -6273,7 +6868,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_userLevel1 == value) == false))
+				if (((_userLevel1 == value) 
+							== false))
 				{
 					this.OnUserLevel1Changing(value);
 					this.SendPropertyChanging();
@@ -6426,7 +7022,8 @@ namespace SERVDataContract.DbLinq
 			}
 			set
 			{
-				if (((_vehicleType1 == value) == false))
+				if (((_vehicleType1 == value) 
+							== false))
 				{
 					this.OnVehicleType1Changing(value);
 					this.SendPropertyChanging();

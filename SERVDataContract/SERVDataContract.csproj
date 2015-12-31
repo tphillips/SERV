@@ -51,6 +51,7 @@
     <Compile Include="RosteredVolunteer.cs" />
     <Compile Include="CalendarEntry.cs" />
     <Compile Include="Group.cs" />
+    <Compile Include="Message.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

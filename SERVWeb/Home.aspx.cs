@@ -81,6 +81,7 @@ namespace SERVWeb
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication();
+			pushBulletPanel.Visible = SERVGlobal.PushBulletEnabled;
 		}
 
 	}

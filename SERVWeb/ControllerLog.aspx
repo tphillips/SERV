@@ -22,9 +22,12 @@
 	<h3>Controller Log</h3>
 
 	<div class="row">
-		<div class="span12 input-append">
-			<input type="text" id="txtController" style="width:150px" class="controllers" placeholder="Choose the controller" />
-		    <button type="button" class="btn" onclick="showBloodPanel()" id="btnBloodRun">Blood Run / Other</button>
+		<div class="span4 input-prepend">
+			<button type="button" class="btn" onclick="" id="btnBloodRun" disabled>Controller</button>
+			<input type="text" id="txtController" style="width:150px" class="controllers" placeholder="Choose the controller" /> 
+		</div>
+		<div class="span4 btn-group text-right" style="display:none">
+			<button type="button" class="btn" onclick="showBloodPanel()" id="btnBloodRun">Blood Run / Other</button>
 		    <button type="button" class="btn" onclick="showAAPanel()" id="btnAARun">Air Ambulance</button>
 		</div>
 	</div>
@@ -260,6 +263,15 @@
 	}
 
 	initFeedback();
+
+	if ('<%=this.ShowAA.ToString()%>' == 'False')
+	{
+		showBloodPanel();
+	}
+	else
+	{
+		showAAPanel();
+	}
 
 </script>
 

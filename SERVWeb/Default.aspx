@@ -10,9 +10,9 @@
 		<div class="span6">
 			<img src="img/logo.png"/>
 			<br/><br/>
-			<h2>SERV SSL</h2>	
+			<h2><%=SERVGlobal.GroupName%></h2>	
 			<h5 style="color:#999999;">System for Emergency Rider Volunteers</h5>
-			<h4>Welcome to <%=SERVGlobal.SystemName%> <%=SERVGlobal.SERVVersion%>.  </h4>	
+			<h4>Welcome to <%=SERVGlobal.SystemName%> <%=SERVGlobal.SERVVersion%></h4>	
 		</div>
 		<div class="span5 pull-right">
 			<h4>Please <a href="Login.aspx">login</a> to continue</h4>
@@ -58,13 +58,15 @@
 					<td style="width:50%">Rich reporting suite</td>
 				</tr>
 			</table>
+			<br/>
+			<br/>
+			<h4><a href="http://www.servssl.org.uk/contact">Contact Us</a> Today for a Demonstration</h4>
+			<p><a class="btn btn-large btn-success" href="http://www.servssl.org.uk/contact">Contact Us</a></p>
 		</center>
 	</div>
 
 	<div class="row" style="margin:0px; padding:50px;text-align:center">
 		<h2>The easiest way to manage Emergency Rider Volunteers.</h2>
-		<h4><a href="http://www.servssl.org.uk/contact">Contact Us</a> Today for a Demonstration</h4>
-		<p><a class="btn btn-large btn-success" href="http://www.servssl.org.uk/contact">Contact Us</a></p>
 		<div style="text-align:center;">
 			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/1.png" />
 			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/2.png" />
@@ -79,13 +81,13 @@
 			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/12.png" />
 			<img style="max-height:300px; max-width:300px; float: left; margin:20px;" class="img-polaroid" src="img/screenshots/13.png" />
 		</div>
+		<div style="clear:both">
+			<br/>
+			<h4><a href="http://www.servssl.org.uk/contact">Contact Us</a> Today for a Demonstration</h4>
+			<p><a class="btn btn-large btn-success" href="http://www.servssl.org.uk/contact">Contact Us</a></p>
+		</div>
 	</div>
 
-	<div class="row" style="margin:0px;background-color:black; color:white; padding:50px;text-align:center">
-		<h2><a style="color:white" href="http://www.servssl.org.uk">Learn more about SERV SSL.</a></h2>
-		<h4><a class="btn btn-large btn-success" href="http://www.servssl.org.uk">Learn more . . .</a></h4>
-	</div>
-	
 	
 	<script>
 

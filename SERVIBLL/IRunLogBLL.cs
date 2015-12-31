@@ -8,9 +8,10 @@ namespace SERVIBLL
 {
 	public interface IRunLogBLL
 	{
-		[Obsolete]
-		bool ImportRawRunLog();
 		RunLog Get(int runLogID);
+		List<RunLog> ListQueuedOrders();
+		List<RunLog> ListQueuedOrdersForMember(int memberId);
+		bool MarkOrderAsAccepted(int memberId, int runLogId);
 		List<RunLog> ListRecent(int count);
 		List<RunLog> ListYesterdays();
 		bool CreateRunLog(DateTime callDateTime, int callFromLocationId, DateTime collectDateTime, int collectionLocationId, 
@@ -25,6 +26,7 @@ namespace SERVIBLL
 		DataTable Report_RunLog();
 		string[] GetMemberUniqueRuns(int memberID);
 		string GetYesterdaysSummary();
+		string ExecuteSQL(string sql);
 	}
 }
 

@@ -62,6 +62,9 @@ namespace SERVDataContract
 		}
 
 		[DataMember]
+		public DateTime? ReadyAtTime { get; set; }
+
+		[DataMember]
 		public int CallFromLocationID { get; set; }
 
 		public DateTime? CollectDateTime { get; set; }
@@ -125,6 +128,8 @@ namespace SERVDataContract
 		public string CallerExt { get; set; }
 
 		public int OriginLocationID { get; set; }
+
+		public DateTime? AcceptedDateTime { get; set; }
 
 		public int RiderMemberID { get; set; }
 

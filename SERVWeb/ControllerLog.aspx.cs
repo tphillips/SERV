@@ -16,6 +16,14 @@ namespace SERVWeb
 			}
 		}
 
+		protected bool ShowAA
+		{
+			get 
+			{
+				return Request["AA"] != null;
+			}
+		}
+
 		protected int UserLevel
 		{
 			get 

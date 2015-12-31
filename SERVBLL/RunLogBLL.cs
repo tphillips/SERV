@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using SERVIBLL;
 using SERVDataContract;
-using SERVDALFactory;
-using SERV.Utils;
 using System.Data;
 using System.Linq;
 
@@ -16,148 +14,75 @@ namespace SERVBLL
 	{
 
 		static Logger log = new Logger();
-		Dictionary<string, string> nameReplacements = new Dictionary<string, string>();
 
 		public RunLogBLL()
 		{
 		}
 
-		[Obsolete]
-		static string CleanTextBlocks(string csv)
-		{
-			bool inText = false;
-			int stop = csv.Length;
-			for (int x = 0; x < stop; x++)
-			{
-				if (csv.Substring(x, 1) == "\"")
-				{
-					inText = !inText;
-				}
-				if (csv.Substring(x, 1) == "," && inText)
-				{
-					csv = csv.Remove(x, 1);
-					stop--;
-				}
-				if (csv.Substring(x, 1) == "\r" && inText)
-				{
-					csv = csv.Remove(x, 1);
-					stop--;
-				}
-				if (csv.Substring(x, 1) == "\n" && inText)
-				{
-					csv = csv.Remove(x, 1);
-					stop--;
-				}
-				if (x % 200 == 0) { System.Threading.Thread.Sleep(5); }
-				if (x % 1000 == 0)
-				{
-					log.Info(string.Format("Processed {0} of {1} csv chars", x, stop));
-					System.Threading.Thread.Sleep(10);  // take a breath
-				}
-			}
-			csv = csv.Replace("    ", " ");
-			csv = csv.Replace("   ", " ");
-			csv = csv.Replace("  ", " ");
-			return csv;
-		}
-
-		[Obsolete]
-		public bool ImportRawRunLog()
+		public bool MarkOrderAsAccepted(int memberId, int runLogId)
 		{
 			log.LogStart();
-			List<SERVDataContract.DbLinq.RawRunLog> records = new List<SERVDataContract.DbLinq.RawRunLog>();
-			log.Debug("Truncating RawRunLog");
-			SERVDALFactory.Factory.RunLogDAL().TruncateRawRunLog();
-			string docURI = "https://docs.google.com/spreadsheet/pub?key=0Avzf69R2XNmVdExyQkpRa3Rtb1d1cHBqM2dINDB1N0E&single=true&gid=0&output=csv";
-			System.Net.ServicePointManager.ServerCertificateValidationCallback += SERV.Utils.Authentication.AcceptAllCertificates;
-			bool OK = false;
-			string csv = "";
-			while (!OK)
+			RunLog r = Get(runLogId);
+			if (r.AcceptedDateTime == null && r.RiderMemberID == memberId)
 			{
-				log.Info("Downloading RunLog");
-				try
-				{
-					csv = new System.Net.WebClient().DownloadString(docURI);
-					OK = true;
-				}
-				catch(Exception ex)
-				{
-					log.Error(ex.Message, ex);
-				}
+				SERVDALFactory.Factory.RunLogDAL().SetAcceptedDateTime(runLogId);
+				return true;
 			}
-			log.Info("Download OK");
-			log.Info("Cleaning CSV");
-			csv = CleanTextBlocks(csv);
-			log.Info("Processing Rows");
-			string[] rows = csv.Split('\n');
-			int rowNum = 0;
-			string prevRow = "";
-			log.Debug("Starting import loop");
-			foreach (string row in rows)
+			else
 			{
-				if (rowNum > 1)
-				{
-					string r = row.Trim();
-					if (!string.IsNullOrEmpty(r))
-					{
-						//log.Debug(r);
-						string[] cols = r.Split(',');
-						SERVDataContract.DbLinq.RawRunLog raw = new SERVDataContract.DbLinq.RawRunLog();
-						try 
-						{
-							raw.CallDate = DateTime.Parse(cols[1].Trim().Replace("\"", ""), new System.Globalization.CultureInfo("en-GB"));
-							raw.CallTime = FixTime(cols[2].Trim());
-							raw.Destination = cols[3].Trim().Replace("\"", "");
-							raw.CollectFrom = cols[4].Trim().Replace("\"", "");
-							raw.CollectTime = FixTime(cols[5].Trim());
-							raw.DeliveryTime = FixTime(cols[6].Trim());
-							raw.Consignment = cols[7].Trim().Replace("\"", "");
-							raw.Urgency = cols[8].Trim().Replace("\"", "");
-							raw.Controller = cols[9].Trim().Replace("\"", "");
-							raw.Rider = cols[10].Trim().Replace("\"", "").Replace(".", "");
-							if (nameReplacements.ContainsKey(raw.Rider)) { raw.Rider = nameReplacements[raw.Rider]; }
-							raw.Notes = cols[11].Trim().Replace("\"", "");
-							raw.CollectTime2 = FixTime(cols[12].Trim());
-							raw.Vehicle = cols[13].Trim().Replace("\"", "");
-							//SERVDALFactory.Factory.RunLogDAL().CreateRawRecord(raw);
-							records.Add(raw);
-						} 
-						catch(System.FormatException fe)
-						{
-							log.Error(cols[1].Trim().Replace("\"", ""), fe);
-						}
-						catch(Exception ex)
-						{
-							log.Error(string.Format("{0} ------ prev: {1} ------ current: {2}", ex.Message, prevRow, row), ex);
-							Console.WriteLine(string.Format("{0} ------ {1} --------- {2}", ex.Message,row, r));
-						}
-					}
-				}
-				rowNum++;
-				prevRow = row;
-				System.Threading.Thread.Sleep(5);
-				if (rowNum % 100 == 0)
-				{
-					log.Info("Starting batch insert of " + records.Count + " records");
-					SERVDALFactory.Factory.RunLogDAL().CreateRawRecords(records);
-					records = new List<SERVDataContract.DbLinq.RawRunLog>();
-					System.Threading.Thread.Sleep(50);
-				}
+				return false;
 			}
-			log.Info("Starting batch insert of " + records.Count + " records");
-			SERVDALFactory.Factory.RunLogDAL().CreateRawRecords(records);
-			log.Info("Taking out the trash");
-			GC.Collect();
-			log.Info("Batch insert complete");
-			return true;
 		}
 
-		[Obsolete]
-		private string FixTime(string time)
+		public List<RunLog> ListQueuedOrders()
 		{
-			time = time.Replace("\"", "").Replace(".", ":");
-			if (time.Contains(":"))	{ time = time.Split(':')[0].PadLeft(2, '0') + ":" + time.Split(':')[1].PadRight(2, '0'); }
-			return time;
+			log.LogStart();
+			List<RunLog> ret = new List<RunLog>();
+			List<SERVDataContract.DbLinq.RunLog> lret = SERVDALFactory.Factory.RunLogDAL().ListQueuedOrders();
+			foreach(SERVDataContract.DbLinq.RunLog rl in lret)
+			{
+				ret.Add(Get(rl.RunLogID));
+			}
+			return ret;
+		}
+
+		public List<RunLog> ListQueuedOrdersForMember(int memberId)
+		{
+			log.LogStart();
+			List<RunLog> ret = new List<RunLog>();
+			List<SERVDataContract.DbLinq.RunLog> lret = SERVDALFactory.Factory.RunLogDAL().ListQueuedOrdersForMember(memberId);
+			foreach(SERVDataContract.DbLinq.RunLog rl in lret)
+			{
+				ret.Add(Get(rl.RunLogID));
+			}
+			return ret;
+		}
+
+		public int CreateOrder(RunLog run, List<int> products)
+		{
+			log.LogStart();
+			SERVDataContract.DbLinq.RunLog runLog = new SERVDataContract.DbLinq.RunLog();
+			runLog.CallDateTime = DateTime.Now;
+			runLog.CallFromLocationID = run.CallFromLocationID;
+			runLog.CollectionLocationID = run.CollectionLocationID;
+			runLog.ControllerMemberID = 0; //TODO System COntroller Id;
+			runLog.CreateDate = DateTime.Now;
+			runLog.CreatedByUserID = run.CreatedByUserID;
+			runLog.DeliverToLocationID = run.DeliverToLocationID;
+			runLog.DutyDate = run.DutyDate;
+			runLog.FinalDestinationLocationID = run.FinalDestinationLocationID;
+			runLog.OriginLocationID = run.OriginLocationID;
+			runLog.Urgency = run.Urgency;
+			runLog.Notes = run.Notes;
+			runLog.Boxes = products.Count;
+			runLog.CallerNumber = run.CallerNumber.Trim().Replace(" ", "");
+			runLog.CallerExt = run.CallerExt.Trim().Replace(" ", "");
+			runLog.RiderMemberID = null;
+			runLog.CollectDateTime = null;
+			runLog.DeliverDateTime = null;
+			runLog.HomeSafeDateTime = null;
+			runLog.VehicleTypeID = null;
+			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(runLog, products);
 		}
 
 		public bool CreateRunLog(DateTime callDateTime, int callFromLocationId, DateTime collectDateTime, int collectionLocationId, 
@@ -165,49 +90,51 @@ namespace SERVBLL
 			int finalDestinationLocationId, int originLocationId, int riderMemberId, int urgency, int vehicleTypeId, 
 			string productIdCsv, DateTime? homeSafeDateTime, string notes, string callerNumber, string callerExt)
 		{
+			log.LogStart();
 			List<int> prods = new List<int>();
 			foreach (string p in productIdCsv.Split(','))
 			{
 				if (p.Trim() != string.Empty) { prods.Add(int.Parse(p)); }
 			}
-			SERVDataContract.DbLinq.RunLog log = new SERVDataContract.DbLinq.RunLog();
-			log.CallDateTime = callDateTime;
-			log.CallFromLocationID = callFromLocationId;
-			log.CollectDateTime = collectDateTime;
-			log.CollectionLocationID = collectionLocationId;
-			log.ControllerMemberID = controllerMemberId;
-			log.CreateDate = DateTime.Now;
-			log.CreatedByUserID = createdByUserId;
-			log.DeliverDateTime = deliverDateTime;
-			log.DeliverToLocationID = deliverToLocationId;
-			log.DutyDate = dutyDate;
-			log.FinalDestinationLocationID = finalDestinationLocationId;
-			log.IsTransfer = 0;
-			log.OriginLocationID = originLocationId;
-			log.RiderMemberID = riderMemberId;
-			log.Urgency = urgency;
-			log.VehicleTypeID = vehicleTypeId;
-			log.HomeSafeDateTime = homeSafeDateTime;
-			log.Notes = notes;
-			log.Boxes = prods.Count;
-			log.CallerNumber = callerNumber.Trim().Replace(" ", "");
-			log.CallerExt = callerExt.Trim().Replace(" ", "");
+			SERVDataContract.DbLinq.RunLog runLog = new SERVDataContract.DbLinq.RunLog();
+			runLog.CallDateTime = callDateTime;
+			runLog.CallFromLocationID = callFromLocationId;
+			runLog.CollectDateTime = collectDateTime;
+			runLog.CollectionLocationID = collectionLocationId;
+			runLog.ControllerMemberID = controllerMemberId;
+			runLog.CreateDate = DateTime.Now;
+			runLog.CreatedByUserID = createdByUserId;
+			runLog.DeliverDateTime = deliverDateTime;
+			runLog.DeliverToLocationID = deliverToLocationId;
+			runLog.DutyDate = dutyDate;
+			runLog.FinalDestinationLocationID = finalDestinationLocationId;
+			runLog.IsTransfer = 0;
+			runLog.OriginLocationID = originLocationId;
+			runLog.RiderMemberID = riderMemberId;
+			runLog.Urgency = urgency;
+			runLog.VehicleTypeID = vehicleTypeId;
+			runLog.HomeSafeDateTime = homeSafeDateTime;
+			runLog.Notes = notes;
+			runLog.Boxes = prods.Count;
+			runLog.CallerNumber = callerNumber.Trim().Replace(" ", "");
+			runLog.CallerExt = callerExt.Trim().Replace(" ", "");
 			// Not completed run
 			if (riderMemberId == -1)
 			{
-				log.RiderMemberID = null;
-				log.CollectDateTime = null;
-				log.DeliverDateTime = null;
-				log.HomeSafeDateTime = null;
-				log.VehicleTypeID = null;
+				runLog.RiderMemberID = null;
+				runLog.CollectDateTime = null;
+				runLog.DeliverDateTime = null;
+				runLog.HomeSafeDateTime = null;
+				runLog.VehicleTypeID = null;
 			}
-			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prods) > 0;
+			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(runLog, prods) > 0;
 		}
 
 		public bool CreateAARunLog(DateTime dutyDate, DateTime collectDateTime, int controllerMemberId, 
 			int createdByUserId, DateTime deliverDateTime, DateTime returnDateTime, int riderMemberId, 
 			int vehicleTypeId, string boxesOutCsv, string boxesInCsv, string notes)
 		{
+			log.LogStart();
 			List<int> prodsOut = new List<int>();
 			foreach (string p in boxesOutCsv.Split(','))
 			{
@@ -221,26 +148,26 @@ namespace SERVBLL
 			// Out trip
 			if (prodsOut.Count > 0)
 			{
-				SERVDataContract.DbLinq.RunLog log = new SERVDataContract.DbLinq.RunLog();
-				log.CallDateTime = null;
-				log.CallFromLocationID = FindAADeliverLocationID();
-				log.CollectDateTime = collectDateTime;
-				log.CollectionLocationID = FindAAPickupLocationID();
-				log.ControllerMemberID = controllerMemberId;
-				log.CreateDate = DateTime.Now;
-				log.CreatedByUserID = createdByUserId;
-				log.DeliverDateTime = deliverDateTime;
-				log.DeliverToLocationID = FindAADeliverLocationID();
-				log.DutyDate = dutyDate;
-				log.FinalDestinationLocationID = FindAADeliverLocationID();
-				log.IsTransfer = 0;
-				log.OriginLocationID = FindAAPickupLocationID();
-				log.RiderMemberID = riderMemberId;
-				log.Urgency = 1;
-				log.VehicleTypeID = vehicleTypeId;
-				log.Notes = notes;
-				log.Boxes = prodsOut.Count;
-				SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prodsOut);
+				SERVDataContract.DbLinq.RunLog runLog = new SERVDataContract.DbLinq.RunLog();
+				runLog.CallDateTime = null;
+				runLog.CallFromLocationID = FindAADeliverLocationID();
+				runLog.CollectDateTime = collectDateTime;
+				runLog.CollectionLocationID = FindAAPickupLocationID();
+				runLog.ControllerMemberID = controllerMemberId;
+				runLog.CreateDate = DateTime.Now;
+				runLog.CreatedByUserID = createdByUserId;
+				runLog.DeliverDateTime = deliverDateTime;
+				runLog.DeliverToLocationID = FindAADeliverLocationID();
+				runLog.DutyDate = dutyDate;
+				runLog.FinalDestinationLocationID = FindAADeliverLocationID();
+				runLog.IsTransfer = 0;
+				runLog.OriginLocationID = FindAAPickupLocationID();
+				runLog.RiderMemberID = riderMemberId;
+				runLog.Urgency = 1;
+				runLog.VehicleTypeID = vehicleTypeId;
+				runLog.Notes = notes;
+				runLog.Boxes = prodsOut.Count;
+				SERVDALFactory.Factory.RunLogDAL().CreateRunLog(runLog, prodsOut);
 			}
 			// In Trip
 			if (prodsIn.Count > 0)
@@ -276,6 +203,7 @@ namespace SERVBLL
 
 		public RunLog Get(int runLogID)
 		{
+			log.LogStart();
 			SERVDataContract.DbLinq.RunLog metal = SERVDALFactory.Factory.RunLogDAL().Get(runLogID);
 			RunLog ret = new RunLog(metal);
 			ret.Products = new Dictionary<string, int>();
@@ -296,6 +224,7 @@ namespace SERVBLL
 
 		public List<RunLog> ListRecent(int count)
 		{
+			log.LogStart();
 			List<RunLog> ret = new List<RunLog>();
 			List<SERVDataContract.DbLinq.RunLog> lret = SERVDALFactory.Factory.RunLogDAL().ListRecent(count);
 			foreach(SERVDataContract.DbLinq.RunLog rl in lret)
@@ -320,7 +249,7 @@ namespace SERVBLL
 		{
 			List<RunLog> y = ListYesterdays();
 			if (y.Count == 0) { return null; }
-			string twitterId = System.Configuration.ConfigurationManager.AppSettings["TwitterID"];
+			string twitterId = "@" + System.Configuration.ConfigurationManager.AppSettings["TwitterID"];
 			int boxes = (from r in y
 			             select r.Boxes).Sum();
 			string[] opts = new string[]
@@ -345,6 +274,40 @@ namespace SERVBLL
 		{
 			string find = new System.Configuration.AppSettingsReader().GetValue("AADeliverLocation", typeof(string)).ToString();
 			return new LocationBLL().ListLocations(find)[0].LocationID;
+		}
+
+		public string ExecuteSQL(string sql)
+		{
+			DataTable ret = null;
+			try
+			{
+				ret = SERVDALFactory.Factory.RunLogDAL().ExecuteSQL(sql);
+			}
+			catch(Exception ex)
+			{
+				return "<table class='sqlResults'><tr><td>" + ex.Message + "</td></tr></table>";
+			}
+			StringBuilder b = new StringBuilder();
+			b.AppendLine("<table class='sqlResults'>");
+			string line = "<tr>";
+			foreach (DataColumn c in ret.Columns)
+			{
+				line += string.Format("<td>{0}</td>", c.ColumnName);
+			}
+			line += "</tr>";
+			b.AppendLine(line);
+			foreach (DataRow r in ret.Rows)
+			{
+				line = "<tr>";
+				foreach (object s in r.ItemArray)
+				{
+					line += string.Format("<td>{0}</td>", s.ToString());
+				}
+				line += "</tr>";
+				b.AppendLine(line.Substring(0, line.Length - 1));
+			}
+			b.AppendLine("</table>");
+			return b.ToString();
 		}
 
 		public List<Report> RunReports()

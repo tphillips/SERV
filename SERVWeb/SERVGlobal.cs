@@ -8,7 +8,7 @@ namespace SERVWeb
 
 		public static Service Service = new Service();
 
-		public static string SERVVersion = "1.9.5";
+		public static string SERVVersion = "1.9.7";
 
 		public static User User
 		{
@@ -24,6 +24,12 @@ namespace SERVWeb
 		}
 
 		public static string SystemName = "SERV";
+		public static string GroupName = new System.Configuration.AppSettingsReader().GetValue("GroupName", typeof(string)).ToString();
+		public static bool PushBulletEnabled = (bool) new System.Configuration.AppSettingsReader().GetValue("PushBulletEnabled", typeof(bool));
+		public static string TwitterID = new System.Configuration.AppSettingsReader().GetValue("TwitterID", typeof(string)).ToString();
+		public static string TwitterWidgetID = new System.Configuration.AppSettingsReader().GetValue("TwitterWidgetID", typeof(string)).ToString();
+		public static string ForumURL = new System.Configuration.AppSettingsReader().GetValue("ForumURL", typeof(string)).ToString();
+
 
 		public static void GotoDefault()
 		{
@@ -92,6 +98,14 @@ namespace SERVWeb
 #else
 			return "<script language=\"JavaScript\" src=\"js/opsMap." + SERVVersion + ".min.js\"></script>";
 #endif
+		}
+
+		public static bool AALogging
+		{
+			get
+			{
+				return true;
+			}
 		}
 
 	}

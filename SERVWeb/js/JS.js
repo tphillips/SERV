@@ -270,6 +270,7 @@ function DisplayMember(memberId)
 					if (json.d.Tags[x].TagName == "Controller") { $("#chkController").prop('checked', true); }
 					if (json.d.Tags[x].TagName == "OnRota") { $("#chkOnRota").prop('checked', true); }
 					if (json.d.Tags[x].TagName == "Committee") { $("#chkCommittee").prop('checked', true); }
+					if (json.d.Tags[x].TagName == "2Boxes") { $("#chk2Box").prop('checked', true); }
 				}
 				
 				loaded();
@@ -300,6 +301,7 @@ function DisplayLocation(locationId)
 			$("#txtLocationName").val(json.d.LocationName);
 			$("#txtLat").val(json.d.Lat);
 			$("#txtLng").val(json.d.Lng);
+			$("#txtPostCode").val(json.d.PostCode);
 			$("#chkHospital").prop('checked', json.d.Hospital == 1);
 			$("#chkChangeOver").prop('checked', json.d.ChangeOver == 1);
 			$("#chkBloodBank").prop('checked', json.d.BloodBank == 1);
@@ -325,8 +327,9 @@ function SaveLocation(locationId)
 		json,
 		function(json)
 		{
-			loaded();
+			loaded();	
 			$("#success").slideDown();
+			window.location.href="Locations.aspx";
 		},
 		function()
 		{
@@ -340,7 +343,7 @@ function JsonifyLocationFromForm(locationId)
 {
 	return '{"location":{"LocationID":' + locationId + ',' + 
 		'"LocationName":"' + $("#txtLocationName").val() + '","Hospital":"' + ($("#chkHospital").prop('checked') ? "1" : "0") + '",' + 
-		'"Lat":"' + $("#txtLat").val() + '","Lng":"' + $("#txtLng").val() + '",' + 
+		'"Lat":"' + $("#txtLat").val() + '","Lng":"' + $("#txtLng").val() + '","PostCode":"' + $("#txtPostCode").val() + '",' +
 		'"ChangeOver":"' + ($("#chkChangeOver").prop('checked')? "1" : "0") + '",' +
 		'"BloodBank":"' + ($("#chkBloodBank").prop('checked')? "1" : "0") + '",' + 
 		'"InNetwork":"' + ($("#chkInNetwork").prop('checked')? "1" : "0") + '", "Enabled":"1"}}';
@@ -704,7 +707,7 @@ function ListLocations(userLevel)
 		function(json)
 		{
 			var append = '<table class="table table-striped table-bordered table-condensed">' +
-			'<thead><tr><th></th><th>Location</th><th>Bloodbank</th><th>Handover</th><th>Hospital</th><th>Lat</th><th>Lng</th><th>In Network</th></tr></thead><tbody>';
+			'<thead><tr><th></th><th>Location</th><th>Bloodbank</th><th>Handover</th><th>Hospital</th><th>Lat</th><th>Lng</th><th>Post Code</th><th>In Network</th></tr></thead><tbody>';
 			for(var x = 0; x < json.d.length; x++)
 			{
 				var name ='<a href="ViewLocation.aspx?locationId=' + json.d[x].LocationID + '">' + json.d[x].LocationName + '</a>';
@@ -714,6 +717,7 @@ function ListLocations(userLevel)
 					"<td>" + (json.d[x].Hospital ? "X" : "") + "</td>" + 
 					"<td>" + (json.d[x].Lat ? json.d[x].Lat.substr(0,8) : "???") + "</td>" + 
 					"<td>" + (json.d[x].Lng ? json.d[x].Lng.substr(0,8) : "???") + "</td>" + 
+					"<td>" + (json.d[x].PostCode ? json.d[x].PostCode : "") + "</td>" + 
 					"<td>" + (json.d[x].InNetwork ? "X" : "") + "</td>" + 
 					"</tr>"
 				append += row;
@@ -953,8 +957,7 @@ function promptForLogin()
 
 function isValidTime(val)
 {
-	if (val.length != 5){ return false; }
-	if (val.indexOf(":") == -1 && val.indexOf(".") == -1) { return false; }
+	if (val.length < 4){ return false; }
 	if (val.indexOf("-") != -1) { return false; }
 	if (val.indexOf("+") != -1) { return false; }
 	return true;

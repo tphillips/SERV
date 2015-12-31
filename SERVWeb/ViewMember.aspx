@@ -90,6 +90,9 @@
 						<label>
 							<input type="checkbox" id="chkFundraiser" onchange="onTagChecked('chkFundraiser', 'Fundraiser')" /> Fundraiser - You are happy to be contacted (by phone or SMS) when SERV are arranging a fundraising event
 						</label>
+						<label>
+							<input type="checkbox" id="chk2Box" onchange="onTagChecked('chk2Box', '2Boxes')" /> 2 Box Capable - You are an advanced qualified rider and are happy to carry 2 boxes after undertaking your own vehicle suitability assessment
+						</label>
 					</div>
 				
 				</div>

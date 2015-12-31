@@ -13,8 +13,40 @@ namespace SERVBLL
 
 		static Logger log = new Logger();
 
+		private const int SCHEDULED_RUN_HOUR = 22;
+
 		public ControllerBLL()
 		{
+		}
+
+		public int OrderRun(int requestorMemberId, RunLog order, List<int> products)
+		{
+			new RunLogBLL().CreateOrder(order, products);
+			throw new NotImplementedException();
+		}
+
+		public void ProcessQueuedOrders()
+		{
+			List<RunLog> queue = new RunLogBLL().ListQueuedOrders();
+			foreach (RunLog order in queue)
+			{
+				// See if rider needs to be assigned
+				// decide on bike / car / hooleygan based on number of boxes, time and final destination
+				// Choose rider from on shift resources
+				// Request rider
+				// Set rider id on order and save
+			}
+		}
+
+		public void CheckActiveRunsProgress()
+		{
+			// Check for delayed pickups, drop offs, home safes
+			// raise exception to human
+		}
+
+		public void HandleIncomingMessage(Message message)
+		{
+			// List all orders which have the riderid assigned, parse and process
 		}
 
 		public bool DivertNumber(Member member, string overrideNumber)

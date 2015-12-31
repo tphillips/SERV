@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<configuration>
+  <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
+  </configSections>
+  <appSettings>
+    <add key="ConnectionString" value="DbLinqProvider=MySql;Server=localhost;Database=SERV;User=root;Password=Admin2015;DbLinqConnectionType=MySql.Data.MySqlClient.MySqlConnection, MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d;Allow Zero Datetime=True;Convert Zero Datetime=True" />
+    <add key="RawConnectionString" value="Server=localhost;Database=SERV;User=root;Password=Admin2015;Allow Zero Datetime=True;Convert Zero Datetime=True" />
+    <add key="GroupName" value="SERV DEMO GROUP" />
+    <add key="PushBulletEnabled" value="false" />
+    <add key="SMSProvider" value="AQL" />
+    <add key="SMSUser" value="Demo" />
+    <add key="SMSPassword" value="Demo" />
+    <add key="SMSFrom" value="SERV_DEMO" />
+    <add key="FlextelNumber" value="1224444" />
+    <add key="FlextelPin" value="1234" />
+    <add key="FlextelFormat" value="https://www.f-l-e-x-t-e-l.ltd.uk/cgi-bin/reroute.sh?alt=simple&amp;mode=divert&amp;flextel={0}&amp;pin={1}&amp;new_dest={2}" />
+    <add key="SendSwapNeededEmails" value="true" />
+    <add key="AAPickupLocation" value="" />
+    <add key="AADeliverLocation" value="" />
+    <add key="TweetTriggerEmailAddress" value="info@servdemo.org.uk" />
+    <add key="SystemMemberID" value="1" />
+    <add key="TwitterID" value="SERV_DEMO" />
+    <add key="TwitterWidgetID" value="12345" />
+    <add key="ForumURL" value="NoForum.htm" />
+  </appSettings>
+  <system.web>
+    <compilation defaultLanguage="C#" debug="true">
+      <assemblies>
+        <add assembly="System.Data.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+      </assemblies>
+    </compilation>
+    <customErrors mode="Off">
+    </customErrors>
+    <authentication mode="None">
+    </authentication>
+    <authorization>
+      <allow users="*" />
+    </authorization>
+    <httpHandlers>
+    </httpHandlers>
+    <trace enabled="false" localOnly="true" pageOutput="false" requestLimit="10" traceMode="SortByTime" />
+    <sessionState mode="InProc" cookieless="false" timeout="20" />
+    <globalization requestEncoding="utf-8" responseEncoding="utf-8" />
+    <pages>
+    </pages>
+  </system.web>
+  <log4net>
+    <appender name="FileAppender" type="log4net.Appender.FileAppender">
+      <file value="SERVLog.txt" />
+      <appendToFile value="true" />
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date [%thread] %-5level %logger [%property{NDC}] - %message%newline" />
+      </layout>
+    </appender>
+    <root>
+      <level value="DEBUG" />
+      <appender-ref ref="FileAppender" />
+    </root>
+  </log4net>
+</configuration>

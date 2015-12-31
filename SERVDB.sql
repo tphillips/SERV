@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS `SERV`.`Member` (
   `LastLat` VARCHAR(45) NULL,
   `LastLng` VARCHAR(45) NULL,
   `GroupID` INT NOT NULL,
+  `SystemController` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`MemberID`),
   INDEX `fk_Member_SERVGroup1_idx` (`GroupID` ASC),
   CONSTRAINT `fk_Member_SERVGroup1`
@@ -298,6 +299,7 @@ CREATE TABLE IF NOT EXISTS `SERV`.`RunLog` (
   `DutyDate` DATETIME NULL,
   `CallDateTime` DATETIME NULL,
   `CollectionLocationID` INT NOT NULL,
+  `AcceptedDateTime` DATETIME NULL,
   `CollectDateTime` DATETIME NULL,
   `DeliverDateTime` DATETIME NULL,
   `FinalDestinationLocationID` INT NOT NULL,
@@ -494,6 +496,54 @@ CREATE TABLE IF NOT EXISTS `SERV`.`Member_Calendar` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `SERV`.`MemberRejectedRun`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SERV`.`MemberRejectedRun` ;
+
+CREATE TABLE IF NOT EXISTS `SERV`.`MemberRejectedRun` (
+  `MemberID` INT NOT NULL,
+  `RunLogID` INT NOT NULL,
+  INDEX `fk_MemberRejectedRun_Member1_idx` (`MemberID` ASC),
+  INDEX `fk_MemberRejectedRun_RunLog1_idx` (`RunLogID` ASC),
+  CONSTRAINT `fk_MemberRejectedRun_Member1`
+    FOREIGN KEY (`MemberID`)
+    REFERENCES `SERV`.`Member` (`MemberID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_MemberRejectedRun_RunLog1`
+    FOREIGN KEY (`RunLogID`)
+    REFERENCES `SERV`.`RunLog` (`RunLogID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SERV`.`RunRejectionReason`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SERV`.`RunRejectionReason` ;
+
+CREATE TABLE IF NOT EXISTS `SERV`.`RunRejectionReason` (
+  `RunRejectionReasonID` INT NOT NULL AUTO_INCREMENT,
+  `Reason` VARCHAR(45) NULL,
+  PRIMARY KEY (`RunRejectionReasonID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `SERV`.`SystemSetting`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `SERV`.`SystemSetting` ;
+
+CREATE TABLE IF NOT EXISTS `SERV`.`SystemSetting` (
+  `SystemSettingID` INT NOT NULL AUTO_INCREMENT,
+  `SettingName` VARCHAR(45) NOT NULL,
+  `Value` VARCHAR(500) NOT NULL,
+  PRIMARY KEY (`SystemSettingID`))
+ENGINE = InnoDB;
+
 USE `SERV` ;
 
 -- -----------------------------------------------------
@@ -617,7 +667,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SERV`;
-INSERT INTO `SERV`.`SERVGroup` (`GroupID`, `Group`) VALUES (1, 'Surrey & South London');
+INSERT INTO `SERV`.`SERVGroup` (`GroupID`, `Group`) VALUES (1, 'SERV DEMO Group');
 
 COMMIT;
 
@@ -627,22 +677,22 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `SERV`;
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Tris', 'Phillips (Dev Box)', '2011-01-01', 'tris.phillips@gmail.com', '07429386911', NULL, 'Developer', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RH69SD', 1980, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Louis', 'Lane', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Peter', 'Parker', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Stanley', 'Stroman', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Brendon', 'Bodden', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Zackary', 'Zawislak', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Jerrod', 'Junk', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Wilber', 'Welles', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Henry', 'Taylor', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Edward', 'Phillips', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Ernest', 'Patterson', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Norma', 'Kelly', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Beverly', 'James', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Charles', 'Martin', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Donna', 'Cox', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`) VALUES (DEFAULT, 'Bonnie', 'Lopez', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Super', 'User', '2011-01-01', 'admin@servsystem.org', '07429386911', NULL, 'Developer', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'RH69SD', 1980, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Louis', 'Lane', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Peter', 'Parker', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Stanley', 'Stroman', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Brendon', 'Bodden', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Zackary', 'Zawislak', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Jerrod', 'Junk', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Wilber', 'Welles', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Henry', 'Taylor', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Edward', 'Phillips', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Ernest', 'Patterson', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Norma', 'Kelly', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Beverly', 'James', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Charles', 'Martin', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Donna', 'Cox', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
+INSERT INTO `SERV`.`Member` (`MemberID`, `FirstName`, `LastName`, `JoinDate`, `EmailAddress`, `MobileNumber`, `HomeNumber`, `Occupation`, `MemberStatusID`, `AvailabilityID`, `RiderAssesmentPassDate`, `AdQualPassDate`, `AdQualType`, `BikeType`, `CarType`, `Notes`, `Address1`, `Address2`, `Address3`, `Town`, `County`, `PostCode`, `BirthYear`, `NextOfKin`, `NextOfKinAddress`, `NextOfKinPhone`, `LegalConfirmation`, `LeaveDate`, `LastGDPGMPDate`, `OnDuty`, `LastLat`, `LastLng`, `GroupID`, `SystemController`) VALUES (DEFAULT, 'Bonnie', 'Lopez', NULL, '@', '07', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, DEFAULT);
 
 COMMIT;
 
@@ -723,6 +773,8 @@ INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (DEFAULT, 'Blood');
 INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (DEFAULT, 'AA');
 INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (DEFAULT, 'Milk');
 INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (DEFAULT, 'Water');
+INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (DEFAULT, 'Committee');
+INSERT INTO `SERV`.`Tag` (`TagID`, `Tag`) VALUES (DEFAULT, '2Boxes');
 
 COMMIT;
 
@@ -834,12 +886,45 @@ COMMIT;
 START TRANSACTION;
 USE `SERV`;
 INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`, `GroupID`) VALUES (DEFAULT, 'Blood', 1, 14, NULL, 0, 7, 4, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`, `GroupID`) VALUES (DEFAULT, 'AA Night', 1, 14, NULL, 1, 8, 1, NULL, NULL, NULL, 1);
 INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`, `GroupID`) VALUES (DEFAULT, 'Day Controller', 1, 14, NULL, 1, 3, 1, NULL, NULL, NULL, 1);
 INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`, `GroupID`) VALUES (DEFAULT, 'Night Controller', 1, 14, NULL, 0, 3, 1, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`, `GroupID`) VALUES (DEFAULT, 'AA Night Standby', 1, 14, NULL, 1, 8, 1, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`, `GroupID`) VALUES (DEFAULT, 'AA Daytime', 1, 14, NULL, 1, 8, 2, NULL, NULL, NULL, 1);
-INSERT INTO `SERV`.`Calendar` (`CalendarID`, `Name`, `SimpleCalendar`, `SimpleDaysIncrement`, `SequentialDayCount`, `VolunteerRemainsFree`, `RequiredTagID`, `DefaultRequirement`, `SortOrder`, `LastGenerated`, `GeneratedUpTo`, `GroupID`) VALUES (DEFAULT, 'Hooleygan', 1, 14, NULL, 0, 7, 1, NULL, NULL, NULL, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `SERV`.`RunRejectionReason`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SERV`;
+INSERT INTO `SERV`.`RunRejectionReason` (`RunRejectionReasonID`, `Reason`) VALUES (DEFAULT, 'Too Tired');
+INSERT INTO `SERV`.`RunRejectionReason` (`RunRejectionReasonID`, `Reason`) VALUES (DEFAULT, 'Bad Rider Choice');
+INSERT INTO `SERV`.`RunRejectionReason` (`RunRejectionReasonID`, `Reason`) VALUES (DEFAULT, 'Already Busy');
+INSERT INTO `SERV`.`RunRejectionReason` (`RunRejectionReasonID`, `Reason`) VALUES (DEFAULT, 'Mechanical Issues');
+INSERT INTO `SERV`.`RunRejectionReason` (`RunRejectionReasonID`, `Reason`) VALUES (DEFAULT, 'Weather');
+INSERT INTO `SERV`.`RunRejectionReason` (`RunRejectionReasonID`, `Reason`) VALUES (DEFAULT, 'Other');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `SERV`.`SystemSetting`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `SERV`;
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'SMSProvider', 'AQL');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'SMSUser', '-');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'SMSPassword', '-');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'SMSFrom', 'SERV');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'FlextelNumber', '-');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'FlextelPin', '-');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'FlextelFormat', 'https://www.f-l-e-x-t-e-l.ltd.uk/cgi-bin/reroute.sh?alt=simple&amp;mode=divert&amp;flextel={0}&amp;pin={1}&amp;new_dest={2}');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'SendSwapNeededEmails', 'true');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'AAPickupLocation', '-');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'AADeliverLocation', '-');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'TweetTriggerEmailAddress', '-');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'SystemMemberID', '-');
+INSERT INTO `SERV`.`SystemSetting` (`SystemSettingID`, `SettingName`, `Value`) VALUES (DEFAULT, 'TwitterID', '-');
 
 COMMIT;
 

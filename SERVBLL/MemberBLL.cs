@@ -12,7 +12,36 @@ namespace SERVBLL
 	public class MemberBLL : IMemberBLL
 	{
 
+		public enum RejectionReason
+		{
+			TooTired,
+			BadRiderChoice,
+			AlreadyBusy,
+			MechanicalIssues,
+			Weather,
+			Other
+		}
+
 		static Logger log = new Logger();
+
+
+		public void RejectOrder(int runLogId, RejectionReason reason)
+		{
+			// log the rejection, DONT clear the order memberid and raise an exception to the human controller.
+		}
+
+		public void LogRunPickup(int runLogId)
+		{
+		}
+
+		public void LogRunHandover(int runLogId)
+		{
+			// Complete the run log
+		}
+
+		public void LogHomeSafe(int runLogId)
+		{
+		}
 
 		public Member Get(int memberId)
 		{
@@ -32,6 +61,17 @@ namespace SERVBLL
 				log.Error(ex.Message, ex);
 				return null;
 			}
+		}
+
+		public Member GetSystemController()
+		{
+			SERVDataContract.DbLinq.Member lret = SERVDALFactory.Factory.MemberDAL().GetSystemController();
+			if (lret == null)
+			{
+				return null;
+			}
+			Member ret = new Member(lret);
+			return ret;
 		}
 
 		public Member GetByEmail(string email)

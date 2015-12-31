@@ -26,6 +26,27 @@ namespace SERVDAL
 				select rl).FirstOrDefault();
 		}
 
+		public void SetAcceptedDateTime(int runLogId)
+		{
+			RunLog l = (from rl in db.RunLog where rl.RunLogID == runLogId select rl).FirstOrDefault();
+			l.AcceptedDateTime = DateTime.Now;
+			db.SubmitChanges();
+		}
+
+		public List<RunLog> ListQueuedOrders()
+		{
+			return (from rl in db.RunLog where rl.AcceptedDateTime == null && rl.RiderMemberID == null
+				orderby rl.CallDateTime descending
+				select rl).ToList();
+		}
+
+		public List<RunLog> ListQueuedOrdersForMember(int memberID)
+		{
+			return (from rl in db.RunLog where rl.AcceptedDateTime == null && rl.RiderMemberID == memberID
+				orderby rl.CallDateTime descending
+				select rl).ToList();
+		}
+	
 		public List<RunLog> ListRecent(int recent)
 		{
 			return (from rl in db.RunLog where rl.DeliverDateTime != null
@@ -129,6 +150,11 @@ namespace SERVDAL
 		public DataTable RunReport(SERVDataContract.Report report)
 		{
 			return DBHelperFactory.DBHelper().ExecuteDataTable(report.Query);
+		}
+
+		public DataTable ExecuteSQL(string sql)
+		{
+			return DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 		}
 
 		/*

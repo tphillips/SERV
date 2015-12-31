@@ -9,6 +9,9 @@ namespace SERVIDAL
 	public interface IRunLogDAL : IDisposable
 	{
 		SERVDataContract.DbLinq.RunLog Get(int runLogID);
+		void SetAcceptedDateTime(int runLogId);
+		List<RunLog> ListQueuedOrders();
+		List<RunLog> ListQueuedOrdersForMember(int memberID);
 		List<RunLog> ListRecent(int recent);
 		List<RunLog> ListYesterdays();
 		bool CreateRawRecord(SERVDataContract.DbLinq.RawRunLog raw);
@@ -19,6 +22,7 @@ namespace SERVIDAL
 		DataTable RunReport(SERVDataContract.Report report);
 		DataTable Report_RunLog();
 		DataTable GetMemberUniqueRuns(int memberID);
+		DataTable ExecuteSQL(string sql);
 	}
 }
 
