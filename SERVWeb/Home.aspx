@@ -108,7 +108,7 @@
 					<li>Adding primary VRN to member form</li>
 					<li>Adding 2 box flag</li>
 					<li>Removing need for : in times on controller log</li>
-					<li>Removing AA logging ;( - Please use regular log form</li>
+					<li>Removing AA logging from primary log form</li>
 					<li>Adding PostCode to Locations</li>
 					<li>Prepping for multi region docker deployment</li>
 				</ul>

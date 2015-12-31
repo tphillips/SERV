@@ -10,5 +10,5 @@ cat ../../SERVDataContract/DbLinq.cs >> ../../SERVDataContract/DbLinq1.cs
 mv ../../SERVDataContract/DbLinq1.cs ../../SERVDataContract/DbLinq.cs
 sed 's/SERv/SERVDB/g' ../../SERVDataContract/DbLinq.cs > ../../SERVDataContract/DbLinq1.cs
 mv ../../SERVDataContract/DbLinq1.cs ../../SERVDataContract/DbLinq.cs
-sed 's/Name="serv./Name="SERV./g' ../../SERVDataContract/DbLinq.cs > ../../SERVDataContract/DbLinq1.cs
+sed 's/Name="serv./Name="/g' ../../SERVDataContract/DbLinq.cs > ../../SERVDataContract/DbLinq1.cs
 mv ../../SERVDataContract/DbLinq1.cs ../../SERVDataContract/DbLinq.cs

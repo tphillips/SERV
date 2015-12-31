@@ -276,7 +276,7 @@ namespace SERVDataContract.DbLinq
 #endif     // MONO_STRICT
 	#endregion
 	
-	[Table(Name="SERV.Availability")]
+	[Table(Name="Availability")]
 	public partial class Availability : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -423,7 +423,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.Calendar")]
+	[Table(Name="Calendar")]
 	public partial class Calendar : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -919,7 +919,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.CalendarEntry")]
+	[Table(Name="CalendarEntry")]
 	public partial class CalendarEntry : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -1281,7 +1281,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.CalendarRequirements")]
+	[Table(Name="CalendarRequirements")]
 	public partial class CalendarRequirements : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -1469,7 +1469,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.Karma")]
+	[Table(Name="Karma")]
 	public partial class Karma : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -1644,7 +1644,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.Location")]
+	[Table(Name="Location")]
 	public partial class Location : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -1990,7 +1990,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.Member")]
+	[Table(Name="Member")]
 	public partial class Member : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -3215,7 +3215,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.Member_Calendar")]
+	[Table(Name="Member_Calendar")]
 	public partial class MemberCalendar : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -3497,7 +3497,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.MemberRejectedRun")]
+	[Table(Name="MemberRejectedRun")]
 	public partial class MemberRejectedRun
 	{
 		
@@ -3642,7 +3642,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.MemberStatus")]
+	[Table(Name="MemberStatus")]
 	public partial class MemberStatus : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -3736,7 +3736,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.Member_Tag")]
+	[Table(Name="Member_Tag")]
 	public partial class MemberTag
 	{
 		
@@ -3881,7 +3881,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.Message")]
+	[Table(Name="Message")]
 	public partial class Message : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -4191,7 +4191,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.MessageType")]
+	[Table(Name="MessageType")]
 	public partial class MessageType : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -4318,7 +4318,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.Product")]
+	[Table(Name="Product")]
 	public partial class Product : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -4472,7 +4472,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.RawRunLog")]
+	[Table(Name="RawRunLog")]
 	public partial class RawRunLog : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -4901,7 +4901,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.RunLog")]
+	[Table(Name="RunLog")]
 	public partial class RunLog : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -5812,7 +5812,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.RunLog_Product")]
+	[Table(Name="RunLog_Product")]
 	public partial class RunLogProduct : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -6039,7 +6039,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.RunRejectionReason")]
+	[Table(Name="RunRejectionReason")]
 	public partial class RunRejectionReason : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -6133,7 +6133,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.SERVGroup")]
+	[Table(Name="SERVGroup")]
 	public partial class SERVDBGROUp : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -6289,7 +6289,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.SystemSetting")]
+	[Table(Name="SystemSetting")]
 	public partial class SystemSetting : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -6411,7 +6411,7 @@ namespace SERVDataContract.DbLinq
 		}
 	}
 	
-	[Table(Name="SERV.Tag")]
+	[Table(Name="Tag")]
 	public partial class Tag : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -6538,7 +6538,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.User")]
+	[Table(Name="User")]
 	public partial class User : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -6855,7 +6855,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.UserLevel")]
+	[Table(Name="UserLevel")]
 	public partial class UserLevel : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -6982,7 +6982,7 @@ namespace SERVDataContract.DbLinq
 		#endregion
 	}
 	
-	[Table(Name="SERV.VehicleType")]
+	[Table(Name="VehicleType")]
 	public partial class VehicleType : System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
