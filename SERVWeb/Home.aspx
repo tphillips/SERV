@@ -105,6 +105,7 @@
 			<div id="changeLog" style="display:none">
 				<ul>
 					<li>Adding basic validation to member form</li>
+					<li>Time formatting on reports</li>
 					<li>Adding primary VRN to member form</li>
 					<li>Adding 2 box flag</li>
 					<li>Removing need for : in times on controller log</li>

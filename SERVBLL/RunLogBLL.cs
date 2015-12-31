@@ -318,8 +318,8 @@ namespace SERVBLL
 			rep.Heading = "Recent Runs";
 			rep.Description = "Real time information from the controller log.";
 			rep.Anchor = "runLog";
-			rep.Query = "select RunLogID as ID, date(DutyDate) as 'Duty Date', coalesce(CallDateTime, 'N/A') as 'Call Date & Time', cf.Location as 'Call From', cl.Location as 'From', " +
-			            "dl.Location as 'To', coalesce(time(rl.CollectDateTime), 'NOT ACCEPTED') as Collected, time(rl.DeliverDateTime) as Delivered, " +
+			rep.Query = "select RunLogID as ID, date_format(DutyDate, '%Y-%m-%d') as 'Duty Date', coalesce(date_format(CallDateTime, '%Y-%m-%d %H:%i'), 'N/A') as 'Call Date & Time', cf.Location as 'Call From', cl.Location as 'From', " +
+				"dl.Location as 'To', coalesce(date_format(rl.CollectDateTime, '%H:%i'), 'NOT ACCEPTED') as Collected, date_format(rl.DeliverDateTime, '%H:%i') as Delivered, " +
 			            //"timediff(rl.DeliverDateTime, rl.CollectDateTime) as 'Run Time', " +
 			            "fl.Location as 'Destination', concat(m.FirstName, ' ', m.LastName) as Rider, v.VehicleType as 'Vehicle', rl.Description as 'Consignment', " +
 			            "concat(c.FirstName, ' ', c.LastName) as Controller from RunLog rl " +

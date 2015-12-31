@@ -29,6 +29,7 @@
 						<li><a href="Locations.aspx"><i class="icon-map-marker"></i> Locations List</a></li>
 						<li><a href="Calendars.aspx"><i class="icon-calendar"></i> Calendar Rota List</a></li>
 						<li class="divider"></li>
+						<li><a href="RecentRuns.aspx"><i class="icon-road"></i> Run Log</a></li>
 						<li class="dropdown-submenu">
 							<a tabindex="-1" href="RunStats.aspx"><i class="icon-print"></i> Reports and Stats</a>
 							<ul class="dropdown-menu">
@@ -47,8 +48,6 @@
 								<li><a href="RunStats.aspx#adQualMembers">AdQual Members</a></li>
 								<li><a href="RunStats.aspx#lastGdpDates">Last GDP Dates</a></li>
 								<li><a href="RunStats.aspx#riderAssessmentDates">Rider Assessment Dates</a></li>
-								<li class="divider"></li>
-								<li><a href="RecentRuns.aspx">Run Log</a></li>
 							</ul>
 						</li>
 						<li class="divider"></li>

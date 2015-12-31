@@ -292,10 +292,10 @@ namespace SERVDAL
 
 		public DataTable Report_RunLog()
 		{
-			string sql = "select RunLogID as ID, date(DutyDate) as 'DutyDate', " +
-						"coalesce(CallDateTime, 'N/A') as 'CallDateTime', cf.Location as 'CallFrom', cl.Location as 'From', " +
-			             "dl.Location as 'To', coalesce(time(rl.CollectDateTime), 'NOT ACCEPTED') as Collected, " +
-			             "time(rl.DeliverDateTime) as Delivered, " +
+			string sql = "select RunLogID as ID, date_format(DutyDate, '%Y-%m-%d') as 'DutyDate', " +
+				"coalesce(date_format(CallDateTime, '%Y-%m-%d %H:%i'), 'N/A') as 'CallDateTime', cf.Location as 'CallFrom', cl.Location as 'From', " +
+				"dl.Location as 'To', coalesce(date_format(rl.CollectDateTime, '%H:%i'), 'NOT ACCEPTED') as Collected, " +
+				"date_format(rl.DeliverDateTime, '%H:%i') as Delivered, " +
 			             //"timediff(rl.DeliverDateTime, rl.CollectDateTime) as 'Run Time', " +
 			             "fl.Location as 'Destination', concat(m.FirstName, ' ', m.LastName) as Rider, " +
 			             "v.VehicleType as 'Vehicle', rl.Description as 'Consignment', " +

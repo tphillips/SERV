@@ -315,7 +315,6 @@ function formatTime(input)
 	{
 		output = output.substring(0, 2) + ":" + output.substring(2,4);
 	}
-	alert(output);
 	return output;
 }
 
