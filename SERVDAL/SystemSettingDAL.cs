@@ -13,7 +13,7 @@ namespace SERVDAL
 	public class SystemSettingDAL : ISystemSettingDAL
 	{
 
-		static Logger log = new Logger();
+		//static Logger log = new Logger();
 		private SERVDataContract.DbLinq.SERVDB db;
 
 		public SystemSettingDAL()

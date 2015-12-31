@@ -795,23 +795,59 @@ function removeMemberTag(memberId, tag)
 
 function SaveBasicMember(memberId)
 {
-	loading();
-	$("#entry").slideUp();
-	var json = JsonifyBasicMemberFromForm(memberId);
-	callServerSide(
-		"Service/Service.asmx/SaveMember", 
-		json,
-		function(json)
-		{
-			loaded();
-			$("#success").slideDown();
-		},
-		function()
-		{
-			loaded();
-			$("#error").slideDown();
-		}
-	);
+	if (ValidateMemberForm())
+	{
+		loading();
+		$("#entry").slideUp();
+		var json = JsonifyBasicMemberFromForm(memberId);
+		callServerSide(
+			"Service/Service.asmx/SaveMember", 
+			json,
+			function(json)
+			{
+				loaded();
+				$("#success").slideDown();
+			},
+			function()
+			{
+				loaded();
+				$("#error").slideDown();
+			}
+		);
+	}
+}
+
+function ValidateMemberForm()
+{
+	if ($("#txtFirstName").val() == "")
+	{
+		niceAlert("You need to have a first name, your parents gave you one."); return false;
+	}
+	if ($("#txtLastName").val() == "")
+	{
+		niceAlert("You need to tell us your surname, your parents gave you one."); return false;
+	}
+	if ($("#txtEmail").val() == "")
+	{
+		niceAlert("You need to provide your Email Address."); return false;
+	}
+	if ($("#txtMobile").val() == "")
+	{
+		niceAlert("You need to provide your Mobile Number."); return false;
+	}
+	if ($("#txtPostCode").val() == "")
+	{
+		niceAlert("You need to provide your Post Code."); return false;
+	}
+	if ($("#txtNOK").val() == "")
+	{
+		niceAlert("You need to provide your Next of Kin Details."); return false;
+	}
+	if ($("#txtNOKPhone").val() == "")
+	{
+		niceAlert("You need to provide your Next of Kin Details."); return false;
+	}
+	return true;
 }
 
 function JsonifyBasicMemberFromForm(memberId)

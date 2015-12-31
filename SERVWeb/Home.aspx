@@ -104,6 +104,8 @@
 			<h5><a href="#" onclick="$('#changeLog').slideDown();">Recent Changes</a></h5>
 			<div id="changeLog" style="display:none">
 				<ul>
+					<li>Adding basic validation to member form</li>
+					<li>Adding primary VRN to member form</li>
 					<li>Adding 2 box flag</li>
 					<li>Removing need for : in times on controller log</li>
 					<li>Removing AA logging ;( - Please use regular log form</li>
