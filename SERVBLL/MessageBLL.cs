@@ -16,13 +16,17 @@ namespace SERVBLL
 
 	public class MessageBLL : IMessageBLL
 	{
+		private static string SMTP_SERVER = System.Configuration.ConfigurationManager.AppSettings["SMTP_Server"];
+		private static int SMTP_PORT = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SMTP_Port"]);
+		private static string MAIL_FROMADDRESS = System.Configuration.ConfigurationManager.AppSettings["Mail_FromAddress"];
+		private static string GroupName = System.Configuration.ConfigurationManager.AppSettings["GroupName"];
 
-		private static System.Net.Mail.SmtpClient c = new SmtpClient(SERVER);
+		private static string MAIL_FROM = $"{GroupName} Management System <{MAIL_FROMADDRESS}>";
+
+		private static System.Net.Mail.SmtpClient c = new SmtpClient(SMTP_SERVER, SMTP_PORT);
 		private static Logger log = new Logger();
 
-		private const string FROM = "noreply@system.servssl.org.uk";
-		private const string SERVER = "localhost";
-		public static string FOOTER = "\r\n\r\n\r\nThis message was sent from an unattended mailbox by the SERV SSL System.  Do not reply to this mail.  If you need to make contact, please use the Forum to PM Tristan Phillips.\r\n";
+		public static string FOOTER = "\r\n\r\n\r\nThis message was sent from an unattended mailbox by the " + GroupName + " Management System.  Do not reply to this mail.\r\n";
 
 		public MessageBLL()
 		{
@@ -351,7 +355,7 @@ namespace SERVBLL
 			{
 				return true;
 			}
-			MailMessage m = new MailMessage(FROM, address);
+			MailMessage m = new MailMessage(MAIL_FROM, address);
 			m.Body = body;
 			m.Subject = subject;
 			SERVDALFactory.Factory.MessageDAL().LogSentEmailMessage(address, m.Subject + " :: " + m.Body, senderUserID);

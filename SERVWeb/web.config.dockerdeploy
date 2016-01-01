@@ -23,6 +23,9 @@
     <add key="TwitterID" value="SERV_DEMO" />
     <add key="TwitterWidgetID" value="12345" />
     <add key="ForumURL" value="NoForum.htm" />
+    <add key="SMTP_Server" value="localhost" />
+    <add key="SMTP_Port" value="25" />
+    <add key="Mail_FromAddress" value="noreply@example.com" />
   </appSettings>
   <system.web>
     <compilation defaultLanguage="C#" debug="true">
