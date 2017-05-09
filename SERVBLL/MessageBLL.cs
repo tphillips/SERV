@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SERVIBLL;
 using SERVDataContract;
-using SERVDALFactory;
-using SERV.Utils;
 using System.Net.Mail;
 using System.Threading;
-using System.Web;
 using System.Net;
 using System.IO;
+using SERVDAL;
 
 namespace SERVBLL
 {
 
-	public class MessageBLL : IMessageBLL
+	public class MessageBLL
 	{
 
 		private static System.Net.Mail.SmtpClient c = new SmtpClient(SERVER);
@@ -247,7 +244,7 @@ namespace SERVBLL
 		{
 			numbers = numbers.Trim().Replace(" ", "");
 			if (numbers.EndsWith(",")) { numbers = numbers.Substring(0, numbers.Length - 1); }
-			SERVDALFactory.Factory.MessageDAL().LogSentSMSMessage(numbers, message, senderUserID);
+			new MessageDAL().LogSentSMSMessage(numbers, message, senderUserID);
 			if (!fromServ)
 			{
 				Member sender = new MemberBLL().GetByUserID(senderUserID);
@@ -354,7 +351,7 @@ namespace SERVBLL
 			MailMessage m = new MailMessage(FROM, address);
 			m.Body = body;
 			m.Subject = subject;
-			SERVDALFactory.Factory.MessageDAL().LogSentEmailMessage(address, m.Subject + " :: " + m.Body, senderUserID);
+			new MessageDAL().LogSentEmailMessage(address, m.Subject + " :: " + m.Body, senderUserID);
 			ParameterizedThreadStart pts = new ParameterizedThreadStart(_DoSendMail);
 			Thread t = new Thread(pts);
 			t.IsBackground = true;

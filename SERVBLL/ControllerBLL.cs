@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using SERVIBLL;
 using SERVDataContract;
-using SERVDALFactory;
-using SERV.Utils;
 
 namespace SERVBLL
 {
-	public class ControllerBLL : IControllerBLL
+	public class ControllerBLL
 	{
 
 		static Logger log = new Logger();

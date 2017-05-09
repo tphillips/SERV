@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
-using SERV.Utils;
-using SERV.Utils.Data;
 
 namespace SERVDataContract
 {

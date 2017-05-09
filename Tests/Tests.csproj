@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,13 +37,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\SERVBLLFactory\SERVBLLFactory.csproj">
-      <Project>{FAF1635A-4209-4888-A85E-46A0B3182682}</Project>
-      <Name>SERVBLLFactory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SERVIBLL\SERVIBLL.csproj">
-      <Project>{B6181FFC-0C16-4F17-A01C-32346BDB9A41}</Project>
-      <Name>SERVIBLL</Name>
+    <ProjectReference Include="..\SERVBLL\SERVBLL.csproj">
+      <Project>{785a132e-3053-46fc-88f5-c4b652334128}</Project>
+      <Name>SERVBLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\SERVDataContract\SERVDataContract.csproj">
       <Project>{573E75FE-EA15-42AA-8A9C-585437ECA586}</Project>

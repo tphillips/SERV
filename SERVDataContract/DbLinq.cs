@@ -3,7 +3,6 @@
 namespace SERVDataContract.DbLinq
 {
 	using System;
-	using System.ComponentModel;
 	using System.Data;
 #if MONO_STRICT
 	using System.Data.Linq;
@@ -13,8 +12,8 @@ namespace SERVDataContract.DbLinq
 #endif  // MONO_STRICT
 	using System.Data.Linq.Mapping;
 	using System.Diagnostics;
-	
-	
+
+
 	public partial class SERVDB : DataContext
 	{
 		

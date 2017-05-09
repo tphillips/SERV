@@ -1,14 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using SERVIBLL;
 using SERVDataContract;
-using SERVDALFactory;
-using SERV.Utils;
 
 namespace SERVBLL
 {
-	public class ShiftBLL : IShiftBLL
+	public class ShiftBLL
 	{
 
 		static Logger log = new Logger();

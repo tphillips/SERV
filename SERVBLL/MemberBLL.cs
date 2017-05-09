@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using SERVIBLL;
 using SERVDataContract;
-using SERVDALFactory;
 using SERV.Utils;
+using SERVDAL;
 
 namespace SERVBLL
 {
 
-	public class MemberBLL : IMemberBLL
+	public class MemberBLL
 	{
 
 		public enum RejectionReason
@@ -47,7 +45,7 @@ namespace SERVBLL
 		{
 			try
 			{
-				SERVDataContract.DbLinq.Member lret = SERVDALFactory.Factory.MemberDAL().Get(memberId);
+				SERVDataContract.DbLinq.Member lret = new MemberDAL().Get(memberId);
 				Member ret = new Member(lret);
 				ret.Tags = new List<Tag>();
 				for(int x = 0; x < lret.MemberTag.Count; x++)
@@ -65,7 +63,7 @@ namespace SERVBLL
 
 		public Member GetSystemController()
 		{
-			SERVDataContract.DbLinq.Member lret = SERVDALFactory.Factory.MemberDAL().GetSystemController();
+			SERVDataContract.DbLinq.Member lret = new MemberDAL().GetSystemController();
 			if (lret == null)
 			{
 				return null;
@@ -78,7 +76,7 @@ namespace SERVBLL
 		{
 			try
 			{
-				SERVDataContract.DbLinq.Member lret = SERVDALFactory.Factory.MemberDAL().GetByEmail(email);
+				SERVDataContract.DbLinq.Member lret = new MemberDAL().GetByEmail(email);
 				Member ret = new Member(lret);
 				ret.Tags = new List<Tag>();
 				for(int x = 0; x < lret.MemberTag.Count; x++)
@@ -98,7 +96,7 @@ namespace SERVBLL
 		{
 			try
 			{
-				SERVDataContract.DbLinq.Member lret = SERVDALFactory.Factory.MemberDAL().GetByUserID(senderUserID);
+				SERVDataContract.DbLinq.Member lret = new MemberDAL().GetByUserID(senderUserID);
 				Member ret = new Member(lret);
 				ret.Tags = new List<Tag>();
 				for(int x = 0; x < lret.MemberTag.Count; x++)
@@ -121,14 +119,14 @@ namespace SERVBLL
 			m.User.Add(new SERVDataContract.DbLinq.User(){ PasswordHash = "", UserLevelID =1});
 			m.MemberStatusID = 1;
 			m.JoinDate = DateTime.Now;
-			return SERVDALFactory.Factory.MemberDAL().Create(m);
+			return new MemberDAL().Create(m);
 		}	
 	
 		public int Save(Member member, User user)
 		{
 			try
 			{
-				using (SERVIDAL.IMemberDAL dal = SERVDALFactory.Factory.MemberDAL())
+				using (MemberDAL dal = new MemberDAL())
 				{
 					SERVDataContract.DbLinq.Member m = dal.Get(member.MemberID);
 					UpdatePolicyAttribute.MapPropertiesWithUpdatePolicy(member, m, user, user.MemberID == member.MemberID);
@@ -164,7 +162,7 @@ namespace SERVBLL
 		public List<Member> List(string search, bool onlyActive = true)
 		{
 			List<Member> ret = new List<Member>();
-			List<SERVDataContract.DbLinq.Member> members = SERVDALFactory.Factory.MemberDAL().List(search, onlyActive);
+			List<SERVDataContract.DbLinq.Member> members = new MemberDAL().List(search, onlyActive);
 			foreach(SERVDataContract.DbLinq.Member m in members)
 			{
 				Member mem = new Member() 
@@ -196,17 +194,17 @@ namespace SERVBLL
 		
 		public void AddMemberTag(int memberId, string tagName)
 		{
-			SERVDALFactory.Factory.MemberDAL().AddMemberTag(memberId, tagName);
+			new MemberDAL().AddMemberTag(memberId, tagName);
 		}
 
 		public void RemoveMemberTag(int memberId, string tagName)
 		{
-			SERVDALFactory.Factory.MemberDAL().RemoveMemberTag(memberId, tagName);
+			new MemberDAL().RemoveMemberTag(memberId, tagName);
 		}
 
 		public User Login(string username, string passwordHash)
 		{
-			using (SERVIDAL.IMemberDAL dal = SERVDALFactory.Factory.MemberDAL())
+			using (MemberDAL dal = new MemberDAL())
 			{
 				SERVDataContract.DbLinq.User u = dal.Login(username, passwordHash);
 				if (u == null)
@@ -220,17 +218,17 @@ namespace SERVBLL
 
 		public User GetUserForMember(int memberId)
 		{
-			return new User(SERVDALFactory.Factory.MemberDAL().GetUserForMember(memberId));
+			return new User(new MemberDAL().GetUserForMember(memberId));
 		}
 
 		public int GetUserIdForMember(int memberId)
 		{
-			return SERVDALFactory.Factory.MemberDAL().GetUserIdForMember(memberId);
+			return new MemberDAL().GetUserIdForMember(memberId);
 		}
 
 		public void SetPassword(string username, string passwordHash)
 		{
-			SERVDALFactory.Factory.MemberDAL().SetPasswordHash(username, passwordHash);
+			new MemberDAL().SetPasswordHash(username, passwordHash);
 		}
 
 		public void SendPasswordReset(string username)
@@ -252,7 +250,7 @@ namespace SERVBLL
 		public List<string> ListMobileNumbersWithAnyTagsIn(string tagsCsv)
 		{
 			List<string> ret = new List<string>();
-			List<string> res = SERVDALFactory.Factory.MemberDAL().ListMobileNumbersWithAnyTagsIn(tagsCsv);
+			List<string> res = new MemberDAL().ListMobileNumbersWithAnyTagsIn(tagsCsv);
 			foreach (string m in res)
 			{
 				string num = m.Replace(" ", "");
@@ -282,7 +280,7 @@ namespace SERVBLL
 			{
 				if (tag.Trim() != "")
 				{
-					seperateTagLists.Add(SERVDALFactory.Factory.MemberDAL().ListMobileNumbersWithTag(tag.Trim()));
+					seperateTagLists.Add(new MemberDAL().ListMobileNumbersWithTag(tag.Trim()));
 				}
 			}
 			// Primative intersection (I have a cold, there must be a better way . . .)
@@ -332,7 +330,7 @@ namespace SERVBLL
 		public List<Member> ListMembersWithAnyTagsIn(string tagsCsv)
 		{
 			List<Member> ret = new List<Member>();
-			List<SERVDataContract.DbLinq.Member> ms = SERVDALFactory.Factory.MemberDAL().ListMembersWithAnyTagsIn(tagsCsv);
+			List<SERVDataContract.DbLinq.Member> ms = new MemberDAL().ListMembersWithAnyTagsIn(tagsCsv);
 			foreach (SERVDataContract.DbLinq.Member m in ms)
 			{
 				ret.Add(new Member() { MemberID = m.MemberID, FirstName = m.FirstName, LastName = m.LastName });
@@ -343,7 +341,7 @@ namespace SERVBLL
 		public List<Member> ListAdministrators()
 		{
 			List<Member> ret = new List<Member>();
-			List<SERVDataContract.DbLinq.Member> ms = SERVDALFactory.Factory.MemberDAL().ListAdministrators();
+			List<SERVDataContract.DbLinq.Member> ms = new MemberDAL().ListAdministrators();
 			foreach (SERVDataContract.DbLinq.Member m in ms)
 			{
 				ret.Add(new Member() { MemberID = m.MemberID, FirstName = m.FirstName, LastName = m.LastName, EmailAddress = m.EmailAddress});
@@ -353,22 +351,22 @@ namespace SERVBLL
 
 		public void SetMemberUserLevel(int memberId, int userLevelId)
 		{
-			SERVDALFactory.Factory.MemberDAL().SetMemberUserLevel(memberId, userLevelId);
+			new MemberDAL().SetMemberUserLevel(memberId, userLevelId);
 		}
 	
 		public void GoOnDuty(int memberId)
 		{
-			SERVDALFactory.Factory.MemberDAL().GoOnDuty(memberId);
+			new MemberDAL().GoOnDuty(memberId);
 		}
 
 		public void GoOffDuty(int memberId)
 		{
-			SERVDALFactory.Factory.MemberDAL().GoOffDuty(memberId);
+			new MemberDAL().GoOffDuty(memberId);
 		}
 
 		public void UpdateLocation(int memberId, string lat, string lng)
 		{
-			SERVDALFactory.Factory.MemberDAL().UpdateLocation(memberId, lat, lng);
+			new MemberDAL().UpdateLocation(memberId, lat, lng);
 		}
 
 	}

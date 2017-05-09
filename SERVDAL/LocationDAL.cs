@@ -1,16 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using SERVIDAL;
 using SERVDataContract.DbLinq;
-using System.Data;
-using System.Data.Common;
-using SERV.Utils.Data;
 using System.Linq;
 
 namespace SERVDAL
 {
-	public class LocationDAL : ILocationDAL
+	public class LocationDAL : IDisposable
 	{
 		static Logger log = new Logger();
 		private SERVDataContract.DbLinq.SERVDB db;

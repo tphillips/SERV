@@ -1,7 +1,4 @@
 #define DYNMARK
-	
-
-using System;
 
 namespace SERV.Utils
 {

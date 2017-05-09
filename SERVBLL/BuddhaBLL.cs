@@ -1,14 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using SERVIBLL;
-using SERVDataContract;
-using SERVDALFactory;
-using SERV.Utils;
 
 namespace SERVBLL
 {
-	public class BuddhaBLL : IBuddhaBLL
+	public class BuddhaBLL
 	{
 
 		public BuddhaBLL()

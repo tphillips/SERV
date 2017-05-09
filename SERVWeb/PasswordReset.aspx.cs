@@ -1,6 +1,7 @@
 
 namespace SERVWeb
 {
+	using SERVBLL;
 	using System;
 	using System.Web;
 	using System.Web.UI;
@@ -12,7 +13,7 @@ namespace SERVWeb
 		{
 			if (txtEmail.Text.Trim() == string.Empty) { return; }
 
-			SERVBLLFactory.Factory.MemberBLL().SendPasswordReset(txtEmail.Text.Trim());
+			new MemberBLL().SendPasswordReset(txtEmail.Text.Trim());
 			Response.Redirect("Login.aspx");
 
 		}

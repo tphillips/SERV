@@ -1,18 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using SERVIDAL;
 using SERVDataContract.DbLinq;
 using System.Data;
-using System.Data.Common;
 using SERV.Utils.Data;
 using System.Linq;
-using System.IO;
 
 namespace SERVDAL
 {
 
-	public class MemberDAL : IMemberDAL, IDisposable
+	public class MemberDAL: IDisposable
 	{
 
 		static Logger log = new Logger();

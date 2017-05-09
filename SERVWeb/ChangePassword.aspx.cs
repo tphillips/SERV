@@ -5,6 +5,7 @@ namespace SERVWeb
 	using System.Web;
 	using System.Web.UI;
 	using SERVDataContract;
+	using SERVBLL;
 
 	public partial class ChangePassword : System.Web.UI.Page
 	{
@@ -20,7 +21,7 @@ namespace SERVWeb
 			User u = new Service().Login(txtEmail.Text.ToLower().Trim(), SERV.Utils.Authentication.Hash(txtEmail.Text.ToLower().Trim() + txtOldPassword.Text));
 			if (u != null && txtNewPassword.Text == txtNewPassword2.Text)
 			{
-				SERVBLLFactory.Factory.MemberBLL().SetPassword(u.Member.EmailAddress, SERV.Utils.Authentication.Hash(u.Member.EmailAddress.ToLower().Trim() + txtNewPassword.Text));
+				new MemberBLL().SetPassword(u.Member.EmailAddress, SERV.Utils.Authentication.Hash(u.Member.EmailAddress.ToLower().Trim() + txtNewPassword.Text));
 				Response.Redirect("Home.aspx?success=yes");
 			}
 		}

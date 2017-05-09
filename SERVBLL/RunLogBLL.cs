@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SERVIBLL;
 using SERVDataContract;
 using System.Data;
 using System.Linq;
+using SERVDAL;
 
 namespace SERVBLL
 {
 	// Short term raw import until all controllers are using the system directly.
 	// 1st hacky draft, needs refactoring
-	public class RunLogBLL : IRunLogBLL
+	public class RunLogBLL
 	{
 
 		static Logger log = new Logger();
@@ -25,7 +25,7 @@ namespace SERVBLL
 			RunLog r = Get(runLogId);
 			if (r.AcceptedDateTime == null && r.RiderMemberID == memberId)
 			{
-				SERVDALFactory.Factory.RunLogDAL().SetAcceptedDateTime(runLogId);
+				new RunLogDAL().SetAcceptedDateTime(runLogId);
 				return true;
 			}
 			else
@@ -38,7 +38,7 @@ namespace SERVBLL
 		{
 			log.LogStart();
 			List<RunLog> ret = new List<RunLog>();
-			List<SERVDataContract.DbLinq.RunLog> lret = SERVDALFactory.Factory.RunLogDAL().ListQueuedOrders();
+			List<SERVDataContract.DbLinq.RunLog> lret = new RunLogDAL().ListQueuedOrders();
 			foreach(SERVDataContract.DbLinq.RunLog rl in lret)
 			{
 				ret.Add(Get(rl.RunLogID));
@@ -50,7 +50,7 @@ namespace SERVBLL
 		{
 			log.LogStart();
 			List<RunLog> ret = new List<RunLog>();
-			List<SERVDataContract.DbLinq.RunLog> lret = SERVDALFactory.Factory.RunLogDAL().ListQueuedOrdersForMember(memberId);
+			List<SERVDataContract.DbLinq.RunLog> lret = new RunLogDAL().ListQueuedOrdersForMember(memberId);
 			foreach(SERVDataContract.DbLinq.RunLog rl in lret)
 			{
 				ret.Add(Get(rl.RunLogID));
@@ -82,7 +82,7 @@ namespace SERVBLL
 			runLog.DeliverDateTime = null;
 			runLog.HomeSafeDateTime = null;
 			runLog.VehicleTypeID = null;
-			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(runLog, products);
+			return new RunLogDAL().CreateRunLog(runLog, products);
 		}
 
 		public bool CreateRunLog(DateTime callDateTime, int callFromLocationId, DateTime collectDateTime, int collectionLocationId, 
@@ -127,7 +127,7 @@ namespace SERVBLL
 				runLog.HomeSafeDateTime = null;
 				runLog.VehicleTypeID = null;
 			}
-			return SERVDALFactory.Factory.RunLogDAL().CreateRunLog(runLog, prods) > 0;
+			return new RunLogDAL().CreateRunLog(runLog, prods) > 0;
 		}
 
 		public bool CreateAARunLog(DateTime dutyDate, DateTime collectDateTime, int controllerMemberId, 
@@ -167,7 +167,7 @@ namespace SERVBLL
 				runLog.VehicleTypeID = vehicleTypeId;
 				runLog.Notes = notes;
 				runLog.Boxes = prodsOut.Count;
-				SERVDALFactory.Factory.RunLogDAL().CreateRunLog(runLog, prodsOut);
+				new RunLogDAL().CreateRunLog(runLog, prodsOut);
 			}
 			// In Trip
 			if (prodsIn.Count > 0)
@@ -191,20 +191,20 @@ namespace SERVBLL
 				log.VehicleTypeID = vehicleTypeId;
 				log.Notes = notes;
 				log.Boxes = prodsIn.Count;
-				SERVDALFactory.Factory.RunLogDAL().CreateRunLog(log, prodsIn);
+				new RunLogDAL().CreateRunLog(log, prodsIn);
 			}
 			return true;
 		}
 
 		public void DeleteRun(int runLogID)
 		{
-			SERVDALFactory.Factory.RunLogDAL().DeleteRunLog(runLogID);
+			new RunLogDAL().DeleteRunLog(runLogID);
 		}
 
 		public RunLog Get(int runLogID)
 		{
 			log.LogStart();
-			SERVDataContract.DbLinq.RunLog metal = SERVDALFactory.Factory.RunLogDAL().Get(runLogID);
+			SERVDataContract.DbLinq.RunLog metal = new RunLogDAL().Get(runLogID);
 			RunLog ret = new RunLog(metal);
 			ret.Products = new Dictionary<string, int>();
 			foreach (SERVDataContract.DbLinq.RunLogProduct rlp in metal.RunLogProduct)
@@ -226,7 +226,7 @@ namespace SERVBLL
 		{
 			log.LogStart();
 			List<RunLog> ret = new List<RunLog>();
-			List<SERVDataContract.DbLinq.RunLog> lret = SERVDALFactory.Factory.RunLogDAL().ListRecent(count);
+			List<SERVDataContract.DbLinq.RunLog> lret = new RunLogDAL().ListRecent(count);
 			foreach(SERVDataContract.DbLinq.RunLog rl in lret)
 			{
 				ret.Add(new RunLog(rl));
@@ -237,7 +237,7 @@ namespace SERVBLL
 		public List<RunLog> ListYesterdays()
 		{
 			List<RunLog> ret = new List<RunLog>();
-			List<SERVDataContract.DbLinq.RunLog> lret = SERVDALFactory.Factory.RunLogDAL().ListYesterdays();
+			List<SERVDataContract.DbLinq.RunLog> lret = new RunLogDAL().ListYesterdays();
 			foreach(SERVDataContract.DbLinq.RunLog rl in lret)
 			{
 				ret.Add(new RunLog(rl));
@@ -281,7 +281,7 @@ namespace SERVBLL
 			DataTable ret = null;
 			try
 			{
-				ret = SERVDALFactory.Factory.RunLogDAL().ExecuteSQL(sql);
+				ret = new RunLogDAL().ExecuteSQL(sql);
 			}
 			catch(Exception ex)
 			{
@@ -669,7 +669,7 @@ namespace SERVBLL
 
 			foreach (Report r in reports)
 			{
-				r.Results = SERVDALFactory.Factory.RunLogDAL().RunReport(r);
+				r.Results = new RunLogDAL().RunReport(r);
 			}
 
 			return reports;
@@ -678,7 +678,7 @@ namespace SERVBLL
 		public string[] GetMemberUniqueRuns(int memberID)
 		{
 			List<string> ret = new List<string>();
-			DataTable t = SERVDALFactory.Factory.RunLogDAL().GetMemberUniqueRuns(memberID);
+			DataTable t = new RunLogDAL().GetMemberUniqueRuns(memberID);
 			if (t != null)
 			{
 				foreach (DataRow r in t.Rows)
@@ -691,7 +691,7 @@ namespace SERVBLL
 
 		public DataTable Report_RunLog()
 		{
-			return SERVDALFactory.Factory.RunLogDAL().Report_RunLog();
+			return new RunLogDAL().Report_RunLog();
 		}
 
 	}

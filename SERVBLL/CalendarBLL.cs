@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using SERV.Utils;
-using SERVDALFactory;
-using SERVIDAL;
 using SERVDataContract;
-using SERVIBLL;
 using System.Linq;
 using System.Threading;
+using SERVDAL;
 
 namespace SERVBLL
 {
-	public class CalendarBLL : ICalendarBLL
+	public class CalendarBLL
 	{
 		const int GENERATE_CALENDAR_DAYS = 182;
 		const int SHIFT_THRESHOLD_HOUR = 6;
@@ -30,7 +26,7 @@ namespace SERVBLL
 		public List<Calendar> ListCalendars()
 		{
 			List<Calendar> ret = new List<Calendar>();
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				List<SERVDataContract.DbLinq.Calendar> cals = dal.ListCalendars();
 				foreach (SERVDataContract.DbLinq.Calendar c in cals)
@@ -46,12 +42,12 @@ namespace SERVBLL
 			log.LogStart();
 			SERVDataContract.DbLinq.Calendar c = new SERVDataContract.DbLinq.Calendar();
 			UpdatePolicyAttribute.MapPropertiesWithUpdatePolicy(cal, c, user, false);
-			return SERVDALFactory.Factory.CalendarDAL().Create(c);
+			return new CalendarDAL().Create(c);
 		}
 
 		public Calendar Get(int calendarId)
 		{
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				SERVDataContract.DbLinq.Calendar lret = dal.Get(calendarId);
 				Calendar ret = new Calendar(lret);
@@ -61,25 +57,25 @@ namespace SERVBLL
 
 		public bool SaveCalendarProps(int calendarId, string calendarName, int sortOrder, int requiredTagId, int defaultRequirement)
 		{
-			return SERVDALFactory.Factory.CalendarDAL().SaveCalendarProps(calendarId, calendarName, sortOrder, requiredTagId, defaultRequirement);
+			return new CalendarDAL().SaveCalendarProps(calendarId, calendarName, sortOrder, requiredTagId, defaultRequirement);
 		}
 
 		public bool RosterVolunteer(int calendarId, int memberId, string rosteringWeek, int rosteringDay)
 		{
-			SERVDALFactory.Factory.CalendarDAL().RosterVolunteer(calendarId, memberId, rosteringWeek, rosteringDay);
+			new CalendarDAL().RosterVolunteer(calendarId, memberId, rosteringWeek, rosteringDay);
 			return true;
 		}
 
 		public bool RemoveRotaSlot(int calendarId, int memberId, string rosteringWeek, int rosteringDay)
 		{
-			SERVDALFactory.Factory.CalendarDAL().RemoveRotaSlot(calendarId, memberId, rosteringWeek, rosteringDay);
+			new CalendarDAL().RemoveRotaSlot(calendarId, memberId, rosteringWeek, rosteringDay);
 			return true;
 		}
 
 		public List<RosteredVolunteer> ListRosteredVolunteers(int calendarId)
 		{
 			List<RosteredVolunteer> ret = new List<RosteredVolunteer>();
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				List<SERVDataContract.DbLinq.MemberCalendar> lret = dal.ListRosteredVolunteers(calendarId);
 				foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
@@ -93,7 +89,7 @@ namespace SERVBLL
 		public List<RosteredVolunteer> ListRosteredVolunteers(string week, int day)
 		{
 			List<RosteredVolunteer> ret = new List<RosteredVolunteer>();
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				List<SERVDataContract.DbLinq.MemberCalendar> lret = dal.ListRosteredVolunteers(week, day);
 				foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
@@ -134,7 +130,7 @@ namespace SERVBLL
 			List<Member> ret = new List<Member>();
 			DateTime shiftDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 			if (DateTime.Now.Hour < SHIFT_THRESHOLD_HOUR){ shiftDate = shiftDate.AddDays(-1); }
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				List<SERVDataContract.DbLinq.Member> lret = dal.ListMembersOnShift(calendarId, shiftDate);
 				foreach (SERVDataContract.DbLinq.Member m in lret)
@@ -148,7 +144,7 @@ namespace SERVBLL
 		public List<RosteredVolunteer> ListRosteredVolunteers()
 		{
 			List<RosteredVolunteer> ret = new List<RosteredVolunteer>();
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				List<SERVDataContract.DbLinq.MemberCalendar> lret = dal.ListRosteredVolunteers();
 				foreach (SERVDataContract.DbLinq.MemberCalendar mc in lret)
@@ -162,7 +158,7 @@ namespace SERVBLL
 		public CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId, bool adhoc)
 		{
 			DateTime cleanDate = new DateTime(date.Year, date.Month, date.Day);
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				SERVDataContract.DbLinq.CalendarEntry entry = dal.GetCalendarEntry(cleanDate, calendarId, memberId, adhoc ? 1 : 0);
 				if (entry == null)
@@ -175,7 +171,7 @@ namespace SERVBLL
 
 		public CalendarEntry GetCalendarEntry(int calendarEntryId)
 		{
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				SERVDataContract.DbLinq.CalendarEntry entry = dal.GetCalendarEntry(calendarEntryId);
 				if (entry == null)
@@ -189,7 +185,7 @@ namespace SERVBLL
 		public CalendarEntry GetCalendarEntry(DateTime date, int calendarId, int memberId)
 		{
 			DateTime cleanDate = new DateTime(date.Year, date.Month, date.Day);
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				SERVDataContract.DbLinq.CalendarEntry entry = dal.GetCalendarEntry(cleanDate, calendarId, memberId);
 				if (entry == null)
@@ -203,7 +199,7 @@ namespace SERVBLL
 		public List<CalendarEntry> ListCalendarEntries(DateTime date)
 		{
 			List<CalendarEntry> ret = new List<CalendarEntry>();
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				List<SERVDataContract.DbLinq.CalendarEntry> lret = dal.ListCalendarEntries(date);
 				foreach (SERVDataContract.DbLinq.CalendarEntry e in lret)
@@ -217,7 +213,7 @@ namespace SERVBLL
 		public List<CalendarEntry> ListCalendarEntries(DateTime date, int days)
 		{
 			List<CalendarEntry> ret = new List<CalendarEntry>();
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				List<SERVDataContract.DbLinq.CalendarEntry> lret = dal.ListCalendarEntries(date, date.AddDays(days));
 				foreach (SERVDataContract.DbLinq.CalendarEntry e in lret)
@@ -357,7 +353,7 @@ namespace SERVBLL
 
 		public CalendarEntry GetMemberNextShift(int memberID)
 		{
-			using (ICalendarDAL dal = SERVDALFactory.Factory.CalendarDAL())
+			using (CalendarDAL dal = new CalendarDAL())
 			{
 				SERVDataContract.DbLinq.CalendarEntry lret = dal.GetMemberNextShift(memberID);
 				if (lret != null)
@@ -382,18 +378,18 @@ namespace SERVBLL
 				MarkShiftSwapNoLongerNeeded(e.CalendarEntryID);
 				return e.CalendarEntryID;
 			}
-			int ret = SERVDALFactory.Factory.CalendarDAL().CreateCalendarEntry(calendarID, memberID, cleanDate, adHoc);
+			int ret = new CalendarDAL().CreateCalendarEntry(calendarID, memberID, cleanDate, adHoc);
 			return ret;
 		}
 
 		void MarkShiftSwapNoLongerNeeded(int calendarEntryID)
 		{
-			SERVDALFactory.Factory.CalendarDAL().MarkShiftSwapNoLongerNeeded(calendarEntryID);
+			new CalendarDAL().MarkShiftSwapNoLongerNeeded(calendarEntryID);
 		}
 
 		public bool MarkShiftSwapNeeded(int calendarId, int memberId, DateTime shiftDate)
 		{
-			bool ret = SERVDALFactory.Factory.CalendarDAL().MarkShiftSwapNeeded(calendarId, memberId, shiftDate);
+			bool ret = new CalendarDAL().MarkShiftSwapNeeded(calendarId, memberId, shiftDate);
 			if (ret)
 			{
 				new MessageBLL().SendShiftSwapNeededEmail(memberId, calendarId, shiftDate);
@@ -421,7 +417,7 @@ namespace SERVBLL
 
 		public void RemoveCalendarEntry(int calendarEntryID)
 		{
-			SERVDALFactory.Factory.CalendarDAL().RemoveCalendarEntry(calendarEntryID);
+			new CalendarDAL().RemoveCalendarEntry(calendarEntryID);
 		}
 			
 		public void GenerateCalendar()
@@ -495,7 +491,7 @@ namespace SERVBLL
 
 		void SetCalendarLastGenerateDate(DateTime now, DateTime curDay)
 		{
-			SERVDALFactory.Factory.CalendarDAL().SetCalendarLastGenerateDate(curDay);
+			new CalendarDAL().SetCalendarLastGenerateDate(curDay);
 		}
 
 		public DateTime GetCurrentWeekAStartDate()

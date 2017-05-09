@@ -1,16 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using SERVIDAL;
 using SERVDataContract.DbLinq;
 using System.Data;
-using System.Data.Common;
 using SERV.Utils.Data;
 using System.Linq;
 
 namespace SERVDAL
 {
-	public class RunLogDAL : IRunLogDAL
+	public class RunLogDAL
 	{
 		private SERVDataContract.DbLinq.SERVDB db;
 
@@ -307,7 +304,7 @@ namespace SERVDAL
 			             "join Location dl on dl.LocationID = rl.DeliverToLocationID " +
 			             "join Location fl on fl.LocationID = rl.FinalDestinationLocationID " +
 			             "left join VehicleType v on v.VehicleTypeID = rl.VehicleTypeID " +
-			             "where DutyDate > '2013-12-31' or CallDateTime > '2013-12-31' " +
+			             "where DutyDate > '2016-12-31' or CallDateTime > '2016-12-31' " +
 			             "order by rl.DutyDate desc, rl.CallDateTime desc;";
 			DataTable ret = DBHelperFactory.DBHelper().ExecuteDataTable(sql);
 			return ret;

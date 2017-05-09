@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,6 +11,19 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SERVWeb</RootNamespace>
     <AssemblyName>SERVWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,7 +51,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Web.Services" />
     <Reference Include="MySql.Data">
@@ -47,44 +66,60 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
         <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
+    <VisualStudio>
+      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49597/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
-    <Folder Include="Service\" />
-    <Folder Include="img\" />
-    <Folder Include="Register\" />
-    <Folder Include="img\error\" />
-    <Folder Include="img\screenshots\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SERVBLLFactory\SERVBLLFactory.csproj">
-      <Project>{FAF1635A-4209-4888-A85E-46A0B3182682}</Project>
-      <Name>SERVBLLFactory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SERVDataContract\SERVDataContract.csproj">
-      <Project>{573E75FE-EA15-42AA-8A9C-585437ECA586}</Project>
-      <Name>SERVDataContract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SERVIBLL\SERVIBLL.csproj">
-      <Project>{B6181FFC-0C16-4F17-A01C-32346BDB9A41}</Project>
-      <Name>SERVIBLL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DBHelperProvider\DBHelperProvider.csproj">
-      <Project>{F3A5BDEA-6D9B-4EF2-B0FC-4E2758ECB5E2}</Project>
+      <Project>{f3a5bdea-6d9b-4ef2-b0fc-4e2758ecb5e2}</Project>
       <Name>DBHelperProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\SERV.Utils\SERV.Utils.csproj">
-      <Project>{11642B2B-034E-4F46-97B1-D005CA169BCE}</Project>
+      <Project>{11642b2b-034e-4f46-97b1-d005ca169bce}</Project>
       <Name>SERV.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SERVBLL\SERVBLL.csproj">
+      <Project>{785a132e-3053-46fc-88f5-c4b652334128}</Project>
+      <Name>SERVBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SERVDAL\SERVDAL.csproj">
+      <Project>{174895a9-f293-4331-a268-891ed4a366c8}</Project>
+      <Name>SERVDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SERVDataContract\SERVDataContract.csproj">
+      <Project>{573e75fe-ea15-42aa-8a9c-585437eca586}</Project>
+      <Name>SERVDataContract</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -190,33 +225,39 @@
   <ItemGroup>
     <Compile Include="Service\Service.asmx.cs">
       <DependentUpon>Service.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Master.master.cs">
       <DependentUpon>Master.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Master.master.designer.cs">
       <DependentUpon>Master.master</DependentUpon>
     </Compile>
     <Compile Include="TopControl.ascx.cs">
       <DependentUpon>TopControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TopControl.ascx.designer.cs">
       <DependentUpon>TopControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewMember.aspx.cs">
       <DependentUpon>ViewMember.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewMember.aspx.designer.cs">
       <DependentUpon>ViewMember.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -224,123 +265,144 @@
     <Compile Include="SERVGlobal.cs" />
     <Compile Include="Panels.ascx.cs">
       <DependentUpon>Panels.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Panels.ascx.designer.cs">
       <DependentUpon>Panels.ascx</DependentUpon>
     </Compile>
     <Compile Include="Members.aspx.cs">
       <DependentUpon>Members.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Members.aspx.designer.cs">
       <DependentUpon>Members.aspx</DependentUpon>
     </Compile>
     <Compile Include="ChangePassword.aspx.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ChangePassword.aspx.designer.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="SMS.aspx.cs">
       <DependentUpon>SMS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SMS.aspx.designer.cs">
       <DependentUpon>SMS.aspx</DependentUpon>
     </Compile>
     <Compile Include="ControllerLog.aspx.cs">
       <DependentUpon>ControllerLog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ControllerLog.aspx.designer.cs">
       <DependentUpon>ControllerLog.aspx</DependentUpon>
     </Compile>
     <Compile Include="Locations.aspx.cs">
       <DependentUpon>Locations.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Locations.aspx.designer.cs">
       <DependentUpon>Locations.aspx</DependentUpon>
     </Compile>
     <Compile Include="RunStats.aspx.cs">
       <DependentUpon>RunStats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RunStats.aspx.designer.cs">
       <DependentUpon>RunStats.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewLocation.aspx.cs">
       <DependentUpon>ViewLocation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewLocation.aspx.designer.cs">
       <DependentUpon>ViewLocation.aspx</DependentUpon>
     </Compile>
     <Compile Include="OpsMap.aspx.cs">
       <DependentUpon>OpsMap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OpsMap.aspx.designer.cs">
       <DependentUpon>OpsMap.aspx</DependentUpon>
     </Compile>
     <Compile Include="PasswordReset.aspx.cs">
       <DependentUpon>PasswordReset.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PasswordReset.aspx.designer.cs">
       <DependentUpon>PasswordReset.aspx</DependentUpon>
     </Compile>
     <Compile Include="RecentRuns.aspx.cs">
       <DependentUpon>RecentRuns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RecentRuns.aspx.designer.cs">
       <DependentUpon>RecentRuns.aspx</DependentUpon>
     </Compile>
     <Compile Include="TakeControl.aspx.cs">
       <DependentUpon>TakeControl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TakeControl.aspx.designer.cs">
       <DependentUpon>TakeControl.aspx</DependentUpon>
     </Compile>
     <Compile Include="Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
     <Compile Include="Calendars.aspx.cs">
       <DependentUpon>Calendars.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Calendars.aspx.designer.cs">
       <DependentUpon>Calendars.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewRota.aspx.cs">
       <DependentUpon>ViewRota.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewRota.aspx.designer.cs">
       <DependentUpon>ViewRota.aspx</DependentUpon>
     </Compile>
     <Compile Include="Calendar.aspx.cs">
       <DependentUpon>Calendar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Calendar.aspx.designer.cs">
       <DependentUpon>Calendar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Forum.aspx.cs">
       <DependentUpon>Forum.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Forum.aspx.designer.cs">
       <DependentUpon>Forum.aspx</DependentUpon>
     </Compile>
     <Compile Include="BloodBoxBingo.aspx.cs">
       <DependentUpon>BloodBoxBingo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BloodBoxBingo.aspx.designer.cs">
       <DependentUpon>BloodBoxBingo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Service\MobileService.asmx.cs">
       <DependentUpon>MobileService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DBQuery.aspx.cs">
       <DependentUpon>DBQuery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DBQuery.aspx.designer.cs">
       <DependentUpon>DBQuery.aspx</DependentUpon>

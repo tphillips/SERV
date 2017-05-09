@@ -4,11 +4,11 @@ namespace SERVWeb
 	using System;
 	using System.Web;
 	using System.Web.UI;
-	using SERVBLLFactory;
 	using System.Data;
 	using SERVDataContract;
 	using System.Collections.Generic;
 	using System.Web.UI.WebControls;
+	using SERVBLL;
 
 	public partial class RunStats : System.Web.UI.Page
 	{
@@ -26,7 +26,7 @@ namespace SERVWeb
 		protected override void OnLoad (EventArgs e)
 		{
 			base.OnLoad(e);
-			List<Report> reports = SERVBLLFactory.Factory.RunLogBLL().RunReports();
+			List<Report> reports = new RunLogBLL().RunReports();
 			ContentPlaceHolder contentPlaceholderContent = (ContentPlaceHolder)Master.FindControl("contentPlaceholder");
 			contentPlaceholderContent.Controls.AddAt(contentPlaceholderContent.Controls.Count-1, new Literal() { 
 				Text = "<div class=\"alert\">\n  <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n  " +

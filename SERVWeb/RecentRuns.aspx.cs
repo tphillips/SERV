@@ -1,6 +1,7 @@
 
 namespace SERVWeb
 {
+	using SERVBLL;
 	using System;
 	using System.Web;
 	using System.Web.UI;
@@ -11,7 +12,7 @@ namespace SERVWeb
 		protected override void OnLoad (EventArgs e)
 		{
 			SERVGlobal.AssertAuthentication();
-			dgRecentRuns.DataSource = SERVBLLFactory.Factory.RunLogBLL().Report_RunLog();
+			dgRecentRuns.DataSource = new RunLogBLL().Report_RunLog();
 			dgRecentRuns.DataBind();
 		}
 

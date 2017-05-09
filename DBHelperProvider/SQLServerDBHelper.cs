@@ -1,7 +1,6 @@
 using System;
 using System.Data;
 using SERV.Utils.Data;
-using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 

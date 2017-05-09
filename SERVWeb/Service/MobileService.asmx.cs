@@ -1,11 +1,7 @@
-﻿using System;
-using System.Web;
-using System.Web.Services;
+﻿using System.Web.Services;
 using System.Collections.Generic;
 using SERVDataContract;
-using SERVBLLFactory;
-using System.Data;
-using System.Threading;
+using SERVBLL;
 
 namespace SERVWeb
 {
@@ -42,7 +38,7 @@ namespace SERVWeb
 		public bool GoOnDuty()
 		{
 			Authenticate();
-			SERVBLLFactory.Factory.MemberBLL().GoOnDuty(CurrentUser().MemberID);
+			new MemberBLL().GoOnDuty(CurrentUser().MemberID);
 			return true;
 		}
 
@@ -50,7 +46,7 @@ namespace SERVWeb
 		public bool GoOffDuty()
 		{
 			Authenticate();
-			SERVBLLFactory.Factory.MemberBLL().GoOffDuty(CurrentUser().MemberID);
+			new MemberBLL().GoOffDuty(CurrentUser().MemberID);
 			return true;
 		}
 
@@ -58,7 +54,7 @@ namespace SERVWeb
 		public bool UpdateLocation(string lat, string lng)
 		{
 			Authenticate();
-			SERVBLLFactory.Factory.MemberBLL().UpdateLocation(CurrentUser().MemberID, lat, lng);
+			new MemberBLL().UpdateLocation(CurrentUser().MemberID, lat, lng);
 			return true;
 		}
 
@@ -66,21 +62,21 @@ namespace SERVWeb
 		public Member GetCurrentController()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.ShiftBLL().GetCurrentController();
+			return new ShiftBLL().GetCurrentController();
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<string> GetCalendarBulletins()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().GetNextXDaysCalendarBulletins(2);
+			return new CalendarBLL().GetNextXDaysCalendarBulletins(2);
 		}
 
 		[WebMethod(EnableSession = true)]
 		public CalendarEntry GetNextShift()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().GetMemberNextShift(CurrentUser().MemberID);
+			return new CalendarBLL().GetMemberNextShift(CurrentUser().MemberID);
 		}
 
 	}

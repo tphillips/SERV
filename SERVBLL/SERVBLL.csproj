@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -50,21 +50,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\SERVIBLL\SERVIBLL.csproj">
-      <Project>{B6181FFC-0C16-4F17-A01C-32346BDB9A41}</Project>
-      <Name>SERVIBLL</Name>
+    <ProjectReference Include="..\SERVDAL\SERVDAL.csproj">
+      <Project>{174895A9-F293-4331-A268-891ED4A366C8}</Project>
+      <Name>SERVDAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\SERVDataContract\SERVDataContract.csproj">
       <Project>{573E75FE-EA15-42AA-8A9C-585437ECA586}</Project>
       <Name>SERVDataContract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SERVDALFactory\SERVDALFactory.csproj">
-      <Project>{8F3E429D-6D76-40DD-9F90-F2F7876A52F8}</Project>
-      <Name>SERVDALFactory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SERVIDAL\SERVIDAL.csproj">
-      <Project>{DC871B06-1443-4664-8E39-68485A47F1D0}</Project>
-      <Name>SERVIDAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\SERV.Utils\SERV.Utils.csproj">
       <Project>{11642B2B-034E-4F46-97B1-D005CA169BCE}</Project>

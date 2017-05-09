@@ -1,22 +1,20 @@
 using System;
-using System.Web;
 using System.Web.Services;
 using System.Collections.Generic;
 using SERVDataContract;
-using SERVBLLFactory;
+using SERVBLL;
 using System.Data;
-using System.Threading;
 
 namespace SERVWeb
 {
 
-    public class Service : System.Web.Services.WebService
+	public class Service : System.Web.Services.WebService
     {
 		
-		private User CurrentUser()
+		private SERVDataContract.User CurrentUser()
 		{
 			if (System.Web.HttpContext.Current.Session["User"] == null) { return null; }
-			return (User)System.Web.HttpContext.Current.Session["User"];
+			return (SERVDataContract.User)System.Web.HttpContext.Current.Session["User"];
 		}
 
 		public void Authenticate()
@@ -31,33 +29,33 @@ namespace SERVWeb
 		public bool SendTestTweetEmail()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.MessageBLL().SendTestTweet(CurrentUser().MemberID);
+			return new MessageBLL().SendTestTweet(CurrentUser().MemberID);
 		}
 
 		[WebMethod]
 		public bool TweetYesterdaysSummary()
 		{
-			return SERVBLLFactory.Factory.MessageBLL().TweetYesterdaysSummary();
+			return new MessageBLL().TweetYesterdaysSummary();
 		}
 
 		[WebMethod]
 		public string GetYesterdaysSummary()
 		{
-			return SERVBLLFactory.Factory.RunLogBLL().GetYesterdaysSummary();
+			return new RunLogBLL().GetYesterdaysSummary();
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<RunLog> ListRecentRuns()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.RunLogBLL().ListRecent(10);
+			return new RunLogBLL().ListRecent(10);
 		}
 
 		[WebMethod(EnableSession = true)]
 		public List<Member> ListMembers()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.MemberBLL().List("");
+			return new MemberBLL().List("");
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -68,7 +66,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.RunLogBLL().ExecuteSQL(sql);
+			return new RunLogBLL().ExecuteSQL(sql);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -79,20 +77,20 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.MemberBLL().Get(memberId);
+			return new MemberBLL().Get(memberId);
 		}
 
 		[WebMethod(EnableSession = true)]
 		public bool SaveMember(Member member)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.MemberBLL().Save(member, CurrentUser()) == member.MemberID;
+			return new MemberBLL().Save(member, CurrentUser()) == member.MemberID;
 		}
 
 		[WebMethod]
 		public int Register(Member member)
 		{
-			return SERVBLLFactory.Factory.MemberBLL().Register(member);
+			return new MemberBLL().Register(member);
 		}
 
 		public int CreateBlankMember(User user)
@@ -107,7 +105,7 @@ namespace SERVWeb
 			m.EmailAddress = "@";
 			m.MobileNumber = "07";
 			m.GroupID = user.Member.GroupID;
-			return SERVBLLFactory.Factory.MemberBLL().Create(m);
+			return new MemberBLL().Create(m);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -118,7 +116,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			SERVBLLFactory.Factory.MemberBLL().AddMemberTag(memberId, tagName);
+			new MemberBLL().AddMemberTag(memberId, tagName);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -129,7 +127,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			SERVBLLFactory.Factory.MemberBLL().RemoveMemberTag(memberId, tagName);
+			new MemberBLL().RemoveMemberTag(memberId, tagName);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -140,21 +138,21 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			SERVBLLFactory.Factory.MemberBLL().SetMemberUserLevel(memberId, userLevelId);
+			new MemberBLL().SetMemberUserLevel(memberId, userLevelId);
 		}
 
 		[WebMethod(EnableSession = true)]
 		public List<Member> SearchMembers(string search, bool onlyActive)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.MemberBLL().List(search, onlyActive);
+			return new MemberBLL().List(search, onlyActive);
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=60)]
 		public List<Member> ListMembersWithTags(string tagsCsv)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.MemberBLL().ListMembersWithAnyTagsIn(tagsCsv);
+			return new MemberBLL().ListMembersWithAnyTagsIn(tagsCsv);
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=60)]
@@ -165,28 +163,28 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.MemberBLL().ListMobileNumbersWithAllTags(tagsCsv);
+			return new MemberBLL().ListMobileNumbersWithAllTags(tagsCsv);
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=60)]
 		public List<Location> ListLocations()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.LocationBLL().ListLocations("");
+			return new LocationBLL().ListLocations("");
 		}
 			
 		[WebMethod(EnableSession = true)]
 		public Location GetLocation(int locationId)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.LocationBLL().Get(locationId);
+			return new LocationBLL().Get(locationId);
 		}
 
 		[WebMethod(EnableSession = true)]
 		public bool SaveLocation(Location location)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.LocationBLL().Save(location, CurrentUser()) == location.LocationID;
+			return new LocationBLL().Save(location, CurrentUser()) == location.LocationID;
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -211,21 +209,21 @@ namespace SERVWeb
 			}
 			Location m = new Location();
 			m.LocationName = "-";
-			return SERVBLLFactory.Factory.LocationBLL().Create(m);
+			return new LocationBLL().Create(m);
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<VehicleType> ListVehicleTypes()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.ListBLL().ListVehicleTypes();
+			return new ListBLL().ListVehicleTypes();
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<Group> ListGroups()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.ListBLL().ListGroups();
+			return new ListBLL().ListGroups();
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -248,13 +246,13 @@ namespace SERVWeb
 				if (!string.IsNullOrEmpty(homeSafeDateTime.Replace(":","").Trim())){ _homeSafeDateTime = DateTime.Parse(homeSafeDateTime); }
 			}
 			// Log it
-			bool res = SERVBLLFactory.Factory.RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
+			bool res = new RunLogBLL().CreateRunLog(_callDateTime, callFromLocationId, _collectDateTime, collectionLocationId, 
 				controllerMemberId, CurrentUser().UserID, _deliverDateTime, deliverToLocationId, _dutyDate, 
 				finalDestinationLocationId, originLocationId, riderMemberId, urgency, vehicleTypeId, productIdCsv, _homeSafeDateTime, notes, callerNumber, callerExt);
 			// If we were updating a record, delete the old one
 			if (runLogID > 0)
 			{
-				SERVBLLFactory.Factory.RunLogBLL().DeleteRun(runLogID);
+				new RunLogBLL().DeleteRun(runLogID);
 			}
 			return res;
 		}
@@ -267,14 +265,14 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			SERVBLLFactory.Factory.RunLogBLL().DeleteRun(runLogID);
+			new RunLogBLL().DeleteRun(runLogID);
 			return true;
 		}
 
 		[WebMethod(EnableSession = true)]
 		public RunLog GetRunLog(int runLogID)
 		{
-			return SERVBLLFactory.Factory.RunLogBLL().Get(runLogID);
+			return new RunLogBLL().Get(runLogID);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -287,7 +285,7 @@ namespace SERVWeb
 			DateTime _deliverDateTime = DateTime.Parse(deliverDateTime);
 			DateTime _returnDateTime = DateTime.Parse(returnDateTime);
 			DateTime _dutyDate = DateTime.Parse(dutyDate);
-			return SERVBLLFactory.Factory.RunLogBLL().CreateAARunLog(_dutyDate, _collectDateTime,  
+			return new RunLogBLL().CreateAARunLog(_dutyDate, _collectDateTime,  
 				controllerMemberId, CurrentUser().UserID, _deliverDateTime, _returnDateTime,
 				riderMemberId, vehicleTypeId, boxesOutCsv, boxesInCsv, notes);
 		}
@@ -300,14 +298,14 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.MessageBLL().SendSMSMessage(numbers, message, CurrentUser().UserID, fromServ);
+			return new MessageBLL().SendSMSMessage(numbers, message, CurrentUser().UserID, fromServ);
 		}
 
 		[WebMethod(EnableSession = true)]
 		public bool SendFeedback(string feedback)
 		{
 			Authenticate();
-			SERVBLLFactory.Factory.MessageBLL().SendFeedback(CurrentUser(), feedback);
+			new MessageBLL().SendFeedback(CurrentUser(), feedback);
 			return true;
 		}
 
@@ -319,7 +317,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.MessageBLL().SendMembershipEmail(address, CurrentUser().UserID, false);
+			return new MessageBLL().SendMembershipEmail(address, CurrentUser().UserID, false);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -331,13 +329,13 @@ namespace SERVWeb
 				throw new System.Security.Authentication.AuthenticationException();
 			}
 			if (sure != "YES"){ throw new InvalidExpressionException("You don't seem to be sure about that"); }
-			SERVBLLFactory.Factory.MessageBLL().SendAllActiveMembersMembershipEmailInBackground(CurrentUser().MemberID, onlyNeverLoggedIn);
+			new MessageBLL().SendAllActiveMembersMembershipEmailInBackground(CurrentUser().MemberID, onlyNeverLoggedIn);
 			return true;
 		}
 
 		public User Login(string username, string passwordHash)
 		{
-			return SERVBLLFactory.Factory.MemberBLL().Login(username, passwordHash);
+			return new MemberBLL().Login(username, passwordHash);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -348,7 +346,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			SERVGlobal.User = SERVBLLFactory.Factory.MemberBLL().GetUserForMember(memberId);
+			SERVGlobal.User = new MemberBLL().GetUserForMember(memberId);
 			return true;
 		}
 
@@ -360,7 +358,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.ShiftBLL().TakeControl(CurrentUser().MemberID, overrideNumber);
+			return new ShiftBLL().TakeControl(CurrentUser().MemberID, overrideNumber);
 		}
 
 
@@ -368,13 +366,13 @@ namespace SERVWeb
 		public string[] GetMemberUniqueRuns()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.RunLogBLL().GetMemberUniqueRuns(CurrentUser().MemberID);
+			return new RunLogBLL().GetMemberUniqueRuns(CurrentUser().MemberID);
 		}
 
 		[WebMethod]
 		public string SwitchController()
 		{
-			return SERVBLLFactory.Factory.ShiftBLL().SwitchController();
+			return new ShiftBLL().SwitchController();
 		}
 			
 		[WebMethod]
@@ -387,14 +385,14 @@ namespace SERVWeb
 		public List<List<CalendarEntry>> ListWeeksCaledarEntries()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().ListWeeksCaledarEntries();
+			return new CalendarBLL().ListWeeksCaledarEntries();
 		}
 
 		[WebMethod(EnableSession = true)]
 		public List<List<CalendarEntry>> ListSpansCaledarEntries(int days, int page)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().ListSpansCaledarEntries(days, page);
+			return new CalendarBLL().ListSpansCaledarEntries(days, page);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -405,7 +403,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.CalendarBLL().RosterVolunteer(calendarId, memberId, rosteringWeek, rosteringDay);
+			return new CalendarBLL().RosterVolunteer(calendarId, memberId, rosteringWeek, rosteringDay);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -416,20 +414,20 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.CalendarBLL().RemoveRotaSlot(calendarId, memberId, rosteringWeek, rosteringDay);
+			return new CalendarBLL().RemoveRotaSlot(calendarId, memberId, rosteringWeek, rosteringDay);
 		}
 
 		[WebMethod(EnableSession = true)]
 		public List<RosteredVolunteer> ListRosteredVolunteers(int calendarId)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().ListRosteredVolunteers(calendarId);
+			return new CalendarBLL().ListRosteredVolunteers(calendarId);
 		}
 
 		[WebMethod]
 		public void GenerateCalendar()
 		{
-			SERVBLLFactory.Factory.CalendarBLL().GenerateCalendar();
+			new CalendarBLL().GenerateCalendar();
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -446,7 +444,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.CalendarBLL().ListMembersOnShift(calendarId);
+			return new CalendarBLL().ListMembersOnShift(calendarId);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -457,7 +455,7 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.CalendarBLL().MarkShiftSwapNeeded(calendarId, memberId, shiftDate);
+			return new CalendarBLL().MarkShiftSwapNeeded(calendarId, memberId, shiftDate);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -468,40 +466,40 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.CalendarBLL().AddVolunteerToCalendar(calendarId, memberId, shiftDate, memberId == CurrentUser().MemberID);
+			return new CalendarBLL().AddVolunteerToCalendar(calendarId, memberId, shiftDate, memberId == CurrentUser().MemberID);
 		}
 
 		[WebMethod(EnableSession = true)]
 		public CalendarEntry GetNextShift()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().GetMemberNextShift(CurrentUser().MemberID);
+			return new CalendarBLL().GetMemberNextShift(CurrentUser().MemberID);
 		}
 
 		[WebMethod]
 		public List<string> GetCurrentWeekADateStrings(string format)
 		{
-			return SERVBLLFactory.Factory.CalendarBLL().GetCurrentWeekADateStrings(format);
+			return new CalendarBLL().GetCurrentWeekADateStrings(format);
 		}
 
 		[WebMethod]
 		public List<string> GetCurrentWeekBDateStrings(string format)
 		{
-			return SERVBLLFactory.Factory.CalendarBLL().GetCurrentWeekBDateStrings(format);
+			return new CalendarBLL().GetCurrentWeekBDateStrings(format);
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<SERVDataContract.Calendar> ListCalendars()
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().ListCalendars();
+			return new CalendarBLL().ListCalendars();
 		}
 
 		[WebMethod(EnableSession = true)]
 		public SERVDataContract.Calendar GetCalendar(int calendarId)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().Get(calendarId);
+			return new CalendarBLL().Get(calendarId);
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -512,20 +510,20 @@ namespace SERVWeb
 			{
 				throw new System.Security.Authentication.AuthenticationException();
 			}
-			return SERVBLLFactory.Factory.CalendarBLL().SaveCalendarProps(calendarId, calendarName, sortOrder, requiredTagId, defaultRequirement);
+			return new CalendarBLL().SaveCalendarProps(calendarId, calendarName, sortOrder, requiredTagId, defaultRequirement);
 		}
 
 		[WebMethod(EnableSession = true, CacheDuration=120)]
 		public List<string> GetNextXDaysCalendarBulletins(int days)
 		{
 			Authenticate();
-			return SERVBLLFactory.Factory.CalendarBLL().GetNextXDaysCalendarBulletins(days);
+			return new CalendarBLL().GetNextXDaysCalendarBulletins(days);
 		}
 
 		[WebMethod]
 		public bool SendCalendarDayBulletinsNotification()
 		{
-			SERVBLLFactory.Factory.CalendarBLL().SendCalendarDayBulletinsNotification();
+			new CalendarBLL().SendCalendarDayBulletinsNotification();
 			return true;
 		}
 
